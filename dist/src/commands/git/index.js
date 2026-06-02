@@ -1,0 +1,30 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.registerGitCommands = registerGitCommands;
+const gpl_command_1 = require("./gpl.command");
+const gph_command_1 = require("./gph.command");
+const ga_command_1 = require("./ga.command");
+const gcm_command_1 = require("./gcm.command");
+const gs_command_1 = require("./gs.command");
+const gco_command_1 = require("./gco.command");
+const gcob_command_1 = require("./gcob.command");
+const bg_command_1 = require("./bg.command");
+const gr_command_1 = require("./gr.command");
+const gpu_command_1 = require("./gpu.command");
+const gpho_command_1 = require("./gpho.command");
+const gplo_command_1 = require("./gplo.command");
+function registerGitCommands(program) {
+    const git = program.command("git").description("Git utilities");
+    (0, gpl_command_1.gplCommand)(git);
+    (0, gph_command_1.gphCommand)(git);
+    (0, ga_command_1.gaCommand)(git);
+    (0, gcm_command_1.gcmCommand)(git);
+    (0, gs_command_1.gsCommand)(git);
+    (0, gco_command_1.gcoCommand)(git);
+    (0, gcob_command_1.gcobCommand)(git);
+    (0, bg_command_1.bgCommand)(git);
+    (0, gr_command_1.grCommand)(git);
+    (0, gpu_command_1.gpuCommand)(git);
+    (0, gpho_command_1.gphoCommand)(git);
+    (0, gplo_command_1.gploCommand)(git);
+}
