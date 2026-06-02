@@ -1,0 +1,13 @@
+/node_modules
+/dist
+.env
+package-lock.json
+yarn.lock
+/uploads
+/.vscode
+.idea
+/typesense-data/
+.codegpt
+.vscode
+google-chrome-stable_current_amd64.deb
+*.deb

@@ -15,9 +15,17 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@types/express": "^5.0.6",
+    "@types/pidusage": "^2.0.5",
+    "@types/ws": "^8.18.1",
     "chalk": "^5.6.2",
     "commander": "^15.0.0",
-    "tabtab": "^3.0.2"
+    "express": "^5.2.1",
+    "open": "^11.0.0",
+    "pidusage": "^4.0.1",
+    "systeminformation": "^5.31.7",
+    "tabtab": "^3.0.2",
+    "ws": "^8.21.0"
   },
   "devDependencies": {
     "@types/node": "^25.9.1",
