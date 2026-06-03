@@ -1,5 +1,4 @@
 import { Command } from "commander";
-
 import { gplCommand } from "./gpl.command";
 import { gphCommand } from "./gph.command";
 import { gaCommand } from "./ga.command";
@@ -21,6 +20,7 @@ import { graphCommand } from "./graph.command";
 import { undoCommand } from "./undo.command";
 import { cpCommand } from "./cp.command";
 import { delCommand } from "./del.command";
+import { finalCommand } from "./final.command";
 
 export function registerGitCommands(program: Command) {
   const git = program.command("git").description("Git utilities");
@@ -45,4 +45,5 @@ export function registerGitCommands(program: Command) {
   undoCommand(git);
   cpCommand(git);
   delCommand(git);
+  finalCommand(git);
 }

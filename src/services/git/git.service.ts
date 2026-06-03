@@ -448,6 +448,17 @@ git log \
       throw new Error(`Invalid ref: ${ref}`);
     }
   }
+  async final(message = "final") {
+    console.log("🚀 Running final workflow");
+
+    await this.addAll();
+
+    await this.commit(message);
+
+    await this.pushWithPull();
+
+    console.log("\n✅ Final workflow completed");
+  }
 }
 
 export const gitService = new GitService();
