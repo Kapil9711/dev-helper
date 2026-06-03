@@ -154,10 +154,7 @@ export default function App() {
 
           <Card
             title="System RAM"
-            value={`${(
-              (data?.runtime?.memory?.usedMB / data?.runtime.memory?.totalMB) *
-              100
-            ).toFixed(2)} %`}
+            value={data?.runtime?.memory?.usedMB.toFixed(2)}
             icon={<MemoryStick />}
           />
 
