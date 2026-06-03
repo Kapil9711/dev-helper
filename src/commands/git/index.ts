@@ -21,6 +21,7 @@ import { undoCommand } from "./undo.command";
 import { cpCommand } from "./cp.command";
 import { delCommand } from "./del.command";
 import { finalCommand } from "./final.command";
+import { untrackCommand } from "./untrack.command";
 
 export function registerGitCommands(program: Command) {
   const git = program.command("git").description("Git utilities");
@@ -46,4 +47,5 @@ export function registerGitCommands(program: Command) {
   cpCommand(git);
   delCommand(git);
   finalCommand(git);
+  untrackCommand(git);
 }

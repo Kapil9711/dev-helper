@@ -459,6 +459,27 @@ git log \
 
     console.log("\n✅ Final workflow completed");
   }
+  async untrack(target: string) {
+    console.log(`🧹 Removing tracking from ${target}`);
+
+    await exec(
+      `
+git rm \
+-r \
+--cached \
+"${target}"
+`,
+    );
+
+    console.log("✅ Tracking removed");
+
+    console.log(
+      `
+File remains locally.
+Commit changes to finalize.
+`,
+    );
+  }
 }
 
 export const gitService = new GitService();

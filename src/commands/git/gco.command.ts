@@ -2,7 +2,7 @@ import { Command } from "commander";
 
 import { gitService } from "../../services/git/git.service";
 
-import { pickBranch } from "../../core/helper/branch.helper";
+import { pickBranch } from "../../core/helper/git.helper";
 
 import { safeCommand } from "../../core/helper/command.helper";
 

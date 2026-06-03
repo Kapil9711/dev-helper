@@ -51,3 +51,44 @@ export async function pickBranch() {
 
   return branch;
 }
+
+export async function pickTracked() {
+  const files = (await exec("git ls-files", true))
+
+    .split("\n")
+
+    .filter(Boolean);
+
+  const selected = await search({
+    message: "Search tracked file/folder",
+
+    source: async (input = "") =>
+      files
+
+        .filter((item) => item.toLowerCase().includes(input.toLowerCase()))
+
+        .slice(
+          0,
+
+          100,
+        )
+
+        .map((item) => ({
+          name: item,
+
+          value: item,
+        })),
+  });
+
+  const accepted = await confirm({
+    message: `Stop tracking "${selected}" ?`,
+
+    default: true,
+  });
+
+  if (!accepted) {
+    throw new UserCancelledError();
+  }
+
+  return selected;
+}
