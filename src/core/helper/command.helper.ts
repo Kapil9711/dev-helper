@@ -1,13 +1,28 @@
-// src/core/helper/safe-command.helper.ts
-
 import { UserCancelledError } from "./prompts.helper";
 
 export async function safeCommand(callback: () => Promise<void>) {
   try {
     await callback();
-  } catch (error) {
+  } catch (error: any) {
+    /*
+     * User cancelled manually
+     */
+
     if (error instanceof UserCancelledError) {
       console.log("\n❌ Operation cancelled");
+
+      return;
+    }
+
+    /*
+     * Ctrl + C / SIGINT from inquirer
+     */
+
+    if (
+      error?.name === "ExitPromptError" ||
+      error?.message?.includes("SIGINT")
+    ) {
+      console.log("\n❌ Prompt closed");
 
       return;
     }
