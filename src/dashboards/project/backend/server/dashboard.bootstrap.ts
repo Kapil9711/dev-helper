@@ -21,6 +21,7 @@ export async function dashboardBootstrap({ command, args }: BootstrapOptions) {
     /*
      * start http server
      */
+
     const server = await dashboardServer.start();
 
     /*

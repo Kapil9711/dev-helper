@@ -14,6 +14,7 @@ class ProcessWrapper {
 
     args: string[];
   }) {
+    console.log("tick");
     this.child = spawn(
       command,
 

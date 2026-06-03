@@ -1,8 +1,11 @@
 import pidusage from "pidusage";
-
 import { websocketServer } from "../server/websocket.server";
-
 import { processWrapper } from "../wrapper/process.wrapper";
+import { projectService } from "./project.service";
+import { gitDashboardService } from "./git.service";
+import os from "os";
+import { systemService } from "./system.service";
+import { mem } from "systeminformation";
 
 class MetricsService {
   private timer?: NodeJS.Timeout;
@@ -19,19 +22,42 @@ class MetricsService {
 
           const stats = await pidusage(pid);
 
+          const project = projectService.getInfo();
+
+          const git = await gitDashboardService.getInfo();
+
+          const memory = systemService.getMemory();
+
+          const cpu = systemService.getCpuUsage();
+
+          const machine = systemService.getMachine();
+
           websocketServer.emit(
-            "metrics",
+            "dashboard:update",
 
             {
-              pid,
+              runtime: {
+                pid,
 
-              cpu: stats.cpu,
+                cpu: cpu,
 
-              memory: stats.memory,
+                memory: memory,
 
-              elapsed: stats.elapsed,
+                elapsed: stats.elapsed,
 
-              uptime: process.uptime(),
+                uptime: process.uptime(),
+              },
+
+              project,
+
+              git,
+              system: {
+                cpu,
+
+                memory,
+
+                machine,
+              },
             },
           );
         } catch (error) {
