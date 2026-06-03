@@ -12,6 +12,15 @@ import { grCommand } from "./gr.command";
 import { gpuCommand } from "./gpu.command";
 import { gphoCommand } from "./gpho.command";
 import { gploCommand } from "./gplo.command";
+import { initCommand } from "./init.command";
+import { fetchCommand } from "./fetch.command";
+import { mergeCommand } from "./merge.command";
+import { syncCommand } from "./sync.command";
+import { cleanupCommand } from "./cleanup.command";
+import { graphCommand } from "./graph.command";
+import { undoCommand } from "./undo.command";
+import { cpCommand } from "./cp.command";
+import { delCommand } from "./del.command";
 
 export function registerGitCommands(program: Command) {
   const git = program.command("git").description("Git utilities");
@@ -27,4 +36,13 @@ export function registerGitCommands(program: Command) {
   gpuCommand(git);
   gphoCommand(git);
   gploCommand(git);
+  initCommand(git);
+  fetchCommand(git);
+  mergeCommand(git);
+  syncCommand(git);
+  cleanupCommand(git);
+  graphCommand(git);
+  undoCommand(git);
+  cpCommand(git);
+  delCommand(git);
 }
