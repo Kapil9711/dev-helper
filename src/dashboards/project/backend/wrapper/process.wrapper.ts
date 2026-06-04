@@ -1,37 +1,49 @@
-import { ChildProcess, spawn } from "child_process";
+import { spawn, IPty } from "node-pty";
 
 import { websocketServer } from "../server/websocket.server";
 
 class ProcessWrapper {
-  private child?: ChildProcess;
+  private child?: IPty;
+
+  private stdinHandler?: (data: Buffer | string) => void;
+
+  private sigintHandler?: () => void;
 
   async start({
     command,
-
     args,
   }: {
     command: string;
 
     args: string[];
   }) {
-    console.log("tick");
-    this.child = spawn(
-      command,
+    console.log("starting:", command, args.join(" "));
 
-      args,
+    this.child = spawn(
+      "/usr/bin/env",
+
+      [command, ...args],
 
       {
-        shell: true,
+        name: "xterm-256color",
 
-        stdio: "pipe",
+        cwd: process.cwd(),
+
+        cols: process.stdout.columns || 120,
+
+        rows: process.stdout.rows || 40,
 
         env: {
           ...process.env,
+
+          TERM: "xterm-256color",
 
           VH_ENABLED: "true",
         },
       },
     );
+
+    console.log("spawned pid:", this.child.pid);
 
     websocketServer.emit(
       "process",
@@ -45,65 +57,119 @@ class ProcessWrapper {
       },
     );
 
-    this.child.stdout?.on(
+    /*
+     * terminal output
+     */
+
+    this.child.onData((data) => {
+      process.stdout.write(data);
+
+      websocketServer.emit(
+        "stdout",
+
+        {
+          message: data,
+
+          timestamp: Date.now(),
+        },
+      );
+    });
+
+    /*
+     * interactive input
+     */
+
+    if (process.stdin.isTTY) {
+      process.stdin.setRawMode(true);
+    }
+
+    process.stdin.resume();
+
+    process.stdin.setEncoding("utf8");
+
+    this.stdinHandler = (data) => {
+      const input = data.toString();
+
+      /*
+       * ctrl+c
+       */
+
+      if (input === "\u0003") {
+        this.stop();
+
+        process.exit(0);
+
+        return;
+      }
+
+      /*
+       * expo shortcuts
+       */
+
+      this.child?.write(input);
+    };
+
+    process.stdin.on(
       "data",
 
-      (data) => {
-        websocketServer.emit(
-          "stdout",
-
-          {
-            message: data.toString(),
-
-            timestamp: Date.now(),
-          },
-        );
-      },
+      this.stdinHandler,
     );
 
-    this.child.stderr?.on(
-      "data",
+    /*
+     * fallback sigint
+     */
 
-      (data) => {
-        websocketServer.emit(
-          "stderr",
+    this.sigintHandler = () => {
+      this.stop();
 
-          {
-            message: data.toString(),
+      process.exit(0);
+    };
 
-            timestamp: Date.now(),
-          },
-        );
-      },
+    process.once(
+      "SIGINT",
+
+      this.sigintHandler,
     );
 
-    this.child.on(
-      "close",
+    /*
+     * child exit
+     */
 
-      (code) => {
-        websocketServer.emit(
-          "process_exit",
+    this.child.onExit(({ exitCode }) => {
+      this.cleanup();
 
-          {
-            code,
-          },
-        );
-      },
-    );
+      websocketServer.emit(
+        "process_exit",
 
-    this.child.on(
-      "error",
+        {
+          code: exitCode,
+        },
+      );
+    });
+  }
 
-      (error) => {
-        websocketServer.emit(
-          "process_error",
+  private cleanup() {
+    if (this.stdinHandler) {
+      process.stdin.off(
+        "data",
 
-          {
-            error: error.message,
-          },
-        );
-      },
-    );
+        this.stdinHandler,
+      );
+    }
+
+    if (this.sigintHandler) {
+      process.removeListener(
+        "SIGINT",
+
+        this.sigintHandler,
+      );
+    }
+
+    if (process.stdin.isTTY) {
+      process.stdin.setRawMode(false);
+    }
+
+    process.stdin.pause();
   }
 
   getPid() {
@@ -115,7 +181,9 @@ class ProcessWrapper {
   }
 
   stop() {
-    this.child?.kill("SIGTERM");
+    this.cleanup();
+
+    this.child?.kill();
   }
 }
 

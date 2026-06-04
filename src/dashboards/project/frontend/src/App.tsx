@@ -4,46 +4,47 @@ import {
   Cpu,
   MemoryStick,
   GitBranch,
-  FolderCode,
-  Hash,
-  Monitor,
-  Activity,
-  Folder,
-  FileCode2,
+  AlertTriangle,
+  Package,
+  Navigation,
+  FolderTree,
+  Smartphone,
 } from "lucide-react";
 
 import { useMetrics } from "./store/useMetrics";
 
-function Card({ title, value, icon }: any) {
+function SmallCard({ title, value, icon }: any) {
   return (
-    <div
-      className="
-      rounded-2xl
-      border
-      border-zinc-800
-      bg-zinc-900/60
-      backdrop-blur-xl
-      p-5
-      transition
-      hover:border-zinc-700
-      "
-    >
-      <div className="flex justify-between items-center">
-        <span className="text-zinc-400 text-sm">{title}</span>
+    <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-3">
+      <div className="flex justify-between text-zinc-500 text-xs">
+        <span>{title}</span>
 
         {icon}
       </div>
 
-      <div
-        className="
-        mt-4
-        text-2xl
-        font-bold
-        text-white
-        "
-      >
-        {value}
+      <div className="text-lg font-semibold mt-2 truncate">
+        {String(value ?? "-")}
       </div>
+    </div>
+  );
+}
+
+function Section({ title, children }: any) {
+  return (
+    <div className="rounded-2xl border border-zinc-800 bg-zinc-900/30 p-4">
+      <div className="font-semibold mb-4">{title}</div>
+
+      {children}
+    </div>
+  );
+}
+
+function KV({ label, value }: any) {
+  return (
+    <div className="flex justify-between py-1 text-sm">
+      <span className="text-zinc-500">{label}</span>
+
+      <span className="truncate max-w-[220px]">{String(value ?? "-")}</span>
     </div>
   );
 }
@@ -51,237 +52,184 @@ function Card({ title, value, icon }: any) {
 export default function App() {
   const data = useMetrics();
 
-  if (!data) {
+  console.log("dashboard", data);
+
+  if (!data || !data.project) {
     return (
-      <div
-        className="
-        min-h-screen
-        bg-zinc-950
-        flex
-        items-center
-        justify-center
-        text-zinc-500
-        "
-      >
-        Loading dashboard...
+      <div className="bg-zinc-950 text-white min-h-screen flex items-center justify-center">
+        Waiting for dashboard...
       </div>
     );
   }
 
   return (
-    <div
-      className="
-      min-h-screen
-      w-screen
-      bg-zinc-950
-      text-white
-      flex
-      "
-    >
-      {/* SIDEBAR */}
+    <div className="bg-zinc-950 min-h-screen text-white p-4">
+      {/* header */}
 
-      <aside
-        className="
-        w-72
-        border-r
-        border-zinc-900
-        p-6
-        flex
-        flex-col
-        "
-      >
-        <h1
-          className="
-          text-2xl
-          font-bold
-          "
-        >
-          VH Dashboard
-        </h1>
+      <div className="flex justify-between mb-5">
+        <div>
+          <h1 className="text-3xl font-bold">VH Dashboard</h1>
 
-        <p className="text-zinc-500 mt-1">Dev Observability</p>
-
-        <div className="mt-10 space-y-3">
-          <SidebarItem label="Dashboard" />
-
-          <SidebarItem label="Console" />
-
-          <SidebarItem label="Network" />
-
-          <SidebarItem label="API Docs" />
-        </div>
-      </aside>
-
-      {/* CONTENT */}
-
-      <main
-        className="
-        flex-1
-        p-8
-        overflow-auto
-        "
-      >
-        {/* PROJECT */}
-
-        <section>
-          <h2
-            className="
-            text-3xl
-            font-bold
-            "
-          >
-            {data.project.name}
-          </h2>
-
-          <p className="text-zinc-500 mt-2">{data.project.cwd}</p>
-        </section>
-
-        {/* METRICS */}
-
-        <section
-          className="
-          grid
-          grid-cols-4
-          gap-5
-          mt-8
-          "
-        >
-          <Card
-            title="CPU"
-            value={`${data.runtime.cpu.toFixed(1)}%`}
-            icon={<Cpu />}
-          />
-
-          <Card
-            title="System RAM"
-            value={data?.runtime?.memory?.usedMB.toFixed(2)}
-            icon={<MemoryStick />}
-          />
-
-          <Card title="PID" value={data.runtime.pid} icon={<Hash />} />
-
-          <Card
-            title="Uptime"
-            value={`${Math.floor(data.runtime.uptime)}s`}
-            icon={<Activity />}
-          />
-        </section>
-
-        {/* PROJECT + GIT */}
-
-        <div
-          className="
-          grid
-          grid-cols-2
-          gap-6
-          mt-8
-          "
-        >
-          <div
-            className="
-            rounded-2xl
-            border
-            border-zinc-800
-            p-6
-            "
-          >
-            <h3 className="font-semibold">Project</h3>
-
-            <div className="mt-5 space-y-4">
-              <Row
-                icon={<Folder />}
-                label="Version"
-                value={data.project.version}
-              />
-
-              <Row
-                icon={<FileCode2 />}
-                label="Scripts"
-                value={String(Object.keys(data.project.scripts).length)}
-              />
-
-              <Row
-                icon={<Monitor />}
-                label="Platform"
-                value={navigator.platform}
-              />
-            </div>
-          </div>
-
-          <div
-            className="
-            rounded-2xl
-            border
-            border-zinc-800
-            p-6
-            "
-          >
-            <h3 className="font-semibold">Git</h3>
-
-            <div className="mt-5 space-y-4">
-              <Row
-                icon={<GitBranch />}
-                label="Branch"
-                value={data.git.branch}
-              />
-
-              <Row
-                icon={<FolderCode />}
-                label="Changes"
-                value={String(data.git.changesCount)}
-              />
-            </div>
-          </div>
+          <div className="text-zinc-500 text-sm">{data.project?.name}</div>
         </div>
 
-        {/* CONSOLE */}
+        <div className="border border-zinc-800 rounded-xl px-4 py-3">
+          <div className="text-xs text-zinc-500">Risk Score</div>
 
-        <section
-          className="
-          mt-8
-          rounded-2xl
-          border
-          border-zinc-800
-          bg-black
-          p-6
-          h-72
-          overflow-auto
-          "
-        >
-          <div className="text-zinc-500">Console logs will stream here...</div>
-        </section>
-      </main>
-    </div>
-  );
-}
-
-function SidebarItem({ label }: { label: string }) {
-  return (
-    <button
-      className="
-      w-full
-      rounded-xl
-      p-3
-      text-left
-      text-zinc-400
-      hover:bg-zinc-900
-      "
-    >
-      {label}
-    </button>
-  );
-}
-
-function Row({ icon, label, value }: any) {
-  return (
-    <div className="flex justify-between items-center">
-      <div className="flex gap-3 items-center text-zinc-400">
-        {icon}
-
-        {label}
+          <div className="text-2xl font-bold">{data.analysis?.score ?? 0}</div>
+        </div>
       </div>
 
-      <span className="font-medium">{value}</span>
+      {/* top cards */}
+
+      <div className="grid grid-cols-4 lg:grid-cols-8 gap-3">
+        <SmallCard
+          title="CPU"
+          value={`${data.runtime?.cpu ?? 0}%`}
+          icon={<Cpu size={14} />}
+        />
+
+        <SmallCard
+          title="RAM"
+          value={`${data.system?.memory?.usedMB ?? 0} MB`}
+          icon={<MemoryStick size={14} />}
+        />
+
+        <SmallCard
+          title="Branch"
+          value={data.git?.branch}
+          icon={<GitBranch size={14} />}
+        />
+
+        <SmallCard
+          title="Deps"
+          value={data.dependencies?.total}
+          icon={<Package size={14} />}
+        />
+
+        <SmallCard
+          title="Findings"
+          value={data.analysis?.findings?.length ?? 0}
+          icon={<AlertTriangle size={14} />}
+        />
+
+        <SmallCard
+          title="Navigation"
+          value={data.navigation?.library}
+          icon={<Navigation size={14} />}
+        />
+
+        <SmallCard
+          title="Architecture"
+          value={data.structure?.architecture}
+          icon={<FolderTree size={14} />}
+        />
+
+        <SmallCard
+          title="Platform"
+          value={data.environment?.node?.platform}
+          icon={<Smartphone size={14} />}
+        />
+      </div>
+
+      <div className="grid grid-cols-12 gap-4 mt-4">
+        {/* left */}
+
+        <div className="col-span-7 space-y-4">
+          <Section title="Risk Findings">
+            <div className="space-y-2 max-h-[500px] overflow-auto">
+              {(data.analysis?.findings ?? []).map((risk) => (
+                <div
+                  key={`${risk.id}-${risk.title}`}
+                  className="border border-zinc-800 rounded-xl p-3"
+                >
+                  <div className="flex justify-between">
+                    <div>{risk.title}</div>
+
+                    <div className="text-xs">{risk.severity}</div>
+                  </div>
+
+                  <div className="text-xs text-zinc-500 mt-2">
+                    {risk.description}
+                  </div>
+
+                  <div className="text-xs mt-2">{risk.recommendation}</div>
+
+                  {!!risk.files?.length && (
+                    <div className="text-cyan-400 text-xs mt-2">
+                      {risk.files.join(", ")}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </Section>
+        </div>
+
+        {/* middle */}
+
+        <div className="col-span-3 space-y-4">
+          <Section title="Project">
+            <KV label="Version" value={data.project?.version} />
+
+            <KV label="Package Manager" value={data.project?.packageManager} />
+
+            <KV label="Dependencies" value={data.dependencies?.total} />
+
+            <KV label="Folders" value={data.structure?.folderCount} />
+
+            <KV
+              label="Expo Packages"
+              value={data.dependencies?.expoPackages?.length}
+            />
+          </Section>
+
+          <Section title="Navigation">
+            <KV label="Stacks" value={data.navigation?.routes?.stackScreens} />
+
+            <KV label="Tabs" value={data.navigation?.routes?.tabScreens} />
+
+            <KV
+              label="goBack"
+              value={data.navigation?.navigationUsage?.goBack}
+            />
+
+            <KV
+              label="Replace"
+              value={data.navigation?.navigationUsage?.replace}
+            />
+          </Section>
+        </div>
+
+        {/* right */}
+
+        <div className="col-span-2 space-y-4">
+          <Section title="Environment">
+            <KV label="Node" value={data.environment?.node?.version} />
+
+            <KV label="Arch" value={data.environment?.node?.arch} />
+
+            <KV
+              label="Expo"
+              value={data.environment?.readiness?.expoInstalled}
+            />
+
+            <KV label="EAS" value={data.environment?.readiness?.easInstalled} />
+          </Section>
+
+          <Section title="Permissions">
+            <KV
+              label="Android Count"
+              value={(data.permissions as any)?.android?.length ?? 0}
+            />
+
+            <KV
+              label="iOS Permissions"
+              value={Object.keys((data.permissions as any)?.ios ?? {}).length}
+            />
+          </Section>
+        </div>
+      </div>
     </div>
   );
 }
