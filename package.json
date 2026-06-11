@@ -1,0 +1,45 @@
+{
+  "name": "vh-cli",
+  "version": "0.0.1",
+  "description": "Developer productivity CLI and dashboard toolkit",
+  "type": "module",
+  "main": "./dist/bin/index.js",
+  "bin": {
+    "vh": "./dist/bin/index.js"
+  },
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": "./dist/bin/index.js"
+  },
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "tsc -p tsconfig.json",
+    "prepare": "yarn build",
+    "dev": "tsc -w",
+    "prepublishOnly": "yarn clean && yarn build"
+  },
+  "keywords": [
+    "cli",
+    "dashboard",
+    "developer-tools",
+    "monitoring"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^15.0.0",
+    "typescript": "^6.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.1"
+  }
+}

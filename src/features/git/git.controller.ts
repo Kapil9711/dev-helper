@@ -1,0 +1,3 @@
+class GitCommandController {
+  private gitInitController() {}
+}
