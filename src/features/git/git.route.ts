@@ -14,7 +14,7 @@ class GitCommandRouter {
   private gitStatus() {
     this.git
       .command("status")
-      .option("-j", "--json")
+      .option("-j, --json")
       .action((options) => {
         console.log(options);
       });
