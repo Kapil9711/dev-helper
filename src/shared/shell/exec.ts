@@ -26,7 +26,7 @@ export async function exec(
     cwd,
     env,
     timeout = 10000,
-    throwOnError = true,
+    throwOnError = false,
     maxBuffer = 10 * 1024 * 1024,
   } = options;
 
