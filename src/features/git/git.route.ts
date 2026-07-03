@@ -8,13 +8,13 @@ class GitCommandRouter {
     // acutal commands
     this.gitInit();
     this.gitStatus();
+    this.gitAdd();
   }
   private gitInit() {
     this.git
       .command("init")
       .description("Initialize a git repository")
       .option("-j, --json")
-
       .action(gitCommandController.gitInit);
   }
   private gitStatus() {
@@ -23,6 +23,14 @@ class GitCommandRouter {
       .description("Check the status of the git repository")
       .option("-j, --json")
       .action(gitCommandController.gitStatus);
+  }
+
+  private gitAdd() {
+    this.git
+      .command("add")
+      .description("Add files to stagging area")
+      .option("-j, --json")
+      .action(gitCommandController.gitAdd);
   }
 }
 
