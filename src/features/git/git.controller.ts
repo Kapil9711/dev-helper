@@ -85,6 +85,7 @@ class GitCommandController {
     const files = await prompt.multiselect({
       message: "Select file to stage",
       options: gitHelper.getFileSelectOptions(stageableFiles),
+      initialValues: ["."],
     });
 
     if (files?.length == 0) {
