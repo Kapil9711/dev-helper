@@ -114,6 +114,9 @@ class GitCommandController {
   }
 
   async gitPushWithPullAndCommit(message: string, options: CommandOptions) {
+    await output.info("4 Steps Process");
+
+    await output.info("1/4 Step");
     let result = await gitCommandService.gitAdd(true);
     await output.autoPrint(result, options);
     // if add fail return early
@@ -122,16 +125,17 @@ class GitCommandController {
     if (!message) {
       message = "auto commit";
     }
+    await output.info("2/4 Step");
     result = await gitCommandService.gitCommit(message);
     await output.autoPrint(result, options);
     //if commit fail return early
     if (!result.success) return;
-
+    await output.info("3/4 Step");
     result = await gitCommandService.gitPull();
     await output.autoPrint(result, options);
     //if pull fail return early
     if (!result.success) return;
-
+    await output.info("4/4 Step");
     return this.gitPush(options);
   }
 }
