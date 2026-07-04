@@ -36,32 +36,39 @@ class Output {
   async success({ title, message, duration, isRaw = false }: OutputProps) {
     await writer.writeln("");
     await writer.writeln(chalk.green(`${title} Started`));
-    await writer.writeln(message);
+    if (message) {
+      await writer.writeln(message);
+    }
     if (duration) {
       const msg = ` Duration ${duration} ms `;
-      // await writer.writeln(chalk.yellow(msg));
-      await writer.writeln(chalk.bgCyanBright(chalk.blackBright(msg)));
+      await writer.writeln(chalk.yellow(msg));
     }
-    await writer.writeln(chalk.green(`${title} SUCCESS`));
+    await writer.writeln(
+      chalk.bgCyanBright(chalk.blackBright(`${title} SUCCESS`)),
+    );
   }
 
   async error({ title, message, duration, isRaw = false }: OutputProps) {
     await writer.writeln("");
-    await writer.writeln(chalk.green(`${title} Started`));
-    await writer.writeln(message);
+    await writer.writeln(chalk.green(`${title} ☑️ Started`));
+    if (message) {
+      await writer.writeln(message);
+    }
+
     if (duration) {
       const msg = `Duration ${duration} ms`;
-      await writer.writeln(chalk.bgCyanBright(chalk.blackBright(msg)));
-
-      // await writer.writeln(chalk.bgGray(chalk.yellow(msg)));
+      await writer.writeln(chalk.yellow(msg));
     }
-    await writer.writeln(chalk.red(`${title} ✖ ERROR`));
+
+    await writer.writeln(
+      chalk.bgCyanBright(chalk.bgRedBright(chalk.black(`${title} ❌ ERROR`))),
+    );
 
     // console.log(chalk.red(`${title} ✖ ERROR`));
   }
 
   async info(message: string, delay: number = 0) {
-    await writer.writeln(message, delay);
+    await writer.writeln(chalk.bgMagentaBright(chalk.cyan(message)), delay);
     // console.log(chalk.cyan(message));
   }
 
