@@ -34,51 +34,23 @@ class Output {
   }
 
   async success({ title, message, duration, isRaw = false }: OutputProps) {
+    await writer.writeln("");
     await writer.writeln(chalk.green(`${title} Started`));
-
-    if (isRaw) {
-      console.log(
-        "********************* Raw Output Start **********************",
-      );
-      console.log();
-    }
     await writer.writeln(message);
-
-    if (isRaw) {
-      console.log();
-      console.log(
-        "********************* Raw Output End **********************",
-      );
-    }
-
     if (duration) {
-      console.log("Duration ", duration, "ms");
+      const msg = `Duration ${duration} ms`;
+      await writer.writeln(chalk.yellow(msg));
     }
     await writer.writeln(chalk.green(`${title} SUCCESS`));
   }
 
   async error({ title, message, duration, isRaw = false }: OutputProps) {
+    await writer.writeln("");
     await writer.writeln(chalk.green(`${title} Started`));
-    if (isRaw) {
-      console.log(
-        "********************* Raw Output Start **********************",
-      );
-      console.log();
-    }
     await writer.writeln(message);
-
-    // console.log(message);
-
-    if (isRaw) {
-      console.log();
-      console.log(
-        "********************* Raw Output End **********************",
-      );
-    }
-    // console.log();
-
     if (duration) {
-      console.log("Duration ", duration, "ms");
+      const msg = `Duration ${duration} ms`;
+      await writer.writeln(chalk.yellow(msg));
     }
     await writer.writeln(chalk.red(`${title} ✖ ERROR`));
 
