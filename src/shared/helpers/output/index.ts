@@ -85,7 +85,7 @@ class Output {
     // console.log(chalk.red(`${title} ✖ ERROR`));
   }
 
-  async info(message: string, delay: number = 0.5) {
+  async info(message: string, delay: number = 0) {
     await writer.writeln(message, delay);
     // console.log(chalk.cyan(message));
   }
