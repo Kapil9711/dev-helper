@@ -26,18 +26,18 @@ class GitCommandController {
 
   async gitInit(options: CommandOptions) {
     const result = await gitCommandService.gitInit();
-    output.autoPrint(result, options);
+    await output.autoPrint(result, options);
   }
 
   async gitStatus(options: CommandOptions) {
     const result = await gitCommandService.gitStatus();
 
-    output.autoPrint(result, options);
+    await output.autoPrint(result, options);
   }
 
   async gitAdd(options: CommandOptions) {
     const result = await gitCommandService.gitAdd();
-    output.autoPrint(result, options);
+    await output.autoPrint(result, options);
   }
 
   async gitCommit(message: string, options: CommandOptions) {
@@ -46,7 +46,7 @@ class GitCommandController {
       message = "auto commit";
     }
     const result = await gitCommandService.gitCommit(message);
-    output.autoPrint(result, options);
+    await output.autoPrint(result, options);
   }
 
   async gitPush(options: CommandOptions) {
@@ -56,19 +56,19 @@ class GitCommandController {
         ? "unSafe"
         : undefined;
     const result = await gitCommandService.gitPush(force);
-    output.autoPrint(result, options);
+    await output.autoPrint(result, options);
   }
 
   async gitPull(options: CommandOptions) {
     const result = await gitCommandService.gitPull();
-    output.autoPrint(result, options);
+    await output.autoPrint(result, options);
   }
 
   // combined controllers
 
   async gitCommitWithAdd(message: string, options: CommandOptions) {
     let result = await gitCommandService.gitAdd(true);
-    output.autoPrint(result, options);
+    await output.autoPrint(result, options);
     // if add fail return early
     if (!result.success) return;
 
@@ -77,7 +77,7 @@ class GitCommandController {
 
   async gitPushWithCommitAndAdd(message: string, options: CommandOptions) {
     let result = await gitCommandService.gitAdd(true);
-    output.autoPrint(result, options);
+    await output.autoPrint(result, options);
     // if add fail return early
     if (!result.success) return;
 
@@ -85,7 +85,7 @@ class GitCommandController {
       message = "auto commit";
     }
     result = await gitCommandService.gitCommit(message);
-    output.autoPrint(result, options);
+    await output.autoPrint(result, options);
     //if commit fail return early
     if (!result.success) return;
 
@@ -94,7 +94,7 @@ class GitCommandController {
 
   async gitPullWithCommitAndAdd(message: string, options: CommandOptions) {
     let result = await gitCommandService.gitAdd(true);
-    output.autoPrint(result, options);
+    await output.autoPrint(result, options);
     // if add fail return early
     if (!result.success) return;
 
@@ -102,7 +102,7 @@ class GitCommandController {
       message = "auto commit";
     }
     result = await gitCommandService.gitCommit(message);
-    output.autoPrint(result, options);
+    await output.autoPrint(result, options);
     //if commit fail return early
     if (!result.success) return;
 
@@ -111,7 +111,7 @@ class GitCommandController {
 
   async gitPushWithPullAndCommit(message: string, options: CommandOptions) {
     let result = await gitCommandService.gitAdd(true);
-    output.autoPrint(result, options);
+    await output.autoPrint(result, options);
     // if add fail return early
     if (!result.success) return;
 
@@ -119,12 +119,12 @@ class GitCommandController {
       message = "auto commit";
     }
     result = await gitCommandService.gitCommit(message);
-    output.autoPrint(result, options);
+    await output.autoPrint(result, options);
     //if commit fail return early
     if (!result.success) return;
 
     result = await gitCommandService.gitPull();
-    output.autoPrint(result, options);
+    await output.autoPrint(result, options);
     //if pull fail return early
     if (!result.success) return;
 

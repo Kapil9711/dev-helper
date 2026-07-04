@@ -109,7 +109,7 @@ class GitCommandServices {
     const currentBranch = status.currentBranch;
     const stageableFiles = gitHelper.getStageableFiles(status.files);
 
-    output.currentBranch(currentBranch);
+    await output.currentBranch(currentBranch);
 
     if (status.summary.staged == 0) {
       const msg = stageableFiles?.length
@@ -249,7 +249,7 @@ class GitCommandServices {
     const status = await gitHelper.getStatus();
     const currentBranch = status.currentBranch;
 
-    output.currentBranch(currentBranch);
+    await output.currentBranch(currentBranch);
 
     if (!status.summary.isClean) {
       result.stderr = "Please commit local chages before pull";

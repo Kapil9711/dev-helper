@@ -12,19 +12,19 @@ type OutputProps = {
 };
 
 class Output {
-  autoPrint(result: ExecResult, options?: CommandOptions) {
+  async autoPrint(result: ExecResult, options?: CommandOptions) {
     const isPrintJson = options?.json;
     if (isPrintJson) {
       return output.json(result);
     }
     if (result.success) {
-      output.success({
+      await output.success({
         title: result.command,
         message: result.stdout,
         duration: result.durationMs,
       });
     } else {
-      output.error({
+      await output.error({
         title: result.command,
         message: result.stderr,
         duration: result.durationMs,
@@ -32,18 +32,16 @@ class Output {
     }
   }
 
-  success({ title, message, duration, isRaw = false }: OutputProps) {
-    console.log();
-    console.log(chalk.green(`✓ ${title} Started`));
-    console.log();
+  async success({ title, message, duration, isRaw = false }: OutputProps) {
+    await writer.writeln(chalk.green(`${title} Started`));
+
     if (isRaw) {
       console.log(
         "********************* Raw Output Start **********************",
       );
       console.log();
     }
-
-    console.log(message);
+    await writer.writeln(message);
 
     if (isRaw) {
       console.log();
@@ -52,26 +50,23 @@ class Output {
       );
     }
 
-    console.log();
     if (duration) {
       console.log("Duration ", duration, "ms");
     }
-    console.log(chalk.green(`${title} ★ SUCCESS`));
+    await writer.writeln(chalk.green(`${title} SUCCESS`));
   }
 
-  error({ title, message, duration, isRaw = false }: OutputProps) {
-    console.log();
-    console.log(chalk.green(`✓ ${title} Started`));
-    console.log();
-
+  async error({ title, message, duration, isRaw = false }: OutputProps) {
+    await writer.writeln(chalk.green(`${title} Started`));
     if (isRaw) {
       console.log(
         "********************* Raw Output Start **********************",
       );
       console.log();
     }
+    await writer.writeln(message);
 
-    console.log(message);
+    // console.log(message);
 
     if (isRaw) {
       console.log();
@@ -79,12 +74,14 @@ class Output {
         "********************* Raw Output End **********************",
       );
     }
-    console.log();
+    // console.log();
 
     if (duration) {
       console.log("Duration ", duration, "ms");
     }
-    console.log(chalk.red(`${title} ✖ ERROR`));
+    await writer.writeln(chalk.red(`${title} ✖ ERROR`));
+
+    // console.log(chalk.red(`${title} ✖ ERROR`));
   }
 
   async info(message: string) {
@@ -96,7 +93,7 @@ class Output {
     console.dir(content);
   }
 
-  currentBranch(branch: GitCurrentBranch) {
+  async currentBranch(branch: GitCurrentBranch) {
     if (!branch) return;
     const message = `
 Current Branch Details 
@@ -108,7 +105,7 @@ Behind    : ${branch.behind}
 
 `;
 
-    output.info(message);
+    await output.info(chalk.cyan(message));
   }
 }
 

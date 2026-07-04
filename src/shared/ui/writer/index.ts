@@ -1,5 +1,5 @@
 export class Writer {
-  async write(text: string, delay = 15): Promise<void> {
+  async write(text: string, delay = 10): Promise<void> {
     for (const char of text) {
       process.stdout.write(char);
 
@@ -7,7 +7,7 @@ export class Writer {
     }
   }
 
-  async writeln(text: string, delay = 15): Promise<void> {
+  async writeln(text: string, delay = 12): Promise<void> {
     await this.write(text, delay);
 
     process.stdout.write("\n");
