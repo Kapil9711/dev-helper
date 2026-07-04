@@ -38,9 +38,9 @@ class Output {
     await writer.writeln(chalk.green(`${title} Started`));
     await writer.writeln(message);
     if (duration) {
-      const msg = `Duration ${duration} ms`;
+      const msg = ` Duration ${duration} ms `;
       // await writer.writeln(chalk.yellow(msg));
-      await writer.writeln(chalk.bgGray(chalk.yellow(msg)));
+      await writer.writeln(chalk.bgCyanBright(chalk.blackBright(msg)));
     }
     await writer.writeln(chalk.green(`${title} SUCCESS`));
   }
@@ -51,7 +51,9 @@ class Output {
     await writer.writeln(message);
     if (duration) {
       const msg = `Duration ${duration} ms`;
-      await writer.writeln(chalk.bgGray(chalk.yellow(msg)));
+      await writer.writeln(chalk.bgCyanBright(chalk.blackBright(msg)));
+
+      // await writer.writeln(chalk.bgGray(chalk.yellow(msg)));
     }
     await writer.writeln(chalk.red(`${title} ✖ ERROR`));
 
