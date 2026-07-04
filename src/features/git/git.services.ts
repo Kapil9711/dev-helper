@@ -279,7 +279,7 @@ class GitCommandServices {
 
     if (!remoteBranchExist) {
       output.info(`Remote branch for ${currentBranch.current} not exit`);
-      result.stderr = "unable to pull remote do not exist";
+      result.stderr = "unable to pull remote branch do not exist";
       return result;
     }
 
