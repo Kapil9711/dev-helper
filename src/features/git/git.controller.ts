@@ -34,16 +34,8 @@ class GitCommandController {
   }
 
   async gitPush(options: CommandOptions) {
-    const result = gitCommandService.gitPush(options.force);
-
-    const remotes = await gitHelper.getRemotes();
-    const remoteUrl = await gitHelper.getRemoteUrl();
-
-    output.info(JSON.stringify(remotes));
-    output.info(JSON.stringify(remoteUrl));
-
-    // const result = await gitCommandService.gitCommit(message);
-    // output.autoPrint(result, options);
+    const result = await gitCommandService.gitPush(options.force);
+    output.autoPrint(result, options);
   }
 }
 
