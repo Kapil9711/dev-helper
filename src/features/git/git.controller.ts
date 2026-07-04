@@ -71,19 +71,12 @@ class GitCommandController {
   // combined controllers
 
   async gitCommitWithAdd(message: string, options: CommandOptions) {
-    const progress = new ProgressBar(["Staging files", "Creating commit"]);
-
-    progress.start();
-
     let result = await gitCommandService.gitAdd(true);
     await output.autoPrint(result, options);
     // if add fail return early
     if (!result.success) return;
 
-    progress.complete(1);
-
     await this.gitCommit(message, options);
-    progress.complete(2);
   }
 
   async gitPushWithCommitAndAdd(message: string, options: CommandOptions) {
