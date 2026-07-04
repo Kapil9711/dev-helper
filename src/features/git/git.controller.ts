@@ -65,6 +65,19 @@ class GitCommandController {
 
     await this.gitCommit(message, options);
   }
+
+  async gitPushWithCommitAndAdd(message: string, options: CommandOptions) {
+    let result = await gitCommandService.gitAdd(true);
+    output.autoPrint(result, options);
+    // if add fail return early
+    if (!result.success) return;
+    result = await gitCommandService.gitCommit(message);
+    output.autoPrint(result, options);
+    //if commit fail return early
+    if (!result.success) return;
+
+    return this.gitPush(options);
+  }
 }
 
 export const gitCommandController = new GitCommandController();

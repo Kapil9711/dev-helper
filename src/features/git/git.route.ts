@@ -14,6 +14,7 @@ class GitCommandRouter {
 
     // auto routes
     this.gitCommitWithAdd();
+    this.gitPushWithCommitAndAdd();
   }
   private gitInit() {
     this.git
@@ -65,6 +66,15 @@ class GitCommandRouter {
       .option("-j, --json")
       .argument("[message]", "commit message")
       .action(gitCommandController.gitCommitWithAdd);
+  }
+
+  private gitPushWithCommitAndAdd() {
+    this.git
+      .command("pcwa")
+      .description("Auto commit with add")
+      .option("-j, --json")
+      .argument("[message]", "commit message")
+      .action(gitCommandController.gitPushWithCommitAndAdd);
   }
 }
 
