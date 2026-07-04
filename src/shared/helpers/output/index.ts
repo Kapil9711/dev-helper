@@ -3,6 +3,7 @@ import { ExecResult } from "../shell/exec.ts";
 import { CommandOptions } from "../../../features/git/git.controller.ts";
 import { GitCurrentBranch } from "../gitParsers/parser.types.ts";
 import { writer } from "../../ui/writer/index.ts";
+import Table from "cli-table3";
 
 type OutputProps = {
   title: string;
@@ -95,15 +96,27 @@ class Output {
 
   async currentBranch(branch: GitCurrentBranch) {
     if (!branch) return;
-    const message = `
-Current Branch Details 
-Branch    : ${branch.current}
-Upstream  : ${branch.upstream ?? "None"}
-Ahead     : ${branch.ahead}
-Behind    : ${branch.behind}
-`;
 
-    await output.info(chalk.cyan(message));
+    const table = new Table({
+      head: ["Property", "Value"],
+      colWidths: [18, 35],
+    });
+
+    table.push(
+      ["Branch", branch.current],
+      ["Upstream", branch.upstream ?? "None"],
+      ["Ahead", branch.ahead],
+      ["Behind", branch.behind],
+    );
+    //     const message = `
+    // Current Branch Details
+    // Branch    : ${branch.current}
+    // Upstream  : ${branch.upstream ?? "None"}
+    // Ahead     : ${branch.ahead}
+    // Behind    : ${branch.behind}
+    // `;
+
+    await output.info(chalk.cyan(table.toString()));
   }
 }
 
