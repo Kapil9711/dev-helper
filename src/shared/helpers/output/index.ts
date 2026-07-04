@@ -115,7 +115,7 @@ class Output {
     // Ahead     : ${branch.ahead}
     // Behind    : ${branch.behind}
     // `;
-
+    await writer.writeln(chalk.cyan("Current Branch Details"));
     await output.info(chalk.cyan(table.toString()));
   }
 }
