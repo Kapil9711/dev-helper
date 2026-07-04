@@ -11,6 +11,9 @@ class GitCommandRouter {
     this.gitAdd();
     this.gitCommit();
     this.gitPush();
+
+    // auto routes
+    this.gitCommitWithAdd();
   }
   private gitInit() {
     this.git
@@ -52,6 +55,18 @@ class GitCommandRouter {
       .option("--force")
       .option("--force-unsafe")
       .action(gitCommandController.gitPush);
+  }
+
+  // auto routes
+  private gitCommitWithAdd() {
+    this.git
+      .command("cwa")
+      .description("Auto commit with add")
+      .option("-j, --json")
+      .argument("[message]", "commit message")
+      .action((message, options) =>
+        gitCommandController.gitCommitWithAdd(message, options),
+      );
   }
 }
 

@@ -43,6 +43,16 @@ class GitCommandController {
     const result = await gitCommandService.gitPush(force);
     output.autoPrint(result, options);
   }
+
+  // combined controllers
+
+  async gitCommitWithAdd(message: string, options: CommandOptions) {
+    let result = await gitCommandService.gitAdd(true);
+    output.autoPrint(result, options);
+    // if add fail return early
+    if (!result.success) return;
+    await this.gitCommit(message, options);
+  }
 }
 
 export const gitCommandController = new GitCommandController();

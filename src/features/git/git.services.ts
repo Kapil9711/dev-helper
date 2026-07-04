@@ -12,7 +12,7 @@ class GitCommandServices {
     return await exec("git status");
   }
 
-  async gitAdd(): Promise<ExecResult> {
+  async gitAdd(auto: boolean = false): Promise<ExecResult> {
     const isGitRepo = await gitHelper.isRepository();
 
     let result = {
@@ -39,32 +39,42 @@ class GitCommandServices {
     const stageableFiles = gitHelper.getStageableFiles(status.files);
 
     if (stageableFiles.length === 0) {
-      result.stderr = "Working tree is clean.";
+      result.stdout = "Working tree is clean.";
+      result.success = true;
       return result;
     }
 
-    const files = await prompt.multiselect({
-      message: "Select file to stage",
-      options: gitHelper.getFileSelectOptions(stageableFiles),
-      initialValues: ["."],
-    });
+    let files: string[] = [];
 
-    if (files?.length == 0) {
-      result.stderr = "Please select valid option";
-      return result;
+    // if not auto ask for selection
+    if (!auto) {
+      files = await prompt.multiselect({
+        message: "Select file to stage",
+        options: gitHelper.getFileSelectOptions(stageableFiles),
+        initialValues: ["."],
+      });
+      if (files?.length == 0) {
+        result.stderr = "Please select valid option";
+        return result;
+      }
+    } else {
+      files = ["."];
     }
 
     const selectAll = files?.includes(".");
 
-    const confirmed = await prompt.confirm({
-      message: selectAll
-        ? "Stage all changes?"
-        : `Stage "${files.join(", ")}"?`,
-    });
+    // if not auto ask for confirmation
+    if (!auto) {
+      const confirmed = await prompt.confirm({
+        message: selectAll
+          ? "Stage all changes?"
+          : `Stage "${files.join(", ")}"?`,
+      });
 
-    if (!confirmed) {
-      result.stderr = "Operation is canceled, exit...";
-      return result;
+      if (!confirmed) {
+        result.stderr = "Operation is canceled, exit...";
+        return result;
+      }
     }
 
     result = await exec(`git add ${files.join(" ")}`);
@@ -158,7 +168,6 @@ class GitCommandServices {
 
     const status = await gitHelper.getStatus();
     const currentBranch = status.currentBranch;
-    output.currentBranch(currentBranch);
 
     if (!currentBranch) {
       result.stderr = "Unable to get current branch";
