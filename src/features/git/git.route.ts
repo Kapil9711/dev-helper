@@ -64,9 +64,7 @@ class GitCommandRouter {
       .description("Auto commit with add")
       .option("-j, --json")
       .argument("[message]", "commit message")
-      .action((message, options) =>
-        gitCommandController.gitCommitWithAdd(message, options),
-      );
+      .action(gitCommandController.gitCommitWithAdd);
   }
 }
 

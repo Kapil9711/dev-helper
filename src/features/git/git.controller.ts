@@ -9,6 +9,17 @@ export type CommandOptions = {
 };
 
 class GitCommandController {
+  constructor() {
+    this.gitInit = this.gitInit.bind(this);
+    this.gitStatus = this.gitStatus.bind(this);
+    this.gitAdd = this.gitAdd.bind(this);
+
+    this.gitCommit = this.gitCommit.bind(this);
+    this.gitPush = this.gitPush.bind(this);
+
+    this.gitCommitWithAdd = this.gitCommitWithAdd.bind(this);
+  }
+
   async gitInit(options: CommandOptions) {
     const result = await gitCommandService.gitInit();
     output.autoPrint(result, options);
@@ -51,6 +62,7 @@ class GitCommandController {
     output.autoPrint(result, options);
     // if add fail return early
     if (!result.success) return;
+
     await this.gitCommit(message, options);
   }
 }
