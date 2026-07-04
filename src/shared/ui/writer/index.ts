@@ -7,7 +7,7 @@ export class Writer {
     }
   }
 
-  async writeln(text: string, delay = 25): Promise<void> {
+  async writeln(text: string, delay = 23): Promise<void> {
     await this.write(text, delay);
 
     process.stdout.write("\n");
