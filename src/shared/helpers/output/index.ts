@@ -97,12 +97,10 @@ class Output {
     if (!branch) return;
     const message = `
 Current Branch Details 
-   
 Branch    : ${branch.current}
 Upstream  : ${branch.upstream ?? "None"}
 Ahead     : ${branch.ahead}
 Behind    : ${branch.behind}
-
 `;
 
     await output.info(chalk.cyan(message));
