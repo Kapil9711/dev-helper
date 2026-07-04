@@ -17,6 +17,7 @@ class GitCommandRouter {
     this.gitCommitWithAdd();
     this.gitPushWithCommitAndAdd();
     this.gitPullWithCommitAndAdd();
+    this.gitPushWithPullAndCommit();
   }
   private gitInit() {
     this.git
@@ -94,6 +95,15 @@ class GitCommandRouter {
       .option("-j, --json")
       .argument("[message]", "commit message")
       .action(gitCommandController.gitPullWithCommitAndAdd);
+  }
+
+  private gitPushWithPullAndCommit() {
+    this.git
+      .command("puplwc")
+      .description("Auto pull with commit and add")
+      .option("-j, --json")
+      .argument("[message]", "commit message")
+      .action(gitCommandController.gitPushWithPullAndCommit);
   }
 }
 

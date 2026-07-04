@@ -21,6 +21,7 @@ class GitCommandController {
     this.gitCommitWithAdd = this.gitCommitWithAdd.bind(this);
     this.gitPushWithCommitAndAdd = this.gitPushWithCommitAndAdd.bind(this);
     this.gitPullWithCommitAndAdd = this.gitPullWithCommitAndAdd.bind(this);
+    this.gitPushWithPullAndCommit = this.gitPushWithPullAndCommit.bind(this);
   }
 
   async gitInit(options: CommandOptions) {
@@ -106,6 +107,28 @@ class GitCommandController {
     if (!result.success) return;
 
     return this.gitPull(options);
+  }
+
+  async gitPushWithPullAndCommit(message: string, options: CommandOptions) {
+    let result = await gitCommandService.gitAdd(true);
+    output.autoPrint(result, options);
+    // if add fail return early
+    if (!result.success) return;
+
+    if (!message) {
+      message = "auto commit";
+    }
+    result = await gitCommandService.gitCommit(message);
+    output.autoPrint(result, options);
+    //if commit fail return early
+    if (!result.success) return;
+
+    result = await gitCommandService.gitPull();
+    output.autoPrint(result, options);
+    //if pull fail return early
+    if (!result.success) return;
+
+    return this.gitPush(options);
   }
 }
 
