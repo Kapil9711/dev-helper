@@ -40,6 +40,27 @@ export class GitParserController {
     return result.stdout;
   }
 
+  async getRemotes(): Promise<string[]> {
+    const result = await exec("git remote", {
+      throwOnError: true,
+    });
+
+    return result.stdout
+      .split("\n")
+      .map((remote) => remote.trim())
+      .filter(Boolean);
+  }
+  async remoteBranchExists(
+    branch: string,
+    remote = "origin",
+  ): Promise<boolean> {
+    const result = await exec(`git ls-remote --heads ${remote} ${branch}`, {
+      throwOnError: true,
+    });
+
+    return result.stdout.trim().length > 0;
+  }
+
   async getRemoteUrl(remote = "origin"): Promise<string> {
     const result = await exec(`git remote get-url ${remote}`, {
       throwOnError: true,

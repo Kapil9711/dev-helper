@@ -1,6 +1,7 @@
 import chalk from "chalk";
 import { ExecResult } from "../shell/exec.ts";
 import { CommandOptions } from "../../../features/git/git.controller.ts";
+import { GitCurrentBranch } from "../gitParsers/parser.types.ts";
 
 type OutputProps = {
   title: string;
@@ -85,18 +86,26 @@ class Output {
     console.log(chalk.red(`${title} ✖ ERROR`));
   }
 
-  info(title: string, message: string) {
-    console.log();
-
-    console.log(chalk.cyan(`ℹ ${title}`));
-
-    console.log();
-
-    console.log(message);
+  info(message: string) {
+    console.log(chalk.cyan(message));
   }
 
   json(content: any) {
     console.dir(content);
+  }
+
+  currentBranch(branch: GitCurrentBranch) {
+    if (!branch) return;
+    const message = `
+Branch    : ${branch.current}
+Upstream  : ${branch.upstream ?? "None"}
+Ahead     : ${branch.ahead}
+Behind    : ${branch.behind}
+
+You are about to create a new commit.
+`;
+
+    output.info(message);
   }
 }
 

@@ -99,6 +99,8 @@ class GitCommandServices {
     const currentBranch = status.currentBranch;
     const stageableFiles = gitHelper.getStageableFiles(status.files);
 
+    output.currentBranch(currentBranch);
+
     if (status.summary.staged == 0) {
       const msg = stageableFiles?.length
         ? `
@@ -113,14 +115,93 @@ class GitCommandServices {
       return result;
     }
 
-    output.json(status);
-
     if (!currentBranch) {
       result.stderr = "Unable to get current branch";
       return result;
     }
 
     return await exec(command);
+  }
+
+  async gitPush(force?: boolean): Promise<ExecResult> {
+    const isGitRepo = await gitHelper.isRepository();
+
+    const command = `git push`;
+
+    let result = {
+      stdout: "",
+      stderr: "",
+      durationMs: 0,
+      success: false,
+      command: command,
+    };
+    if (!isGitRepo) {
+      result.stderr = "Not a git repository";
+      return result;
+    }
+
+    const remotes = await gitHelper.getRemotes();
+    const remote = remotes?.[0];
+
+    if (!remote) {
+      result.stderr = "Remote url not exist";
+      return result;
+    }
+
+    const status = await gitHelper.getStatus();
+    const currentBranch = status.currentBranch;
+    output.currentBranch(currentBranch);
+
+    if (!currentBranch) {
+      result.stderr = "Unable to get current branch";
+      return result;
+    }
+
+    if (currentBranch.detached) {
+      result.stderr = "Can not push in detached mode";
+      return result;
+    }
+
+    // if upstream exist then directly push it
+    if (currentBranch.upstream) {
+      output.info(`Upstream for ${currentBranch.current} exist`);
+      return await exec("git push");
+    }
+
+    let remoteBranchExist = await gitHelper.remoteBranchExists(
+      currentBranch.current,
+      remote,
+    );
+
+    if (remoteBranchExist) {
+      const remoteBranch = `${remote}/${currentBranch.current}`;
+      output.info(`Upstream for ${currentBranch.current} not exist`);
+      output.info(
+        `Creating Upstream for ${currentBranch.current} to ${remoteBranch}`,
+      );
+      const upstreamResult = await exec(
+        `git branch --set-upstream-to="${remoteBranch}"`,
+      );
+      if (!upstreamResult.success) {
+        output.info(`Upstream for ${currentBranch.current} failed`);
+        return upstreamResult;
+      }
+      output.info(`Upstream created`);
+      output.info("Pushing to remote...");
+      return await exec("git push");
+    }
+
+    output.info(`Remote branch for ${currentBranch.current} not exit`);
+    output.info(`Creating remote branch and setting upstream`);
+
+    result = await exec(
+      `git push --set-upstream ${remote} ${currentBranch.current}`,
+    );
+
+    if (result.success) {
+      output.info(`done...`);
+    }
+    return result;
   }
 }
 

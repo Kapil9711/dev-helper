@@ -10,6 +10,7 @@ class GitCommandRouter {
     this.gitStatus();
     this.gitAdd();
     this.gitCommit();
+    this.gitPush();
   }
   private gitInit() {
     this.git
@@ -41,6 +42,15 @@ class GitCommandRouter {
       .argument("[message]", "commit message")
       .option("-j, --json")
       .action(gitCommandController.gitCommit);
+  }
+
+  private gitPush() {
+    this.git
+      .command("push")
+      .description("Push to remote branch")
+      .option("-j, --json")
+      .option("-f", "--force")
+      .action(gitCommandController.gitPush);
   }
 }
 

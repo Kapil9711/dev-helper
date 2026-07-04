@@ -4,6 +4,7 @@ import { gitCommandService } from "./git.services.ts";
 
 export type CommandOptions = {
   json?: boolean;
+  force?: boolean;
 };
 
 class GitCommandController {
@@ -30,6 +31,19 @@ class GitCommandController {
     }
     const result = await gitCommandService.gitCommit(message);
     output.autoPrint(result, options);
+  }
+
+  async gitPush(options: CommandOptions) {
+    const result = gitCommandService.gitPush(options.force);
+
+    const remotes = await gitHelper.getRemotes();
+    const remoteUrl = await gitHelper.getRemoteUrl();
+
+    output.info(JSON.stringify(remotes));
+    output.info(JSON.stringify(remoteUrl));
+
+    // const result = await gitCommandService.gitCommit(message);
+    // output.autoPrint(result, options);
   }
 }
 
