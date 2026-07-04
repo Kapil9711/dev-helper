@@ -118,7 +118,7 @@ class GitCommandController {
     await output.info(chalk.blueBright("4 Steps Process"));
     console.log();
 
-    await output.info(chalk.blueBright("1/4 Step"));
+    await output.info(chalk.blueBright("1/4 Step (stagging files...)"));
     let result = await gitCommandService.gitAdd(true);
     await output.autoPrint(result, options);
     // if add fail return early
@@ -127,17 +127,19 @@ class GitCommandController {
     if (!message) {
       message = "auto commit";
     }
-    await output.info(chalk.blueBright("2/4 Step"));
+    await output.info(chalk.blueBright("2/4 Step (commiting staged files)"));
     result = await gitCommandService.gitCommit(message);
     await output.autoPrint(result, options);
     //if commit fail return early
     if (!result.success) return;
-    await output.info(chalk.blueBright("3/4 Step"));
+    await output.info(
+      chalk.blueBright("3/4 Step (pulling from remote branch)"),
+    );
     result = await gitCommandService.gitPull();
     await output.autoPrint(result, options);
     //if pull fail return early
     if (!result.success) return;
-    await output.info(chalk.blueBright("4/4 Step"));
+    await output.info(chalk.blueBright("4/4 Step (pushing to remote branch)"));
     return this.gitPush(options);
   }
 }
