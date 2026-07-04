@@ -123,17 +123,25 @@ class GitCommandServices {
     return await exec(command);
   }
 
-  async gitPush(force?: boolean): Promise<ExecResult> {
+  async gitPush(force: "safe" | "unSafe" | undefined): Promise<ExecResult> {
     const isGitRepo = await gitHelper.isRepository();
 
-    const command = `git push`;
+    const command = (cmd: string) => {
+      if (force == "safe") {
+        return `git push ${cmd} '--force-with-lease'`;
+      } else if (force == "unSafe") {
+        return `git push ${cmd} '--force'`;
+      } else {
+        return `git push ${cmd}`;
+      }
+    };
 
     let result = {
       stdout: "",
       stderr: "",
       durationMs: 0,
       success: false,
-      command: command,
+      command: command(" "),
     };
     if (!isGitRepo) {
       result.stderr = "Not a git repository";
@@ -165,11 +173,7 @@ class GitCommandServices {
     // if upstream exist then directly push it
     if (currentBranch.upstream) {
       output.info(`Upstream for '${currentBranch.current}' exist`);
-      result = await exec("git push");
-      if (result.success) {
-        output.info(`Pushed ${currentBranch.current} sucessfully`);
-      }
-      return result;
+      return await exec(command(" "));
     }
 
     let remoteBranchExist = await gitHelper.remoteBranchExists(
@@ -192,7 +196,7 @@ class GitCommandServices {
       }
       output.info(`Upstream created`);
       output.info("Pushing to remote...");
-      return await exec("git push");
+      return await exec(command(" "));
     }
 
     output.info(`Remote branch for ${currentBranch.current} not exit`);

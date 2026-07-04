@@ -49,7 +49,8 @@ class GitCommandRouter {
       .command("push")
       .description("Push to remote branch")
       .option("-j, --json")
-      .option("-f", "--force")
+      .option("--force")
+      .option("--force-unsafe")
       .action(gitCommandController.gitPush);
   }
 }

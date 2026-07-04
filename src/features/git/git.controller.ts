@@ -5,6 +5,7 @@ import { gitCommandService } from "./git.services.ts";
 export type CommandOptions = {
   json?: boolean;
   force?: boolean;
+  forceUnsafe?: boolean;
 };
 
 class GitCommandController {
@@ -34,7 +35,12 @@ class GitCommandController {
   }
 
   async gitPush(options: CommandOptions) {
-    const result = await gitCommandService.gitPush(options.force);
+    const force = options.force
+      ? "safe"
+      : options.forceUnsafe
+        ? "unSafe"
+        : undefined;
+    const result = await gitCommandService.gitPush(force);
     output.autoPrint(result, options);
   }
 }
