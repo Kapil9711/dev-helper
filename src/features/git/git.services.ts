@@ -2,7 +2,6 @@ import { gitHelper } from "../../shared/helpers/gitParsers/parser.controller.ts"
 import { output } from "../../shared/helpers/output/index.ts";
 import { prompt } from "../../shared/helpers/prompt/prompt.ts";
 import { exec, ExecResult } from "../../shared/helpers/shell/exec.ts";
-import { StepProgress } from "../../shared/ui/stepProgress/index.ts";
 
 class GitCommandServices {
   async gitInit() {
@@ -89,13 +88,6 @@ class GitCommandServices {
   }
 
   async gitCommit(message: string): Promise<ExecResult> {
-    const progress = new StepProgress([
-      "Checking repository",
-      "Creating commit",
-    ]);
-
-    progress.start();
-
     const isGitRepo = await gitHelper.isRepository();
 
     const command = `git commit -m '${message}'`;
@@ -112,7 +104,7 @@ class GitCommandServices {
       result.stderr = "Not a git repository";
       return result;
     }
-    progress.complete(1);
+
     const status = await gitHelper.getStatus();
     const currentBranch = status.currentBranch;
     const stageableFiles = gitHelper.getStageableFiles(status.files);
@@ -139,7 +131,7 @@ class GitCommandServices {
     }
 
     result = await exec(command);
-    progress.complete(2);
+
     return result;
   }
 

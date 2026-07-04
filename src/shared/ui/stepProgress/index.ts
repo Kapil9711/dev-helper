@@ -90,3 +90,45 @@ export class StepProgress {
     }
   }
 }
+
+export class ProgressBar {
+  private readonly total: number;
+
+  private completed = 0;
+
+  constructor(private readonly steps: string[]) {
+    this.total = steps.length;
+  }
+
+  start() {
+    this.render();
+  }
+
+  complete(count: number) {
+    this.completed = Math.min(count, this.total);
+
+    this.render();
+
+    if (this.completed === this.total) {
+      console.log("\n✔ Completed");
+    }
+  }
+
+  private render() {
+    const width = 30;
+
+    const progress = this.completed / this.total;
+
+    const filled = Math.round(progress * width);
+
+    const empty = width - filled;
+
+    const percent = Math.round(progress * 100);
+
+    process.stdout.write("\r");
+
+    process.stdout.write(
+      `[${"█".repeat(filled)}${"░".repeat(empty)}] ${percent}% (${this.completed}/${this.total})`,
+    );
+  }
+}
