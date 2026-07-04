@@ -2,6 +2,7 @@ import chalk from "chalk";
 import { ExecResult } from "../shell/exec.ts";
 import { CommandOptions } from "../../../features/git/git.controller.ts";
 import { GitCurrentBranch } from "../gitParsers/parser.types.ts";
+import { writer } from "../../ui/writer/index.ts";
 
 type OutputProps = {
   title: string;
@@ -86,8 +87,9 @@ class Output {
     console.log(chalk.red(`${title} ✖ ERROR`));
   }
 
-  info(message: string) {
-    console.log(chalk.cyan(message));
+  async info(message: string) {
+    await writer.writeln(message);
+    // console.log(chalk.cyan(message));
   }
 
   json(content: any) {

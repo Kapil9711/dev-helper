@@ -181,7 +181,7 @@ class GitCommandServices {
 
     // if upstream exist then directly push it
     if (currentBranch.upstream) {
-      output.info(`Upstream for '${currentBranch.current}' exist`);
+      await output.info(`Upstream for '${currentBranch.current}' exist`);
       return await exec(command(" "));
     }
 
@@ -192,31 +192,31 @@ class GitCommandServices {
 
     if (remoteBranchExist) {
       const remoteBranch = `${remote}/${currentBranch.current}`;
-      output.info(`Upstream for ${currentBranch.current} not exist`);
-      output.info(
+      await output.info(`Upstream for ${currentBranch.current} not exist`);
+      await output.info(
         `Creating Upstream for ${currentBranch.current} to ${remoteBranch}`,
       );
       const upstreamResult = await exec(
         `git branch --set-upstream-to="${remoteBranch}"`,
       );
       if (!upstreamResult.success) {
-        output.info(`Upstream for ${currentBranch.current} failed`);
+        await output.info(`Upstream for ${currentBranch.current} failed`);
         return upstreamResult;
       }
-      output.info(`Upstream created`);
-      output.info("Pushing to remote...");
+      await output.info(`Upstream created`);
+      await output.info("Pushing to remote...");
       return await exec(command(" "));
     }
 
-    output.info(`Remote branch for ${currentBranch.current} not exit`);
-    output.info(`Creating remote branch and setting upstream`);
+    await output.info(`Remote branch for ${currentBranch.current} not exit`);
+    await output.info(`Creating remote branch and setting upstream`);
 
     result = await exec(
       `git push --set-upstream ${remote} ${currentBranch.current}`,
     );
 
     if (result.success) {
-      output.info(`done...`);
+      await output.info(`done...`);
     }
     return result;
   }
@@ -268,7 +268,7 @@ class GitCommandServices {
 
     // if upstream exist then directly pull it
     if (currentBranch.upstream) {
-      output.info(`Upstream for '${currentBranch.current}' exist`);
+      await output.info(`Upstream for '${currentBranch.current}' exist`);
       return await exec(command);
     }
 
@@ -278,25 +278,25 @@ class GitCommandServices {
     );
 
     if (!remoteBranchExist) {
-      output.info(`Remote branch for ${currentBranch.current} not exit`);
+      await output.info(`Remote branch for ${currentBranch.current} not exit`);
       result.stderr = "unable to pull remote branch do not exist";
       return result;
     }
 
     const remoteBranch = `${remote}/${currentBranch.current}`;
-    output.info(`Upstream for ${currentBranch.current} not exist`);
-    output.info(
+    await output.info(`Upstream for ${currentBranch.current} not exist`);
+    await output.info(
       `Creating Upstream for ${currentBranch.current} to ${remoteBranch}`,
     );
     const upstreamResult = await exec(
       `git branch --set-upstream-to="${remoteBranch}"`,
     );
     if (!upstreamResult.success) {
-      output.info(`Upstream for ${currentBranch.current} failed`);
+      await output.info(`Upstream for ${currentBranch.current} failed`);
       return upstreamResult;
     }
-    output.info(`Upstream created`);
-    output.info("Pulling from remote...");
+    await output.info(`Upstream created`);
+    await output.info("Pulling from remote...");
     return await exec(command);
   }
 
