@@ -44,7 +44,7 @@ class Output {
       await writer.writeln(chalk.yellow(msg));
     }
     await writer.writeln(
-      chalk.bgCyanBright(chalk.blackBright(`${title} SUCCESS`)),
+      chalk.bgCyanBright(chalk.blackBright(` ${title} SUCCESS `)),
     );
   }
 
@@ -61,14 +61,14 @@ class Output {
     }
 
     await writer.writeln(
-      chalk.bgCyanBright(chalk.bgRedBright(chalk.black(`${title} ❌ ERROR`))),
+      chalk.bgCyanBright(chalk.bgRedBright(chalk.black(` ${title} ❌ ERROR `))),
     );
 
     // console.log(chalk.red(`${title} ✖ ERROR`));
   }
 
   async info(message: string, delay: number = 0) {
-    await writer.writeln(chalk.bgMagentaBright(chalk.cyan(message)), delay);
+    await writer.writeln(chalk.cyan(message), delay);
     // console.log(chalk.cyan(message));
   }
 
