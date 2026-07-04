@@ -164,8 +164,12 @@ class GitCommandServices {
 
     // if upstream exist then directly push it
     if (currentBranch.upstream) {
-      output.info(`Upstream for ${currentBranch.current} exist`);
-      return await exec("git push");
+      output.info(`Upstream for '${currentBranch.current}' exist`);
+      result = await exec("git push");
+      if (result.success) {
+        output.info(`Pushed ${currentBranch.current} sucessfully`);
+      }
+      return result;
     }
 
     let remoteBranchExist = await gitHelper.remoteBranchExists(
