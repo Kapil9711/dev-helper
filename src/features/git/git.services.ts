@@ -83,7 +83,7 @@ class GitCommandServices {
   async gitCommit(message: string): Promise<ExecResult> {
     const isGitRepo = await gitHelper.isRepository();
 
-    const command = `git commit -m ${message}`;
+    const command = `git commit -m '${message}'`;
 
     let result = {
       stdout: "",
