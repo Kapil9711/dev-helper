@@ -116,6 +116,7 @@ class GitCommandController {
 
   async gitPushWithPullAndCommit(message: string, options: CommandOptions) {
     await output.info(chalk.blueBright("4 Steps Process"));
+    console.log();
 
     await output.info(chalk.blueBright("1/4 Step"));
     let result = await gitCommandService.gitAdd(true);
