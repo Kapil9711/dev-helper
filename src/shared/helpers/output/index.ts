@@ -108,13 +108,6 @@ class Output {
       ["Ahead", branch.ahead],
       ["Behind", branch.behind],
     );
-    //     const message = `
-    // Current Branch Details
-    // Branch    : ${branch.current}
-    // Upstream  : ${branch.upstream ?? "None"}
-    // Ahead     : ${branch.ahead}
-    // Behind    : ${branch.behind}
-    // `;
     await writer.writeln("");
     await writer.writeln(chalk.cyan("Current Branch Details"));
     await output.info(chalk.cyan(table.toString()));
