@@ -24,7 +24,7 @@ class GitCommandServices {
     };
 
     if (!isGitRepo) {
-      result.stdout = "Not a git repository";
+      result.stderr = "Not a git repository";
       return result;
     }
 
@@ -32,14 +32,14 @@ class GitCommandServices {
     const currentBranch = status.currentBranch;
 
     if (!currentBranch) {
-      result.stdout = "Unable to get current branch";
+      result.stderr = "Unable to get current branch";
       return result;
     }
 
     const stageableFiles = gitHelper.getStageableFiles(status.files);
 
     if (stageableFiles.length === 0) {
-      result.stdout = "Working tree is clean.";
+      result.stderr = "Working tree is clean.";
       return result;
     }
 
@@ -50,7 +50,7 @@ class GitCommandServices {
     });
 
     if (files?.length == 0) {
-      result.stdout = "Please select valid option";
+      result.stderr = "Please select valid option";
       return result;
     }
 
@@ -63,15 +63,12 @@ class GitCommandServices {
     });
 
     if (!confirmed) {
-      result.stdout = "Operation is canceled, exit...";
+      result.stderr = "Operation is canceled, exit...";
       return result;
     }
 
     result = await exec(`git add ${files.join(" ")}`);
     const target = selectAll ? "all changes" : files?.join(", ");
-
-    if (result.success) {
-    }
 
     if (result.success) {
       result.stdout = `${target} staged successfully.`;
@@ -94,15 +91,32 @@ class GitCommandServices {
     };
 
     if (!isGitRepo) {
-      result.stdout = "Not a git repository";
+      result.stderr = "Not a git repository";
       return result;
     }
 
     const status = await gitHelper.getStatus();
     const currentBranch = status.currentBranch;
+    const stageableFiles = gitHelper.getStageableFiles(status.files);
+
+    if (status.summary.staged == 0) {
+      const msg = stageableFiles?.length
+        ? `
+      No changes to commit,
+
+      Add files to stagging
+      ${stageableFiles?.map((item) => item?.path)?.join(", ")}
+      `
+        : "no changes to commit";
+      result.stdout = msg;
+      result.success = true;
+      return result;
+    }
+
+    output.json(status);
 
     if (!currentBranch) {
-      result.stdout = "Unable to get current branch";
+      result.stderr = "Unable to get current branch";
       return result;
     }
 
