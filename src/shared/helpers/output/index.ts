@@ -68,6 +68,7 @@ class Output {
   }
 
   async info(message: string, delay: number = 0) {
+    await writer.writeln("");
     await writer.writeln(chalk.cyan(message), delay);
     // console.log(chalk.cyan(message));
   }

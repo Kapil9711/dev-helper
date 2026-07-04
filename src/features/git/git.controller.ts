@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import { gitHelper } from "../../shared/helpers/gitParsers/parser.controller.ts";
 import { output } from "../../shared/helpers/output/index.ts";
 import {
@@ -114,7 +115,7 @@ class GitCommandController {
   }
 
   async gitPushWithPullAndCommit(message: string, options: CommandOptions) {
-    await output.info("4 Steps Process");
+    await output.info(chalk.blueBright("4 Steps Process"));
 
     await output.info("1/4 Step");
     let result = await gitCommandService.gitAdd(true);
@@ -125,7 +126,7 @@ class GitCommandController {
     if (!message) {
       message = "auto commit";
     }
-    await output.info("2/4 Step");
+    await output.info(chalk.blueBright("2/4 Step"));
     result = await gitCommandService.gitCommit(message);
     await output.autoPrint(result, options);
     //if commit fail return early
