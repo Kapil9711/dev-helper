@@ -259,6 +259,13 @@ export class GitSummaryBuilder {
       unstaged: 0,
 
       total: files.length,
+
+      hasChanges: false,
+      hasStagedChanges: false,
+      hasUnstagedChanges: false,
+      hasUntrackedFiles: false,
+      hasConflicts: false,
+      isClean: true,
     };
 
     for (const file of files) {
@@ -268,6 +275,22 @@ export class GitSummaryBuilder {
 
       this.countStatus(summary, file.workTreeStatus, false);
     }
+
+    // ------------------------------------------------------------------
+    // Derived values
+    // ------------------------------------------------------------------
+
+    summary.hasChanges = summary.total > 0;
+
+    summary.hasStagedChanges = summary.staged > 0;
+
+    summary.hasUnstagedChanges = summary.unstaged > 0;
+
+    summary.hasUntrackedFiles = summary.untracked > 0;
+
+    summary.hasConflicts = summary.conflicted > 0;
+
+    summary.isClean = !summary.hasChanges;
 
     return summary;
   }

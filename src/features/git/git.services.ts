@@ -220,6 +220,85 @@ class GitCommandServices {
     }
     return result;
   }
+
+  async gitPull(): Promise<ExecResult> {
+    const isGitRepo = await gitHelper.isRepository();
+
+    const command = "git pull";
+
+    let result = {
+      stdout: "",
+      stderr: "",
+      durationMs: 0,
+      success: false,
+      command: command,
+    };
+    if (!isGitRepo) {
+      result.stderr = "Not a git repository";
+      return result;
+    }
+
+    const remotes = await gitHelper.getRemotes();
+    const remote = remotes?.[0];
+
+    if (!remote) {
+      result.stderr = "Remote url not exist";
+      return result;
+    }
+
+    const status = await gitHelper.getStatus();
+    const currentBranch = status.currentBranch;
+
+    if (!status.summary.isClean) {
+      result.stderr = "Please commit local chages before pull";
+      return result;
+    }
+
+    if (!currentBranch) {
+      result.stderr = "Unable to get current branch";
+      return result;
+    }
+
+    if (currentBranch.detached) {
+      result.stderr = "Can not pull in detached mode";
+      return result;
+    }
+
+    // if upstream exist then directly pull it
+    if (currentBranch.upstream) {
+      output.info(`Upstream for '${currentBranch.current}' exist`);
+      return await exec(command);
+    }
+
+    let remoteBranchExist = await gitHelper.remoteBranchExists(
+      currentBranch.current,
+      remote,
+    );
+
+    if (!remoteBranchExist) {
+      output.info(`Remote branch for ${currentBranch.current} not exit`);
+      result.stderr = "unable to pull remote do not exist";
+      return result;
+    }
+
+    const remoteBranch = `${remote}/${currentBranch.current}`;
+    output.info(`Upstream for ${currentBranch.current} not exist`);
+    output.info(
+      `Creating Upstream for ${currentBranch.current} to ${remoteBranch}`,
+    );
+    const upstreamResult = await exec(
+      `git branch --set-upstream-to="${remoteBranch}"`,
+    );
+    if (!upstreamResult.success) {
+      output.info(`Upstream for ${currentBranch.current} failed`);
+      return upstreamResult;
+    }
+    output.info(`Upstream created`);
+    output.info("Pulling from remote...");
+    return await exec(command);
+  }
+
+  // small services
 }
 
 export const gitCommandService = new GitCommandServices();

@@ -79,6 +79,18 @@ export interface GitStatusSummary {
   unstaged: number;
 
   total: number;
+
+  hasChanges: boolean;
+
+  hasStagedChanges: boolean;
+
+  hasUnstagedChanges: boolean;
+
+  hasUntrackedFiles: boolean;
+
+  hasConflicts: boolean;
+
+  isClean: boolean;
 }
 
 export interface GitStatus {

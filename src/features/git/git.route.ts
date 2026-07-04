@@ -11,6 +11,7 @@ class GitCommandRouter {
     this.gitAdd();
     this.gitCommit();
     this.gitPush();
+    this.gitPull();
 
     // auto routes
     this.gitCommitWithAdd();
@@ -56,6 +57,14 @@ class GitCommandRouter {
       .option("--force")
       .option("--force-unsafe")
       .action(gitCommandController.gitPush);
+  }
+
+  private gitPull() {
+    this.git
+      .command("pull")
+      .description("Push to remote branch")
+      .option("-j, --json")
+      .action(gitCommandController.gitPull);
   }
 
   // auto routes

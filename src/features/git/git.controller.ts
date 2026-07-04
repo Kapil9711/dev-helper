@@ -19,6 +19,7 @@ class GitCommandController {
 
     this.gitCommitWithAdd = this.gitCommitWithAdd.bind(this);
     this.gitPushWithCommitAndAdd = this.gitPushWithCommitAndAdd.bind(this);
+    this.gitPull = this.gitPull.bind(this);
   }
 
   async gitInit(options: CommandOptions) {
@@ -53,6 +54,11 @@ class GitCommandController {
         ? "unSafe"
         : undefined;
     const result = await gitCommandService.gitPush(force);
+    output.autoPrint(result, options);
+  }
+
+  async gitPull(options: CommandOptions) {
+    const result = await gitCommandService.gitPull();
     output.autoPrint(result, options);
   }
 
