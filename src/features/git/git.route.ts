@@ -9,6 +9,7 @@ class GitCommandRouter {
     this.gitInit();
     this.gitStatus();
     this.gitAdd();
+    this.gitCommit();
   }
   private gitInit() {
     this.git
@@ -31,6 +32,15 @@ class GitCommandRouter {
       .description("Add files to stagging area")
       .option("-j, --json")
       .action(gitCommandController.gitAdd);
+  }
+
+  private gitCommit() {
+    this.git
+      .command("commit")
+      .description("Create commit")
+      .argument("[message]", "commit message")
+      .option("-j, --json")
+      .action(gitCommandController.gitCommit);
   }
 }
 

@@ -1,4 +1,6 @@
 import chalk from "chalk";
+import { ExecResult } from "../shell/exec.ts";
+import { CommandOptions } from "../../../features/git/git.controller.ts";
 
 type OutputProps = {
   title: string;
@@ -8,6 +10,26 @@ type OutputProps = {
 };
 
 class Output {
+  autoPrint(result: ExecResult, options?: CommandOptions) {
+    const isPrintJson = options?.json;
+    if (isPrintJson) {
+      return output.json(result);
+    }
+    if (result.success) {
+      output.success({
+        title: result.command,
+        message: result.stdout,
+        duration: result.durationMs,
+      });
+    } else {
+      output.error({
+        title: result.command,
+        message: result.stderr,
+        duration: result.durationMs,
+      });
+    }
+  }
+
   success({ title, message, duration, isRaw = false }: OutputProps) {
     console.log();
     console.log(chalk.green(`✓ ${title} Started`));

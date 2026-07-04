@@ -1,103 +1,35 @@
 import { gitHelper } from "../../shared/helpers/gitParsers/parser.controller.ts";
 import { output } from "../../shared/helpers/output/index.ts";
-import { prompt } from "../../shared/helpers/prompt/prompt.ts";
-import { exec } from "../../shared/helpers/shell/exec.ts";
 import { gitCommandService } from "./git.services.ts";
 
+export type CommandOptions = {
+  json?: boolean;
+};
+
 class GitCommandController {
-  async gitInit(options: { json: boolean }) {
+  async gitInit(options: CommandOptions) {
     const result = await gitCommandService.gitInit();
-    const isPrintJson = options.json;
-
-    // handling options
-    if (isPrintJson) {
-      return output.json(result);
-    }
-
-    if (result.success) {
-      output.success({
-        title: result.command,
-        message: result.stdout,
-        duration: result.durationMs,
-      });
-    } else {
-      output.error({
-        title: result.command,
-        message: result.stderr,
-        duration: result.durationMs,
-      });
-    }
+    output.autoPrint(result, options);
   }
 
-  async gitStatus(options: { json: boolean }) {
+  async gitStatus(options: CommandOptions) {
     const result = await gitCommandService.gitStatus();
 
-    const isPrintJson = options.json;
-
-    // handling options
-    if (isPrintJson) {
-      return output.json(result);
-    }
-
-    if (result.success) {
-      output.success({
-        title: result.command,
-        message: result.stdout,
-        duration: result.durationMs,
-      });
-    } else {
-      output.error({
-        title: result.command,
-        message: result.stderr,
-        duration: result.durationMs,
-      });
-    }
+    output.autoPrint(result, options);
   }
 
-  async gitAdd(options: { json: boolean }) {
+  async gitAdd(options: CommandOptions) {
     const result = await gitCommandService.gitAdd();
-
-    const isPrintJson = options.json;
-
-    // handling options
-    if (isPrintJson) {
-      return output.json(result);
-    }
-
-    if (result.success) {
-      output.success({
-        title: result.command,
-        message: result.stdout,
-        duration: result.durationMs,
-      });
-    } else {
-      output.error({
-        title: result.command,
-        message: result.stderr,
-        duration: result.durationMs,
-      });
-    }
+    output.autoPrint(result, options);
   }
 
-  async gitCommit() {
-    const isGitRepo = await gitHelper.isRepository();
-
-    if (!isGitRepo) {
-      return output.error({
-        title: "git add",
-        message: "Not a git repository",
-      });
+  async gitCommit(message: string, options: CommandOptions) {
+    // validate message before commiting
+    if (!message) {
+      message = "auto commit";
     }
-
-    const status = await gitHelper.getStatus();
-    const currentBranch = status.currentBranch;
-
-    if (!currentBranch) {
-      return output.error({
-        title: "git add",
-        message: "Unable to get current branch",
-      });
-    }
+    const result = await gitCommandService.gitCommit(message);
+    output.autoPrint(result, options);
   }
 }
 

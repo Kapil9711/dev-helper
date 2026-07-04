@@ -79,6 +79,35 @@ class GitCommandServices {
     }
     return result;
   }
+
+  async gitCommit(message: string): Promise<ExecResult> {
+    const isGitRepo = await gitHelper.isRepository();
+
+    const command = `git commit -m ${message}`;
+
+    let result = {
+      stdout: "",
+      stderr: "",
+      durationMs: 0,
+      success: false,
+      command: command,
+    };
+
+    if (!isGitRepo) {
+      result.stdout = "Not a git repository";
+      return result;
+    }
+
+    const status = await gitHelper.getStatus();
+    const currentBranch = status.currentBranch;
+
+    if (!currentBranch) {
+      result.stdout = "Unable to get current branch";
+      return result;
+    }
+
+    return await exec(command);
+  }
 }
 
 export const gitCommandService = new GitCommandServices();
