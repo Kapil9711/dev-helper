@@ -72,6 +72,10 @@ class GitCommandController {
     output.autoPrint(result, options);
     // if add fail return early
     if (!result.success) return;
+
+    if (!message) {
+      message = "auto commit";
+    }
     result = await gitCommandService.gitCommit(message);
     output.autoPrint(result, options);
     //if commit fail return early
