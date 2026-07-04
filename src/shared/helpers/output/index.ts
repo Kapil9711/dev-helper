@@ -97,12 +97,13 @@ class Output {
   currentBranch(branch: GitCurrentBranch) {
     if (!branch) return;
     const message = `
+Current Branch Details 
+   
 Branch    : ${branch.current}
 Upstream  : ${branch.upstream ?? "None"}
 Ahead     : ${branch.ahead}
 Behind    : ${branch.behind}
 
-You are about to create a new commit.
 `;
 
     output.info(message);

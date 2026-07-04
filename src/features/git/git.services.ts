@@ -249,6 +249,8 @@ class GitCommandServices {
     const status = await gitHelper.getStatus();
     const currentBranch = status.currentBranch;
 
+    output.currentBranch(currentBranch);
+
     if (!status.summary.isClean) {
       result.stderr = "Please commit local chages before pull";
       return result;
