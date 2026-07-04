@@ -18,6 +18,7 @@ class GitCommandController {
     this.gitPush = this.gitPush.bind(this);
 
     this.gitCommitWithAdd = this.gitCommitWithAdd.bind(this);
+    this.gitPushWithCommitAndAdd = this.gitPushWithCommitAndAdd.bind(this);
   }
 
   async gitInit(options: CommandOptions) {
