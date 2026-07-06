@@ -54,11 +54,14 @@ export class GitParserController {
     branch: string,
     remote = "origin",
   ): Promise<boolean> {
-    const result = await exec(`git ls-remote --heads ${remote} ${branch}`, {
-      throwOnError: true,
-    });
+    const result = await exec(
+      `git ls-remote --heads ${remote} refs/heads/${branch}`,
+      {
+        throwOnError: true,
+      },
+    );
 
-    return result.stdout.trim().length > 0;
+    return result.stdout.trim() !== "";
   }
 
   async getRemoteUrl(remote = "origin"): Promise<string> {

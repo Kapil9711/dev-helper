@@ -184,6 +184,15 @@ class GitCommandServices {
       output.info(`Upstream for '${currentBranch.current}' exist`);
       return await exec(command(" "));
     }
+    const remoteBranch = `${remote}/${currentBranch.current}`;
+    output.info(`Upstream for ${currentBranch.current} not exist`);
+    output.info(
+      `Creating Upstream for ${currentBranch.current} to ${remoteBranch} `,
+    );
+    output.info("Pushing to remote...");
+    return await exec(
+      `git push --set-upstream ${remote} ${currentBranch.current}`,
+    );
 
     let remoteBranchExist = await gitHelper.remoteBranchExists(
       currentBranch.current,
