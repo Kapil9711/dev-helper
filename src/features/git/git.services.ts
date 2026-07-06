@@ -245,7 +245,7 @@ class GitCommandServices {
     // if input branch is available then use it and return
     if (inputBranch) {
       await output.info("Pulling from remote...");
-      return await exec(`${command} '${inputBranch}'`);
+      return await exec(`${command} '${remote}' '${inputBranch}'`);
     }
 
     // if upstream exist then directly pull it
