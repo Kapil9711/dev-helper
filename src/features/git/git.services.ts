@@ -193,41 +193,6 @@ class GitCommandServices {
     return await exec(
       `git push --set-upstream ${remote} ${currentBranch.current}`,
     );
-
-    let remoteBranchExist = await gitHelper.remoteBranchExists(
-      currentBranch.current,
-      remote,
-    );
-
-    if (remoteBranchExist) {
-      const remoteBranch = `${remote}/${currentBranch.current}`;
-      output.info(`Upstream for ${currentBranch.current} not exist`);
-      output.info(
-        `Creating Upstream for ${currentBranch.current} to ${remoteBranch}`,
-      );
-      const upstreamResult = await exec(
-        `git branch --set-upstream-to="${remoteBranch}"`,
-      );
-      if (!upstreamResult.success) {
-        output.info(`Upstream for ${currentBranch.current} failed`);
-        return upstreamResult;
-      }
-      output.info(`Upstream created`);
-      output.info("Pushing to remote...");
-      return await exec(command(" "));
-    }
-
-    output.info(`Remote branch for ${currentBranch.current} not exit`);
-    output.info(`Creating remote branch and setting upstream`);
-
-    result = await exec(
-      `git push --set-upstream ${remote} ${currentBranch.current}`,
-    );
-
-    if (result.success) {
-      output.info(`done...`);
-    }
-    return result;
   }
 
   async gitPull(): Promise<ExecResult> {
