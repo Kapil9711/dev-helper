@@ -23,10 +23,10 @@ export class Writer {
 
   private calculateDelay(text: string): number {
     const length = text.length;
-    if (length <= 30) return 30;
-    if (length <= 80) return 18;
-    if (length <= 150) return 4;
-    if (length <= 300) return 2;
+    if (length <= 30) return 26;
+    if (length <= 80) return 20;
+    if (length <= 150) return 8;
+    if (length <= 300) return 4;
     return 1;
   }
 }
