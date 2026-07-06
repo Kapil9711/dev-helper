@@ -1,5 +1,5 @@
 import { Option } from "@clack/prompts";
-import { exec } from "../shell/exec.ts";
+import { exec, ExecResult } from "../shell/exec.ts";
 import { GitDisplay, GitParser, GitStatusHelper } from "./parser.services.ts";
 import {
   GitBranch,
@@ -62,6 +62,51 @@ export class GitParserController {
     );
 
     return result.stdout.trim() !== "";
+  }
+  async ensureUpstream(branch: string, remote = "origin"): Promise<ExecResult> {
+    const successResult: ExecResult = {
+      stdout: "",
+      stderr: "",
+      durationMs: 0,
+      success: true,
+      command: "",
+    };
+
+    const status = await this.getStatus();
+
+    // Already configured
+    if (status.currentBranch.upstream) {
+      return successResult;
+    }
+
+    const remoteBranch = `${remote}/${branch}`;
+
+    const remoteBranchExists = await this.remoteBranchExists(branch, remote);
+
+    if (!remoteBranchExists) {
+      return {
+        ...successResult,
+        success: false,
+        stderr: `Remote branch '${remoteBranch}' does not exist.`,
+      };
+    }
+
+    // Make sure the remote tracking ref exists locally.
+    const fetchResult = await exec(`git fetch ${remote}`);
+
+    if (!fetchResult.success) {
+      return fetchResult;
+    }
+
+    const upstreamResult = await exec(
+      `git branch --set-upstream-to=${remoteBranch}`,
+    );
+
+    if (!upstreamResult.success) {
+      return upstreamResult;
+    }
+
+    return successResult;
   }
 
   async getRemoteUrl(remote = "origin"): Promise<string> {

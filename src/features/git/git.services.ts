@@ -254,32 +254,13 @@ class GitCommandServices {
       return await exec(command);
     }
 
-    let remoteBranchExist = await gitHelper.remoteBranchExists(
-      currentBranch.current,
-      remote,
-    );
+    result = await gitHelper.ensureUpstream(currentBranch.current, remote);
 
-    if (!remoteBranchExist) {
-      await output.info(`Remote branch for ${currentBranch.current} not exit`);
-      result.stderr = "unable to pull remote branch do not exist";
+    if (!result.success) {
       return result;
     }
 
-    const remoteBranch = `${remote}/${currentBranch.current}`;
-    await output.info(`Upstream for ${currentBranch.current} not exist`);
-    await output.info(
-      `Creating Upstream for ${currentBranch.current} to ${remoteBranch}`,
-    );
-    const upstreamResult = await exec(
-      `git branch --set-upstream-to="${remoteBranch}"`,
-    );
-    if (!upstreamResult.success) {
-      await output.info(`Upstream for ${currentBranch.current} failed`);
-      return upstreamResult;
-    }
-    await output.info(`Upstream created`);
-    await output.info("Pulling from remote...");
-    return await exec(command);
+    return await exec("git pull");
   }
 
   // small services

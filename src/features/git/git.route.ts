@@ -66,7 +66,7 @@ class GitCommandRouter {
       .command("pull")
       .description("Push to remote branch")
       .option("-j, --json")
-      .argument("branch", "Branch Name")
+      .argument("[branch]", "Branch Name")
       .action(gitCommandController.gitPull);
   }
 
