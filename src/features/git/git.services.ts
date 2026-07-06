@@ -223,7 +223,7 @@ class GitCommandServices {
     return result;
   }
 
-  async gitPull(): Promise<ExecResult> {
+  async gitPull(inputBranch: string): Promise<ExecResult> {
     const isGitRepo = await gitHelper.isRepository();
 
     const command = "git pull";
@@ -266,6 +266,12 @@ class GitCommandServices {
     if (currentBranch.detached) {
       result.stderr = "Can not pull in detached mode";
       return result;
+    }
+
+    // if input branch is available then use it and return
+    if (inputBranch) {
+      await output.info("Pulling from remote...");
+      return await exec(`${command} '${inputBranch}'`);
     }
 
     // if upstream exist then directly pull it

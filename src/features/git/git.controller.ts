@@ -64,8 +64,8 @@ class GitCommandController {
     await output.autoPrint(result, options);
   }
 
-  async gitPull(options: CommandOptions) {
-    const result = await gitCommandService.gitPull();
+  async gitPull(branch: string, options: CommandOptions) {
+    const result = await gitCommandService.gitPull(branch);
     await output.autoPrint(result, options);
   }
 
@@ -111,7 +111,7 @@ class GitCommandController {
     //if commit fail return early
     if (!result.success) return;
 
-    return this.gitPull(options);
+    return this.gitPull("", options);
   }
 
   async gitPushWithPullAndCommit(message: string, options: CommandOptions) {
@@ -135,7 +135,7 @@ class GitCommandController {
     await output.info(
       chalk.blueBright("3/4 Step (pulling from remote branch)"),
     );
-    result = await gitCommandService.gitPull();
+    result = await gitCommandService.gitPull("");
     await output.autoPrint(result, options);
     //if pull fail return early
     if (!result.success) return;
