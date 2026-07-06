@@ -97,7 +97,11 @@ class GitCommandController {
     return this.gitPush(options);
   }
 
-  async gitPullWithCommitAndAdd(message: string, options: CommandOptions) {
+  async gitPullWithCommitAndAdd(
+    inputBranch: string,
+    message: string,
+    options: CommandOptions,
+  ) {
     let result = await gitCommandService.gitAdd(true);
     await output.autoPrint(result, options);
     // if add fail return early
@@ -111,10 +115,14 @@ class GitCommandController {
     //if commit fail return early
     if (!result.success) return;
 
-    return this.gitPull("", options);
+    return this.gitPull(inputBranch, options);
   }
 
-  async gitPushWithPullAndCommit(message: string, options: CommandOptions) {
+  async gitPushWithPullAndCommit(
+    inputBranch: string,
+    message: string,
+    options: CommandOptions,
+  ) {
     await output.info(chalk.blueBright("4 Steps Process"));
     console.log();
 
@@ -135,7 +143,7 @@ class GitCommandController {
     await output.info(
       chalk.blueBright("3/4 Step (pulling from remote branch)"),
     );
-    result = await gitCommandService.gitPull("");
+    result = await gitCommandService.gitPull(inputBranch);
     await output.autoPrint(result, options);
     //if pull fail return early
     if (!result.success) return;

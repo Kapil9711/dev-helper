@@ -94,7 +94,8 @@ class GitCommandRouter {
       .command("plcwa")
       .description("Auto pull with commit and add")
       .option("-j, --json")
-      .argument("[message]", "commit message")
+      .argument("[branch]", "commit message")
+      .argument("[message]", "Branch Name")
       .action(gitCommandController.gitPullWithCommitAndAdd);
   }
 
@@ -103,6 +104,7 @@ class GitCommandRouter {
       .command("puplwc")
       .description("Auto pull with commit and add")
       .option("-j, --json")
+      .argument("[branch]", "commit message")
       .argument("[message]", "commit message")
       .action(gitCommandController.gitPushWithPullAndCommit);
   }
