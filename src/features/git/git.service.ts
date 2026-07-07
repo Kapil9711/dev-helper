@@ -295,7 +295,7 @@ class GitCommandServices {
       return await exec(`${command} '${inputBranch}'`);
     }
 
-    const status = await gitHelper.getStatus();
+    const status = await gitHelper.getStatus(true);
 
     if (!status.summary.isClean) {
       result.stderr = `
@@ -307,14 +307,35 @@ class GitCommandServices {
     }
 
     const branchList = await gitHelper.getBranches("all");
-    const branchNames = branchList.map((branch) => branch.name);
+    const localBranchNames = branchList
+      .filter((branch) => !branch.remote)
+      .map((branch) => branch.name);
+    const branchNames = branchList
+      .filter((branch) => !branch.current)
+      .map((branch) => branch.name);
 
-    const branch = await enquirer.prompt({
+    const { branch }: any = await enquirer.prompt({
       type: "autocomplete",
       name: "branch",
       message: "Select branch",
-      choices: branchNames,
+      choices: ["create-new-branch", ...branchNames],
     });
+
+    if (!branch) {
+      result.stderr = "select a valid branch";
+      return result;
+    }
+
+    const selectedBrach = branch.branch;
+
+    const confirmed = await prompt.confirm({
+      message: `confirm selection ${selectedBrach}`,
+    });
+
+    if (!confirmed) {
+      result.stderr = "Operation is canceled, exit...";
+      return result;
+    }
 
     console.log(branch);
 
