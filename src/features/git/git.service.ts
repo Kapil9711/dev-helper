@@ -316,6 +316,8 @@ class GitCommandServices {
       choices: branchNames,
     });
 
+    console.log(branch);
+
     return result;
   }
 }
