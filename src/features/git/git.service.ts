@@ -306,7 +306,7 @@ class GitCommandServices {
       return result;
     }
 
-    const branchList = await gitHelper.getBranches("local");
+    const branchList = await gitHelper.getBranches("all");
     const branchNames = branchList.map((branch) => branch.name);
 
     const branch = await enquirer.prompt({
