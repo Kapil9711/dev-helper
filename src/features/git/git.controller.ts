@@ -1,11 +1,6 @@
 import chalk from "chalk";
-import { gitHelper } from "../../shared/helpers/gitParsers/parser.controller.ts";
 import { output } from "../../shared/helpers/output/index.ts";
-import {
-  ProgressBar,
-  StepProgress,
-} from "../../shared/ui/stepProgress/index.ts";
-import { gitCommandService } from "./git.services.ts";
+import { gitCommandService } from "./git.service.ts";
 
 export type CommandOptions = {
   json?: boolean;
