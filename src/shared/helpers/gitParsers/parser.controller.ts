@@ -11,7 +11,7 @@ import {
 
 export class GitParserController {
   private lastFetchAt = 0;
-  private readonly FETCH_TTL = 8000;
+  private readonly FETCH_TTL = 20000;
   async isRepository(): Promise<boolean> {
     const result = await exec("git rev-parse --is-inside-work-tree");
 
@@ -161,11 +161,11 @@ export class GitParserController {
     if (isFetch) {
       const now = Date.now();
       if (now - this.lastFetchAt > this.FETCH_TTL) {
-        console.log("fetching", this.lastFetchAt, now, now - this.lastFetchAt);
+        console.log(" (fetching)");
         const result = await exec("git fetch");
         if (result.success) this.lastFetchAt = now;
       } else {
-        console.log("not fetched");
+        console.log(" (not fetched)");
       }
     }
 
