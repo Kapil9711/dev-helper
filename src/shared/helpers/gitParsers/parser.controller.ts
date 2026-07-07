@@ -10,6 +10,8 @@ import {
 } from "./parser.types.ts";
 
 export class GitParserController {
+  private lastFetchAt = 0;
+  private readonly FETCH_TTL = 8000;
   async isRepository(): Promise<boolean> {
     const result = await exec("git rev-parse --is-inside-work-tree");
 
@@ -157,7 +159,11 @@ export class GitParserController {
 
   async getStatus(isFetch: boolean = false): Promise<GitStatus> {
     if (isFetch) {
-      await exec("git fetch");
+      const now = Date.now();
+      if (now - this.lastFetchAt > this.FETCH_TTL) {
+        this.lastFetchAt = now;
+        await exec("git fetch");
+      }
     }
 
     const result = await exec("git status --porcelain=v2 --branch -z", {
