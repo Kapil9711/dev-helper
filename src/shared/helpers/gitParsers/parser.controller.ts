@@ -155,7 +155,11 @@ export class GitParserController {
     }
   }
 
-  async getStatus(): Promise<GitStatus> {
+  async getStatus(isFetch: boolean = false): Promise<GitStatus> {
+    if (isFetch) {
+      await exec("git fetch");
+    }
+
     const result = await exec("git status --porcelain=v2 --branch -z", {
       throwOnError: true,
     });
