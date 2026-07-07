@@ -326,7 +326,7 @@ class GitCommandServices {
       return result;
     }
 
-    const selectedBrach = branch.branch;
+    const selectedBrach = branch;
 
     const confirmed = await prompt.confirm({
       message: `confirm selection ${selectedBrach}`,
