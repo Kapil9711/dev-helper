@@ -310,9 +310,7 @@ class GitCommandServices {
     const localBranchNames = branchList
       .filter((branch) => !branch.remote)
       .map((branch) => branch.name);
-    const branchNames = branchList
-      .filter((branch) => !branch.current)
-      .map((branch) => branch.name);
+    const branchNames = branchList.map((branch) => branch.name);
 
     const { branch }: any = await enquirer.prompt({
       type: "autocomplete",
