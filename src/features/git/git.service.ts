@@ -263,7 +263,25 @@ class GitCommandServices {
     return await exec("git pull");
   }
 
-  // small services
+  async gitCheckout(inputBranch: string): Promise<ExecResult> {
+    const isGitRepo = await gitHelper.isRepository();
+
+    const command = "git checkout";
+
+    let result = {
+      stdout: "",
+      stderr: "",
+      durationMs: 0,
+      success: false,
+      command: command,
+    };
+    if (!isGitRepo) {
+      result.stderr = "Not a git repository";
+      return result;
+    }
+
+    return result;
+  }
 }
 
 export const gitCommandService = new GitCommandServices();
