@@ -161,7 +161,7 @@ export class GitParserController {
     if (isFetch) {
       const now = Date.now();
       if (now - this.lastFetchAt > this.FETCH_TTL) {
-        console.log("fetching");
+        console.log("fetching", this.lastFetchAt, now, now - this.lastFetchAt);
         const result = await exec("git fetch");
         if (result.success) this.lastFetchAt = now;
       } else {
