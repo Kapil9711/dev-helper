@@ -2,6 +2,9 @@ import { gitHelper } from "../../shared/helpers/gitParsers/parser.controller.ts"
 import { output } from "../../shared/helpers/output/index.ts";
 import { prompt } from "../../shared/helpers/prompt/prompt.ts";
 import { exec, ExecResult } from "../../shared/helpers/shell/exec.ts";
+import Enquirer from "enquirer";
+
+const enquirer = new Enquirer();
 
 class GitCommandServices {
   async gitInit() {
@@ -263,7 +266,10 @@ class GitCommandServices {
     return await exec("git pull");
   }
 
-  async gitCheckout(inputBranch: string): Promise<ExecResult> {
+  async gitCheckout(
+    inputBranch: string,
+    newBranch: boolean,
+  ): Promise<ExecResult> {
     const isGitRepo = await gitHelper.isRepository();
 
     const command = "git checkout";
@@ -279,6 +285,36 @@ class GitCommandServices {
       result.stderr = "Not a git repository";
       return result;
     }
+
+    // if checkout with create new branch return early
+    if (newBranch) {
+      return await exec(`${command} -b '${inputBranch}'`);
+    }
+    // if checkout to existing branch return early
+    if (inputBranch) {
+      return await exec(`${command} '${inputBranch}'`);
+    }
+
+    const status = await gitHelper.getStatus();
+
+    if (!status.summary.isClean) {
+      result.stderr = `
+      Local changes are present
+      commit local changes to continue
+      abort checkout
+       `;
+      return result;
+    }
+
+    const branchList = await gitHelper.getBranches("local");
+    const branchNames = branchList.map((branch) => branch.name);
+
+    const branch = await enquirer.prompt({
+      type: "autocomplete",
+      name: "branch",
+      message: "Select branch",
+      choices: branchNames,
+    });
 
     return result;
   }
