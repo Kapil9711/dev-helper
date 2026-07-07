@@ -324,15 +324,34 @@ class GitCommandServices {
       return result;
     }
 
-    const selectedBrach = branch;
+    const selectedBranch = branch;
 
     const confirmed = await prompt.confirm({
-      message: `confirm selection ${selectedBrach}`,
+      message: `confirm selection ${selectedBranch}`,
     });
 
     if (!confirmed) {
       result.stderr = "Operation is canceled, exit...";
       return result;
+    }
+
+    const remotes = await gitHelper.getRemotes();
+    const remote = remotes?.[0];
+
+    // if remote branch selected
+    if (selectedBranch?.includes(remote)) {
+      const localBranch = selectedBranch.replace(`${remote}/`, "");
+      if (localBranchNames?.includes(localBranch)) {
+        await output.info("local branch exist checkout");
+        return await exec(`${command} '${localBranch}'`);
+      }
+      await output.info("local branch  not exist");
+      await output.info("creating local branch and start tracking");
+      return await exec(`git checkout --track ${branch}`);
+    }
+    // if local branch selected direclty checkout
+    if (selectedBranch != "create-new-branch") {
+      return exec(`${command} '${selectedBranch}'`);
     }
 
     console.log(branch);
