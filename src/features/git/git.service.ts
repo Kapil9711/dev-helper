@@ -354,9 +354,29 @@ class GitCommandServices {
       return exec(`${command} '${selectedBranch}'`);
     }
 
-    console.log(branch);
+    // if create new branch selected
+
+    const userInput = await this.promptForNewBranch();
+
+    console.log(userInput);
 
     return result;
+  }
+
+  // small helpers
+
+  private async promptForNewBranch(): Promise<string> {
+    return prompt.input({
+      message: "Branch name",
+      placeholder: "feature/login",
+      validate(value) {
+        if (!value?.trim()) {
+          return "Branch name is required.";
+        }
+
+        return undefined;
+      },
+    });
   }
 }
 

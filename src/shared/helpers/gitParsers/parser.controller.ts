@@ -8,6 +8,7 @@ import {
   GitFileKind,
   GitStatus,
 } from "./parser.types.ts";
+import { prompt } from "../prompt/prompt.ts";
 
 export class GitParserController {
   private lastFetchAt = 0;
