@@ -24,6 +24,8 @@ class GitCommandController {
     this.gitPullWithCommitAndAdd = this.gitPullWithCommitAndAdd.bind(this);
     this.gitPushWithPullAndCommit = this.gitPushWithPullAndCommit.bind(this);
     this.gitCheckout = this.gitCheckout.bind(this);
+    this.gitCheckoutWithCommitAndAdd =
+      this.gitCheckoutWithCommitAndAdd.bind(this);
   }
 
   async gitInit(options: CommandOptions) {
@@ -154,6 +156,27 @@ class GitCommandController {
     if (!result.success) return;
     await output.info(chalk.blueBright("4/4 Step (pushing to remote branch)"));
     return this.gitPush(options);
+  }
+
+  async gitCheckoutWithCommitAndAdd(
+    message: string,
+    branch: string,
+    options: CommandOptions,
+  ) {
+    let result = await gitCommandService.gitAdd(true);
+    await output.autoPrint(result, options);
+    // if add fail return early
+    if (!result.success) return;
+
+    if (!message) {
+      message = "auto commit";
+    }
+    result = await gitCommandService.gitCommit(message);
+    await output.autoPrint(result, options);
+    //if commit fail return early
+    if (!result.success) return;
+
+    return this.gitCheckout(branch, options);
   }
 }
 

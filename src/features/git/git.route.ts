@@ -19,6 +19,7 @@ class GitCommandRouter {
     this.gitPullWithCommitAndAdd();
     this.gitPushWithPullAndCommit();
     this.gitCheckout();
+    this.gitCheckoutWithCommitAndAdd();
   }
   private gitInit() {
     this.git
@@ -117,6 +118,16 @@ class GitCommandRouter {
       .argument("[branch]", "commit message")
       .argument("[message]", "commit message")
       .action(gitCommandController.gitPushWithPullAndCommit);
+  }
+
+  private gitCheckoutWithCommitAndAdd() {
+    this.git
+      .command("cwca")
+      .description("Checkout with commit and add")
+      .argument("[message]", "Branch Name")
+      .option("-b, --new-branch")
+      .argument("[branch]", "Branch Name")
+      .action(gitCommandController.gitCheckoutWithCommitAndAdd);
   }
 }
 
