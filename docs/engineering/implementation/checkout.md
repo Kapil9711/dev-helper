@@ -39,25 +39,26 @@ flowchart TD
 
 A[User executes checkout command] --> B[Validate Git repository]
 
-B --> C[Read Git status]
 
-C --> D{Working tree clean?}
+B -->|Yes| G{Branch argument provided?}
 
-D -->|No| E[Display modified files]
+G -->|Yes| H{If Create New Branch}
 
-E --> F[Abort checkout]
+H -->|Yes| Crc[Create Input Branch And Checkout]
 
-D -->|Yes| G{Branch argument provided?}
+H -->|No| Co[Checkout Input Branch]
 
-G -->|Yes| H[Checkout specified branch]
 
-G -->|No| I[Load local branches]
 
-I --> J[Load remote branches]
+G -->|No| C{Is working tree clean}
 
-J --> K[Merge & sort branches]
+C -->|Yes| I[Load all branches]
 
-K --> L[Insert 'Create New Branch' option]
+C-->|No| D[Abort Checkout]
+
+I --> J[Create option for selection]
+
+J --> L[Insert 'Create New Branch' option]
 
 L --> M[Display searchable branch picker]
 
@@ -71,7 +72,13 @@ P --> Q[Validate branch name]
 
 Q --> R[Create & checkout new branch]
 
-H --> S[Done]
+
+Crc --> S[Done]
+
+
+
+Co --> S
+
 
 O --> S
 
