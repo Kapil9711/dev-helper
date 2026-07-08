@@ -1,6 +1,6 @@
 export class Writer {
   async write(text: string, delay?: number): Promise<void> {
-    // If delay is explicitly provided, use it.
+    // If delay is explicitly provided
     const characterDelay = delay ?? this.calculateDelay(text);
 
     for (const char of text) {
