@@ -42,11 +42,13 @@ A[User executes checkout command] --> B[Validate Git repository]
 
 B -->|Yes| G{Branch argument provided?}
 
-G -->|Yes| H{If Create New Branch}
+G -->|Yes| H{Create New Branch}
 
-H -->|Yes| Crc[Create Input Branch And Checkout]
+H -->|Yes| Crc[Create Branch]
 
-H -->|No| Co[Checkout Input Branch]
+H -->|No| Co[Checkout]
+
+Crc --> Co
 
 
 
@@ -64,7 +66,16 @@ L --> M[Display searchable branch picker]
 
 M --> N{User selection}
 
-N -->|Existing Branch| O[Checkout selected branch]
+N --> |Existing Branch| O{selected remote branch}
+
+O--> |Yes| Chl{corresponding local branch exist}
+O--> |No| Lco[checkout local branch]
+
+Chl--> |Yes| Lco
+
+Chl -->|No| Cl[Create corresponding Local branch]
+
+Cl--> Lco
 
 N -->|Create New Branch| P[Prompt for branch name]
 
@@ -72,15 +83,9 @@ P --> Q[Validate branch name]
 
 Q --> R[Create & checkout new branch]
 
+Co --> S[Done]
 
-Crc --> S[Done]
-
-
-
-Co --> S
-
-
-O --> S
+Lco --> S
 
 R --> S
 ```
@@ -253,24 +258,68 @@ participant User
 participant VH Helper
 participant Git
 
-User->>VH Helper: vh git checkout
+User->>VH Helper: vh git checkout [branch]
 
-VH Helper->>Git: Read git status
+VH Helper->>Git: Validate Git repository
+Git-->>VH Helper: Repository valid
 
-Git-->>VH Helper: Working tree status
+alt Branch argument provided
 
-alt Working tree not clean
-    VH Helper-->>User: Display modified files
-    VH Helper-->>User: Abort checkout
-else Working tree clean
-    VH Helper->>Git: Load local branches
-    VH Helper->>Git: Load remote branches
-    Git-->>VH Helper: Branch list
-    VH Helper-->>User: Interactive branch picker
-    User->>VH Helper: Select branch
-    VH Helper->>Git: git checkout branch
-    Git-->>VH Helper: Success
+    alt Create New Branch
+        VH Helper->>Git: git branch <name>
+        Git-->>VH Helper: Branch created
+    end
+
+    VH Helper->>Git: git checkout <branch>
+    Git-->>VH Helper: Checkout successful
     VH Helper-->>User: Switched to branch
+
+else No branch argument
+
+    VH Helper->>Git: Read git status
+    Git-->>VH Helper: Working tree status
+
+    alt Working tree not clean
+        VH Helper-->>User: Abort checkout
+    else Working tree clean
+
+        VH Helper->>Git: Load local branches
+        VH Helper->>Git: Load remote branches
+        Git-->>VH Helper: Branch list
+
+        VH Helper-->>User: Display searchable branch picker
+        User->>VH Helper: Select option
+
+        alt Existing Branch
+
+            alt Selected branch is remote
+                VH Helper->>Git: Check corresponding local branch
+                Git-->>VH Helper: Local branch exists?
+
+                alt Local branch does not exist
+                    VH Helper->>Git: Create local tracking branch
+                    Git-->>VH Helper: Branch created
+                end
+            end
+
+            VH Helper->>Git: git checkout <branch>
+            Git-->>VH Helper: Checkout successful
+            VH Helper-->>User: Switched to branch
+
+        else Create New Branch
+
+            VH Helper-->>User: Prompt for branch name
+            User->>VH Helper: Enter branch name
+
+            VH Helper->>Git: Validate branch name
+            Git-->>VH Helper: Branch name valid
+
+            VH Helper->>Git: git checkout -b <branch>
+            Git-->>VH Helper: Branch created & checked out
+            VH Helper-->>User: Switched to new branch
+
+        end
+    end
 end
 ```
 

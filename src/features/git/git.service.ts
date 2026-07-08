@@ -295,7 +295,7 @@ class GitCommandServices {
       return await exec(`${command} '${inputBranch}'`);
     }
 
-    const status = await gitHelper.getStatus(true);
+    const status = await gitHelper.getStatus();
 
     if (!status.summary.isClean) {
       result.stderr = `
