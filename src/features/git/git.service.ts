@@ -358,9 +358,13 @@ class GitCommandServices {
 
     const userInput = await this.promptForNewBranch();
 
-    console.log(userInput);
+    if (userInput.toLowerCase() == "exit") {
+      result.stdout = "Operation is canceled, exit...";
+      result.success = true;
+      return result;
+    }
 
-    return result;
+    return await exec(`${command} -b '${userInput}'`);
   }
 
   // small helpers
@@ -368,7 +372,7 @@ class GitCommandServices {
   private async promptForNewBranch(): Promise<string> {
     return prompt.input({
       message: "Branch name",
-      placeholder: "feature/login",
+      placeholder: "feature/login (Enter exit for cancel)",
       validate(value) {
         if (!value?.trim()) {
           return "Branch name is required.";
