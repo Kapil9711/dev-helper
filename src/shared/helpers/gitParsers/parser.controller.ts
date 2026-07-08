@@ -10,6 +10,8 @@ import {
 } from "./parser.types.ts";
 
 export class GitParserController {
+  private lastFetchAt = 0;
+  private readonly FETCH_TTL = 20000;
   async isRepository(): Promise<boolean> {
     const result = await exec("git rev-parse --is-inside-work-tree");
 
@@ -127,7 +129,7 @@ export class GitParserController {
       },
     );
 
-    const branches = result.stdout
+    const branches: GitBranch[] = result.stdout
       .split("\n")
       .filter(Boolean)
       .map((line) => {
@@ -137,7 +139,24 @@ export class GitParserController {
           name: shortName,
           current: head === "*",
           remote: fullRef.startsWith("refs/remotes"),
+          fullRef,
         };
+      })
+      // Ignore refs like origin/HEAD -> origin/main
+      .filter((branch) => !branch.fullRef.endsWith("/HEAD"))
+      .map(({ fullRef, ...branch }) => branch)
+      .sort((a, b) => {
+        // Current branch first
+        if (a.current) return -1;
+        if (b.current) return 1;
+
+        // Local branches before remote branches
+        if (a.remote !== b.remote) {
+          return a.remote ? 1 : -1;
+        }
+
+        // Alphabetical
+        return a.name.localeCompare(b.name);
       });
 
     switch (type) {
@@ -155,7 +174,15 @@ export class GitParserController {
     }
   }
 
-  async getStatus(): Promise<GitStatus> {
+  async getStatus(isFetch: boolean = false): Promise<GitStatus> {
+    if (isFetch) {
+      const now = Date.now();
+      if (now - this.lastFetchAt > this.FETCH_TTL) {
+        const result = await exec("git fetch");
+        if (result.success) this.lastFetchAt = now;
+      }
+    }
+
     const result = await exec("git status --porcelain=v2 --branch -z", {
       throwOnError: true,
     });

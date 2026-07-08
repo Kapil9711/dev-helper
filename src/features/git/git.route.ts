@@ -18,6 +18,7 @@ class GitCommandRouter {
     this.gitPushWithCommitAndAdd();
     this.gitPullWithCommitAndAdd();
     this.gitPushWithPullAndCommit();
+    this.gitCheckout();
   }
   private gitInit() {
     this.git
@@ -64,10 +65,19 @@ class GitCommandRouter {
   private gitPull() {
     this.git
       .command("pull")
-      .description("Push to remote branch")
+      .description("Pull from remote branch")
       .option("-j, --json")
       .argument("[branch]", "Branch Name")
       .action(gitCommandController.gitPull);
+  }
+
+  private gitCheckout() {
+    this.git
+      .command("checkout")
+      .description("Checkout to new branch")
+      .option("-b, --new-branch")
+      .argument("[branch]", "Branch Name")
+      .action(gitCommandController.gitCheckout);
   }
 
   // auto routes

@@ -1,13 +1,12 @@
 import chalk from "chalk";
-
 import { output } from "../../shared/helpers/output/index.ts";
-
 import { gitCommandService } from "./git.service.ts";
 
 export type CommandOptions = {
   json?: boolean;
   force?: boolean;
-  forceUnsafe?: boolean;
+  forceUnsafe: boolean;
+  newBranch: boolean;
 };
 
 class GitCommandController {
@@ -24,6 +23,7 @@ class GitCommandController {
     this.gitPushWithCommitAndAdd = this.gitPushWithCommitAndAdd.bind(this);
     this.gitPullWithCommitAndAdd = this.gitPullWithCommitAndAdd.bind(this);
     this.gitPushWithPullAndCommit = this.gitPushWithPullAndCommit.bind(this);
+    this.gitCheckout = this.gitCheckout.bind(this);
   }
 
   async gitInit(options: CommandOptions) {
@@ -63,6 +63,14 @@ class GitCommandController {
 
   async gitPull(branch: string, options: CommandOptions) {
     const result = await gitCommandService.gitPull(branch);
+    await output.autoPrint(result, options);
+  }
+
+  async gitCheckout(branch: string, options: CommandOptions) {
+    const result = await gitCommandService.gitCheckout(
+      branch,
+      options.newBranch,
+    );
     await output.autoPrint(result, options);
   }
 

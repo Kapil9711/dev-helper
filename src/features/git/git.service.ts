@@ -2,6 +2,9 @@ import { gitHelper } from "../../shared/helpers/gitParsers/parser.controller.ts"
 import { output } from "../../shared/helpers/output/index.ts";
 import { prompt } from "../../shared/helpers/prompt/prompt.ts";
 import { exec, ExecResult } from "../../shared/helpers/shell/exec.ts";
+import Enquirer from "enquirer";
+
+const enquirer = new Enquirer();
 
 class GitCommandServices {
   async gitInit() {
@@ -105,7 +108,7 @@ class GitCommandServices {
       return result;
     }
 
-    const status = await gitHelper.getStatus();
+    const status = await gitHelper.getStatus(true);
     const currentBranch = status.currentBranch;
     const stageableFiles = gitHelper.getStageableFiles(status.files);
 
@@ -222,7 +225,7 @@ class GitCommandServices {
       return result;
     }
 
-    const status = await gitHelper.getStatus();
+    const status = await gitHelper.getStatus(true);
     const currentBranch = status.currentBranch;
 
     await output.currentBranch(currentBranch);
@@ -263,7 +266,98 @@ class GitCommandServices {
     return await exec("git pull");
   }
 
-  // small services
+  async gitCheckout(
+    inputBranch: string,
+    newBranch: boolean,
+  ): Promise<ExecResult> {
+    const isGitRepo = await gitHelper.isRepository();
+
+    const command = "git checkout";
+
+    let result = {
+      stdout: "",
+      stderr: "",
+      durationMs: 0,
+      success: false,
+      command: command,
+    };
+    if (!isGitRepo) {
+      result.stderr = "Not a git repository";
+      return result;
+    }
+
+    // if checkout with create new branch return early
+    if (newBranch) {
+      return await exec(`${command} -b '${inputBranch}'`);
+    }
+    // if checkout to existing branch return early
+    if (inputBranch) {
+      return await exec(`${command} '${inputBranch}'`);
+    }
+
+    const status = await gitHelper.getStatus(true);
+
+    if (!status.summary.isClean) {
+      result.stderr = `
+      Local changes are present
+      commit local changes to continue
+      abort checkout
+       `;
+      return result;
+    }
+
+    const branchList = await gitHelper.getBranches("all");
+    const localBranchNames = branchList
+      .filter((branch) => !branch.remote)
+      .map((branch) => branch.name);
+    const branchNames = branchList.map((branch) => branch.name);
+
+    const { branch }: any = await enquirer.prompt({
+      type: "autocomplete",
+      name: "branch",
+      message: "Select branch",
+      choices: ["create-new-branch", ...branchNames],
+    });
+
+    if (!branch) {
+      result.stderr = "select a valid branch";
+      return result;
+    }
+
+    const selectedBranch = branch;
+
+    const confirmed = await prompt.confirm({
+      message: `confirm selection ${selectedBranch}`,
+    });
+
+    if (!confirmed) {
+      result.stderr = "Operation is canceled, exit...";
+      return result;
+    }
+
+    const remotes = await gitHelper.getRemotes();
+    const remote = remotes?.[0];
+
+    // if remote branch selected
+    if (selectedBranch?.includes(remote)) {
+      const localBranch = selectedBranch.replace(`${remote}/`, "");
+      if (localBranchNames?.includes(localBranch)) {
+        await output.info("local branch exist checkout");
+        return await exec(`${command} '${localBranch}'`);
+      }
+      await output.info("local branch  not exist");
+      await output.info("creating local branch and start tracking");
+      return await exec(`git checkout --track ${branch}`);
+    }
+    // if local branch selected direclty checkout
+    if (selectedBranch != "create-new-branch") {
+      return exec(`${command} '${selectedBranch}'`);
+    }
+
+    console.log(branch);
+
+    return result;
+  }
 }
 
 export const gitCommandService = new GitCommandServices();
