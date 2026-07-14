@@ -14,11 +14,9 @@ class GitCommandController {
     this.gitInit = this.gitInit.bind(this);
     this.gitStatus = this.gitStatus.bind(this);
     this.gitAdd = this.gitAdd.bind(this);
-
     this.gitCommit = this.gitCommit.bind(this);
     this.gitPush = this.gitPush.bind(this);
     this.gitPull = this.gitPull.bind(this);
-
     this.gitCommitWithAdd = this.gitCommitWithAdd.bind(this);
     this.gitPushWithCommitAndAdd = this.gitPushWithCommitAndAdd.bind(this);
     this.gitPullWithCommitAndAdd = this.gitPullWithCommitAndAdd.bind(this);
@@ -26,6 +24,7 @@ class GitCommandController {
     this.gitCheckout = this.gitCheckout.bind(this);
     this.gitCheckoutWithCommitAndAdd =
       this.gitCheckoutWithCommitAndAdd.bind(this);
+    this.gitBranch = this.gitBranch.bind(this);
   }
 
   async gitInit(options: CommandOptions) {
@@ -76,6 +75,11 @@ class GitCommandController {
     await output.autoPrint(result, options);
   }
 
+  async gitBranch(options: CommandOptions) {
+    const result = await gitCommandService.gitBranch();
+    await output.autoPrint(result, options);
+  }
+
   // combined controllers
 
   async gitCommitWithAdd(message: string, options: CommandOptions) {
@@ -105,8 +109,8 @@ class GitCommandController {
   }
 
   async gitPullWithCommitAndAdd(
-    inputBranch: string,
     message: string,
+    inputBranch: string,
     options: CommandOptions,
   ) {
     let result = await gitCommandService.gitAdd(true);
@@ -126,8 +130,8 @@ class GitCommandController {
   }
 
   async gitPushWithPullAndCommit(
-    inputBranch: string,
     message: string,
+    inputBranch: string,
     options: CommandOptions,
   ) {
     await output.info(chalk.blueBright("4 Steps Process"));

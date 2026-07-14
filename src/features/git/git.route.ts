@@ -20,6 +20,7 @@ class GitCommandRouter {
     this.gitPushWithPullAndCommit();
     this.gitCheckout();
     this.gitCheckoutWithCommitAndAdd();
+    this.gitBranch();
   }
   private gitInit() {
     this.git
@@ -81,6 +82,14 @@ class GitCommandRouter {
       .action(gitCommandController.gitCheckout);
   }
 
+  private gitBranch() {
+    this.git
+      .command("branch")
+      .description("All Branch List")
+      .option("-b, --new-branch")
+      .action(gitCommandController.gitBranch);
+  }
+
   // auto routes
   private gitCommitWithAdd() {
     this.git
@@ -105,8 +114,8 @@ class GitCommandRouter {
       .command("plcwa")
       .description("Auto pull with commit and add")
       .option("-j, --json")
-      .argument("[branch]", "commit message")
       .argument("[message]", "Branch Name")
+      .argument("[branch]", "commit message")
       .action(gitCommandController.gitPullWithCommitAndAdd);
   }
 
@@ -115,8 +124,9 @@ class GitCommandRouter {
       .command("puplwc")
       .description("Auto pull with commit and add")
       .option("-j, --json")
-      .argument("[branch]", "commit message")
       .argument("[message]", "commit message")
+      .argument("[branch]", "commit message")
+
       .action(gitCommandController.gitPushWithPullAndCommit);
   }
 
