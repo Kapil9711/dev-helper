@@ -367,6 +367,39 @@ class GitCommandServices {
     return await exec(`${command} -b '${userInput}'`);
   }
 
+  async gitBranch(): Promise<ExecResult> {
+    const isGitRepo = await gitHelper.isRepository();
+
+    const command = "git checkout";
+
+    let result = {
+      stdout: "",
+      stderr: "",
+      durationMs: 0,
+      success: false,
+      command: command,
+    };
+    if (!isGitRepo) {
+      result.stderr = "Not a git repository";
+      return result;
+    }
+
+    const status = await gitHelper.getStatus();
+
+    const branchList = await gitHelper.getBranches("all");
+    const branchNames = branchList.map((branch) => branch.name);
+
+    for (let name of branchNames) {
+      const isCurrent = status.currentBranch.current == name;
+      await output.info(`${name} ${isCurrent ? " *" : ""}`, 8);
+    }
+
+    result.success = true;
+    result.stdout = "Branch listed successfully";
+
+    return result;
+  }
+
   // small helpers
 
   private async promptForNewBranch(): Promise<string> {
