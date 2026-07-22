@@ -108,7 +108,7 @@ class GitCommandServices {
       return result;
     }
 
-    const status = await gitHelper.getStatus(true);
+    const status = await gitHelper.getStatus(false);
     const currentBranch = status.currentBranch;
     const stageableFiles = gitHelper.getStageableFiles(status.files);
 
