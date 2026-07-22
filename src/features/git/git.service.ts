@@ -90,7 +90,10 @@ class GitCommandServices {
     return result;
   }
 
-  async gitCommit(message: string): Promise<ExecResult> {
+  async gitCommit(
+    message: string,
+    isFetch: boolean = false,
+  ): Promise<ExecResult> {
     const isGitRepo = await gitHelper.isRepository();
 
     const command = `git commit -m '${message}'`;
@@ -108,7 +111,7 @@ class GitCommandServices {
       return result;
     }
 
-    const status = await gitHelper.getStatus(false);
+    const status = await gitHelper.getStatus(isFetch);
     const currentBranch = status.currentBranch;
     const stageableFiles = gitHelper.getStageableFiles(status.files);
 
