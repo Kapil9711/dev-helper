@@ -43,12 +43,16 @@ class GitCommandController {
     await output.autoPrint(result, options);
   }
 
-  async gitCommit(message: string, options: CommandOptions) {
+  async gitCommit(
+    message: string,
+    options: CommandOptions,
+    isFetch: boolean = false,
+  ) {
     // validate message before commiting
     if (!message) {
       message = "auto commit";
     }
-    const result = await gitCommandService.gitCommit(message);
+    const result = await gitCommandService.gitCommit(message, isFetch);
     await output.autoPrint(result, options);
   }
 
@@ -88,7 +92,7 @@ class GitCommandController {
     // if add fail return early
     if (!result.success) return;
 
-    await this.gitCommit(message, options);
+    await this.gitCommit(message, options, false);
   }
 
   async gitPushWithCommitAndAdd(message: string, options: CommandOptions) {
@@ -100,7 +104,7 @@ class GitCommandController {
     if (!message) {
       message = "auto commit";
     }
-    result = await gitCommandService.gitCommit(message);
+    result = await gitCommandService.gitCommit(message, true);
     await output.autoPrint(result, options);
     //if commit fail return early
     if (!result.success) return;
@@ -121,7 +125,7 @@ class GitCommandController {
     if (!message) {
       message = "auto commit";
     }
-    result = await gitCommandService.gitCommit(message);
+    result = await gitCommandService.gitCommit(message, false);
     await output.autoPrint(result, options);
     //if commit fail return early
     if (!result.success) return;
@@ -147,7 +151,7 @@ class GitCommandController {
       message = "auto commit";
     }
     await output.info(chalk.blueBright("2/4 Step (commiting staged files)"));
-    result = await gitCommandService.gitCommit(message);
+    result = await gitCommandService.gitCommit(message, true);
     await output.autoPrint(result, options);
     //if commit fail return early
     if (!result.success) return;
