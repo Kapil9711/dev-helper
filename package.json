@@ -1,11 +1,11 @@
 {
-  "name": "vh-cli",
-  "version": "0.0.1",
+  "name": "vh-dev-helper",
+  "version": "1.0.1",
   "description": "Developer productivity CLI and dashboard toolkit",
-  "type": "module",
-  "main": "./dist/bin/index.js",
+  "type": "commonjs",
+  "main": "dist/bin/index.js",
   "bin": {
-    "vh": "./dist/bin/index.js"
+    "vh": "dist/bin/index.js"
   },
   "files": [
     "dist/**/*",
