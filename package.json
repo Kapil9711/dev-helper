@@ -17,7 +17,7 @@
   },
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "tsc -p tsconfig.json",
+    "build": "yarn run clean && tsc -p tsconfig.json",
     "prepare": "yarn build",
     "dev": "tsc -w",
     "prepublishOnly": "yarn clean && yarn build"
@@ -43,6 +43,7 @@
     "commander": "^15.0.0",
     "enquirer": "^2.4.1",
     "log-update": "^8.0.0",
+    "socket.io": "^4.8.4",
     "typescript": "^6.0.3"
   },
   "devDependencies": {

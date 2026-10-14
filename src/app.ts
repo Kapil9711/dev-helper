@@ -1,5 +1,6 @@
 import { Command } from "commander";
 import { gitCommandRouter } from "./features/git/git.route.ts";
+import { logsCommandRouter } from "./features/logs/logs.route.ts";
 
 export class App {
   private program: Command;
@@ -9,13 +10,14 @@ export class App {
   }
 
   initialiazeCommandar() {
-    this.program.name("vh").description("VH Helper Cli").version("0.0.1");
+    this.program.name("vh").description("VH Helper CLI").version("1.0.1");
     this.registerAllCommands();
     this.program.parse();
   }
 
   registerAllCommands() {
     gitCommandRouter.register(this.program);
+    logsCommandRouter.register(this.program);
   }
 }
 
