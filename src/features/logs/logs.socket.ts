@@ -1,27 +1,20 @@
 import type { Server as HttpServer } from "node:http";
 import { Server } from "socket.io";
 
-interface VHEvent {
-  eventId: string;
-  appName: string;
-  timestamp: number;
-  type: "log" | "network:req" | "network:res";
-  [key: string]: unknown;
-}
+import { createLogsDatabase, type IncomingVHEvent } from "./logs.database.js";
 
-interface VHEventsAck {
+import { createLogsQueue } from "./logs.queue.js";
+
+export interface VHEventsAck {
   ok: boolean;
   eventIds?: string[];
   error?: string;
 }
 
 const MAX_BATCH_SIZE = 50;
-const MAX_STORED_EVENTS = 10_000;
 
-const events = new Map<string, VHEvent>();
-
-function isVHEvent(value: unknown): value is VHEvent {
-  if (!value || typeof value !== "object" || Array.isArray(value)) {
+function isVHEvent(value: unknown): value is IncomingVHEvent {
+  if (typeof value !== "object" || value === null) {
     return false;
   }
 
@@ -29,164 +22,155 @@ function isVHEvent(value: unknown): value is VHEvent {
 
   if (
     typeof event.eventId !== "string" ||
-    event.eventId.length === 0 ||
     typeof event.appName !== "string" ||
-    event.appName.length === 0 ||
     typeof event.timestamp !== "number" ||
-    !Number.isFinite(event.timestamp)
+    !Number.isFinite(event.timestamp) ||
+    typeof event.type !== "string"
   ) {
     return false;
   }
 
-  switch (event.type) {
-    case "log":
-      return (
-        typeof event.message === "string" &&
-        ["debug", "info", "warn", "error"].includes(String(event.level)) &&
-        typeof event.fingerprint === "string"
-      );
-
-    case "network:req":
-      return (
-        typeof event.requestId === "string" &&
-        typeof event.method === "string" &&
-        typeof event.url === "string"
-      );
-
-    case "network:res":
-      return (
-        typeof event.requestId === "string" &&
-        (event.status === undefined ||
-          (typeof event.status === "number" &&
-            Number.isFinite(event.status))) &&
-        (event.durationMs === undefined ||
-          (typeof event.durationMs === "number" &&
-            Number.isFinite(event.durationMs))) &&
-        (event.error === undefined || typeof event.error === "string")
-      );
-
-    default:
-      return false;
+  if (event.type === "log") {
+    return typeof event.level === "string" && typeof event.message === "string";
   }
+
+  if (event.type === "network:req") {
+    return (
+      typeof event.requestId === "string" &&
+      typeof event.method === "string" &&
+      typeof event.url === "string"
+    );
+  }
+
+  if (event.type === "network:res") {
+    return typeof event.requestId === "string";
+  }
+
+  return false;
 }
 
 export function createLogsSocketServer(httpServer: HttpServer) {
   const io = new Server(httpServer, {
     cors: {
-      // Adjust this to your dashboard origin when browser access is enabled.
-      origin: ["http://localhost:3000"],
+      origin: "http://localhost:3000",
     },
   });
 
-  io.engine.on("connection_error", (error) => {
-    console.error("[VH Logs] Connection error:", {
-      code: error.code,
-      message: error.message,
-      context: error.context,
-    });
+  const database = createLogsDatabase();
+  const queue = createLogsQueue(database, {
+    maxPendingEvents: 5_000,
   });
 
   io.on("connection", (socket) => {
-    console.log(`[VH Logs] Client connected: ${socket.id}`);
-
     socket.on(
       "vh:events",
-      (payload: unknown, acknowledge?: (result: VHEventsAck) => void) => {
-        console.log("[VH Logs] vh:events received", {
-          isArray: Array.isArray(payload),
-          count: Array.isArray(payload) ? payload.length : 0,
-        });
-
-        if (typeof acknowledge !== "function") {
-          console.warn(
-            "[VH Logs] Received batch without acknowledgement callback",
-          );
-          return;
-        }
+      (payload: unknown, acknowledge?: (response: VHEventsAck) => void) => {
+        const ack = typeof acknowledge === "function" ? acknowledge : () => {};
 
         if (
           !Array.isArray(payload) ||
           payload.length === 0 ||
           payload.length > MAX_BATCH_SIZE
         ) {
-          acknowledge({
+          ack({
             ok: false,
-            error: `Expected between 1 and ${MAX_BATCH_SIZE} events`,
+            error: `Batch must contain 1-${MAX_BATCH_SIZE} events`,
           });
           return;
         }
 
         if (!payload.every(isVHEvent)) {
-          acknowledge({
+          ack({
             ok: false,
             error: "Batch contains invalid events",
           });
           return;
         }
 
-        const batch = payload as VHEvent[];
-        const batchIds = new Set<string>();
+        const events = payload as IncomingVHEvent[];
+        const eventIds = events.map((event) => event.eventId);
 
-        // Reject conflicting duplicate IDs within the same batch.
-        for (const event of batch) {
-          if (batchIds.has(event.eventId)) {
-            acknowledge({
-              ok: false,
-              error: `Duplicate eventId in batch: ${event.eventId}`,
-            });
-            return;
-          }
-
-          batchIds.add(event.eventId);
+        if (
+          eventIds.some((id) => id.length === 0) ||
+          new Set(eventIds).size !== eventIds.length
+        ) {
+          ack({
+            ok: false,
+            error: "Event IDs must be non-empty and unique within a batch",
+          });
+          return;
         }
 
-        for (const event of batch) {
-          // Retried events are already accepted; don't store them twice.
-          if (events.has(event.eventId)) {
-            continue;
-          }
+        void queue.enqueue(events).then(
+          (persistedIds) => {
+            const logEvents = events.filter((event) => event.type === "log");
 
-          events.set(event.eventId, event);
+            const networkEvents = events.filter(
+              (event) =>
+                event.type === "network:req" || event.type === "network:res",
+            );
 
-          if (events.size > MAX_STORED_EVENTS) {
-            const oldestId = events.keys().next().value;
+            const appNames = [...new Set(events.map((event) => event.appName))];
 
-            if (oldestId !== undefined) {
-              events.delete(oldestId);
+            if (logEvents.length > 0) {
+              io.emit("vh:logs:new", {
+                appNames: [...new Set(logEvents.map((event) => event.appName))],
+                eventIds: logEvents.map((event) => event.eventId),
+                timestamp: Date.now(),
+              });
             }
-          }
 
-          console.log(
-            `[VH Logs] ${event.appName} | ${event.type} | ${event.eventId}`,
-          );
-        }
+            if (networkEvents.length > 0) {
+              io.emit("vh:network:new", {
+                appNames: [
+                  ...new Set(networkEvents.map((event) => event.appName)),
+                ],
+                eventIds: networkEvents.map((event) => event.eventId),
+                timestamp: Date.now(),
+              });
+            }
 
-        // Confirms in-memory acceptance, not durable database storage.
-        acknowledge({
-          ok: true,
-          eventIds: batch.map((event) => event.eventId),
-        });
+            ack({
+              ok: true,
+              eventIds: persistedIds,
+            });
+          },
+          (error: unknown) => {
+            const message =
+              error instanceof Error
+                ? error.message
+                : "Failed to process events";
+
+            ack({
+              ok: false,
+              error: message,
+            });
+          },
+        );
       },
     );
-
-    socket.on("disconnect", (reason) => {
-      console.log(`[VH Logs] Client disconnected: ${socket.id} (${reason})`);
-    });
   });
+
+  let closing = false;
+
+  function close(): void {
+    if (closing) {
+      return;
+    }
+
+    closing = true;
+    queue.close();
+
+    // Close Socket.IO first, then release the database connection.
+    io.close(() => {
+      database.close();
+    });
+  }
 
   return {
     io,
-
-    getEvents(): VHEvent[] {
-      return Array.from(events.values());
-    },
-
-    close(): Promise<void> {
-      return new Promise((resolve) => {
-        io.close(() => resolve());
-      });
-    },
+    database,
+    queue,
+    close,
   };
 }
-
-export type LogsSocketServer = ReturnType<typeof createLogsSocketServer>;

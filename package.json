@@ -1,6 +1,6 @@
 {
   "name": "vh-dev-helper",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Developer productivity CLI and dashboard toolkit",
   "type": "commonjs",
   "main": "dist/bin/index.js",
@@ -17,10 +17,14 @@
   },
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "yarn run clean && tsc -p tsconfig.json",
     "prepare": "yarn build",
     "dev": "tsc -w",
-    "prepublishOnly": "yarn clean && yarn build"
+    "prepublishOnly": "yarn clean && yarn build",
+    "dh": "node dist/bin/index.js",
+    "build:dashboard": "yarn --cwd dashboard build",
+    "build:server": "tsc -p tsconfig.json",
+    "copy:dashboard": "mkdir -p dist/dashboard && cp -R dashboard/out/. dist/dashboard/",
+    "build": "yarn build:dashboard && yarn run clean && tsc -p tsconfig.json && yarn copy:dashboard"
   },
   "keywords": [
     "cli",
@@ -37,16 +41,19 @@
   "license": "MIT",
   "dependencies": {
     "@clack/prompts": "^1.6.0",
+    "better-sqlite3": "^13.0.3",
     "chalk": "^5.6.2",
     "cli-progress": "^3.12.0",
     "cli-table3": "^0.6.5",
     "commander": "^15.0.0",
     "enquirer": "^2.4.1",
     "log-update": "^8.0.0",
+    "sirv": "^3.0.2",
     "socket.io": "^4.8.4",
     "typescript": "^6.0.3"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^9.6.0",
     "@types/node": "^25.9.1"
   }
 }
