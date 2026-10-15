@@ -5,6 +5,7 @@ export default defineConfig({
     index: "src/index.ts",
     "browser/index": "src/browser/index.ts",
     "node/index": "src/node/index.ts",
+    "react-native/index": "src/react-native/index.ts",
   },
   format: ["esm"],
   dts: true,

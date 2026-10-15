@@ -14,17 +14,36 @@ export interface VHLogEvent extends VHBaseEvent {
   fingerprint: string;
 }
 
+export type VHHeaders = Record<string, string>;
+
+export type VHQueryParams = Record<
+  string,
+  string | number | boolean | null | undefined
+>;
+
 export interface VHNetworkRequestEvent extends VHBaseEvent {
   type: "network:req";
   requestId: string;
+
+  /** HTTP request details */
   method: string;
   url: string;
+  params?: VHQueryParams;
+  headers?: VHHeaders;
+  body?: unknown;
 }
 
 export interface VHNetworkResponseEvent extends VHBaseEvent {
   type: "network:res";
   requestId: string;
+
+  /** HTTP response details */
+  method?: string;
+  url?: string;
   status?: number;
+  statusText?: string;
+  headers?: VHHeaders;
+  body?: unknown;
   durationMs?: number;
   error?: string;
 }
@@ -44,11 +63,19 @@ export interface VHNetworkRequestInput {
   requestId: string;
   method: string;
   url: string;
+  params?: VHQueryParams;
+  headers?: VHHeaders;
+  body?: unknown;
 }
 
 export interface VHNetworkResponseInput {
   requestId: string;
+  method?: string;
+  url?: string;
   status?: number;
+  statusText?: string;
+  headers?: VHHeaders;
+  body?: unknown;
   durationMs?: number;
   error?: string;
 }

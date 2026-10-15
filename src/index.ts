@@ -161,6 +161,9 @@ export function createVH(options: VHOptions): VHClient {
           requestId: input.requestId,
           method: input.method,
           url: input.url,
+          ...(input.params === undefined ? {} : { params: input.params }),
+          ...(input.headers === undefined ? {} : { headers: input.headers }),
+          ...(input.body === undefined ? {} : { body: input.body }),
           timestamp: Date.now(),
         });
       },
@@ -171,7 +174,14 @@ export function createVH(options: VHOptions): VHClient {
           eventId: createId(),
           appName,
           requestId: input.requestId,
+          ...(input.method === undefined ? {} : { method: input.method }),
+          ...(input.url === undefined ? {} : { url: input.url }),
           ...(input.status === undefined ? {} : { status: input.status }),
+          ...(input.statusText === undefined
+            ? {}
+            : { statusText: input.statusText }),
+          ...(input.headers === undefined ? {} : { headers: input.headers }),
+          ...(input.body === undefined ? {} : { body: input.body }),
           ...(input.durationMs === undefined
             ? {}
             : { durationMs: input.durationMs }),
