@@ -1,3 +1,5 @@
+import { sha256 } from "@noble/hashes/sha2.js";
+import { bytesToHex, utf8ToBytes } from "@noble/hashes/utils.js";
 import type { VHLogLevel } from "./types.js";
 
 function stableStringify(value: unknown): string {
@@ -10,7 +12,6 @@ function stableStringify(value: unknown): string {
   }
 
   const record = value as Record<string, unknown>;
-
   const keys = Object.keys(record).sort();
 
   return `{${keys
@@ -29,10 +30,5 @@ export async function createFingerprint(
     data: data ?? null,
   });
 
-  const bytes = new TextEncoder().encode(input);
-  const hash = await crypto.subtle.digest("SHA-256", bytes);
-
-  return Array.from(new Uint8Array(hash))
-    .map((byte) => byte.toString(16).padStart(2, "0"))
-    .join("");
+  return bytesToHex(sha256(utf8ToBytes(input)));
 }
