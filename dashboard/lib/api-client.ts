@@ -1,6 +1,9 @@
 import type { AppsResponse } from "@/types/apps";
 import type { LogsResponse } from "@/types/logs";
-import type { NetworkRequestsResponse } from "@/types/network";
+import type {
+  NetworkRequestsResponse,
+  NetworkRequestDetailsResponse,
+} from "@/types/network";
 
 type ApiParams = Record<string, string | number | boolean | null | undefined>;
 
@@ -40,5 +43,12 @@ export const apiClient = {
     cursor?: string;
   }): Promise<NetworkRequestsResponse> {
     return apiGet("/api/network-requests", params);
+  },
+
+  getNetworkRequestDetails(params?: {
+    limit?: number;
+    cursor?: string;
+  }): Promise<NetworkRequestDetailsResponse> {
+    return apiGet("/api/network-request-details", params);
   },
 };

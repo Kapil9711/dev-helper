@@ -112,7 +112,7 @@ function getFilters(params: URLSearchParams) {
 }
 
 export function createLogsApi(dbPath: string) {
-  // Separate SQLite connection; WAL permits concurrent reads and writes.
+  // Separate read-only connection; WAL permits concurrent reads and writes.
   const db = new Database(dbPath, {
     readonly: true,
     fileMustExist: true,
@@ -182,6 +182,7 @@ export function createLogsApi(dbPath: string) {
 
     const hasMore = rows.length > filters.limit;
     const data = hasMore ? rows.slice(0, filters.limit) : rows;
+
     const last = data[data.length - 1];
 
     return {
@@ -282,6 +283,7 @@ export function createLogsApi(dbPath: string) {
 
     const hasMore = rows.length > filters.limit;
     const data = hasMore ? rows.slice(0, filters.limit) : rows;
+
     const last = data[data.length - 1];
 
     return {
@@ -300,6 +302,107 @@ export function createLogsApi(dbPath: string) {
     };
   }
 
+  function listNetworkRequestDetails(params: URLSearchParams) {
+    const filters = getFilters(params);
+    const method = getQueryValue(params, "method")?.toUpperCase();
+    const statusValue = getQueryValue(params, "status");
+
+    let status: number | undefined;
+
+    if (statusValue !== undefined) {
+      if (!/^\d{3}$/.test(statusValue)) {
+        throw new Error("status must be an HTTP status code");
+      }
+
+      status = Number(statusValue);
+
+      if (status < 100 || status > 599) {
+        throw new Error("status must be between 100 and 599");
+      }
+    }
+
+    const conditions: string[] = [];
+    const values: (string | number)[] = [];
+
+    if (filters.appName) {
+      conditions.push("app_name = ?");
+      values.push(filters.appName);
+    }
+
+    if (method) {
+      conditions.push("method = ?");
+      values.push(method);
+    }
+
+    if (status !== undefined) {
+      conditions.push("status = ?");
+      values.push(status);
+    }
+
+    if (filters.search) {
+      conditions.push("(url LIKE ? OR method LIKE ?)");
+      const term = `%${filters.search}%`;
+      values.push(term, term);
+    }
+
+    if (filters.from !== undefined) {
+      conditions.push("started_at >= ?");
+      values.push(filters.from);
+    }
+
+    if (filters.to !== undefined) {
+      conditions.push("started_at <= ?");
+      values.push(filters.to);
+    }
+
+    if (filters.cursor) {
+      conditions.push("(started_at < ? OR (started_at = ? AND id < ?))");
+      values.push(
+        filters.cursor.lastSeen,
+        filters.cursor.lastSeen,
+        filters.cursor.id,
+      );
+    }
+
+    const where = conditions.length ? `WHERE ${conditions.join(" AND ")}` : "";
+
+    const rows = db
+      .prepare(
+        `
+        SELECT *
+        FROM network_request_details
+        ${where}
+        ORDER BY started_at DESC, id DESC
+        LIMIT ?
+      `,
+      )
+      .all(...values, filters.limit + 1) as Array<{
+      id: number;
+      started_at: number;
+      [key: string]: unknown;
+    }>;
+
+    const hasMore = rows.length > filters.limit;
+    const data = hasMore ? rows.slice(0, filters.limit) : rows;
+
+    const last = data[data.length - 1];
+
+    return {
+      data,
+      pagination: {
+        limit: filters.limit,
+        hasMore,
+        nextCursor:
+          hasMore && last
+            ? encodeCursor({
+                lastSeen: last.started_at,
+                id: last.id,
+              })
+            : null,
+      },
+    };
+  }
+
   function listApps() {
     const rows = db
       .prepare(
@@ -309,6 +412,9 @@ export function createLogsApi(dbPath: string) {
           SELECT app_name, last_seen FROM console_logs
           UNION ALL
           SELECT app_name, last_seen FROM network_requests
+          UNION ALL
+          SELECT app_name, started_at AS last_seen
+          FROM network_request_details
         )
         GROUP BY app_name
         ORDER BY app_name ASC
@@ -325,11 +431,14 @@ export function createLogsApi(dbPath: string) {
     pathname: string,
     searchParams: URLSearchParams,
   ): boolean {
-    if (
-      pathname !== "/api/logs" &&
-      pathname !== "/api/network-requests" &&
-      pathname !== "/api/apps"
-    ) {
+    const supportedPaths = [
+      "/api/logs",
+      "/api/network-requests",
+      "/api/network-request-details",
+      "/api/apps",
+    ];
+
+    if (!supportedPaths.includes(pathname)) {
       return false;
     }
 
@@ -344,6 +453,8 @@ export function createLogsApi(dbPath: string) {
         sendJson(res, 200, listLogs(searchParams));
       } else if (pathname === "/api/network-requests") {
         sendJson(res, 200, listNetworkRequests(searchParams));
+      } else if (pathname === "/api/network-request-details") {
+        sendJson(res, 200, listNetworkRequestDetails(searchParams));
       } else {
         sendJson(res, 200, listApps());
       }

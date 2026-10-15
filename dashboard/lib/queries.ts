@@ -5,6 +5,8 @@ export const queryKeys = {
   apps: ["apps"] as const,
   logs: (limit: number) => ["logs", limit] as const,
   networkRequests: (limit: number) => ["network-requests", limit] as const,
+  networkRequestDetails: (limit: number) =>
+    ["network-request-details", limit] as const,
 };
 
 export function useAppsQuery() {
@@ -27,6 +29,14 @@ export function useNetworkRequestsQuery(limit = 50) {
   return useQuery({
     queryKey: queryKeys.networkRequests(limit),
     queryFn: () => apiClient.getNetworkRequests({ limit }),
+    staleTime: 2_000,
+  });
+}
+
+export function useNetworkRequestDetailsQuery(limit = 100) {
+  return useQuery({
+    queryKey: queryKeys.networkRequestDetails(limit),
+    queryFn: () => apiClient.getNetworkRequestDetails({ limit }),
     staleTime: 2_000,
   });
 }

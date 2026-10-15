@@ -4,11 +4,25 @@ import { useMemo, useState } from "react";
 import { Search, RefreshCw, Network } from "lucide-react";
 import { RequestTable } from "@/components/network/request-table";
 import { RequestDetails } from "@/components/network/request-details";
-import { useNetworkRequestsQuery } from "@/lib/queries";
-import type { NetworkRequest } from "@/types/network";
+import {
+  useNetworkRequestsQuery,
+  useNetworkRequestDetailsQuery,
+} from "@/lib/queries";
+import type { NetworkRequest, NetworkRequestDetail } from "@/types/network";
+
+function normalizeUrl(value: string): string {
+  try {
+    const url = new URL(value);
+    url.hash = "";
+    return url.toString();
+  } catch {
+    return value.trim();
+  }
+}
 
 export default function NetworkPage() {
   const query = useNetworkRequestsQuery(100);
+  const detailsQuery = useNetworkRequestDetailsQuery(100);
 
   const [search, setSearch] = useState("");
   const [method, setMethod] = useState("ALL");
@@ -28,26 +42,58 @@ export default function NetworkPage() {
       const matchesMethod =
         method === "ALL" || request.method.toUpperCase() === method;
 
-      const matchesStatus =
-        status === "ALL" ||
-        (status === "SUCCESS" &&
+      let matchesStatus = status === "ALL";
+
+      if (status === "SUCCESS") {
+        matchesStatus =
           request.status !== null &&
           request.status >= 200 &&
           request.status < 400 &&
-          !request.error) ||
-        (status === "CLIENT_ERROR" &&
+          !request.error;
+      } else if (status === "CLIENT_ERROR") {
+        matchesStatus =
           request.status !== null &&
           request.status >= 400 &&
-          request.status < 500) ||
-        (status === "SERVER_ERROR" &&
-          request.status !== null &&
-          request.status >= 500) ||
-        (status === "ERROR" &&
-          (request.status === null || request.error !== null));
+          request.status < 500;
+      } else if (status === "SERVER_ERROR") {
+        matchesStatus = request.status !== null && request.status >= 500;
+      } else if (status === "ERROR") {
+        matchesStatus = request.status === null || request.error !== null;
+      }
 
       return matchesSearch && matchesMethod && matchesStatus;
     });
   }, [query.data, search, method, status]);
+
+  const selectedDetail = useMemo<NetworkRequestDetail | null>(() => {
+    if (!selected) return null;
+
+    const matchingDetails = (detailsQuery.data?.data ?? []).filter(
+      (detail) =>
+        detail.app_name === selected.app_name &&
+        detail.method.toUpperCase() === selected.method.toUpperCase() &&
+        normalizeUrl(detail.url) === normalizeUrl(selected.url),
+    );
+
+    // Prefer the newest individual request for this aggregate.
+    return (
+      matchingDetails.sort(
+        (a, b) => b.started_at - a.started_at || b.id - a.id,
+      )[0] ?? null
+    );
+  }, [selected, detailsQuery.data]);
+
+  const refresh = () => {
+    void Promise.all([query.refetch(), detailsQuery.refetch()]);
+  };
+
+  const isFetching = query.isFetching || detailsQuery.isFetching;
+
+  const errorCount = (query.data?.data ?? []).filter(
+    (request) =>
+      request.error !== null ||
+      (request.status !== null && request.status >= 400),
+  ).length;
 
   return (
     <main className="min-h-[calc(100vh-4rem)] bg-[#0b1120] p-5 text-white md:p-7">
@@ -60,21 +106,18 @@ export default function NetworkPage() {
         </div>
 
         <button
-          onClick={() => void query.refetch()}
-          disabled={query.isFetching}
+          onClick={refresh}
+          disabled={isFetching}
           className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-gray-300 hover:bg-white/[0.07] disabled:opacity-50"
         >
-          <RefreshCw
-            size={15}
-            className={query.isFetching ? "animate-spin" : ""}
-          />
+          <RefreshCw size={15} className={isFetching ? "animate-spin" : ""} />
           Refresh
         </button>
       </div>
 
       <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
         <div className="rounded-xl border border-white/10 bg-[#111827] p-4">
-          <p className="text-xs text-gray-500">Loaded requests</p>
+          <p className="text-xs text-gray-500">Loaded request groups</p>
           <p className="mt-2 text-2xl font-semibold">
             {query.data?.data.length ?? "—"}
           </p>
@@ -88,13 +131,7 @@ export default function NetworkPage() {
         <div className="rounded-xl border border-white/10 bg-[#111827] p-4">
           <p className="text-xs text-gray-500">Request groups with errors</p>
           <p className="mt-2 text-2xl font-semibold text-red-400">
-            {
-              (query.data?.data ?? []).filter(
-                (request) =>
-                  request.error !== null ||
-                  (request.status !== null && request.status >= 400),
-              ).length
-            }
+            {errorCount}
           </p>
         </div>
       </div>
@@ -143,7 +180,7 @@ export default function NetworkPage() {
               Failed to load network requests.
             </p>
             <button
-              onClick={() => void query.refetch()}
+              onClick={refresh}
               className="mt-3 text-sm text-blue-400 hover:text-blue-300"
             >
               Try again
@@ -164,11 +201,12 @@ export default function NetworkPage() {
         <div className="flex items-center justify-between border-t border-white/10 px-4 py-3 text-xs text-gray-500">
           <span>
             Showing {requests.length} of {query.data?.data.length ?? 0} loaded
-            records
+            groups
           </span>
+
           <span className="flex items-center gap-1.5">
             <Network size={13} />
-            Live updates enabled
+            {isFetching ? "Updating..." : "Refresh to check for new activity"}
           </span>
         </div>
       </div>
@@ -180,11 +218,33 @@ export default function NetworkPage() {
             className="flex-1 cursor-default"
             onClick={() => setSelected(null)}
           />
+
           <div className="h-full w-full max-w-lg overflow-y-auto border-l border-white/10 bg-[#0e1626] shadow-2xl">
-            <RequestDetails
-              request={selected}
-              onClose={() => setSelected(null)}
-            />
+            {detailsQuery.isError ? (
+              <div className="p-6">
+                <p className="text-sm text-red-300">
+                  Failed to load individual request details.
+                </p>
+                <button
+                  onClick={() => void detailsQuery.refetch()}
+                  className="mt-3 text-sm text-blue-400 hover:text-blue-300"
+                >
+                  Retry
+                </button>
+                <button
+                  onClick={() => setSelected(null)}
+                  className="mt-3 block text-sm text-gray-400 hover:text-white"
+                >
+                  Close
+                </button>
+              </div>
+            ) : (
+              <RequestDetails
+                request={selected}
+                detail={selectedDetail}
+                onClose={() => setSelected(null)}
+              />
+            )}
           </div>
         </div>
       )}
