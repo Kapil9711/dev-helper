@@ -3,9 +3,11 @@ function createId() {
   if (typeof globalThis.crypto?.randomUUID === "function") {
     return globalThis.crypto.randomUUID();
   }
-  throw new Error(
-    "Secure randomUUID is unavailable. Use a modern runtime with Web Crypto support."
-  );
+  return [
+    Date.now().toString(36),
+    Math.random().toString(36).slice(2),
+    Math.random().toString(36).slice(2)
+  ].join("-");
 }
 
 // src/core/batcher.ts
@@ -85,6 +87,8 @@ var EventBatcher = class {
 };
 
 // src/core/fingerprint.ts
+import { sha256 } from "@noble/hashes/sha2.js";
+import { bytesToHex, utf8ToBytes } from "@noble/hashes/utils.js";
 function stableStringify(value) {
   if (value === null || typeof value !== "object") {
     return JSON.stringify(value) ?? "undefined";
@@ -102,9 +106,7 @@ async function createFingerprint(level, message, data) {
     message,
     data: data ?? null
   });
-  const bytes = new TextEncoder().encode(input);
-  const hash = await crypto.subtle.digest("SHA-256", bytes);
-  return Array.from(new Uint8Array(hash)).map((byte) => byte.toString(16).padStart(2, "0")).join("");
+  return bytesToHex(sha256(utf8ToBytes(input)));
 }
 
 // src/core/transport.ts
@@ -298,6 +300,9 @@ function createVH(options) {
           requestId: input.requestId,
           method: input.method,
           url: input.url,
+          ...input.params === void 0 ? {} : { params: input.params },
+          ...input.headers === void 0 ? {} : { headers: input.headers },
+          ...input.body === void 0 ? {} : { body: input.body },
           timestamp: Date.now()
         });
       },
@@ -307,7 +312,12 @@ function createVH(options) {
           eventId: createId(),
           appName,
           requestId: input.requestId,
+          ...input.method === void 0 ? {} : { method: input.method },
+          ...input.url === void 0 ? {} : { url: input.url },
           ...input.status === void 0 ? {} : { status: input.status },
+          ...input.statusText === void 0 ? {} : { statusText: input.statusText },
+          ...input.headers === void 0 ? {} : { headers: input.headers },
+          ...input.body === void 0 ? {} : { body: input.body },
           ...input.durationMs === void 0 ? {} : { durationMs: input.durationMs },
           ...input.error === void 0 ? {} : { error: input.error },
           timestamp: Date.now()
