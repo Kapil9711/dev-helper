@@ -41,6 +41,7 @@ interface VHOptions {
     appName: string;
     serverUrl: string | string[];
     showConsoleOnLog?: boolean;
+    isDisabled?: boolean;
 }
 interface VHNetworkRequestInput {
     requestId: string;

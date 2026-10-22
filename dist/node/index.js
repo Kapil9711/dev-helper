@@ -229,17 +229,20 @@ function createVH(options) {
     throw new Error("serverUrl must contain valid http:// or https:// URLs");
   }
   const showConsoleOnLog = options.showConsoleOnLog ?? true;
-  const transports = serverUrls.map(
-    (serverUrl) => new VHTransport({ serverUrl })
-  );
+  let transports = [];
+  if (!options.isDisabled) {
+    transports = serverUrls.map((serverUrl) => new VHTransport({ serverUrl }));
+  }
   const batcher = new EventBatcher({
     maxBatchSize: 50,
     flushIntervalMs: 5e3,
     maxQueueSize: 5e3,
     async onFlush(events) {
-      await Promise.all(
-        transports.map((transport) => transport.sendBatch(events))
-      );
+      if (!options.isDisabled) {
+        await Promise.all(
+          transports.map((transport) => transport.sendBatch(events))
+        );
+      }
     }
   });
   let destroyed = false;
@@ -335,7 +338,11 @@ function createVH(options) {
       await waitForPendingLogs();
       await batcher.destroy();
       destroyed = true;
-      await Promise.all(transports.map((transport) => transport.destroy()));
+      if (!options.isDisabled) {
+        await Promise.all(
+          transports.map((transport) => transport.destroy())
+        );
+      }
     }
   };
 }
