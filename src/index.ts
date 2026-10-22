@@ -68,9 +68,11 @@ export function createVH(options: VHOptions): VHClient {
 
   const showConsoleOnLog = options.showConsoleOnLog ?? true;
 
-  const transports = serverUrls.map(
-    (serverUrl) => new VHTransport({ serverUrl }),
-  );
+  let transports: any = [];
+
+  if (!options.isDisabled) {
+    transports = serverUrls.map((serverUrl) => new VHTransport({ serverUrl }));
+  }
 
   const batcher = new EventBatcher({
     maxBatchSize: 50,
@@ -78,9 +80,11 @@ export function createVH(options: VHOptions): VHClient {
     maxQueueSize: 5000,
 
     async onFlush(events) {
-      await Promise.all(
-        transports.map((transport) => transport.sendBatch(events)),
-      );
+      if (!options.isDisabled) {
+        await Promise.all(
+          transports.map((transport: any) => transport.sendBatch(events)),
+        );
+      }
     },
   });
 
@@ -196,7 +200,11 @@ export function createVH(options: VHOptions): VHClient {
 
       destroyed = true;
 
-      await Promise.all(transports.map((transport) => transport.destroy()));
+      if (!options.isDisabled) {
+        await Promise.all(
+          transports.map((transport: any) => transport.destroy()),
+        );
+      }
     },
   };
 }

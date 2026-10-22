@@ -38,6 +38,7 @@ export interface VHOptions {
   appName: string;
   serverUrl: string | string[];
   showConsoleOnLog?: boolean;
+  isDisabled?: boolean;
 }
 
 export interface VHNetworkRequestInput {
