@@ -15,10 +15,12 @@ import {
   Tag,
   GitMerge,
   ExternalLink,
+  Split,
   X,
 } from "lucide-react";
 import { playTone } from "@/lib/prefrences";
 import { useGitCommitDetailsQuery } from "@/lib/queries";
+import { CommitDiffModal } from "./commit-diff-modal";
 
 interface CommitHistoryProps {
   commits: GitCommitItem[];
@@ -50,7 +52,7 @@ function getInitials(name: string): string {
 export function CommitHistory({ commits }: CommitHistoryProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [copiedHash, setCopiedHash] = useState<string | null>(null);
-  const [selectedCommitHash, setSelectedCommitHash] = useState<string | null>(null);
+  const [modalCommit, setModalCommit] = useState<GitCommitItem | null>(null);
 
   // Filter commits by query
   const filteredCommits = useMemo(() => {
@@ -67,9 +69,7 @@ export function CommitHistory({ commits }: CommitHistoryProps) {
     );
   }, [commits, searchTerm]);
 
-  // Selected commit query
-  const commitDetailsQuery = useGitCommitDetailsQuery(selectedCommitHash || undefined);
-
+  // Selected commit query (not needed for inline raw view now that we use modal)
   const handleCopyHash = async (hash: string) => {
     try {
       await navigator.clipboard.writeText(hash);
@@ -112,7 +112,7 @@ export function CommitHistory({ commits }: CommitHistoryProps) {
         ) : (
           filteredCommits.map((c) => {
             const isCopied = copiedHash === c.hash;
-            const isSelected = selectedCommitHash === c.hash;
+            const isModalOpen = modalCommit?.hash === c.hash;
             const isHead = c.refs && c.refs.some((r) => r.includes("HEAD"));
             const isMerge = c.parents && c.parents.length > 1;
 
@@ -120,7 +120,7 @@ export function CommitHistory({ commits }: CommitHistoryProps) {
               <div
                 key={c.hash}
                 onClick={() => {
-                  setSelectedCommitHash(isSelected ? null : c.hash);
+                  setModalCommit(c);
                   playTone("click");
                 }}
                 className={`relative pl-11 group transition cursor-pointer select-none`}
@@ -132,7 +132,7 @@ export function CommitHistory({ commits }: CommitHistoryProps) {
                       ? "border-emerald-400 bg-emerald-500 shadow-[0_0_10px_rgba(52,211,153,0.7)]"
                       : isMerge
                       ? "border-purple-400 bg-purple-600"
-                      : isSelected
+                      : isModalOpen
                       ? "border-sky-400 bg-sky-500 shadow-[0_0_8px_rgba(56,189,248,0.6)]"
                       : "border-sky-400 bg-slate-900"
                   }`}
@@ -143,12 +143,12 @@ export function CommitHistory({ commits }: CommitHistoryProps) {
                 {/* Commit Box Card */}
                 <div
                   className={`p-3.5 rounded-xl border transition ${
-                    isSelected
+                    isModalOpen
                       ? "border-sky-500/50 bg-sky-500/10 shadow-sm"
                       : "vh-border bg-black/5 dark:bg-white/5 hover:border-sky-500/30 hover:bg-white/5"
                   }`}
                 >
-                  {/* Branch & Tag Pills ("Branches who did the commit") */}
+                  {/* Branch & Tag Pills */}
                   {c.refs && c.refs.length > 0 && (
                     <div className="flex flex-wrap items-center gap-1.5 mb-2">
                       {c.refs.map((refStr, rIdx) => {
@@ -183,27 +183,42 @@ export function CommitHistory({ commits }: CommitHistoryProps) {
                     </div>
                   )}
 
-                  {/* Message & Short Hash */}
+                  {/* Message, Split Diff Button & Short Hash */}
                   <div className="flex items-start justify-between gap-3">
                     <p className="text-xs font-semibold vh-text-main leading-relaxed">
                       {c.message}
                     </p>
 
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleCopyHash(c.hash);
-                      }}
-                      title="Copy full commit SHA"
-                      className="flex items-center gap-1 font-mono text-[10.5px] px-2 py-0.5 rounded border vh-border bg-white/5 vh-text-muted hover:text-sky-400 hover:border-sky-400/40 transition shrink-0"
-                    >
-                      {isCopied ? (
-                        <Check size={11} className="text-emerald-400" />
-                      ) : (
-                        <Copy size={11} />
-                      )}
-                      <span>{c.shortHash}</span>
-                    </button>
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setModalCommit(c);
+                          playTone("click");
+                        }}
+                        title="Open side-by-side split diff modal for this commit"
+                        className="flex items-center gap-1 font-mono text-[11px] px-2.5 py-0.5 rounded-lg border border-sky-500/30 bg-sky-500/10 text-sky-400 hover:bg-sky-500/20 font-semibold transition shadow-xs"
+                      >
+                        <Split size={12} />
+                        <span>Split Diff</span>
+                      </button>
+
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleCopyHash(c.hash);
+                        }}
+                        title="Copy full commit SHA"
+                        className="flex items-center gap-1 font-mono text-[10.5px] px-2 py-0.5 rounded-lg border vh-border bg-white/5 vh-text-muted hover:text-sky-400 hover:border-sky-400/40 transition"
+                      >
+                        {isCopied ? (
+                          <Check size={11} className="text-emerald-400" />
+                        ) : (
+                          <Copy size={11} />
+                        )}
+                        <span>{c.shortHash}</span>
+                      </button>
+                    </div>
                   </div>
 
                   {/* Author & Timestamp Bar */}
@@ -230,43 +245,19 @@ export function CommitHistory({ commits }: CommitHistoryProps) {
                       <span>{c.date}</span>
                     </div>
                   </div>
-
-                  {/* Expanded Commit Diff Preview */}
-                  {isSelected && (
-                    <div
-                      onClick={(e) => e.stopPropagation()}
-                      className="mt-3 pt-3 border-t vh-border space-y-2 animate-in fade-in duration-150"
-                    >
-                      <div className="flex items-center justify-between text-xs">
-                        <span className="font-mono text-sky-400 font-semibold flex items-center gap-1.5">
-                          <FileCode size={13} />
-                          Commit Inspector: {c.shortHash}
-                        </span>
-                        <button
-                          onClick={() => setSelectedCommitHash(null)}
-                          className="text-[10px] vh-text-dim hover:text-white"
-                        >
-                          Collapse
-                        </button>
-                      </div>
-
-                      {commitDetailsQuery.isLoading ? (
-                        <p className="text-xs vh-text-dim py-2 font-mono">Loading commit diff...</p>
-                      ) : commitDetailsQuery.data?.output ? (
-                        <pre className="p-3 rounded-lg bg-black/40 border vh-border font-mono text-[11px] overflow-x-auto max-h-64 whitespace-pre text-slate-300">
-                          {commitDetailsQuery.data.output}
-                        </pre>
-                      ) : (
-                        <p className="text-xs vh-text-dim py-2">No commit details available.</p>
-                      )}
-                    </div>
-                  )}
                 </div>
               </div>
             );
           })
         )}
       </div>
+
+      {/* Side-by-Side Split Diff Modal for Commits */}
+      <CommitDiffModal
+        commit={modalCommit}
+        isOpen={modalCommit !== null}
+        onClose={() => setModalCommit(null)}
+      />
     </div>
   );
 }
