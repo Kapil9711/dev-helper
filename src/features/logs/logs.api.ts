@@ -6,6 +6,7 @@ import {
   handleGitLog,
   handleGitBranches,
   handleGitAction,
+  handleGitCommitShow,
 } from "./logs.git.api.ts";
 
 type QueryValue = string | undefined;
@@ -567,6 +568,7 @@ export function createLogsApi(dbPath: string) {
       "/api/git/status",
       "/api/git/diff",
       "/api/git/log",
+      "/api/git/commit",
       "/api/git/branches",
       "/api/git/action",
     ];
@@ -619,6 +621,11 @@ export function createLogsApi(dbPath: string) {
 
     if (pathname === "/api/git/log") {
       void handleGitLog(searchParams, res);
+      return true;
+    }
+
+    if (pathname === "/api/git/commit") {
+      void handleGitCommitShow(searchParams, res);
       return true;
     }
 

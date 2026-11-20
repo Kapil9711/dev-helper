@@ -8,6 +8,7 @@ import type {
   GitStatusResponse,
   GitDiffResponse,
   GitLogResponse,
+  GitCommitDetailResponse,
   GitBranchesResponse,
   GitActionPayload,
   GitActionResult,
@@ -24,8 +25,12 @@ async function apiGet<T>(path: string, params?: ApiParams): Promise<T> {
     }
   }
 
+  // Prevent browser from caching dynamic telemetry and git status
+  url.searchParams.set("_t", String(Date.now()));
+
   const response = await fetch(url.toString(), {
     headers: { Accept: "application/json" },
+    cache: "no-store",
   });
 
   if (!response.ok) {
@@ -178,8 +183,12 @@ export const apiClient = {
     return apiGet("/api/git/diff", params);
   },
 
-  getGitLog(limit = 30): Promise<GitLogResponse> {
+  getGitLog(limit = 50): Promise<GitLogResponse> {
     return apiGet("/api/git/log", { limit });
+  },
+
+  getGitCommitDetails(hash: string): Promise<GitCommitDetailResponse> {
+    return apiGet("/api/git/commit", { hash });
   },
 
   getGitBranches(): Promise<GitBranchesResponse> {

@@ -76,10 +76,10 @@ export async function handleGitLog(
   res: ServerResponse,
 ): Promise<void> {
   try {
-    const limitStr = searchParams.get("limit") || "30";
-    const limit = Math.min(Math.max(Number(limitStr) || 30, 1), 100);
+    const limitStr = searchParams.get("limit") || "50";
+    const limit = Math.min(Math.max(Number(limitStr) || 50, 1), 100);
 
-    const cmd = `git log -n ${limit} --pretty=format:"%H|%h|%an|%ae|%ad|%s" --date=short`;
+    const cmd = `git log -n ${limit} --pretty=format:"%H|%h|%an|%ae|%ad|%ar|%d|%p|%s" --date=short`;
     const result = await exec(cmd, { timeout: 30000 });
 
     if (!result.success) {
@@ -92,14 +92,37 @@ export async function handleGitLog(
       .map((line) => line.trim())
       .filter(Boolean)
       .map((line) => {
-        const [hash, shortHash, author, email, date, ...messageParts] =
-          line.split("|");
+        const [
+          hash,
+          shortHash,
+          author,
+          email,
+          date,
+          relativeDate,
+          rawRefs,
+          rawParents,
+          ...messageParts
+        ] = line.split("|");
+
+        let refs: string[] = [];
+        if (rawRefs) {
+          const trimmed = rawRefs.trim().replace(/^\(|\)$/g, "").trim();
+          if (trimmed) {
+            refs = trimmed.split(",").map((r) => r.trim()).filter(Boolean);
+          }
+        }
+
+        const parents = rawParents ? rawParents.trim().split(" ").filter(Boolean) : [];
+
         return {
           hash: hash || "",
           shortHash: shortHash || "",
           author: author || "",
           email: email || "",
           date: date || "",
+          relativeDate: relativeDate || "",
+          refs,
+          parents,
           message: messageParts.join("|") || "",
         };
       });
@@ -108,6 +131,31 @@ export async function handleGitLog(
   } catch (err: unknown) {
     const error = err as Error;
     sendJson(res, 500, { error: error.message || "Failed to get git log" });
+  }
+}
+
+export async function handleGitCommitShow(
+  searchParams: URLSearchParams,
+  res: ServerResponse,
+): Promise<void> {
+  try {
+    const hash = searchParams.get("hash");
+    if (!hash) {
+      sendJson(res, 400, { error: "Commit hash is required" });
+      return;
+    }
+    const cleanHash = sanitizeArg(hash);
+    const result = await exec(`git show --stat --patch "${cleanHash}"`, {
+      timeout: 30000,
+    });
+    sendJson(res, 200, {
+      hash: cleanHash,
+      output: result.stdout,
+      error: result.stderr || null,
+    });
+  } catch (err: unknown) {
+    const error = err as Error;
+    sendJson(res, 500, { error: error.message || "Failed to show commit" });
   }
 }
 
@@ -252,6 +300,7 @@ export async function handleGitAction(
         stdout: result.stdout,
         stderr: result.stderr,
         command: cmd,
+        durationMs: result.durationMs,
       });
     } catch (err: unknown) {
       const error = err as Error;

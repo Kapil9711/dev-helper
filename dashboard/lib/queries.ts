@@ -19,6 +19,7 @@ export const queryKeys = {
   gitDiff: (file?: string, staged?: boolean) =>
     ["git-diff", file || "all", staged ? "staged" : "unstaged"] as const,
   gitLog: (limit: number) => ["git-log", limit] as const,
+  gitCommitDetails: (hash: string) => ["git-commit", hash] as const,
   gitBranches: ["git-branches"] as const,
 };
 
@@ -75,11 +76,20 @@ export function useGitDiffQuery(file?: string, staged?: boolean) {
   });
 }
 
-export function useGitLogQuery(limit = 30) {
+export function useGitLogQuery(limit = 50) {
   return useQuery({
     queryKey: queryKeys.gitLog(limit),
     queryFn: () => apiClient.getGitLog(limit),
-    staleTime: 5_000,
+    staleTime: 3_000,
+  });
+}
+
+export function useGitCommitDetailsQuery(hash?: string) {
+  return useQuery({
+    queryKey: queryKeys.gitCommitDetails(hash || ""),
+    queryFn: () => apiClient.getGitCommitDetails(hash!),
+    enabled: Boolean(hash),
+    staleTime: 60_000,
   });
 }
 

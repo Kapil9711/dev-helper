@@ -1,16 +1,18 @@
 export type GitFileKind =
+  | "normal"
   | "modified"
   | "untracked"
   | "deleted"
   | "renamed"
+  | "copy"
   | "conflict";
 
 export interface GitChangedFile {
   path: string;
   origPath?: string;
   kind: GitFileKind;
-  workingTreeStatus: string;
-  indexStatus: string;
+  workTreeStatus: string | null;
+  indexStatus: string | null;
 }
 
 export interface GitCurrentBranch {
@@ -49,11 +51,20 @@ export interface GitCommitItem {
   author: string;
   email: string;
   date: string;
+  relativeDate: string;
+  refs: string[];
+  parents: string[];
   message: string;
 }
 
 export interface GitLogResponse {
   commits: GitCommitItem[];
+}
+
+export interface GitCommitDetailResponse {
+  hash: string;
+  output: string;
+  error: string | null;
 }
 
 export interface GitBranchItem {
@@ -89,5 +100,6 @@ export interface GitActionResult {
   stdout?: string;
   stderr?: string;
   command?: string;
+  durationMs?: number;
   error?: string;
 }
