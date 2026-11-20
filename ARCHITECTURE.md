@@ -314,6 +314,7 @@ A **Next.js 16 App Router** application exported as a static site and bundled in
 | `/` | Dashboard home | Stat cards (apps, log counts) |
 | `/console` | ConsolePanel | `GET /api/logs` |
 | `/network` | RequestTable + RequestDetails | `GET /api/network-requests`, `GET /api/network-request-details` |
+| `/docs` | DocsPage + ApiRequestRunner | Swagger & Scalar style API reference (unique route aggregation, OpenAPI export, code snippets, parameters table, responses accordion, interactive runner) |
 | `/events` | Events view | — |
 | `/projects` | Projects view | — |
 | `/settings` | Settings | User preferences |

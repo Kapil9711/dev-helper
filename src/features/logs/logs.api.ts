@@ -8,7 +8,7 @@ function sendJson(res: ServerResponse, status: number, body: unknown): void {
     "content-type": "application/json; charset=utf-8",
     "cache-control": "no-store",
     "access-control-allow-origin": "*",
-    "access-control-allow-methods": "GET, OPTIONS",
+    "access-control-allow-methods": "GET, POST, OPTIONS",
     "access-control-allow-headers": "Content-Type, Authorization",
   });
 
@@ -428,6 +428,123 @@ export function createLogsApi(dbPath: string) {
     return { data: rows };
   }
 
+  async function handleProxyRequest(
+    req: IncomingMessage,
+    res: ServerResponse,
+  ): Promise<void> {
+    try {
+      const rawBody = await new Promise<string>((resolve, reject) => {
+        let body = "";
+        req.on("data", (chunk) => {
+          body += chunk;
+          if (body.length > 10 * 1024 * 1024) {
+            req.destroy();
+            reject(new Error("Request payload too large (max 10MB)"));
+          }
+        });
+        req.on("end", () => resolve(body));
+        req.on("error", reject);
+      });
+
+      const payload = JSON.parse(rawBody || "{}") as {
+        method?: string;
+        url?: string;
+        headers?: Record<string, string>;
+        params?: Record<string, string>;
+        body?: string | null;
+      };
+
+      const method = String(payload.method || "GET").toUpperCase();
+      let targetUrl = String(payload.url || "").trim();
+
+      if (!targetUrl) {
+        sendJson(res, 400, { error: "URL is required" });
+        return;
+      }
+
+      // Append query params if specified
+      if (payload.params && typeof payload.params === "object") {
+        try {
+          const parsed = new URL(targetUrl, "http://localhost");
+          for (const [k, v] of Object.entries(payload.params)) {
+            if (v !== undefined && v !== null && v !== "") {
+              parsed.searchParams.set(k, String(v));
+            }
+          }
+          targetUrl = parsed.toString();
+        } catch {
+          // Keep targetUrl as is
+        }
+      }
+
+      const headers: Record<string, string> = {};
+      if (payload.headers && typeof payload.headers === "object") {
+        for (const [k, v] of Object.entries(payload.headers)) {
+          if (v !== undefined && v !== null && v !== "") {
+            headers[k] = String(v);
+          }
+        }
+      }
+
+      const reqBody =
+        method !== "GET" && method !== "HEAD" && payload.body != null
+          ? typeof payload.body === "string"
+            ? payload.body
+            : JSON.stringify(payload.body)
+          : undefined;
+
+      const startTime = Date.now();
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 30000);
+
+      try {
+        const response = await fetch(targetUrl, {
+          method,
+          headers,
+          body: reqBody,
+          signal: controller.signal,
+        });
+
+        clearTimeout(timeout);
+        const durationMs = Date.now() - startTime;
+
+        const responseHeaders: Record<string, string> = {};
+        response.headers.forEach((val, key) => {
+          responseHeaders[key] = val;
+        });
+
+        const responseText = await response.text();
+
+        sendJson(res, 200, {
+          status: response.status,
+          statusText: response.statusText,
+          headers: responseHeaders,
+          body: responseText,
+          durationMs,
+        });
+      } catch (fetchError: unknown) {
+        clearTimeout(timeout);
+        const durationMs = Date.now() - startTime;
+        const err = fetchError as Error;
+        const isAbort = err.name === "AbortError";
+
+        sendJson(res, 200, {
+          status: null,
+          statusText: isAbort ? "Request Timeout" : "Network Error",
+          headers: {},
+          body: null,
+          durationMs,
+          error: isAbort
+            ? "Request timed out after 30 seconds"
+            : err.message || "Failed to fetch response",
+        });
+      }
+    } catch (err: unknown) {
+      const error = err as Error;
+      sendJson(res, 400, { error: error.message || "Invalid proxy request" });
+    }
+  }
+
   function handle(
     req: IncomingMessage,
     res: ServerResponse,
@@ -439,6 +556,7 @@ export function createLogsApi(dbPath: string) {
       "/api/network-requests",
       "/api/network-request-details",
       "/api/apps",
+      "/api/proxy",
     ];
 
     if (!supportedPaths.includes(pathname)) {
@@ -448,10 +566,21 @@ export function createLogsApi(dbPath: string) {
     if (req.method === "OPTIONS") {
       res.writeHead(204, {
         "access-control-allow-origin": "*",
-        "access-control-allow-methods": "GET, OPTIONS",
+        "access-control-allow-methods": "GET, POST, OPTIONS",
         "access-control-allow-headers": "Content-Type, Authorization",
       });
       res.end();
+      return true;
+    }
+
+    if (pathname === "/api/proxy") {
+      if (req.method !== "POST") {
+        res.setHeader("allow", "POST, OPTIONS");
+        sendJson(res, 405, { error: "Method not allowed" });
+        return true;
+      }
+
+      void handleProxyRequest(req, res);
       return true;
     }
 

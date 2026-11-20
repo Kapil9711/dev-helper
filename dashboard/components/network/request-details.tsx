@@ -19,6 +19,7 @@ import {
 import { formatDistanceToNow } from "date-fns";
 import type { NetworkRequest, NetworkRequestDetail } from "@/types/network";
 import { PrettyJson } from "@/components/shared/pretty-json";
+import { ApiRequestRunner } from "@/components/shared/api-request-runner";
 import { playTone } from "@/lib/prefrences";
 
 interface RequestDetailsProps {
@@ -28,7 +29,7 @@ interface RequestDetailsProps {
   onClose: () => void;
 }
 
-type TabKey = "overview" | "request" | "response" | "curl";
+type TabKey = "overview" | "request" | "response" | "test" | "curl";
 
 export function RequestDetails({
   request,
@@ -244,6 +245,19 @@ export function RequestDetails({
           {/* Quick Header Actions */}
           <div className="flex items-center gap-2 shrink-0">
             <button
+              onClick={() => setActiveTab("test")}
+              className={`flex items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-semibold transition ${
+                activeTab === "test"
+                  ? "border-sky-500 bg-sky-500/20 text-sky-300"
+                  : "border-sky-500/30 bg-sky-500/10 text-sky-400 hover:bg-sky-500/20"
+              }`}
+              title="Make Request / Replay API"
+            >
+              <Send size={13} />
+              <span className="hidden sm:inline">Make Request</span>
+            </button>
+
+            <button
               onClick={copyUrl}
               className="flex items-center gap-1.5 rounded-lg border vh-border px-2.5 py-1.5 text-xs font-medium vh-text-muted hover:text-white hover:bg-white/5 transition"
               title="Copy Request URL"
@@ -357,6 +371,12 @@ export function RequestDetails({
                 : isError
                   ? "bg-red-500/20 text-red-400"
                   : "bg-amber-500/20 text-amber-300",
+            },
+            {
+              id: "test" as const,
+              label: "Make Request",
+              badge: "Live",
+              badgeColor: "bg-sky-500/20 text-sky-400",
             },
             {
               id: "curl" as const,
@@ -659,7 +679,30 @@ export function RequestDetails({
             </div>
           )}
 
-          {/* TAB 4: cURL & REPLAY */}
+          {/* TAB 4: MAKE REQUEST / PLAYGROUND */}
+          {activeTab === "test" && (
+            <div className="space-y-4">
+              <div className="flex items-center justify-between border-b vh-border pb-3">
+                <div>
+                  <h3 className="text-sm font-bold vh-text-main">Make Request & Replay</h3>
+                  <p className="text-xs vh-text-dim">
+                    Edit parameters, headers, and body, then execute this request live to inspect the response.
+                  </p>
+                </div>
+              </div>
+
+              <ApiRequestRunner
+                initialMethod={request.method}
+                initialUrl={request.url}
+                initialParamsJson={activeDetail?.params_json}
+                initialHeadersJson={activeDetail?.request_headers_json}
+                initialBodyJson={activeDetail?.request_body_json}
+                appName={request.app_name}
+              />
+            </div>
+          )}
+
+          {/* TAB 5: cURL & REPLAY */}
           {activeTab === "curl" && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">

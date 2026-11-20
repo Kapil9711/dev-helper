@@ -29,6 +29,7 @@ import {
   Shapes,
   Stamp,
   Layers,
+  Terminal,
 } from "lucide-react";
 import {
   useDashboardPreferences,
@@ -193,17 +194,17 @@ export default function SettingsPage() {
               <div className="flex items-center gap-2">
                 <h2 className="font-bold text-sm vh-text-main">Design System Paradigm</h2>
                 <span className="rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-semibold vh-text-muted">
-                  3 Complete Architectures
+                  5 Design Paradigms
                 </span>
               </div>
               <p className="text-xs vh-text-dim">
-                Switch the entire dashboard look and feel between Modern Glass, 3D Skeuomorphism, and Neubrutalism.
+                Switch the entire dashboard look and feel between Modern Minimal, 3D Skeuomorphism, Neubrutalism, Glassmorphism, and Cyberpunk HUD.
               </p>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {/* Option A: Modern Flat */}
           <button
             onClick={() => {
@@ -223,7 +224,7 @@ export default function SettingsPage() {
                     <Sparkles size={16} />
                   </div>
                   <div>
-                    <h3 className="font-bold text-sm vh-text-main">Modern Glass</h3>
+                    <h3 className="font-bold text-sm vh-text-main">Modern Flat</h3>
                     <span className="text-[10px] font-mono text-blue-400">Default & Minimal</span>
                   </div>
                 </div>
@@ -235,13 +236,13 @@ export default function SettingsPage() {
               </div>
 
               <p className="mt-3 text-xs leading-5 vh-text-muted">
-                Clean flat cards, smooth transparencies, subtle glass overlays, and crisp hairline borders for low distraction.
+                Clean flat cards, smooth transparencies, subtle overlays, and crisp hairline borders for low distraction.
               </p>
 
               {/* Mini visual mockup */}
               <div className="mt-4 rounded-lg border vh-border vh-bg-input p-3 space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] text-zinc-400 font-medium">Glass Preview</span>
+                  <span className="text-[10px] text-zinc-400 font-medium">Flat Preview</span>
                   <span className="rounded-full bg-emerald-500/20 text-emerald-400 px-2 py-0.2 text-[10px] font-medium border border-emerald-500/30">
                     200 OK
                   </span>
@@ -253,7 +254,7 @@ export default function SettingsPage() {
             </div>
 
             <div className="mt-4 pt-3 border-t vh-border-subtle flex items-center justify-between text-[11px] vh-text-dim">
-              <span>Razor borders • Glass</span>
+              <span>Razor borders • Clean</span>
               <span className="font-mono text-[10px]">data-style="modern"</span>
             </div>
           </button>
@@ -341,7 +342,7 @@ export default function SettingsPage() {
               </div>
 
               <p className="mt-3 text-xs leading-5 vh-text-muted">
-                High-contrast 2.5px solid borders, hard 4px drop shadows with zero blur, snappy push-down clicks, and retro stickers.
+                High-contrast solid borders, hard 4px drop shadows with zero blur, snappy push-down clicks, and retro stamps.
               </p>
 
               {/* Mini visual mockup */}
@@ -361,6 +362,114 @@ export default function SettingsPage() {
             <div className="mt-4 pt-3 border-t vh-border-subtle flex items-center justify-between text-[11px] vh-text-dim">
               <span>Hard 4px Shadow • Zero Blur</span>
               <span className="font-mono text-[10px]">data-style="neubrutalism"</span>
+            </div>
+          </button>
+
+          {/* Option D: Glassmorphism */}
+          <button
+            onClick={() => {
+              updatePreferences({ uiStyle: "glassmorphism" });
+              playTone("click");
+            }}
+            className={`group relative flex flex-col justify-between rounded-xl border p-5 text-left transition-all ${
+              preferences.uiStyle === "glassmorphism"
+                ? "border-2 border-cyan-400/90 bg-cyan-500/10 shadow-xl shadow-cyan-500/10 scale-[1.01]"
+                : "vh-border vh-bg-subtle hover:border-white/20 hover:scale-[1.005]"
+            }`}
+          >
+            <div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-cyan-500/20 text-cyan-400 border border-cyan-400/40 backdrop-blur-md shadow-[0_4px_12px_rgba(6,182,212,0.25)]">
+                    <Layers size={16} />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-sm vh-text-main">Glassmorphism</h3>
+                    <span className="text-[10px] font-mono text-cyan-400">Frosted Glass & Depth</span>
+                  </div>
+                </div>
+                {preferences.uiStyle === "glassmorphism" && (
+                  <span className="flex items-center gap-1 rounded-full bg-cyan-500/20 px-2 py-0.5 text-[11px] font-bold text-cyan-300 border border-cyan-400/40 shadow-[0_0_8px_rgba(6,182,212,0.5)]">
+                    <Check size={12} /> Active
+                  </span>
+                )}
+              </div>
+
+              <p className="mt-3 text-xs leading-5 vh-text-muted">
+                Translucent frosted glass blur (20px), specular highlights, diffuse ambient glow, and floating depth.
+              </p>
+
+              {/* Mini visual mockup */}
+              <div className="mt-4 rounded-xl border border-cyan-500/30 bg-cyan-950/20 backdrop-blur-md p-3 space-y-2 shadow-[0_8px_24px_rgba(0,0,0,0.4),inset_0_1px_1px_rgba(255,255,255,0.2)]">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] text-cyan-300 font-semibold">Frosted Layer</span>
+                  <span className="rounded-full bg-cyan-500/20 backdrop-blur-sm text-cyan-300 px-2 py-0.5 text-[9px] font-bold border border-cyan-400/40">
+                    GLOW
+                  </span>
+                </div>
+                <div className="h-6 w-full rounded-lg border border-white/20 bg-white/10 backdrop-blur-sm flex items-center justify-center text-[10px] font-medium text-cyan-200">
+                  Translucent Pill
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-4 pt-3 border-t vh-border-subtle flex items-center justify-between text-[11px] vh-text-dim">
+              <span>Frosted Blur • Specular Sheen</span>
+              <span className="font-mono text-[10px]">data-style="glassmorphism"</span>
+            </div>
+          </button>
+
+          {/* Option E: Cyberpunk HUD */}
+          <button
+            onClick={() => {
+              updatePreferences({ uiStyle: "cyberpunk" });
+              playTone("click");
+            }}
+            className={`group relative flex flex-col justify-between rounded-xl border p-5 text-left transition-all ${
+              preferences.uiStyle === "cyberpunk"
+                ? "border-2 border-emerald-400/90 bg-emerald-500/10 shadow-xl shadow-emerald-500/10 scale-[1.01]"
+                : "vh-border vh-bg-subtle hover:border-white/20 hover:scale-[1.005]"
+            }`}
+          >
+            <div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="flex h-8 w-8 items-center justify-center rounded bg-emerald-500/20 text-emerald-400 border border-emerald-400/60 shadow-[0_0_10px_rgba(16,185,129,0.4)]">
+                    <Terminal size={16} />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-sm vh-text-main font-mono">Cyber HUD</h3>
+                    <span className="text-[10px] font-mono text-emerald-400">Sci-Fi Terminal</span>
+                  </div>
+                </div>
+                {preferences.uiStyle === "cyberpunk" && (
+                  <span className="flex items-center gap-1 rounded bg-emerald-500/20 px-2 py-0.5 text-[11px] font-mono font-bold text-emerald-300 border border-emerald-400/50 shadow-[0_0_10px_rgba(16,185,129,0.5)]">
+                    <Check size={12} /> ACTIVE
+                  </span>
+                )}
+              </div>
+
+              <p className="mt-3 text-xs leading-5 vh-text-muted">
+                Futuristic sci-fi HUD aesthetic, hairline neon borders, micro-grid backdrop, and monospace terminal brackets.
+              </p>
+
+              {/* Mini visual mockup */}
+              <div className="mt-4 rounded border border-emerald-500/40 bg-emerald-950/20 p-3 space-y-2 shadow-[0_0_16px_rgba(16,185,129,0.2)] font-mono">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] text-emerald-400 font-bold tracking-wider">[ HUD_V2 ]</span>
+                  <span className="rounded bg-emerald-500/20 text-emerald-300 px-1.5 py-0.2 text-[9px] font-bold border border-emerald-500/50">
+                    ONLINE
+                  </span>
+                </div>
+                <div className="h-6 w-full rounded border border-emerald-500/50 bg-black/60 flex items-center justify-center text-[10px] font-bold text-emerald-300 shadow-[0_0_8px_rgba(16,185,129,0.3)]">
+                  &gt; RUN_SYS
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-4 pt-3 border-t vh-border-subtle flex items-center justify-between text-[11px] vh-text-dim">
+              <span>Neon Hairline • Micro-Grid</span>
+              <span className="font-mono text-[10px]">data-style="cyberpunk"</span>
             </div>
           </button>
         </div>
@@ -440,7 +549,7 @@ export default function SettingsPage() {
         </div>
       </section>
 
-      {/* 3. Theme Presets (4 Curated Themes) */}
+      {/* 3. Theme Presets (Curated Themes) */}
       <section className="rounded-xl border vh-border vh-bg-card p-6 shadow-sm">
         <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
@@ -452,11 +561,11 @@ export default function SettingsPage() {
               <div className="flex items-center gap-2">
                 <h2 className="font-bold text-sm vh-text-main">Developer Theme Presets</h2>
                 <span className="rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-semibold vh-text-muted">
-                  {AVAILABLE_THEMES.length} Themes
+                  {AVAILABLE_THEMES.length} Curated Themes
                 </span>
               </div>
               <p className="text-xs vh-text-dim">
-                Hand-curated palettes: Clean White, Warm Off-White, Sky Mist, and Midnight Black.
+                Hand-curated dark & light palettes: Midnight Slate, Carbon Pro, Matrix Emerald, Tokyo Night, Nordic Frost, Retro Amber CRT, Neon Synthwave, Sepia Warm, Sky Mist, Warm Off-White, and Clean White.
               </p>
             </div>
           </div>
@@ -466,7 +575,8 @@ export default function SettingsPage() {
           {AVAILABLE_THEMES.map((t) => {
             const isSelected = preferences.theme === t.id;
             const isLightCard =
-              t.id === "light" || t.id === "off-white" || t.id === "sky-mist";
+              t.isLight ??
+              (t.id === "light" || t.id === "off-white" || t.id === "sky-mist");
 
             return (
               <button
@@ -753,10 +863,23 @@ export default function SettingsPage() {
               <label className="mb-2 block text-xs font-semibold uppercase tracking-wider vh-text-dim">
                 Interface Density
               </label>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-3 gap-2 sm:gap-2.5">
                 {[
-                  { id: "comfortable", label: "Comfortable", desc: "Standard spacious view" },
-                  { id: "compact", label: "Compact", desc: "Dense layout for high volume" },
+                  {
+                    id: "comfortable",
+                    label: "Comfortable",
+                    desc: "Spacious layout with relaxed breathing room",
+                  },
+                  {
+                    id: "standard",
+                    label: "Standard",
+                    desc: "Balanced medium density for everyday work",
+                  },
+                  {
+                    id: "compact",
+                    label: "Compact",
+                    desc: "Dense layout for high-volume logs",
+                  },
                 ].map((d) => (
                   <button
                     key={d.id}

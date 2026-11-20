@@ -15,12 +15,14 @@ import {
   PanelLeft,
   Pin,
   PinOff,
+  BookOpen,
 } from "lucide-react";
 import { useDashboardPreferences, playTone } from "@/lib/prefrences";
 
 const navigation = [
   { label: "Overview", href: "/", icon: Activity },
   { label: "Network", href: "/network/", icon: Network },
+  { label: "API Docs", href: "/docs/", icon: BookOpen },
   { label: "Console", href: "/console/", icon: Terminal },
   { label: "Events", href: "/events/", icon: Zap },
   { label: "Projects", href: "/projects/", icon: Boxes },

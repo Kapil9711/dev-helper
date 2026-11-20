@@ -8,9 +8,25 @@ import {
   type ReactNode,
 } from "react";
 
-export type Theme = "midnight" | "sky-mist" | "off-white" | "light";
+export type Theme =
+  | "midnight"
+  | "carbon-dark"
+  | "obsidian-emerald"
+  | "tokyo-night"
+  | "nordic-slate"
+  | "retro-amber"
+  | "retro-synthwave"
+  | "sepia-dark"
+  | "sky-mist"
+  | "off-white"
+  | "light";
 
-export type UIStyle = "modern" | "skeuomorphic" | "neubrutalism";
+export type UIStyle =
+  | "modern"
+  | "skeuomorphic"
+  | "neubrutalism"
+  | "glassmorphism"
+  | "cyberpunk";
 export type IconStyle = "default" | "glow" | "stamped" | "minimal";
 
 export type AccentColor =
@@ -21,7 +37,7 @@ export type AccentColor =
   | "rose"
   | "cyan";
 
-export type Density = "comfortable" | "compact";
+export type Density = "comfortable" | "standard" | "compact";
 export type TimestampFormat = "relative" | "absolute" | "full";
 export type JsonViewerMode = "tree" | "raw";
 export type FontFamily = "mono" | "sans" | "code";
@@ -75,14 +91,79 @@ export const AVAILABLE_THEMES: {
   desc: string;
   cardBg: string;
   accentDot: string;
+  isLight?: boolean;
 }[] = [
   {
     id: "midnight",
-    name: "Midnight Black",
-    tag: "Slate Dark",
-    desc: "Balanced deep slate-black with refined indigo contrast",
-    cardBg: "bg-[#0b0f17]",
+    name: "Midnight Slate",
+    tag: "Deep Indigo",
+    desc: "Refined deep obsidian-slate with elegant indigo accents",
+    cardBg: "bg-[#0b1120]",
     accentDot: "bg-blue-500",
+    isLight: false,
+  },
+  {
+    id: "carbon-dark",
+    name: "Carbon Pro",
+    tag: "Pure Minimal",
+    desc: "Ultra-crisp Linear / Vercel neutral charcoal black with high-contrast slate borders",
+    cardBg: "bg-[#09090b]",
+    accentDot: "bg-zinc-200",
+    isLight: false,
+  },
+  {
+    id: "obsidian-emerald",
+    name: "Matrix Emerald",
+    tag: "Terminal Dark",
+    desc: "Pitch dark hacker terminal with refined bio-emerald accents and calm labels",
+    cardBg: "bg-[#060b08]",
+    accentDot: "bg-emerald-400",
+    isLight: false,
+  },
+  {
+    id: "tokyo-night",
+    name: "Tokyo Night",
+    tag: "Cyber Indigo",
+    desc: "Deep cyberpunk indigo night sky with neon lavender & fuchsia highlights",
+    cardBg: "bg-[#0f1423]",
+    accentDot: "bg-indigo-400",
+    isLight: false,
+  },
+  {
+    id: "nordic-slate",
+    name: "Nordic Frost",
+    tag: "Arctic Slate",
+    desc: "Cool polar blue-slate dark with crisp arctic ice cyan accents",
+    cardBg: "bg-[#0c121c]",
+    accentDot: "bg-sky-400",
+    isLight: false,
+  },
+  {
+    id: "retro-amber",
+    name: "Retro Amber CRT",
+    tag: "VT220 Vintage",
+    desc: "Iconic 1980s amber phosphor CRT terminal with authentic warm monochrome glow",
+    cardBg: "bg-[#120e06]",
+    accentDot: "bg-amber-400",
+    isLight: false,
+  },
+  {
+    id: "retro-synthwave",
+    name: "Neon Synthwave",
+    tag: "80s Outrun",
+    desc: "Retro 80s arcade dark with electric cyan, laser magenta, and deep purple",
+    cardBg: "bg-[#130826]",
+    accentDot: "bg-pink-500",
+    isLight: false,
+  },
+  {
+    id: "sepia-dark",
+    name: "Sepia Warm",
+    tag: "Vintage Dark",
+    desc: "Warm dark espresso & coffee tones with cozy honey amber glow",
+    cardBg: "bg-[#15110d]",
+    accentDot: "bg-amber-500",
+    isLight: false,
   },
   {
     id: "sky-mist",
@@ -91,6 +172,7 @@ export const AVAILABLE_THEMES: {
     desc: "Ethereal morning sky mist with crisp cyan-slate typography",
     cardBg: "bg-[#edf4f9]",
     accentDot: "bg-sky-500",
+    isLight: true,
   },
   {
     id: "off-white",
@@ -99,6 +181,7 @@ export const AVAILABLE_THEMES: {
     desc: "Soft warm ivory & paper cream for gentle daytime viewing",
     cardBg: "bg-[#f4f0e8]",
     accentDot: "bg-amber-600",
+    isLight: true,
   },
   {
     id: "light",
@@ -107,6 +190,57 @@ export const AVAILABLE_THEMES: {
     desc: "Crisp architectural pure white with slate typography",
     cardBg: "bg-[#ffffff]",
     accentDot: "bg-blue-600",
+    isLight: true,
+  },
+];
+
+export const AVAILABLE_UI_STYLES: {
+  id: UIStyle;
+  name: string;
+  subtitle: string;
+  desc: string;
+  badge: string;
+  accentColor: string;
+}[] = [
+  {
+    id: "modern",
+    name: "Modern Flat",
+    subtitle: "Clean & Razor Borders",
+    desc: "Minimalist flat panels, refined hairline borders, and subtle focus transitions.",
+    badge: "Clean Flat",
+    accentColor: "text-blue-400",
+  },
+  {
+    id: "skeuomorphic",
+    name: "Skeuomorphism",
+    subtitle: "3D Tactile & Hardware LEDs",
+    desc: "Tactile 3D beveled cards, debossed inset wells, physical keycaps, and hardware LED indicators.",
+    badge: "3D Depth",
+    accentColor: "text-amber-400",
+  },
+  {
+    id: "neubrutalism",
+    name: "Neubrutalism",
+    subtitle: "Hard Black Shadows & Pop",
+    desc: "High-contrast solid borders, hard 4px offset drop shadows, snappy click physics, and retro stamps.",
+    badge: "Bold Pop",
+    accentColor: "text-pink-400",
+  },
+  {
+    id: "glassmorphism",
+    name: "Glassmorphism",
+    subtitle: "Frosted Blur & Specular Sheen",
+    desc: "Translucent frosted backdrop blur, specular gradient highlights, and diffuse ambient depth.",
+    badge: "Frosted Glass",
+    accentColor: "text-cyan-400",
+  },
+  {
+    id: "cyberpunk",
+    name: "Cyberpunk HUD",
+    subtitle: "Neon Hairlines & Grid Matrix",
+    desc: "High-tech terminal HUD, glowing neon hairline outlines, micro-grid backdrop, and monospace data brackets.",
+    badge: "Cyber HUD",
+    accentColor: "text-emerald-400",
   },
 ];
 
@@ -137,9 +271,13 @@ export function PreferencesProvider({ children }: { children: ReactNode }) {
           theme: AVAILABLE_THEMES.some((t) => t.id === parsed.theme)
             ? (parsed.theme as Theme)
             : DEFAULT_PREFERENCES.theme,
-          uiStyle: ["modern", "skeuomorphic", "neubrutalism"].includes(
-            parsed.uiStyle as string,
-          )
+          uiStyle: [
+            "modern",
+            "skeuomorphic",
+            "neubrutalism",
+            "glassmorphism",
+            "cyberpunk",
+          ].includes(parsed.uiStyle as string)
             ? (parsed.uiStyle as UIStyle)
             : DEFAULT_PREFERENCES.uiStyle,
           iconStyle: ["default", "glow", "stamped", "minimal"].includes(
@@ -157,7 +295,7 @@ export function PreferencesProvider({ children }: { children: ReactNode }) {
           ].includes(parsed.accentColor as string)
             ? (parsed.accentColor as AccentColor)
             : DEFAULT_PREFERENCES.accentColor,
-          density: ["comfortable", "compact"].includes(parsed.density as string)
+          density: ["comfortable", "standard", "compact"].includes(parsed.density as string)
             ? (parsed.density as Density)
             : DEFAULT_PREFERENCES.density,
           timestampFormat: ["relative", "absolute", "full"].includes(

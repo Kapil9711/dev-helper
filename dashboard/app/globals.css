@@ -2,16 +2,16 @@
 
 :root,
 [data-theme="midnight"] {
-  --bg-app: #0b1120;
-  --bg-sidebar: #080d19;
-  --bg-card: #111827;
-  --bg-card-hover: #172033;
+  --bg-app: #090e17;
+  --bg-sidebar: #060911;
+  --bg-card: #0f172a;
+  --bg-card-hover: #162038;
   --bg-subtle: rgba(255, 255, 255, 0.03);
-  --bg-input: #080d1a;
-  --bg-modal: #0e1626;
+  --bg-input: #070c14;
+  --bg-modal: #0d1526;
   --border: rgba(255, 255, 255, 0.08);
   --border-subtle: rgba(255, 255, 255, 0.04);
-  --border-active: rgba(255, 255, 255, 0.2);
+  --border-active: rgba(255, 255, 255, 0.22);
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
   --text-dim: #64748b;
@@ -21,6 +21,160 @@
   --json-number: #fbbf24;
   --json-boolean: #f472b6;
   --json-null: #94a3b8;
+}
+
+[data-theme="carbon-dark"] {
+  --bg-app: #09090b;
+  --bg-sidebar: #050507;
+  --bg-card: #121216;
+  --bg-card-hover: #18181e;
+  --bg-subtle: rgba(255, 255, 255, 0.04);
+  --bg-input: #08080a;
+  --bg-modal: #111114;
+  --border: rgba(255, 255, 255, 0.1);
+  --border-subtle: rgba(255, 255, 255, 0.05);
+  --border-active: rgba(255, 255, 255, 0.28);
+  --text-main: #f4f4f5;
+  --text-muted: #a1a1aa;
+  --text-dim: #71717a;
+  --color-scheme: dark;
+  --json-key: #38bdf8;
+  --json-string: #34d399;
+  --json-number: #f59e0b;
+  --json-boolean: #a855f7;
+  --json-null: #71717a;
+}
+
+[data-theme="obsidian-emerald"] {
+  --bg-app: #060a08;
+  --bg-sidebar: #040705;
+  --bg-card: #0b140f;
+  --bg-card-hover: #112018;
+  --bg-subtle: rgba(16, 185, 129, 0.05);
+  --bg-input: #040806;
+  --bg-modal: #0a130e;
+  --border: rgba(16, 185, 129, 0.18);
+  --border-subtle: rgba(16, 185, 129, 0.08);
+  --border-active: rgba(16, 185, 129, 0.45);
+  --text-main: #f0fdf4;
+  --text-muted: #86efac;
+  --text-dim: #52796f;
+  --color-scheme: dark;
+  --json-key: #34d399;
+  --json-string: #6ee7b7;
+  --json-number: #facc15;
+  --json-boolean: #f472b6;
+  --json-null: #64748b;
+}
+
+[data-theme="tokyo-night"] {
+  --bg-app: #0e1220;
+  --bg-sidebar: #0a0d18;
+  --bg-card: #15192c;
+  --bg-card-hover: #1d223c;
+  --bg-subtle: rgba(129, 140, 248, 0.06);
+  --bg-input: #0a0e19;
+  --bg-modal: #131728;
+  --border: rgba(129, 140, 248, 0.16);
+  --border-subtle: rgba(129, 140, 248, 0.08);
+  --border-active: rgba(129, 140, 248, 0.45);
+  --text-main: #f8fafc;
+  --text-muted: #a5b4fc;
+  --text-dim: #64748b;
+  --color-scheme: dark;
+  --json-key: #818cf8;
+  --json-string: #38bdf8;
+  --json-number: #fbbf24;
+  --json-boolean: #f472b6;
+  --json-null: #94a3b8;
+}
+
+[data-theme="nordic-slate"] {
+  --bg-app: #0c121c;
+  --bg-sidebar: #080d15;
+  --bg-card: #121a27;
+  --bg-card-hover: #192437;
+  --bg-subtle: rgba(56, 189, 248, 0.05);
+  --bg-input: #090e16;
+  --bg-modal: #101723;
+  --border: rgba(148, 163, 184, 0.14);
+  --border-subtle: rgba(148, 163, 184, 0.07);
+  --border-active: rgba(56, 189, 248, 0.4);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --color-scheme: dark;
+  --json-key: #38bdf8;
+  --json-string: #2dd4bf;
+  --json-number: #fbbf24;
+  --json-boolean: #ec4899;
+  --json-null: #94a3b8;
+}
+
+[data-theme="retro-amber"] {
+  --bg-app: #100b02;
+  --bg-sidebar: #0a0701;
+  --bg-card: #181105;
+  --bg-card-hover: #241908;
+  --bg-subtle: rgba(255, 176, 0, 0.06);
+  --bg-input: #0d0902;
+  --bg-modal: #161005;
+  --border: rgba(255, 176, 0, 0.22);
+  --border-subtle: rgba(255, 176, 0, 0.1);
+  --border-active: rgba(255, 176, 0, 0.55);
+  --text-main: #ffb000;
+  --text-muted: #cc8800;
+  --text-dim: #885a00;
+  --color-scheme: dark;
+  --json-key: #ffd000;
+  --json-string: #ffb000;
+  --json-number: #ff8800;
+  --json-boolean: #ff5500;
+  --json-null: #885a00;
+}
+
+[data-theme="retro-synthwave"] {
+  --bg-app: #120822;
+  --bg-sidebar: #0b0416;
+  --bg-card: #1a0d31;
+  --bg-card-hover: #261347;
+  --bg-subtle: rgba(255, 42, 109, 0.08);
+  --bg-input: #0f061c;
+  --bg-modal: #180b2d;
+  --border: rgba(255, 42, 109, 0.25);
+  --border-subtle: rgba(255, 42, 109, 0.12);
+  --border-active: rgba(5, 217, 232, 0.6);
+  --text-main: #f8f7ff;
+  --text-muted: #05d9e8;
+  --text-dim: #9966cc;
+  --color-scheme: dark;
+  --json-key: #05d9e8;
+  --json-string: #ff2a6d;
+  --json-number: #fcee09;
+  --json-boolean: #d1f7ff;
+  --json-null: #795290;
+}
+
+[data-theme="sepia-dark"] {
+  --bg-app: #14100c;
+  --bg-sidebar: #0d0a08;
+  --bg-card: #1c1712;
+  --bg-card-hover: #261f19;
+  --bg-subtle: rgba(245, 158, 11, 0.06);
+  --bg-input: #0f0c09;
+  --bg-modal: #19140f;
+  --border: rgba(245, 158, 11, 0.18);
+  --border-subtle: rgba(245, 158, 11, 0.08);
+  --border-active: rgba(245, 158, 11, 0.45);
+  --text-main: #fef3c7;
+  --text-muted: #d97706;
+  --text-dim: #8c6d48;
+  --color-scheme: dark;
+  --json-key: #fbbf24;
+  --json-string: #34d399;
+  --json-number: #f97316;
+  --json-boolean: #f43f5e;
+  --json-null: #8c6d48;
 }
 
 [data-theme="sky-mist"] {
@@ -153,6 +307,23 @@ html, body {
 [data-font="code"] pre,
 [data-font="code"] code {
   font-family: "JetBrains Mono", "Fira Code", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+[data-density="standard"] {
+  font-size: 13.5px;
+}
+[data-density="standard"] .p-5 {
+  padding: 1.15rem;
+}
+[data-density="standard"] .p-4 {
+  padding: 0.875rem;
+}
+[data-density="standard"] .py-3 {
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
+}
+[data-density="standard"] .gap-3 {
+  gap: 0.65rem;
 }
 
 [data-density="compact"] {
@@ -404,6 +575,177 @@ div:has(> input) > input.bg-transparent {
   box-shadow: 1.5px 1.5px 0px 0px currentColor !important;
   border-radius: 4px !important;
   font-weight: 800 !important;
+}
+
+/* ========================================================
+   GLASSMORPHISM DESIGN SYSTEM ([data-style="glassmorphism"])
+   Frosted Translucent Blur, Specular Highlights & Ambient Depth
+   ======================================================== */
+[data-style="glassmorphism"] {
+  --glass-card-bg: rgba(17, 24, 39, 0.65);
+  --glass-modal-bg: rgba(14, 22, 38, 0.82);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.12);
+  --glass-shadow: 0 16px 36px 0 rgba(0, 0, 0, 0.42), inset 0 1px 1px 0 rgba(255, 255, 255, 0.16);
+  --glass-blur: blur(20px);
+}
+
+[data-style="glassmorphism"][data-theme="light"],
+[data-style="glassmorphism"][data-theme="off-white"],
+[data-style="glassmorphism"][data-theme="sky-mist"] {
+  --glass-card-bg: rgba(255, 255, 255, 0.75);
+  --glass-modal-bg: rgba(255, 255, 255, 0.9);
+  --glass-border: 1px solid rgba(0, 0, 0, 0.08);
+  --glass-shadow: 0 16px 36px 0 rgba(0, 0, 0, 0.07), inset 0 1px 1px 0 rgba(255, 255, 255, 0.95);
+  --glass-blur: blur(20px);
+}
+
+[data-style="glassmorphism"] .vh-bg-card,
+[data-style="glassmorphism"] aside,
+[data-style="glassmorphism"] div[class*="rounded-xl"][class*="border"] {
+  background-color: var(--glass-card-bg) !important;
+  backdrop-filter: var(--glass-blur) !important;
+  -webkit-backdrop-filter: var(--glass-blur) !important;
+  border: var(--glass-border) !important;
+  box-shadow: var(--glass-shadow) !important;
+  border-radius: 14px !important;
+}
+
+[data-style="glassmorphism"] .vh-bg-modal {
+  background-color: var(--glass-modal-bg) !important;
+  backdrop-filter: blur(26px) !important;
+  -webkit-backdrop-filter: blur(26px) !important;
+  border: var(--glass-border) !important;
+  box-shadow: var(--glass-shadow) !important;
+  border-radius: 16px !important;
+}
+
+[data-style="glassmorphism"] button:not([class*="pointer-events-none"]),
+[data-style="glassmorphism"] a[class*="rounded-xl"],
+[data-style="glassmorphism"] .vh-btn {
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+  border-radius: 10px !important;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease !important;
+}
+
+[data-style="glassmorphism"][data-theme="light"] button:not([class*="pointer-events-none"]),
+[data-style="glassmorphism"][data-theme="off-white"] button:not([class*="pointer-events-none"]),
+[data-style="glassmorphism"][data-theme="sky-mist"] button:not([class*="pointer-events-none"]) {
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+}
+
+[data-style="glassmorphism"] button:hover:not(:disabled) {
+  border-color: rgba(255, 255, 255, 0.32) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+  transform: translateY(-1px);
+}
+
+[data-style="glassmorphism"] input:not(.bg-transparent):not([type="checkbox"]):not([type="radio"]),
+[data-style="glassmorphism"] select,
+[data-style="glassmorphism"] textarea,
+[data-style="glassmorphism"] .vh-bg-input {
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  background-color: rgba(0, 0, 0, 0.22) !important;
+  border-radius: 10px !important;
+}
+
+[data-style="glassmorphism"][data-theme="light"] input:not(.bg-transparent):not([type="checkbox"]):not([type="radio"]),
+[data-style="glassmorphism"][data-theme="off-white"] input:not(.bg-transparent):not([type="checkbox"]):not([type="radio"]),
+[data-style="glassmorphism"][data-theme="sky-mist"] input:not(.bg-transparent):not([type="checkbox"]):not([type="radio"]) {
+  background-color: rgba(255, 255, 255, 0.72) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+[data-style="glassmorphism"] input.bg-transparent,
+[data-style="glassmorphism"] .vh-bg-input input {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+[data-style="glassmorphism"] span[class*="rounded-full"],
+[data-style="glassmorphism"] span[class*="rounded-md"] {
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  border: 1px solid currentColor !important;
+}
+
+/* ========================================================
+   CYBERPUNK HUD DESIGN SYSTEM ([data-style="cyberpunk"])
+   Neon Hairline Borders, Ambient Glow Halo & Sci-Fi HUD
+   ======================================================== */
+[data-style="cyberpunk"] {
+  --cyber-border: 1px solid var(--accent-border, rgba(59, 130, 246, 0.45));
+  --cyber-glow: 0 0 18px -2px var(--accent-bg, rgba(59, 130, 246, 0.2)), inset 0 0 14px -5px var(--accent-bg, rgba(59, 130, 246, 0.12));
+  --cyber-btn-glow: 0 0 12px 0 var(--accent-bg, rgba(59, 130, 246, 0.35));
+}
+
+[data-style="cyberpunk"][data-theme="light"],
+[data-style="cyberpunk"][data-theme="off-white"],
+[data-style="cyberpunk"][data-theme="sky-mist"] {
+  --cyber-border: 1px solid var(--accent-primary, #0284c7);
+  --cyber-glow: 0 0 14px -2px rgba(2, 132, 199, 0.22), inset 0 0 10px -4px rgba(2, 132, 199, 0.08);
+  --cyber-btn-glow: 0 0 10px 0 rgba(2, 132, 199, 0.28);
+}
+
+[data-style="cyberpunk"] .vh-bg-card,
+[data-style="cyberpunk"] .vh-bg-modal,
+[data-style="cyberpunk"] aside,
+[data-style="cyberpunk"] div[class*="rounded-xl"][class*="border"] {
+  border: var(--cyber-border) !important;
+  box-shadow: var(--cyber-glow) !important;
+  border-radius: 4px !important;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px) !important;
+  background-size: 24px 24px !important;
+}
+
+[data-style="cyberpunk"] button:not([class*="pointer-events-none"]),
+[data-style="cyberpunk"] a[class*="rounded-xl"],
+[data-style="cyberpunk"] .vh-btn {
+  border: var(--cyber-border) !important;
+  box-shadow: var(--cyber-btn-glow) !important;
+  border-radius: 4px !important;
+  font-family: var(--font-mono, monospace);
+  transition: all 0.15s ease !important;
+}
+
+[data-style="cyberpunk"] button:hover:not(:disabled) {
+  border-color: var(--accent-primary) !important;
+  box-shadow: 0 0 22px 2px var(--accent-border) !important;
+  transform: translateY(-1px);
+}
+
+[data-style="cyberpunk"] button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+[data-style="cyberpunk"] input:not(.bg-transparent):not([type="checkbox"]):not([type="radio"]),
+[data-style="cyberpunk"] select,
+[data-style="cyberpunk"] textarea,
+[data-style="cyberpunk"] .vh-bg-input {
+  border: var(--cyber-border) !important;
+  border-radius: 4px !important;
+  font-family: var(--font-mono, monospace);
+}
+
+[data-style="cyberpunk"] input.bg-transparent,
+[data-style="cyberpunk"] .vh-bg-input input {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+[data-style="cyberpunk"] span[class*="rounded-full"],
+[data-style="cyberpunk"] span[class*="rounded-md"] {
+  border-radius: 2px !important;
+  font-family: var(--font-mono, monospace);
+  font-weight: 700 !important;
+  border: 1px solid currentColor !important;
 }
 
 /* ========================================================

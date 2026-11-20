@@ -54,6 +54,78 @@ function getJsonByteSize(obj: unknown): string {
   }
 }
 
+function highlightJsonSyntax(jsonStr: string): React.ReactNode {
+  if (!jsonStr) return null;
+  // Match JSON keys with colon, strings, numbers, booleans, null, brackets and colons
+  const tokenRegex = /("(?:\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(?:\s*:)?|\b(?:true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?|[{}[\],:])/g;
+
+  const nodes: React.ReactNode[] = [];
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+
+  while ((match = tokenRegex.exec(jsonStr)) !== null) {
+    if (match.index > lastIndex) {
+      nodes.push(jsonStr.substring(lastIndex, match.index));
+    }
+    const token = match[0];
+    const key = `${match.index}-${token.slice(0, 8)}`;
+
+    if (token.endsWith(":")) {
+      const keyVal = token.slice(0, -1);
+      nodes.push(
+        <span key={`${key}-k`} className="json-key font-semibold">
+          {keyVal}
+        </span>
+      );
+      nodes.push(
+        <span key={`${key}-c`} className="json-colon opacity-70">
+          :
+        </span>
+      );
+    } else if (token.startsWith('"')) {
+      nodes.push(
+        <span key={key} className="json-string">
+          {token}
+        </span>
+      );
+    } else if (token === "true" || token === "false") {
+      nodes.push(
+        <span key={key} className="json-boolean font-semibold">
+          {token}
+        </span>
+      );
+    } else if (token === "null") {
+      nodes.push(
+        <span key={key} className="json-null italic opacity-80">
+          {token}
+        </span>
+      );
+    } else if (/^-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?$/.test(token)) {
+      nodes.push(
+        <span key={key} className="json-number font-medium">
+          {token}
+        </span>
+      );
+    } else if (/^[{}[\],]$/.test(token)) {
+      nodes.push(
+        <span key={key} className="json-bracket opacity-60">
+          {token}
+        </span>
+      );
+    } else {
+      nodes.push(token);
+    }
+
+    lastIndex = tokenRegex.lastIndex;
+  }
+
+  if (lastIndex < jsonStr.length) {
+    nodes.push(jsonStr.substring(lastIndex));
+  }
+
+  return nodes;
+}
+
 interface TreeNodeProps {
   nodeKey?: string;
   value: unknown;
@@ -126,7 +198,7 @@ function TreeNode({
         <button
           onClick={copyNode}
           title="Copy value"
-          className="ml-auto opacity-0 group-hover:opacity-100 p-0.5 rounded text-gray-500 hover:text-white transition"
+          className="ml-auto opacity-0 group-hover:opacity-100 p-0.5 rounded text-gray-500 hover:vh-text-main transition"
         >
           {nodeCopied ? <Check size={11} className="text-emerald-400" /> : <Copy size={11} />}
         </button>
@@ -150,7 +222,7 @@ function TreeNode({
       >
         <button
           type="button"
-          className="p-0.5 text-gray-500 hover:text-white transition"
+          className="p-0.5 text-gray-500 hover:vh-text-main transition"
         >
           {expanded ? <ChevronDown size={13} /> : <ChevronRight size={13} />}
         </button>
@@ -177,7 +249,7 @@ function TreeNode({
         <button
           onClick={copyNode}
           title="Copy node"
-          className="ml-auto opacity-0 group-hover:opacity-100 p-0.5 rounded text-gray-500 hover:text-white transition"
+          className="ml-auto opacity-0 group-hover:opacity-100 p-0.5 rounded text-gray-500 hover:vh-text-main transition"
         >
           {nodeCopied ? <Check size={11} className="text-emerald-400" /> : <Copy size={11} />}
         </button>
@@ -277,7 +349,7 @@ export function PrettyJson({
 
         <div className="flex items-center gap-1.5">
           {/* In-viewer quick search */}
-          <div className="flex items-center gap-1 rounded-md border vh-border bg-black/20 px-2 py-1 text-[11px]">
+          <div className="flex items-center gap-1 rounded-md border vh-border vh-bg-subtle px-2 py-1 text-[11px]">
             <Search size={11} className="vh-text-dim" />
             <input
               value={searchTerm}
@@ -286,21 +358,21 @@ export function PrettyJson({
               className="w-20 border-0 bg-transparent text-[11px] vh-text-main shadow-none outline-none ring-0 focus:border-0 focus:outline-none focus:ring-0 placeholder:text-gray-500 focus:w-28 transition-all"
             />
             {searchTerm && (
-              <button onClick={() => setSearchTerm("")} className="vh-text-dim hover:text-white">
+              <button onClick={() => setSearchTerm("")} className="vh-text-dim hover:opacity-100">
                 <X size={10} />
               </button>
             )}
           </div>
 
           {/* Tree / Raw Switcher */}
-          <div className="flex items-center rounded-lg border vh-border bg-black/20 p-0.5">
+          <div className="flex items-center rounded-lg border vh-border vh-bg-subtle p-0.5">
             <button
               onClick={() => setViewMode("tree")}
               title="Tree view"
               className={`flex items-center gap-1 rounded-md px-2 py-1 text-[11px] font-medium transition ${
                 viewMode === "tree"
                   ? "vh-bg-accent vh-text-accent font-semibold shadow-xs"
-                  : "vh-text-dim hover:text-white"
+                  : "vh-text-dim hover:opacity-100"
               }`}
             >
               <ListTree size={12} />
@@ -312,7 +384,7 @@ export function PrettyJson({
               className={`flex items-center gap-1 rounded-md px-2 py-1 text-[11px] font-medium transition ${
                 viewMode === "raw"
                   ? "vh-bg-accent vh-text-accent font-semibold shadow-xs"
-                  : "vh-text-dim hover:text-white"
+                  : "vh-text-dim hover:opacity-100"
               }`}
             >
               <Code size={12} />
@@ -326,7 +398,7 @@ export function PrettyJson({
               onClick={() => setWrapLines((prev) => !prev)}
               title={wrapLines ? "Disable word wrap" : "Enable word wrap"}
               className={`p-1.5 rounded-lg border vh-border transition ${
-                wrapLines ? "vh-bg-accent vh-text-accent" : "vh-text-dim hover:text-white"
+                wrapLines ? "vh-bg-accent vh-text-accent" : "vh-text-dim hover:opacity-100"
               }`}
             >
               <WrapText size={12} />
@@ -338,7 +410,7 @@ export function PrettyJson({
             <button
               onClick={downloadJson}
               title="Download JSON file"
-              className="p-1.5 rounded-lg border vh-border vh-text-dim hover:text-white hover:bg-white/5 transition"
+              className="p-1.5 rounded-lg border vh-border vh-text-dim hover:opacity-100 hover:bg-white/5 transition"
             >
               <Download size={12} />
             </button>
@@ -357,7 +429,7 @@ export function PrettyJson({
 
       {/* JSON Content Area */}
       <div
-        className="overflow-auto p-3"
+        className="overflow-auto p-3.5"
         style={{ maxHeight }}
       >
         {viewMode === "tree" && typeof parsedData === "object" && parsedData !== null ? (
@@ -369,11 +441,11 @@ export function PrettyJson({
           />
         ) : (
           <pre
-            className={`font-mono text-xs leading-5 text-slate-200 select-text ${
+            className={`font-mono text-xs leading-6 vh-text-main select-text ${
               wrapLines ? "whitespace-pre-wrap break-words" : "whitespace-pre overflow-x-auto"
             }`}
           >
-            {formattedString}
+            {highlightJsonSyntax(formattedString)}
           </pre>
         )}
       </div>

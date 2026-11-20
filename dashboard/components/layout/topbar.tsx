@@ -12,6 +12,8 @@ import {
   Sparkles,
   Box,
   Shapes,
+  Layers,
+  Terminal,
 } from "lucide-react";
 import { ConnectionStatus } from "./connection-status";
 import {
@@ -25,6 +27,7 @@ import { useAppsQuery } from "@/lib/queries";
 const titles: Record<string, string> = {
   "/": "Overview",
   "/network": "Network",
+  "/docs": "API Docs",
   "/console": "Console",
   "/events": "Events",
   "/projects": "Projects",
@@ -238,7 +241,7 @@ export function Topbar() {
           )}
         </div>
 
-        {/* Quick UI Style Switcher (Modern / Skeuomorphism / Neubrutalism) */}
+        {/* Quick UI Style Switcher (Modern / Skeuo / Brutal / Glass / Cyber) */}
         <div className="relative" ref={styleRef}>
           <button
             onClick={() => setStyleDropdownOpen((prev) => !prev)}
@@ -249,6 +252,10 @@ export function Topbar() {
               <Box size={14} className="text-amber-400" />
             ) : preferences.uiStyle === "neubrutalism" ? (
               <Shapes size={14} className="text-pink-400" />
+            ) : preferences.uiStyle === "glassmorphism" ? (
+              <Layers size={14} className="text-cyan-400" />
+            ) : preferences.uiStyle === "cyberpunk" ? (
+              <Terminal size={14} className="text-emerald-400" />
             ) : (
               <Sparkles size={14} className="vh-text-accent" />
             )}
@@ -257,12 +264,16 @@ export function Topbar() {
                 ? "Skeuo"
                 : preferences.uiStyle === "neubrutalism"
                   ? "Brutal"
-                  : "Modern"}
+                  : preferences.uiStyle === "glassmorphism"
+                    ? "Glass"
+                    : preferences.uiStyle === "cyberpunk"
+                      ? "Cyber"
+                      : "Modern"}
             </span>
           </button>
 
           {styleDropdownOpen && (
-            <div className="absolute right-0 mt-2 w-56 rounded-xl border vh-border vh-bg-modal p-1.5 shadow-2xl backdrop-blur-xl z-50">
+            <div className="absolute right-0 mt-2 w-60 rounded-xl border vh-border vh-bg-modal p-1.5 shadow-2xl backdrop-blur-xl z-50">
               <div className="px-2.5 py-1.5 text-[10px] font-semibold uppercase tracking-wider vh-text-dim">
                 Design System Paradigm
               </div>
@@ -272,7 +283,7 @@ export function Topbar() {
                     {
                       id: "modern",
                       label: "Modern Flat",
-                      desc: "Clean glass & crisp borders",
+                      desc: "Clean minimal & razor borders",
                       icon: Sparkles,
                       color: "text-blue-400",
                     },
@@ -289,6 +300,20 @@ export function Topbar() {
                       desc: "Hard black shadow & click physics",
                       icon: Shapes,
                       color: "text-pink-400",
+                    },
+                    {
+                      id: "glassmorphism",
+                      label: "Glassmorphism",
+                      desc: "Frosted blur & specular highlights",
+                      icon: Layers,
+                      color: "text-cyan-400",
+                    },
+                    {
+                      id: "cyberpunk",
+                      label: "Cyberpunk HUD",
+                      desc: "Neon hairlines & sci-fi terminal",
+                      icon: Terminal,
+                      color: "text-emerald-400",
                     },
                   ] as const
                 ).map((s) => (
