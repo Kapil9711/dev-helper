@@ -224,30 +224,127 @@ export function DiffViewer({
 
   if (!filePath && !diff) {
     return (
-      <div className="flex flex-col items-center justify-center py-14 px-4 text-center vh-bg-card border vh-border rounded-xl shadow-sm">
-        <div className="h-12 w-12 rounded-2xl bg-white/5 border vh-border flex items-center justify-center mb-3 text-sky-400">
-          <FileCode size={24} />
+      <div
+        className={`vh-bg-card border vh-border rounded-xl overflow-hidden shadow-sm flex flex-col ${
+          isFullScreen ? "w-full h-full max-h-none" : "min-h-[460px]"
+        }`}
+      >
+        {/* Diff Workbench Header */}
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b vh-border px-4 py-2.5 bg-black/5 dark:bg-white/5 select-none shrink-0">
+          <div className="flex items-center gap-2 min-w-0">
+            <FileCode size={16} className="text-sky-400 shrink-0" />
+            <span className="font-mono text-xs font-semibold vh-text-main">
+              Diff Inspector
+            </span>
+            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white/5 border vh-border vh-text-dim">
+              No File Selected
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2 opacity-40 pointer-events-none select-none">
+            <div className="flex items-center border vh-border rounded-lg overflow-hidden bg-black/10 dark:bg-white/5 text-xs">
+              <span className="flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold vh-bg-accent vh-text-accent">
+                <Columns size={12} />
+                <span>Split</span>
+              </span>
+              <span className="flex items-center gap-1.5 px-2.5 py-1 text-xs vh-text-dim border-l vh-border">
+                <Rows size={12} />
+                <span>Unified</span>
+              </span>
+            </div>
+          </div>
         </div>
-        <p className="font-bold text-sm vh-text-main">No File Selected for Diff</p>
-        <p className="text-xs mt-1 vh-text-dim max-w-md">
-          Select any modified, staged, or untracked file from the working tree above to view its side-by-side diff.
-        </p>
+
+        {/* Side-by-Side Column Guide Subheader */}
+        <div className="grid grid-cols-2 border-b vh-border bg-black/10 dark:bg-white/5 text-[11px] font-mono select-none shrink-0 divide-x vh-border opacity-70">
+          <div className="py-1.5 px-4 flex items-center justify-between text-rose-400/90 font-medium">
+            <span className="flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-rose-500 inline-block" />
+              Previous / Original File (Deletions)
+            </span>
+            <span className="text-[10px] opacity-70">Old Revision</span>
+          </div>
+
+          <div className="py-1.5 px-4 flex items-center justify-between text-emerald-400/90 font-medium">
+            <span className="flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" />
+              Updated / Modified File (Additions)
+            </span>
+            <span className="text-[10px] opacity-70">Working Copy</span>
+          </div>
+        </div>
+
+        {/* Spacious, Balanced Empty State Body */}
+        <div className="flex-1 flex flex-col items-center justify-center p-8 text-center min-h-[340px] space-y-4">
+          <div className="relative">
+            <div className="h-14 w-14 rounded-2xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-sky-400 shadow-sm">
+              <Split size={26} />
+            </div>
+            <div className="absolute -bottom-1 -right-1 h-5 w-5 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+              <CheckCircle2 size={12} />
+            </div>
+          </div>
+
+          <div className="space-y-1.5 max-w-md">
+            <h4 className="font-bold text-sm vh-text-main">
+              Select a File to Compare Revisions Side-by-Side
+            </h4>
+            <p className="text-xs vh-text-dim leading-relaxed">
+              Click any modified file from <strong className="text-emerald-400 font-semibold">Staged Changes</strong> (left) or <strong className="text-sky-400 font-semibold">Working Tree</strong> (right) to view line-by-line additions and deletions.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-2 pt-2 text-[11px] font-mono vh-text-dim">
+            <span className="px-2.5 py-1 rounded-lg bg-black/20 border vh-border flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
+              Red: Deleted lines
+            </span>
+            <span className="px-2.5 py-1 rounded-lg bg-black/20 border vh-border flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+              Green: Added lines
+            </span>
+            <span className="px-2.5 py-1 rounded-lg bg-black/20 border vh-border flex items-center gap-1.5">
+              <Maximize2 size={11} className="text-sky-400" />
+              Full Screen ready
+            </span>
+          </div>
+        </div>
       </div>
     );
   }
 
   if (diff.trim() === "") {
     return (
-      <div className="flex flex-col items-center justify-center py-14 px-4 text-center vh-bg-card border vh-border rounded-xl shadow-sm">
-        <div className="h-12 w-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-3 text-emerald-400">
-          <CheckCircle2 size={24} />
+      <div
+        className={`vh-bg-card border vh-border rounded-xl overflow-hidden shadow-sm flex flex-col ${
+          isFullScreen ? "w-full h-full max-h-none" : "min-h-[460px]"
+        }`}
+      >
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b vh-border px-4 py-2.5 bg-black/5 dark:bg-white/5 select-none shrink-0">
+          <div className="flex items-center gap-2 min-w-0">
+            <FileCode size={16} className="text-emerald-400 shrink-0" />
+            <span className="font-mono text-xs font-semibold vh-text-main truncate">
+              {filePath || "Working Directory"}
+            </span>
+            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
+              Clean / No Changes
+            </span>
+          </div>
         </div>
-        <p className="font-bold text-sm vh-text-main">Working Tree Clean</p>
-        <p className="text-xs mt-1 vh-text-dim max-w-md">
-          {filePath
-            ? `File "${filePath}" has no pending uncommitted changes.`
-            : "No modified or uncommitted files in repository."}
-        </p>
+
+        <div className="flex-1 flex flex-col items-center justify-center p-8 text-center min-h-[340px] space-y-3">
+          <div className="h-14 w-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+            <CheckCircle2 size={28} />
+          </div>
+          <div className="space-y-1 max-w-md">
+            <h4 className="font-bold text-sm vh-text-main">No Pending Changes</h4>
+            <p className="text-xs vh-text-dim leading-relaxed">
+              {filePath
+                ? `File "${filePath}" matches the target revision exactly.`
+                : "Your working directory matches HEAD. There are no uncommitted diffs."}
+            </p>
+          </div>
+        </div>
       </div>
     );
   }

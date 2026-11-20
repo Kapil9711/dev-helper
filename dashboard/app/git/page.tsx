@@ -34,6 +34,7 @@ import {
   useGitLogQuery,
   useGitBranchesQuery,
   useGitStashQuery,
+  useGitConfigQuery,
   queryKeys,
 } from "@/lib/queries";
 import { apiClient } from "@/lib/api-client";
@@ -123,6 +124,7 @@ export default function GitDashboardPage() {
   const logQuery = useGitLogQuery(50);
   const branchesQuery = useGitBranchesQuery();
   const stashQuery = useGitStashQuery();
+  const configQuery = useGitConfigQuery();
 
   const status = statusQuery.data;
   const isRepo = status?.isRepo ?? false;
@@ -288,6 +290,11 @@ export default function GitDashboardPage() {
   const handlePush = async () => {
     const branch = currentBranch?.current || "HEAD";
     const remote = currentBranch?.upstream || "origin/" + branch;
+    const ahead = currentBranch?.ahead ?? 0;
+    const behind = currentBranch?.behind ?? 0;
+    const commits = logQuery.data?.commits ?? [];
+    const pending = ahead > 0 ? commits.slice(0, ahead) : [];
+    const remoteUrl = configQuery.data?.remoteUrl || "";
 
     setSyncModal({
       isOpen: true,
@@ -295,6 +302,15 @@ export default function GitDashboardPage() {
       status: "running",
       currentBranch: branch,
       remoteBranch: remote,
+      remoteUrl,
+      aheadCount: ahead,
+      behindCount: behind,
+      pendingCommits: pending.map((c) => ({
+        hash: c.hash.slice(0, 7),
+        message: c.message,
+        author: c.author,
+        time: c.date,
+      })),
       command: `git push`,
     });
 
@@ -310,7 +326,16 @@ export default function GitDashboardPage() {
           status: "success",
           currentBranch: branch,
           remoteBranch: remote,
-          command: `git push`,
+          remoteUrl,
+          aheadCount: ahead,
+          behindCount: behind,
+          pendingCommits: pending.map((c) => ({
+            hash: c.hash.slice(0, 7),
+            message: c.message,
+            author: c.author,
+            time: c.date,
+          })),
+          command: res.command || `git push`,
           stdout: res.stdout || "Everything up-to-date",
           stderr: res.stderr,
           durationMs: res.durationMs || durationMs,
@@ -324,7 +349,16 @@ export default function GitDashboardPage() {
           status: "error",
           currentBranch: branch,
           remoteBranch: remote,
-          command: `git push`,
+          remoteUrl,
+          aheadCount: ahead,
+          behindCount: behind,
+          pendingCommits: pending.map((c) => ({
+            hash: c.hash.slice(0, 7),
+            message: c.message,
+            author: c.author,
+            time: c.date,
+          })),
+          command: res.command || `git push`,
           stdout: res.stdout,
           stderr: res.stderr || res.error || "Push rejected by remote host",
           durationMs: res.durationMs || durationMs,
@@ -338,6 +372,9 @@ export default function GitDashboardPage() {
         status: "error",
         currentBranch: branch,
         remoteBranch: remote,
+        remoteUrl,
+        aheadCount: ahead,
+        behindCount: behind,
         command: `git push`,
         stderr: (err as Error).message,
         durationMs: Date.now() - startTime,
@@ -350,6 +387,9 @@ export default function GitDashboardPage() {
   const handlePull = async (targetBranch?: string) => {
     const branch = currentBranch?.current || "HEAD";
     const remote = targetBranch || currentBranch?.upstream || "origin/" + branch;
+    const ahead = currentBranch?.ahead ?? 0;
+    const behind = currentBranch?.behind ?? 0;
+    const remoteUrl = configQuery.data?.remoteUrl || "";
     const pullCmd = targetBranch ? `git pull origin ${targetBranch}` : "git pull";
 
     setSyncModal({
@@ -358,6 +398,9 @@ export default function GitDashboardPage() {
       status: "running",
       currentBranch: branch,
       remoteBranch: remote,
+      remoteUrl,
+      aheadCount: ahead,
+      behindCount: behind,
       command: pullCmd,
     });
 
@@ -376,6 +419,9 @@ export default function GitDashboardPage() {
           status: "success",
           currentBranch: branch,
           remoteBranch: remote,
+          remoteUrl,
+          aheadCount: ahead,
+          behindCount: behind,
           command: res.command || pullCmd,
           stdout: res.stdout || "Already up to date.",
           stderr: res.stderr,
@@ -390,6 +436,9 @@ export default function GitDashboardPage() {
           status: "error",
           currentBranch: branch,
           remoteBranch: remote,
+          remoteUrl,
+          aheadCount: ahead,
+          behindCount: behind,
           command: res.command || pullCmd,
           stdout: res.stdout,
           stderr: res.stderr || res.error || "Pull failed",
@@ -404,6 +453,9 @@ export default function GitDashboardPage() {
         status: "error",
         currentBranch: branch,
         remoteBranch: remote,
+        remoteUrl,
+        aheadCount: ahead,
+        behindCount: behind,
         command: pullCmd,
         stderr: (err as Error).message,
         durationMs: Date.now() - startTime,
@@ -512,7 +564,7 @@ export default function GitDashboardPage() {
   }
 
   return (
-    <main className="min-h-full space-y-5 vh-bg-app p-5 vh-text-main md:p-7">
+    <main className="min-h-full space-y-4 vh-bg-app p-4 sm:p-6 vh-text-main">
       {/* Top Header Bar */}
       <header className="flex flex-wrap items-center justify-between gap-4 border-b vh-border pb-4">
         <div>
@@ -1109,6 +1161,12 @@ export default function GitDashboardPage() {
         modalState={syncModal}
         onClose={() => setSyncModal((prev) => ({ ...prev, isOpen: false }))}
         onPullFirst={() => void handlePull()}
+        onSelectConflictFile={(file) => {
+          setSelectedFile(file);
+          setSelectedStaged(false);
+          setActiveTab("diff");
+          playTone("click");
+        }}
       />
     </main>
   );
