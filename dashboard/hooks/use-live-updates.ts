@@ -15,14 +15,39 @@ export function useLiveUpdates() {
       void queryClient.invalidateQueries({
         queryKey: ["logs"],
       });
+      void queryClient.invalidateQueries({
+        queryKey: ["apps"],
+      });
     };
 
     const handleNewNetworkRequests = () => {
       void queryClient.invalidateQueries({
         queryKey: ["network-requests"],
       });
+      void queryClient.invalidateQueries({
+        queryKey: ["network-request-details"],
+      });
+      void queryClient.invalidateQueries({
+        queryKey: ["apps"],
+      });
     };
 
+    const handleConnect = () => {
+      void queryClient.invalidateQueries({
+        queryKey: ["logs"],
+      });
+      void queryClient.invalidateQueries({
+        queryKey: ["network-requests"],
+      });
+      void queryClient.invalidateQueries({
+        queryKey: ["network-request-details"],
+      });
+      void queryClient.invalidateQueries({
+        queryKey: ["apps"],
+      });
+    };
+
+    socket.on("connect", handleConnect);
     socket.on("vh:logs:new", handleNewLogs);
     socket.on("vh:network:new", handleNewNetworkRequests);
 
@@ -31,6 +56,7 @@ export function useLiveUpdates() {
     }
 
     return () => {
+      socket.off("connect", handleConnect);
       socket.off("vh:logs:new", handleNewLogs);
       socket.off("vh:network:new", handleNewNetworkRequests);
     };

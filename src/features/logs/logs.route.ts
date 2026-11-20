@@ -23,6 +23,7 @@ export const logsCommandRouter = {
 
     logs
       .command("serve")
+      .alias("server")
       .description("Start the VH log collection server")
       .option("-p, --port <port>", "Port to listen on", "4317")
       .action((options: { port: string }) => {

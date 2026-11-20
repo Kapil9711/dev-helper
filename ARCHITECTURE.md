@@ -221,6 +221,19 @@ flowchart LR
 | `vh git plcwa [msg] [branch]` | Pull+Commit+Add | `add` → `commit` → `pull` |
 | `vh git puplwc [msg] [branch]` | Push+Pull+Commit | 4-step: `add` → `commit` → `pull` → `push` |
 | `vh git cwca [msg] [branch]` | Checkout+Commit+Add | `add` → `commit` → `checkout` |
+| `vh git stash` | — | Interactive stash (push/list/pop/apply/drop) |
+| `vh git merge [branch]` | — | Merge branch with autocomplete & `--abort` |
+| `vh git diff` | — | Show working tree diff (`-s, --staged` for index) |
+| `vh git log` | — | Decorated graph log (`-n, --limit`) |
+| `vh git reset` | — | Soft / hard reset (`--head` to discard unstaged) |
+| `vh git tag` | — | Interactive tags (list/create/delete) |
+| `vh git rebase [branch]` | — | Rebase current branch with `--abort` |
+| `vh git remote` | — | Manage remotes (list/add/remove) |
+| `vh git cherry-pick [commit]` | — | Pick commits with interactive log history |
+| `vh git clean` | — | Safe untracked cleanup with dry-run preview |
+| `vh git restore [file]` | — | Discard changes per file interactively |
+| `vh git show [commit]` | — | Inspect commit diff and metadata |
+| `vh git fetch` | — | Fetch remote refs (`-a, --all` with prune) |
 
 All commands accept `--json` / `-j` to output raw JSON for scripting.
 
@@ -325,21 +338,45 @@ AppShell
 sequenceDiagram
     participant UI as React Page
     participant RQ as TanStack Query
-    participant API as REST API
+    participant API as REST API (/api/*)
     participant SC as Socket Client
     participant SIO as Socket.IO Server
 
-    UI->>RQ: useLogsQuery()
-    RQ->>API: GET /api/logs?limit=50
-    API-->>RQ: data + pagination
+    UI->>RQ: useLogsQuery(limit, appName) / useNetworkRequestsQuery(limit, appName)
+    RQ->>API: GET /api/logs?limit=50&appName=...
+    API-->>RQ: { data, pagination }
     RQ-->>UI: render
 
     SIO-->>SC: vh:logs:new
     SC->>RQ: invalidateQueries
-    RQ->>API: GET /api/logs (refetch)
+    RQ->>API: GET /api/logs (scoped refetch)
     API-->>RQ: updated data
-    RQ-->>UI: re-render
+    RQ-->>UI: re-render (live update)
 ```
+
+### Theming & Design System Paradigms
+
+The dashboard supports persistent, instant client-side customization via [prefrences.tsx](file:///Users/garnetlanee/Desktop/dev-helper/dashboard/lib/prefrences.tsx):
+
+- **3 Design System Paradigms (`data-style`)**:
+  - **Modern Glass (`modern`)**: Minimalist glassmorphism with smooth translucent overlays, razor-thin hairline borders, and subtle elevation.
+  - **Skeuomorphism (`skeuomorphic`)**: Real-world tactile depth featuring multi-layer 3D beveled cards, debossed inset wells for inputs, physical keycap push-down click physics, and hardware incandescent LED lamp status glows.
+  - **Neubrutalism (`neubrutalism`)**: Bold, unapologetic graphic architecture with high-contrast 2.5px solid borders, hard 4px angular drop-shadows with zero blur, reactive click physics, and retro sticker badges.
+- **4 Icon Presentation Styles (`data-icon-style`)**:
+  - **Adaptive System (`default`)**: Seamlessly conforms to the currently selected design system paradigm.
+  - **Luminous Neon Glow (`glow`)**: Ambient neon glow halos surrounding active icons and badges.
+  - **Brutalist Stamped (`stamped`)**: Heavy bordered stamp containers with 2.5px offset drop shadows.
+  - **Minimal Stroke (`minimal`)**: Unadorned, crisp line strokes.
+- **4 Curated Theme Presets (`data-theme`)**:
+  - **Midnight Black (`midnight`)**: Balanced deep slate-black with refined indigo contrast (Default).
+  - **Sky Mist (`sky-mist`)**: Ethereal morning sky mist with crisp cyan-slate typography.
+  - **Warm Off-White (`off-white`)**: Soft warm ivory & paper cream for gentle daytime viewing.
+  - **Clean White (`light`)**: Crisp architectural pure white with slate typography.
+- **6 Accent Colors**: Blue, Violet, Emerald, Amber, Rose, Cyan
+- **Collapsible Sidebar**: Icon-only strip (64px) at rest that smoothly expands to full navigation (256px) on hover, freeing maximum horizontal table width for telemetry
+- **Interactive PrettyJson Component**: Syntax-highlighted tree/raw visualizer with collapsible nodes, size byte counter, live key/value search filter, 1-click copy, and file download
+- **Web Audio Feedback**: Zero-dependency browser audio synthesizer for alerts on errors and click confirmations
+- **Global Project Scoping**: Isolate all dashboard telemetry (Overview, Console, Network, Events) to an individual application with single-click reset.
 
 | Library | Role |
 |---------|------|

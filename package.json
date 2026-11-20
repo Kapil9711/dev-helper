@@ -21,10 +21,10 @@
     "dev": "tsc -w",
     "prepublishOnly": "yarn clean && yarn build",
     "dh": "node dist/bin/index.js",
-    "build:dashboard": "yarn --cwd dashboard build",
+    "build:dashboard": "cd dashboard && npx next build --webpack",
     "build:server": "tsc -p tsconfig.json",
     "copy:dashboard": "mkdir -p dist/dashboard && cp -R dashboard/out/. dist/dashboard/",
-    "build": "yarn build:dashboard && yarn run clean && tsc -p tsconfig.json && yarn copy:dashboard"
+    "build": "rm -rf dist && npm run build:dashboard && npm run build:server && npm run copy:dashboard"
   },
   "keywords": [
     "cli",

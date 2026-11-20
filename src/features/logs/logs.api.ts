@@ -7,6 +7,9 @@ function sendJson(res: ServerResponse, status: number, body: unknown): void {
   res.writeHead(status, {
     "content-type": "application/json; charset=utf-8",
     "cache-control": "no-store",
+    "access-control-allow-origin": "*",
+    "access-control-allow-methods": "GET, OPTIONS",
+    "access-control-allow-headers": "Content-Type, Authorization",
   });
 
   res.end(JSON.stringify(body));
@@ -442,8 +445,18 @@ export function createLogsApi(dbPath: string) {
       return false;
     }
 
+    if (req.method === "OPTIONS") {
+      res.writeHead(204, {
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET, OPTIONS",
+        "access-control-allow-headers": "Content-Type, Authorization",
+      });
+      res.end();
+      return true;
+    }
+
     if (req.method !== "GET") {
-      res.setHeader("allow", "GET");
+      res.setHeader("allow", "GET, OPTIONS");
       sendJson(res, 405, { error: "Method not allowed" });
       return true;
     }

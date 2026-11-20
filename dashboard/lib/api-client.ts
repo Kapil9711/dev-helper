@@ -11,12 +11,12 @@ async function apiGet<T>(path: string, params?: ApiParams): Promise<T> {
   const url = new URL(path, window.location.origin);
 
   for (const [key, value] of Object.entries(params ?? {})) {
-    if (value !== undefined && value !== null) {
+    if (value !== undefined && value !== null && value !== "") {
       url.searchParams.set(key, String(value));
     }
   }
 
-  const response = await fetch(url, {
+  const response = await fetch(url.toString(), {
     headers: { Accept: "application/json" },
   });
 
@@ -34,11 +34,25 @@ export const apiClient = {
     return apiGet("/api/apps");
   },
 
-  getLogs(params?: { limit?: number; cursor?: string }): Promise<LogsResponse> {
+  getLogs(params?: {
+    appName?: string;
+    level?: string;
+    search?: string;
+    from?: number;
+    to?: number;
+    limit?: number;
+    cursor?: string;
+  }): Promise<LogsResponse> {
     return apiGet("/api/logs", params);
   },
 
   getNetworkRequests(params?: {
+    appName?: string;
+    method?: string;
+    status?: number;
+    search?: string;
+    from?: number;
+    to?: number;
     limit?: number;
     cursor?: string;
   }): Promise<NetworkRequestsResponse> {
@@ -46,6 +60,12 @@ export const apiClient = {
   },
 
   getNetworkRequestDetails(params?: {
+    appName?: string;
+    method?: string;
+    status?: number;
+    search?: string;
+    from?: number;
+    to?: number;
     limit?: number;
     cursor?: string;
   }): Promise<NetworkRequestDetailsResponse> {

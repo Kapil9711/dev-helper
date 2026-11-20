@@ -52,7 +52,8 @@ function isVHEvent(value: unknown): value is IncomingVHEvent {
 export function createLogsSocketServer(httpServer: HttpServer) {
   const io = new Server(httpServer, {
     cors: {
-      origin: "http://localhost:3000",
+      origin: "*",
+      methods: ["GET", "POST"],
     },
   });
 

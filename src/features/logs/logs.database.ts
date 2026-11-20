@@ -99,7 +99,22 @@ function sha256(value: unknown): string {
 }
 
 function toJson(value: unknown): string | null {
-  if (value === undefined) return null;
+  if (value === undefined || value === null) return null;
+
+  if (typeof value === "string") {
+    const trimmed = value.trim();
+    if (
+      (trimmed.startsWith("{") && trimmed.endsWith("}")) ||
+      (trimmed.startsWith("[") && trimmed.endsWith("]"))
+    ) {
+      try {
+        JSON.parse(trimmed);
+        return trimmed;
+      } catch {
+        // Fall through to JSON.stringify
+      }
+    }
+  }
 
   try {
     const result = JSON.stringify(value);
@@ -254,9 +269,13 @@ export function createLogsDatabase(): LogsDatabase {
   const updateResponse = db.prepare(`
     UPDATE network_requests
     SET
-      status = COALESCE(?, status),
+      status = CASE
+        WHEN ? IS NOT NULL THEN ?
+        WHEN ? IS NOT NULL THEN NULL
+        ELSE status
+      END,
       duration_ms = COALESCE(?, duration_ms),
-      error = COALESCE(?, error),
+      error = ?,
       last_seen = MAX(last_seen, ?)
     WHERE fingerprint = ?
   `);
@@ -345,22 +364,25 @@ export function createLogsDatabase(): LogsDatabase {
         excluded.status_text,
         network_request_details.status_text
       ),
-      response_headers_json = COALESCE(
-        excluded.response_headers_json,
-        network_request_details.response_headers_json
-      ),
-      response_body_json = COALESCE(
-        excluded.response_body_json,
-        network_request_details.response_body_json
-      ),
+      response_headers_json = CASE
+        WHEN excluded.response_headers_json IS NOT NULL
+        THEN excluded.response_headers_json
+        ELSE network_request_details.response_headers_json
+      END,
+      response_body_json = CASE
+        WHEN excluded.response_body_json IS NOT NULL
+        THEN excluded.response_body_json
+        ELSE network_request_details.response_body_json
+      END,
       duration_ms = COALESCE(
         excluded.duration_ms,
         network_request_details.duration_ms
       ),
-      error = COALESCE(
-        excluded.error,
-        network_request_details.error
-      ),
+      error = CASE
+        WHEN excluded.error IS NOT NULL THEN excluded.error
+        WHEN excluded.status IS NOT NULL AND excluded.status < 400 THEN NULL
+        ELSE network_request_details.error
+      END,
       completed_at = excluded.completed_at,
       updated_at = MAX(
         network_request_details.updated_at,
@@ -447,10 +469,20 @@ export function createLogsDatabase(): LogsDatabase {
               | undefined;
 
             if (priorResponse?.completed_at != null) {
+              const status = priorResponse.status;
+              let error: string | null = null;
+              if (typeof priorResponse.error === "string" && priorResponse.error.trim().length > 0) {
+                error = priorResponse.error.trim();
+              } else if (status !== null && status >= 400) {
+                error = `HTTP ${status}`;
+              }
+
               updateResponse.run(
-                priorResponse.status,
+                status,
+                status,
+                error,
                 priorResponse.duration_ms,
-                priorResponse.error,
+                error,
                 priorResponse.completed_at,
                 fingerprint,
               );
@@ -475,17 +507,52 @@ export function createLogsDatabase(): LogsDatabase {
             throw new Error("Invalid network response event");
           }
 
-          const link = findRequest.get(event.appName, requestId) as
+          let link = findRequest.get(event.appName, requestId) as
             | { fingerprint: string }
             | undefined;
 
-          if (link) {
-            updateResponse.run(
-              typeof event.status === "number" ? event.status : null,
-              typeof event.durationMs === "number" ? event.durationMs : null,
-              typeof event.error === "string" ? event.error : null,
+          let fingerprint = link?.fingerprint;
+
+          // If no link exists yet (e.g. response arrived before request or standalone response),
+          // synthesize link if method and url are present.
+          if (!fingerprint && typeof event.method === "string" && typeof event.url === "string") {
+            const normalizedMethod = event.method.toUpperCase();
+            fingerprint = sha256({
+              appName: event.appName,
+              method: normalizedMethod,
+              url: event.url,
+            });
+
+            insertRequest.run(
+              fingerprint,
+              event.appName,
+              normalizedMethod,
+              event.url,
               event.timestamp,
-              link.fingerprint,
+              event.timestamp,
+            );
+
+            linkRequest.run(event.appName, requestId, fingerprint);
+          }
+
+          const status = typeof event.status === "number" ? event.status : null;
+          const durationMs = typeof event.durationMs === "number" ? event.durationMs : null;
+          let error: string | null = null;
+          if (typeof event.error === "string" && event.error.trim().length > 0) {
+            error = event.error.trim();
+          } else if (status !== null && status >= 400) {
+            error = `HTTP ${status}`;
+          }
+
+          if (fingerprint) {
+            updateResponse.run(
+              status,
+              status,
+              error,
+              durationMs,
+              error,
+              event.timestamp,
+              fingerprint,
             );
           }
 
