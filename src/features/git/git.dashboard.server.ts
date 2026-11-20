@@ -21,6 +21,7 @@ import {
   handleServerInfo,
 } from "../logs/logs.git.api.ts";
 import { workspaceWatcher } from "./workspace.watcher.ts";
+import { findAvailablePort } from "../../shared/helpers/server/port.helper.ts";
 
 const dashboardDirectory = resolve(__dirname, "../../dashboard");
 
@@ -32,7 +33,21 @@ export interface GitDashboardServerOptions {
 export async function startGitDashboardServer(
   options: GitDashboardServerOptions = {},
 ): Promise<void> {
-  const port = options.port || 4318;
+  const requestedPort = options.port || 4318;
+  const { port, wasChanged } = await findAvailablePort(requestedPort, "0.0.0.0");
+
+  if (wasChanged) {
+    console.log(
+      chalk.yellow(
+        `\n[VH] Port ${requestedPort} is already in use by another project or process.`,
+      ),
+    );
+    console.log(
+      chalk.cyan(
+        `[VH] Automatically assigned to next available port: ${chalk.bold(port)}\n`,
+      ),
+    );
+  }
 
   const isRepo = await gitHelper.isRepository();
   if (!isRepo) {
@@ -202,6 +217,19 @@ export async function startGitDashboardServer(
     });
   });
 
+  httpServer.on("error", (err: NodeJS.ErrnoException) => {
+    if (err.code === "EADDRINUSE") {
+      console.error(
+        chalk.red(
+          `\n[VH Error] Port ${port} is currently in use. Please specify another port with --port <number>.\n`,
+        ),
+      );
+    } else {
+      console.error(chalk.red(`\n[VH Server Error] ${err.message}\n`));
+    }
+    process.exit(1);
+  });
+
   httpServer.listen(port, "0.0.0.0", () => {
     const dashboardUrl = `http://localhost:${port}/git/`;
     console.log(chalk.bold.hex("#10b981")("\n=============================================="));
@@ -210,7 +238,11 @@ export async function startGitDashboardServer(
     console.log(`${chalk.gray("Repository:")}  ${chalk.white.bold(repoRoot)}`);
     console.log(`${chalk.gray("Branch:")}      ${chalk.cyan.bold(currentBranch)}`);
     console.log(`${chalk.gray("Dashboard:")}   ${chalk.green.underline(dashboardUrl)}`);
-    console.log(`${chalk.gray("Port:")}        ${chalk.yellow(port)}`);
+    console.log(
+      `${chalk.gray("Port:")}        ${chalk.yellow(port)} ${
+        wasChanged ? chalk.gray(`(auto-assigned; ${requestedPort} in use)`) : ""
+      }`,
+    );
     console.log(chalk.gray("----------------------------------------------"));
     console.log(chalk.gray("Press Ctrl+C to stop the Git Dashboard server.\n"));
 

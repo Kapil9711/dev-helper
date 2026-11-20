@@ -7,6 +7,7 @@ import { fileURLToPath } from "node:url";
 import { createLogsSocketServer } from "./logs.socket.js";
 import { createLogsApi } from "./logs.api.js";
 import { createLogsDatabase } from "./logs.database.js";
+import { findAvailablePort } from "../../shared/helpers/server/port.helper.ts";
 
 // Compiled route file:
 // dist/features/logs/logs.route.js
@@ -26,11 +27,16 @@ export const logsCommandRouter = {
       .alias("server")
       .description("Start the VH log collection server")
       .option("-p, --port <port>", "Port to listen on", "4317")
-      .action((options: { port: string }) => {
-        const port = Number(options.port);
+      .action(async (options: { port: string }) => {
+        const requestedPort = Number(options.port);
 
-        if (!Number.isInteger(port) || port < 1 || port > 65535) {
+        if (!Number.isInteger(requestedPort) || requestedPort < 1 || requestedPort > 65535) {
           throw new Error("Port must be an integer from 1 to 65535");
+        }
+
+        const { port, wasChanged } = await findAvailablePort(requestedPort, "0.0.0.0");
+        if (wasChanged) {
+          console.log(`[VH] Notice: Port ${requestedPort} is in use. Using next available port ${port}.`);
         }
 
         const database = createLogsDatabase();
