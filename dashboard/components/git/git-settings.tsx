@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import {
-  Settings,
   User,
   Mail,
   GitBranch,
@@ -13,6 +12,14 @@ import {
   VolumeX,
   Check,
   RotateCcw,
+  SlidersHorizontal,
+  Sparkles,
+  Stamp,
+  Layers,
+  Zap,
+  Box,
+  Shapes,
+  Terminal,
 } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useGitConfigQuery, queryKeys } from "@/lib/queries";
@@ -21,20 +28,25 @@ import {
   useDashboardPreferences,
   AVAILABLE_THEMES,
   playTone,
+  type Theme,
   type UIStyle,
+  type IconStyle,
+  type AccentColor,
   type Density,
 } from "@/lib/prefrences";
 
 export function GitSettings() {
   const queryClient = useQueryClient();
   const configQuery = useGitConfigQuery();
-  const { preferences, updatePreferences } = useDashboardPreferences();
+  const { preferences, updatePreferences, resetPreferences } =
+    useDashboardPreferences();
 
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [defaultBranch, setDefaultBranch] = useState("main");
   const [isSaving, setIsSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
+  const [resetDone, setResetDone] = useState(false);
 
   useEffect(() => {
     if (configQuery.data) {
@@ -69,12 +81,78 @@ export function GitSettings() {
     }
   };
 
-  const uiStyles: { id: UIStyle; name: string; desc: string }[] = [
-    { id: "modern", name: "Modern", desc: "Clean borders and soft rounded corners" },
-    { id: "skeuomorphic", name: "Skeuomorphic", desc: "Tactile bevels, metallic gradients & inset shadows" },
-    { id: "neubrutalism", name: "Neubrutalism", desc: "Bold black borders, hard shadows & high contrast" },
-    { id: "glassmorphism", name: "Glassmorphism", desc: "Frosted glass acrylic blur with luminous borders" },
-    { id: "cyberpunk", name: "Cyberpunk", desc: "Neon edges, digital glow & futuristic typography" },
+  const accentOptions: { id: AccentColor; name: string; dot: string }[] = [
+    { id: "blue", name: "Electric Blue", dot: "bg-blue-500" },
+    { id: "violet", name: "Amethyst Violet", dot: "bg-violet-500" },
+    { id: "emerald", name: "Emerald Mint", dot: "bg-emerald-500" },
+    { id: "amber", name: "Solar Amber", dot: "bg-amber-500" },
+    { id: "rose", name: "Ruby Rose", dot: "bg-rose-500" },
+    { id: "cyan", name: "Cyan Ice", dot: "bg-cyan-500" },
+  ];
+
+  const iconStyles = [
+    {
+      id: "default" as IconStyle,
+      title: "Adaptive System",
+      desc: "Matches current UI paradigm automatically",
+      icon: Layers,
+    },
+    {
+      id: "glow" as IconStyle,
+      title: "Luminous Glow",
+      desc: "Outer neon halo on active icons & badges",
+      icon: Zap,
+    },
+    {
+      id: "stamped" as IconStyle,
+      title: "Brutalist Stamped",
+      desc: "Chunky bordered stamp boxes with offset shadow",
+      icon: Stamp,
+    },
+    {
+      id: "minimal" as IconStyle,
+      title: "Minimal Stroke",
+      desc: "Clean line-work without shadows or halos",
+      icon: SlidersHorizontal,
+    },
+  ];
+
+  const uiStyles: { id: UIStyle; name: string; desc: string; icon: any; color: string }[] = [
+    {
+      id: "modern",
+      name: "Modern Flat",
+      desc: "Clean flat cards, smooth transparencies & crisp hairline borders",
+      icon: Sparkles,
+      color: "text-blue-400",
+    },
+    {
+      id: "skeuomorphic",
+      name: "Skeuomorphism",
+      desc: "Tactile 3D beveled cards, debossed inset inputs & physical LED glow",
+      icon: Box,
+      color: "text-amber-400",
+    },
+    {
+      id: "neubrutalism",
+      name: "Neubrutalism",
+      desc: "High-contrast solid borders, hard 4px offset shadow with zero blur",
+      icon: Shapes,
+      color: "text-pink-400",
+    },
+    {
+      id: "glassmorphism",
+      name: "Glassmorphism",
+      desc: "Frosted glass blur (20px), specular sheen & diffuse ambient depth",
+      icon: Layers,
+      color: "text-cyan-400",
+    },
+    {
+      id: "cyberpunk",
+      name: "Cyberpunk HUD",
+      desc: "Sci-fi terminal, neon hairlines, glowing indicators & monospace fonts",
+      icon: Terminal,
+      color: "text-emerald-400",
+    },
   ];
 
   const densities: { id: Density; name: string; desc: string }[] = [
@@ -83,10 +161,17 @@ export function GitSettings() {
     { id: "compact", name: "Compact (13.5px)", desc: "High density data view" },
   ];
 
+  const handleResetPreferences = () => {
+    resetPreferences();
+    setResetDone(true);
+    playTone("click");
+    setTimeout(() => setResetDone(false), 2000);
+  };
+
   return (
-    <div className="space-y-6">
-      {/* Git Identity Settings Card */}
-      <div className="rounded-2xl border vh-border vh-bg-card p-5 sm:p-6 shadow-sm">
+    <div className="space-y-6 pb-12">
+      {/* 1. Git Identity Settings Card */}
+      <section className="rounded-2xl border vh-border vh-bg-card p-5 sm:p-6 shadow-sm">
         <div className="flex items-center gap-3 border-b vh-border pb-4 mb-5">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl vh-bg-accent vh-text-accent border vh-border-accent">
             <User size={20} />
@@ -96,7 +181,7 @@ export function GitSettings() {
               Git Author Profile
             </h3>
             <p className="text-xs vh-text-dim">
-              Configure your local git user and commit signing metadata
+              Configure your local git user and commit signing metadata for this repository
             </p>
           </div>
         </div>
@@ -185,147 +270,280 @@ export function GitSettings() {
             )}
           </div>
         </form>
-      </div>
+      </section>
 
-      {/* Dashboard UI & Theme Settings Card */}
-      <div className="rounded-2xl border vh-border vh-bg-card p-5 sm:p-6 shadow-sm">
+      {/* 2. Accent Color & Spacing Section (NEW) */}
+      <section className="rounded-2xl border vh-border vh-bg-card p-5 sm:p-6 shadow-sm">
         <div className="flex items-center gap-3 border-b vh-border pb-4 mb-5">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl vh-bg-accent vh-text-accent border vh-border-accent">
-            <Palette size={20} />
+            <SlidersHorizontal size={20} />
           </div>
           <div>
             <h3 className="font-bold text-sm sm:text-base vh-text-main">
-              Dashboard Theme & UI Styles
+              Accent Color & Spacing
             </h3>
             <p className="text-xs vh-text-dim">
-              Personalize colors, styling paradigms, layout density, and audio feedback
+              Refine your highlight color and interface density scaling across Git views
             </p>
           </div>
         </div>
 
-        {/* UI Style Selector */}
-        <div className="mb-6">
-          <label className="block text-xs font-bold uppercase tracking-wider vh-text-dim mb-2.5">
-            Design Paradigm
-          </label>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {uiStyles.map((style) => {
-              const isSelected = preferences.uiStyle === style.id;
-              return (
-                <button
-                  key={style.id}
-                  onClick={() => {
-                    updatePreferences({ uiStyle: style.id });
-                    playTone("click");
-                  }}
-                  className={`flex flex-col text-left p-3.5 rounded-xl border transition ${
-                    isSelected
-                      ? "border-emerald-500/50 bg-emerald-500/10 shadow-sm"
-                      : "vh-border vh-bg-app hover:border-white/20"
-                  }`}
-                >
-                  <div className="flex items-center justify-between w-full">
-                    <span className="font-bold text-xs vh-text-main">
-                      {style.name}
-                    </span>
-                    {isSelected && <Check size={14} className="text-emerald-400" />}
-                  </div>
-                  <span className="text-[11px] vh-text-dim mt-1">
-                    {style.desc}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Density Selector */}
-        <div className="mb-6">
-          <label className="block text-xs font-bold uppercase tracking-wider vh-text-dim mb-2.5">
-            Interface Density Scale
-          </label>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            {densities.map((d) => {
-              const isSelected = preferences.density === d.id;
-              return (
-                <button
-                  key={d.id}
-                  onClick={() => {
-                    updatePreferences({ density: d.id });
-                    playTone("click");
-                  }}
-                  className={`flex flex-col text-left p-3.5 rounded-xl border transition ${
-                    isSelected
-                      ? "border-emerald-500/50 bg-emerald-500/10 shadow-sm"
-                      : "vh-border vh-bg-app hover:border-white/20"
-                  }`}
-                >
-                  <div className="flex items-center justify-between w-full">
-                    <span className="font-bold text-xs vh-text-main">{d.name}</span>
-                    {isSelected && <Check size={14} className="text-emerald-400" />}
-                  </div>
-                  <span className="text-[11px] vh-text-dim mt-1">{d.desc}</span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Themes Grid */}
-        <div className="mb-6">
-          <label className="block text-xs font-bold uppercase tracking-wider vh-text-dim mb-2.5">
-            Color Theme ({AVAILABLE_THEMES.length} Available)
-          </label>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5">
-            {AVAILABLE_THEMES.map((t) => {
-              const isSelected = preferences.theme === t.id;
-              return (
-                <button
-                  key={t.id}
-                  onClick={() => {
-                    updatePreferences({ theme: t.id });
-                    playTone("click");
-                  }}
-                  className={`flex items-center justify-between p-2.5 rounded-xl border text-xs transition ${
-                    isSelected
-                      ? "border-emerald-500/50 bg-emerald-500/10 font-bold vh-text-main shadow-xs"
-                      : "vh-border vh-bg-app vh-text-dim hover:text-white hover:border-white/20"
-                  }`}
-                >
-                  <span className="flex items-center gap-2 truncate">
-                    <span className={`h-2.5 w-2.5 rounded-full shrink-0 ${t.accentDot}`} />
-                    <span className="truncate">{t.name}</span>
-                  </span>
-                  {isSelected && <Check size={13} className="text-emerald-400 shrink-0" />}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Sound Feedback Toggle */}
-        <div className="flex items-center justify-between border-t vh-border pt-4">
+        <div className="space-y-6">
+          {/* Accent Color Options */}
           <div>
-            <p className="text-xs font-semibold vh-text-main">Interface Audio Effects</p>
-            <p className="text-[11px] vh-text-dim">Subtle click & completion audio feedback</p>
+            <label className="mb-3 block text-xs font-semibold uppercase tracking-wider vh-text-dim">
+              Highlight Accent Color
+            </label>
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+              {accentOptions.map((acc) => {
+                const isSelected = preferences.accentColor === acc.id;
+                return (
+                  <button
+                    key={acc.id}
+                    onClick={() => {
+                      updatePreferences({ accentColor: acc.id });
+                      playTone("click");
+                    }}
+                    className={`flex items-center gap-2.5 rounded-xl border p-3 text-xs font-semibold transition ${
+                      isSelected
+                        ? "border-2 vh-border-accent vh-bg-accent shadow-xs scale-[1.02]"
+                        : "vh-border vh-bg-input vh-text-main hover:border-white/20"
+                    }`}
+                  >
+                    <span className={`h-3.5 w-3.5 rounded-full shrink-0 ${acc.dot}`} />
+                    <span className="truncate">{acc.name}</span>
+                    {isSelected && <Check size={13} className="ml-auto vh-text-accent shrink-0" />}
+                  </button>
+                );
+              })}
+            </div>
           </div>
-          <button
-            onClick={() => {
-              const next = !preferences.soundAlerts;
-              updatePreferences({ soundAlerts: next });
-              if (next) playTone("click");
-            }}
-            className={`flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-xs font-semibold transition ${
-              preferences.soundAlerts
-                ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-400"
-                : "vh-border vh-bg-card vh-text-dim"
-            }`}
-          >
-            {preferences.soundAlerts ? <Volume2 size={14} /> : <VolumeX size={14} />}
-            <span>{preferences.soundAlerts ? "Enabled" : "Muted"}</span>
-          </button>
+
+          {/* Interface Density */}
+          <div className="pt-4 border-t vh-border">
+            <label className="mb-3 block text-xs font-semibold uppercase tracking-wider vh-text-dim">
+              Interface Density Scale
+            </label>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {densities.map((d) => {
+                const isSelected = preferences.density === d.id;
+                return (
+                  <button
+                    key={d.id}
+                    onClick={() => {
+                      updatePreferences({ density: d.id });
+                      playTone("click");
+                    }}
+                    className={`flex flex-col text-left p-3.5 rounded-xl border transition ${
+                      isSelected
+                        ? "border-2 vh-border-accent vh-bg-accent shadow-xs scale-[1.01]"
+                        : "vh-border vh-bg-input hover:border-white/20"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between w-full">
+                      <span className="font-bold text-xs vh-text-main">{d.name}</span>
+                      {isSelected && <Check size={14} className="vh-text-accent" />}
+                    </div>
+                    <span className="text-[11px] vh-text-dim mt-1">{d.desc}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
+
+      {/* 3. Icon Presentation Theme Section (NEW) */}
+      <section className="rounded-2xl border vh-border vh-bg-card p-5 sm:p-6 shadow-sm">
+        <div className="flex items-center gap-3 border-b vh-border pb-4 mb-5">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl vh-bg-accent vh-text-accent border vh-border-accent">
+            <Stamp size={20} />
+          </div>
+          <div>
+            <h3 className="font-bold text-sm sm:text-base vh-text-main">
+              Icon Presentation Theme
+            </h3>
+            <p className="text-xs vh-text-dim">
+              Select how icons, branch tags, and diff badges are visually emphasized
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {iconStyles.map((item) => {
+            const isSelected = preferences.iconStyle === item.id;
+            const Icon = item.icon;
+            return (
+              <button
+                key={item.id}
+                onClick={() => {
+                  updatePreferences({ iconStyle: item.id });
+                  playTone("click");
+                }}
+                className={`flex flex-col justify-between rounded-xl border p-3.5 text-left transition ${
+                  isSelected
+                    ? "border-2 vh-border-accent vh-bg-accent font-semibold shadow-xs scale-[1.01]"
+                    : "vh-border vh-bg-input hover:border-white/20"
+                }`}
+              >
+                <div>
+                  <div className="flex items-center justify-between">
+                    <Icon size={16} className={isSelected ? "vh-text-accent" : "vh-text-dim"} />
+                    {isSelected && <Check size={13} className="vh-text-accent" />}
+                  </div>
+                  <p className="mt-2 text-xs font-bold vh-text-main">{item.title}</p>
+                  <p className="mt-0.5 text-[11px] leading-4 vh-text-dim">{item.desc}</p>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* 4. Design System Paradigm (UI Styles) */}
+      <section className="rounded-2xl border vh-border vh-bg-card p-5 sm:p-6 shadow-sm">
+        <div className="flex items-center gap-3 border-b vh-border pb-4 mb-5">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl vh-bg-accent vh-text-accent border vh-border-accent">
+            <Sparkles size={20} />
+          </div>
+          <div>
+            <h3 className="font-bold text-sm sm:text-base vh-text-main">
+              Design System Paradigm
+            </h3>
+            <p className="text-xs vh-text-dim">
+              Switch the Git dashboard visual style between Modern Minimal, 3D Skeuomorphism, Neubrutalism, Glassmorphism, and Cyberpunk HUD
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3.5">
+          {uiStyles.map((style) => {
+            const isSelected = preferences.uiStyle === style.id;
+            const Icon = style.icon;
+            return (
+              <button
+                key={style.id}
+                onClick={() => {
+                  updatePreferences({ uiStyle: style.id });
+                  playTone("click");
+                }}
+                className={`flex flex-col justify-between text-left p-4 rounded-xl border transition-all ${
+                  isSelected
+                    ? "border-2 vh-border-accent vh-bg-accent shadow-md scale-[1.02]"
+                    : "vh-border vh-bg-input hover:border-white/20 hover:scale-[1.005]"
+                }`}
+              >
+                <div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Icon size={16} className={style.color} />
+                      <span className="font-bold text-xs vh-text-main">{style.name}</span>
+                    </div>
+                    {isSelected && <Check size={13} className="vh-text-accent" />}
+                  </div>
+                  <p className="text-[11px] vh-text-dim mt-2 leading-relaxed">{style.desc}</p>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* 5. Developer Theme Presets (Curated Themes) */}
+      <section className="rounded-2xl border vh-border vh-bg-card p-5 sm:p-6 shadow-sm">
+        <div className="flex items-center justify-between border-b vh-border pb-4 mb-5">
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl vh-bg-accent vh-text-accent border vh-border-accent">
+              <Palette size={20} />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h3 className="font-bold text-sm sm:text-base vh-text-main">
+                  Developer Theme Presets
+                </h3>
+                <span className="rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-semibold vh-text-muted">
+                  {AVAILABLE_THEMES.length} Curated Themes
+                </span>
+              </div>
+              <p className="text-xs vh-text-dim">
+                Hand-curated dark & light palettes with high contrast code diff highlights
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+          {AVAILABLE_THEMES.map((t) => {
+            const isSelected = preferences.theme === t.id;
+            const isLightCard =
+              t.isLight ??
+              (t.id === "light" || t.id === "off-white" || t.id === "sky-mist");
+
+            return (
+              <button
+                key={t.id}
+                onClick={() => {
+                  updatePreferences({ theme: t.id });
+                  playTone("click");
+                }}
+                className={`flex items-center justify-between p-3.5 rounded-xl border text-xs transition-all ${
+                  isSelected
+                    ? "border-2 vh-border-accent shadow-md scale-[1.02] font-bold"
+                    : "vh-border hover:border-white/20 hover:scale-[1.005]"
+                } ${t.cardBg}`}
+              >
+                <div className="flex items-center gap-2.5 truncate">
+                  <span className={`h-3 w-3 rounded-full shrink-0 ${t.accentDot}`} />
+                  <span className={`truncate ${isLightCard ? "text-zinc-900" : "text-slate-100"}`}>
+                    {t.name}
+                  </span>
+                </div>
+                {isSelected && <Check size={14} className="vh-text-accent shrink-0" />}
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* 6. Interface Audio Effects & Preferences Reset */}
+      <section className="rounded-2xl border vh-border vh-bg-card p-5 sm:p-6 shadow-sm">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h3 className="text-xs font-bold uppercase tracking-wider vh-text-main">
+              Interface Audio & Defaults
+            </h3>
+            <p className="text-[11px] vh-text-dim mt-0.5">
+              Subtle click & operational audio cues, or reset all visual preferences to factory defaults
+            </p>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => {
+                const next = !preferences.soundAlerts;
+                updatePreferences({ soundAlerts: next });
+                if (next) playTone("click");
+              }}
+              className={`flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-xs font-semibold transition ${
+                preferences.soundAlerts
+                  ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-400"
+                  : "vh-border vh-bg-input vh-text-dim"
+              }`}
+            >
+              {preferences.soundAlerts ? <Volume2 size={14} /> : <VolumeX size={14} />}
+              <span>{preferences.soundAlerts ? "Sound Enabled" : "Sound Muted"}</span>
+            </button>
+
+            <button
+              onClick={handleResetPreferences}
+              className="flex items-center gap-1.5 rounded-xl border vh-border vh-bg-input px-3 py-1.5 text-xs font-semibold vh-text-dim hover:text-white hover:border-white/20 transition"
+            >
+              <RotateCcw size={13} />
+              <span>{resetDone ? "Preferences Reset!" : "Reset to Defaults"}</span>
+            </button>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
