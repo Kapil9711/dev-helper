@@ -224,11 +224,13 @@ export function DiffViewer({
 
   if (!filePath && !diff) {
     return (
-      <div className="flex flex-col items-center justify-center p-14 text-center vh-bg-card border vh-border rounded-xl">
-        <FileCode className="w-12 h-12 mb-3 vh-text-dim opacity-40" />
-        <p className="font-semibold text-base vh-text-main">No File Selected</p>
-        <p className="text-xs mt-1 vh-text-dim max-w-sm">
-          Select any modified, staged, or untracked file from the working tree to view its side-by-side diff.
+      <div className="flex flex-col items-center justify-center py-14 px-4 text-center vh-bg-card border vh-border rounded-xl shadow-sm">
+        <div className="h-12 w-12 rounded-2xl bg-white/5 border vh-border flex items-center justify-center mb-3 text-sky-400">
+          <FileCode size={24} />
+        </div>
+        <p className="font-bold text-sm vh-text-main">No File Selected for Diff</p>
+        <p className="text-xs mt-1 vh-text-dim max-w-md">
+          Select any modified, staged, or untracked file from the working tree above to view its side-by-side diff.
         </p>
       </div>
     );
@@ -236,10 +238,12 @@ export function DiffViewer({
 
   if (diff.trim() === "") {
     return (
-      <div className="flex flex-col items-center justify-center p-14 text-center vh-bg-card border vh-border rounded-xl">
-        <CheckCircle2 className="w-12 h-12 mb-3 text-emerald-400 opacity-80" />
-        <p className="font-semibold text-base vh-text-main">Working Tree Clean</p>
-        <p className="text-xs mt-1 vh-text-dim max-w-sm">
+      <div className="flex flex-col items-center justify-center py-14 px-4 text-center vh-bg-card border vh-border rounded-xl shadow-sm">
+        <div className="h-12 w-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-3 text-emerald-400">
+          <CheckCircle2 size={24} />
+        </div>
+        <p className="font-bold text-sm vh-text-main">Working Tree Clean</p>
+        <p className="text-xs mt-1 vh-text-dim max-w-md">
           {filePath
             ? `File "${filePath}" has no pending uncommitted changes.`
             : "No modified or uncommitted files in repository."}
@@ -435,15 +439,15 @@ export function DiffViewer({
               >
                 {/* Left Side: Previous File */}
                 <div
-                  className={`flex items-start py-0.5 px-2 min-w-0 ${
+                  className={`flex items-start py-1 px-3 min-w-0 ${
                     isLeftDel
                       ? "bg-rose-500/15 text-rose-300"
                       : isLeftEmpty
-                      ? "bg-black/10 dark:bg-white/5 opacity-30 select-none"
+                      ? "bg-black/10 dark:bg-white/5 opacity-25 select-none"
                       : "vh-text-main"
                   }`}
                 >
-                  <span className="w-9 text-right pr-2 text-[10px] select-none opacity-40 shrink-0 font-mono">
+                  <span className="w-8 text-right pr-2 text-[10px] select-none opacity-40 shrink-0 font-mono">
                     {left?.lineNumber ?? ""}
                   </span>
 
@@ -451,22 +455,22 @@ export function DiffViewer({
                     {isLeftDel ? "-" : " "}
                   </span>
 
-                  <span className="whitespace-pre-wrap break-all flex-1 font-mono">
+                  <span className="whitespace-pre font-mono text-[11.5px] leading-5 flex-1 overflow-x-auto">
                     {left?.text ?? ""}
                   </span>
                 </div>
 
                 {/* Right Side: Updated File */}
                 <div
-                  className={`flex items-start py-0.5 px-2 min-w-0 ${
+                  className={`flex items-start py-1 px-3 min-w-0 ${
                     isRightAdd
                       ? "bg-emerald-500/15 text-emerald-300"
                       : isRightEmpty
-                      ? "bg-black/10 dark:bg-white/5 opacity-30 select-none"
+                      ? "bg-black/10 dark:bg-white/5 opacity-25 select-none"
                       : "vh-text-main"
                   }`}
                 >
-                  <span className="w-9 text-right pr-2 text-[10px] select-none opacity-40 shrink-0 font-mono">
+                  <span className="w-8 text-right pr-2 text-[10px] select-none opacity-40 shrink-0 font-mono">
                     {right?.lineNumber ?? ""}
                   </span>
 
@@ -474,7 +478,7 @@ export function DiffViewer({
                     {isRightAdd ? "+" : " "}
                   </span>
 
-                  <span className="whitespace-pre-wrap break-all flex-1 font-mono">
+                  <span className="whitespace-pre font-mono text-[11.5px] leading-5 flex-1 overflow-x-auto">
                     {right?.text ?? ""}
                   </span>
                 </div>

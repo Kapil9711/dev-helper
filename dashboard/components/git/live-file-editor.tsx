@@ -40,29 +40,23 @@ export function LiveFileEditor() {
   const [selectedFilePath, setSelectedFilePath] = useState<string | null>(null);
   const [fileDraft, setFileDraft] = useState<string>("");
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
   const [copySuccess, setCopySuccess] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [saveStatus, setSaveStatus] = useState<string | null>(null);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // Queries
+  // Queries - Strictly limited to the top 2 files: current editing file and last edited file
   const liveFilesQuery = useGitLiveFilesQuery(isLiveWatch && !hasUnsavedChanges ? 3000 : undefined);
-  const activeFiles = liveFilesQuery.data?.files ?? [];
+  const activeFiles = useMemo(() => {
+    return (liveFilesQuery.data?.files ?? []).slice(0, 2);
+  }, [liveFilesQuery.data?.files]);
 
-  // Determine which file to display: user choice or first modified file
+  // Determine which file to display: user choice or the current editing file (index 0)
   const currentFile = useMemo(() => {
     if (selectedFilePath) {
       const match = activeFiles.find((f) => f.path === selectedFilePath);
       if (match) return match;
-      return {
-        path: selectedFilePath,
-        status: "M",
-        mtime: Date.now(),
-        size: 0,
-        language: "plaintext",
-      } as GitLiveFile;
     }
     return activeFiles[0] ?? null;
   }, [selectedFilePath, activeFiles]);
@@ -194,13 +188,6 @@ export function LiveFileEditor() {
       // Ignored
     }
   };
-
-  // Filtered files list for search
-  const filteredFiles = useMemo(() => {
-    if (!searchTerm.trim()) return activeFiles;
-    const term = searchTerm.toLowerCase();
-    return activeFiles.filter((f) => f.path.toLowerCase().includes(term));
-  }, [activeFiles, searchTerm]);
 
   // Compute line count and numbers
   const lines = useMemo(() => {
@@ -380,32 +367,53 @@ export function LiveFileEditor() {
         </div>
       </div>
 
-      {/* Active Files Carousel / Chip Strip */}
+      {/* Active Files Strip: ONLY Current Editing File & Last Edited File */}
       <div className="flex items-center gap-2 border-b vh-border px-4 py-2 bg-black/20 overflow-x-auto no-scrollbar">
         <span className="text-[10px] font-semibold uppercase tracking-wider vh-text-dim shrink-0">
-          Modified Files ({activeFiles.length}):
+          Active Workspace ({activeFiles.length}):
         </span>
 
         {activeFiles.length === 0 ? (
           <span className="text-xs vh-text-dim italic">
-            Working tree clean — viewing recent repository file
+            Working tree clean — no active file edits
           </span>
         ) : (
-          filteredFiles.map((file) => {
+          activeFiles.map((file, idx) => {
             const isSelected = file.path === activePath;
+            const isCurrent = idx === 0;
+            const tagLabel = isCurrent ? "Current Editing" : "Last Edited";
+
             return (
               <button
                 key={file.path}
                 onClick={() => handleSelectFile(file.path)}
-                className={`flex items-center gap-1.5 rounded-lg border px-2.5 py-1 text-xs font-medium whitespace-nowrap transition shrink-0 ${
+                className={`flex items-center gap-2 rounded-xl border px-3 py-1.5 text-xs transition shrink-0 ${
                   isSelected
-                    ? "border-emerald-500/40 bg-emerald-500/15 text-emerald-300 shadow-xs font-semibold"
+                    ? "border-emerald-500/50 bg-emerald-500/15 text-emerald-300 shadow-xs font-semibold scale-[1.01]"
                     : "vh-border vh-bg-card vh-text-dim hover:text-white hover:border-white/20"
                 }`}
               >
-                <FileText size={11} className={isSelected ? "text-emerald-400" : "vh-text-dim"} />
-                <span>{file.path.split("/").pop()}</span>
-                <span className="text-[10px] opacity-70">
+                <span
+                  className={`flex items-center gap-1 text-[10px] uppercase font-mono px-1.5 py-0.5 rounded-md ${
+                    isCurrent
+                      ? "bg-emerald-500/25 text-emerald-400 border border-emerald-500/30"
+                      : "bg-zinc-500/20 text-zinc-300 border border-zinc-500/30"
+                  }`}
+                >
+                  <span
+                    className={`h-1.5 w-1.5 rounded-full ${
+                      isCurrent ? "bg-emerald-400 animate-pulse" : "bg-zinc-400"
+                    }`}
+                  />
+                  {tagLabel}
+                </span>
+
+                <FileText size={12} className={isSelected ? "text-emerald-400" : "vh-text-dim"} />
+                <span className="font-mono text-xs max-w-[200px] sm:max-w-[320px] truncate">
+                  {file.path}
+                </span>
+
+                <span className="text-[10px] font-mono opacity-60">
                   {relativeTime(file.mtime)}
                 </span>
               </button>

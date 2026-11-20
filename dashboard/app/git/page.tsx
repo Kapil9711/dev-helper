@@ -759,9 +759,61 @@ export default function GitDashboardPage() {
         </div>
       )}
 
-      {/* SECTION 1: SIDE-BY-SIDE STAGING & WORKING TREE + COMMIT COMPOSER (FULL CONTAINER WIDTH) */}
+      {/* TOP WORKSPACE NAVIGATION TABS */}
+      <div className="flex flex-wrap items-center justify-between border-b vh-border pb-3 gap-2">
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+          {[
+            { id: "diff", label: "Diff & Staging", icon: FileCode },
+            { id: "editor", label: "Live File Editor", icon: Code2 },
+            { id: "log", label: "Commit Graph", icon: GitCommit },
+            { id: "branches", label: "Branches & Merge", icon: GitBranch },
+            { id: "stash", label: "Stash Manager", icon: Archive },
+            { id: "settings", label: "Git Settings", icon: Settings },
+          ].map((tab) => {
+            const Icon = tab.icon;
+            const isActive = activeTab === tab.id;
+
+            return (
+              <button
+                key={tab.id}
+                onClick={() => {
+                  playTone("click");
+                  setActiveTab(tab.id as typeof activeTab);
+                  if (typeof window !== "undefined") {
+                    const url = new URL(window.location.href);
+                    url.searchParams.set("tab", tab.id);
+                    window.history.pushState({}, "", url.toString());
+                  }
+                }}
+                className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition ${
+                  isActive
+                    ? "vh-bg-accent vh-text-accent border vh-border-accent shadow-xs scale-[1.01]"
+                    : "vh-text-dim hover:text-white hover:bg-white/5 border border-transparent"
+                }`}
+              >
+                <Icon size={14} />
+                <span>{tab.label}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {activeTab === "diff" && selectedFile && (
+          <button
+            onClick={() => {
+              setSelectedFile(null);
+              playTone("click");
+            }}
+            className="text-xs vh-text-dim hover:text-white px-2.5 py-1 rounded-lg hover:bg-white/5 transition border vh-border"
+          >
+            Clear Selected File
+          </button>
+        )}
+      </div>
+
+      {/* TAB 1: DIFF & STAGING AREA */}
       {activeTab === "diff" && (
-        <section className="space-y-3.5">
+        <div className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Staged Changes Card */}
             <div className="vh-bg-card border vh-border rounded-xl p-3.5 shadow-sm space-y-2.5 flex flex-col h-64">
@@ -993,121 +1045,64 @@ export default function GitDashboardPage() {
             </div>
           </div>
         </div>
-      </section>
+
+        {/* Bottom Row: Full-Width Side-by-Side Diff Viewer */}
+        <div className="w-full">
+          <DiffViewer
+            diff={diffQuery.data?.diff ?? ""}
+            filePath={selectedFile}
+            staged={selectedStaged}
+            onStageToggle={() => {
+              if (!selectedFile) return;
+              if (selectedStaged) void handleUnstageFile(selectedFile);
+              else void handleStageFile(selectedFile);
+            }}
+            onDiscard={() => {
+              if (selectedFile) void handleDiscardFile(selectedFile);
+            }}
+            isActionLoading={diffQuery.isFetching}
+          />
+        </div>
+      </div>
       )}
 
-      {/* SECTION 2: FULL-WIDTH MAIN WORKSPACE TABS */}
-      <section className="space-y-3">
-        {/* Full-Width View Tabs */}
-        <div className="flex flex-wrap items-center justify-between border-b vh-border pb-2.5 gap-2">
-          <div className="flex items-center gap-1 overflow-x-auto no-scrollbar">
-            {[
-              { id: "diff", label: "Diff & Staging", icon: FileCode },
-              { id: "editor", label: "Live File Editor", icon: Code2 },
-              { id: "log", label: "Commit Graph", icon: GitCommit },
-              { id: "branches", label: "Branches & Merge", icon: GitBranch },
-              { id: "stash", label: "Stash Manager", icon: Archive },
-              { id: "settings", label: "Git Settings", icon: Settings },
-            ].map((tab) => {
-              const Icon = tab.icon;
-              const isActive = activeTab === tab.id;
-
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => {
-                    playTone("click");
-                    setActiveTab(tab.id as typeof activeTab);
-                    if (typeof window !== "undefined") {
-                      const url = new URL(window.location.href);
-                      url.searchParams.set("tab", tab.id);
-                      window.history.pushState({}, "", url.toString());
-                    }
-                  }}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition ${
-                    isActive
-                      ? "vh-bg-accent vh-text-accent border vh-border-accent shadow-sm"
-                      : "vh-text-dim hover:text-white hover:bg-white/5"
-                  }`}
-                >
-                  <Icon size={14} />
-                  <span>{tab.label}</span>
-                </button>
-              );
-            })}
-          </div>
-
-          {activeTab === "diff" && selectedFile && (
-            <button
-              onClick={() => {
-                setSelectedFile(null);
-                playTone("click");
-              }}
-              className="text-[11px] vh-text-dim hover:text-white"
-            >
-              Clear File Selection
-            </button>
-          )}
+      {/* TAB 2: FULL-WIDTH LIVE FILE EDITOR */}
+      {activeTab === "editor" && (
+        <div className="w-full">
+          <LiveFileEditor />
         </div>
+      )}
 
-        {/* Tab 1: FULL-WIDTH Diff Viewer */}
-        {activeTab === "diff" && (
-          <div className="w-full">
-            <DiffViewer
-              diff={diffQuery.data?.diff ?? ""}
-              filePath={selectedFile}
-              staged={selectedStaged}
-              onStageToggle={() => {
-                if (!selectedFile) return;
-                if (selectedStaged) void handleUnstageFile(selectedFile);
-                else void handleStageFile(selectedFile);
-              }}
-              onDiscard={() => {
-                if (selectedFile) void handleDiscardFile(selectedFile);
-              }}
-              isActionLoading={diffQuery.isFetching}
-            />
-          </div>
-        )}
+      {/* TAB 3: FULL-WIDTH COMMIT HISTORY & GRAPH */}
+      {activeTab === "log" && (
+        <div className="w-full">
+          <CommitHistory commits={logQuery.data?.commits ?? []} />
+        </div>
+      )}
 
-        {/* Tab 2: FULL-WIDTH Live File Editor */}
-        {activeTab === "editor" && (
-          <div className="w-full">
-            <LiveFileEditor />
-          </div>
-        )}
+      {/* TAB 4: FULL-WIDTH STASH MANAGER */}
+      {activeTab === "stash" && (
+        <div className="w-full">
+          <StashManager onRefreshWorkingTree={refetchGitState} />
+        </div>
+      )}
 
-        {/* Tab 3: FULL-WIDTH Commit History & Graph */}
-        {activeTab === "log" && (
-          <div className="w-full">
-            <CommitHistory commits={logQuery.data?.commits ?? []} />
-          </div>
-        )}
+      {/* TAB 5: FULL-WIDTH BRANCHES & MERGE MANAGER */}
+      {activeTab === "branches" && (
+        <div className="w-full">
+          <BranchesManager
+            currentBranchName={currentBranch?.current}
+            onRefreshAll={refetchGitState}
+          />
+        </div>
+      )}
 
-        {/* Tab 4: FULL-WIDTH Stash Manager */}
-        {activeTab === "stash" && (
-          <div className="w-full">
-            <StashManager onRefreshWorkingTree={refetchGitState} />
-          </div>
-        )}
-
-        {/* Tab 5: FULL-WIDTH Branches & Merge Manager */}
-        {activeTab === "branches" && (
-          <div className="w-full">
-            <BranchesManager
-              currentBranchName={currentBranch?.current}
-              onRefreshAll={refetchGitState}
-            />
-          </div>
-        )}
-
-        {/* Tab 6: FULL-WIDTH Git Settings */}
-        {activeTab === "settings" && (
-          <div className="w-full">
-            <GitSettings />
-          </div>
-        )}
-      </section>
+      {/* TAB 6: FULL-WIDTH GIT SETTINGS */}
+      {activeTab === "settings" && (
+        <div className="w-full">
+          <GitSettings />
+        </div>
+      )}
 
       {/* Push / Pull Detailed Modal */}
       <GitSyncModal

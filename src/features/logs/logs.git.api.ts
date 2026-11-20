@@ -613,13 +613,16 @@ export async function handleGitLiveFiles(res: ServerResponse): Promise<void> {
         } catch {
           // Ignored
         }
-        if (fileList.length >= 10) break;
+        if (fileList.length >= 2) break;
       }
     }
 
+    // Keep ONLY the current editing file and the last edited file (top 2 by mtime)
+    const limitedFiles = fileList.slice(0, 2);
+
     sendJson(res, 200, {
-      files: fileList,
-      activeFile: fileList[0]?.path || null,
+      files: limitedFiles,
+      activeFile: limitedFiles[0]?.path || null,
     });
   } catch (err: unknown) {
     const error = err as Error;
