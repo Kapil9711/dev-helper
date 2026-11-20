@@ -159,6 +159,53 @@ export async function handleGitCommitShow(
   }
 }
 
+export async function handleGitStashList(res: ServerResponse): Promise<void> {
+  try {
+    const result = await exec("git stash list", { timeout: 30000 });
+    if (!result.success || !result.stdout.trim()) {
+      sendJson(res, 200, { stashes: [] });
+      return;
+    }
+
+    const stashes = result.stdout
+      .split("\n")
+      .map((line) => line.trim())
+      .filter(Boolean)
+      .map((line) => {
+        const colonIdx = line.indexOf(":");
+        const ref = colonIdx !== -1 ? line.slice(0, colonIdx).trim() : line;
+        const message = colonIdx !== -1 ? line.slice(colonIdx + 1).trim() : "";
+        return { ref, message };
+      });
+
+    sendJson(res, 200, { stashes });
+  } catch (err: unknown) {
+    const error = err as Error;
+    sendJson(res, 500, { error: error.message || "Failed to list stashes" });
+  }
+}
+
+export async function handleGitStashDiff(
+  searchParams: URLSearchParams,
+  res: ServerResponse,
+): Promise<void> {
+  try {
+    const stash = searchParams.get("stash") || "stash@{0}";
+    const cleanStash = sanitizeArg(stash);
+    const result = await exec(`git stash show -p "${cleanStash}"`, {
+      timeout: 30000,
+    });
+    sendJson(res, 200, {
+      stash: cleanStash,
+      diff: result.stdout,
+      error: result.stderr || null,
+    });
+  } catch (err: unknown) {
+    const error = err as Error;
+    sendJson(res, 500, { error: error.message || "Failed to get stash diff" });
+  }
+}
+
 export async function handleGitBranches(res: ServerResponse): Promise<void> {
   try {
     const branches = await gitHelper.getBranches("all");
@@ -189,6 +236,8 @@ export async function handleGitAction(
         file?: string;
         message?: string;
         branch?: string;
+        remote?: string;
+        stashRef?: string;
         subAction?: string;
       };
 
@@ -242,7 +291,22 @@ export async function handleGitAction(
         }
 
         case "pull": {
-          cmd = "git pull";
+          let targetBranch = (payload.branch || "").trim();
+          let remote = (payload.remote || "origin").trim();
+
+          if (targetBranch) {
+            // Strip remote prefix if provided (e.g. "origin/main" -> remote "origin", branch "main")
+            if (targetBranch.startsWith(`${remote}/`)) {
+              targetBranch = targetBranch.slice(remote.length + 1);
+            } else if (targetBranch.includes("/") && !targetBranch.startsWith("refs/")) {
+              const parts = targetBranch.split("/");
+              remote = parts[0];
+              targetBranch = parts.slice(1).join("/");
+            }
+            cmd = `git pull "${sanitizeArg(remote)}" "${sanitizeArg(targetBranch)}"`;
+          } else {
+            cmd = "git pull";
+          }
           break;
         }
 
@@ -270,12 +334,13 @@ export async function handleGitAction(
 
         case "stash": {
           const subAction = payload.subAction || "push";
+          const stashRef = payload.stashRef ? sanitizeArg(payload.stashRef) : "";
           if (subAction === "pop") {
-            cmd = "git stash pop";
+            cmd = stashRef ? `git stash pop "${stashRef}"` : "git stash pop";
           } else if (subAction === "apply") {
-            cmd = "git stash apply";
+            cmd = stashRef ? `git stash apply "${stashRef}"` : "git stash apply";
           } else if (subAction === "drop") {
-            cmd = "git stash drop";
+            cmd = stashRef ? `git stash drop "${stashRef}"` : "git stash drop";
           } else if (subAction === "list") {
             cmd = "git stash list";
           } else {
@@ -284,6 +349,46 @@ export async function handleGitAction(
               ? `git stash push -m '${msg.replace(/'/g, "'\\''")}'`
               : "git stash push";
           }
+          break;
+        }
+
+        case "create-branch": {
+          const branch = (payload.branch || "").trim();
+          if (!branch) {
+            sendJson(res, 400, { error: "Branch name is required" });
+            return;
+          }
+          cmd = `git checkout -b "${sanitizeArg(branch)}"`;
+          break;
+        }
+
+        case "delete-branch": {
+          const branch = (payload.branch || "").trim();
+          if (!branch) {
+            sendJson(res, 400, { error: "Branch name is required" });
+            return;
+          }
+          cmd = `git branch -D "${sanitizeArg(branch)}"`;
+          break;
+        }
+
+        case "merge": {
+          const branch = (payload.branch || "").trim();
+          if (!branch) {
+            sendJson(res, 400, { error: "Branch to merge is required" });
+            return;
+          }
+          cmd = `git merge "${sanitizeArg(branch)}"`;
+          break;
+        }
+
+        case "undo-commit": {
+          cmd = "git reset --soft HEAD~1";
+          break;
+        }
+
+        case "fetch": {
+          cmd = "git fetch --prune --all";
           break;
         }
 

@@ -20,6 +20,10 @@ import {
   DownloadCloud,
   Layers,
   ChevronDown,
+  Archive,
+  Undo2,
+  GitMerge,
+  Maximize2,
 } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 import {
@@ -27,12 +31,15 @@ import {
   useGitDiffQuery,
   useGitLogQuery,
   useGitBranchesQuery,
+  useGitStashQuery,
   queryKeys,
 } from "@/lib/queries";
 import { apiClient } from "@/lib/api-client";
 import { useDashboardPreferences, playTone } from "@/lib/prefrences";
 import { DiffViewer } from "@/components/git/diff-viewer";
 import { CommitHistory } from "@/components/git/commit-history";
+import { StashManager } from "@/components/git/stash-manager";
+import { BranchesManager } from "@/components/git/branches-manager";
 import { GitSyncModal, GitSyncModalState } from "@/components/git/git-sync-modal";
 import type { GitChangedFile, GitBranchItem } from "@/types/git";
 
@@ -44,8 +51,8 @@ export default function GitDashboardPage() {
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [selectedStaged, setSelectedStaged] = useState<boolean>(false);
 
-  // Active view tab in main area: "diff" | "log" | "branches"
-  const [activeTab, setActiveTab] = useState<"diff" | "log" | "branches">("diff");
+  // Active view tab in full-width main area: "diff" | "log" | "stash" | "branches"
+  const [activeTab, setActiveTab] = useState<"diff" | "log" | "stash" | "branches">("diff");
 
   // Commit form
   const [commitMessage, setCommitMessage] = useState("");
@@ -54,6 +61,11 @@ export default function GitDashboardPage() {
     type: "success" | "error";
     text: string;
   } | null>(null);
+
+  // Pull from different branch state
+  const [isPullMenuOpen, setIsPullMenuOpen] = useState(false);
+  const [pullSearchTerm, setPullSearchTerm] = useState("");
+  const [customPullBranch, setCustomPullBranch] = useState("");
 
   // Push / Pull Detailed Modal State
   const [syncModal, setSyncModal] = useState<GitSyncModalState>({
@@ -69,6 +81,7 @@ export default function GitDashboardPage() {
   const diffQuery = useGitDiffQuery(selectedFile || undefined, selectedStaged);
   const logQuery = useGitLogQuery(50);
   const branchesQuery = useGitBranchesQuery();
+  const stashQuery = useGitStashQuery();
 
   const status = statusQuery.data;
   const isRepo = status?.isRepo ?? false;
@@ -99,6 +112,12 @@ export default function GitDashboardPage() {
     );
   }, [files]);
 
+  // List of branches available for pulling (remote tracking and local)
+  const selectableBranches = useMemo(() => {
+    const list = branchesQuery.data?.branches ?? [];
+    return list.filter((b) => b.name !== currentBranch?.current);
+  }, [branchesQuery.data?.branches, currentBranch?.current]);
+
   // Conventional commit presets
   const commitPresets = [
     { label: "feat", prefix: "feat: " },
@@ -120,12 +139,14 @@ export default function GitDashboardPage() {
     await Promise.all([
       queryClient.invalidateQueries({ queryKey: queryKeys.gitStatus }),
       queryClient.invalidateQueries({ queryKey: queryKeys.gitBranches }),
+      queryClient.invalidateQueries({ queryKey: queryKeys.gitStash }),
       queryClient.invalidateQueries({ queryKey: ["git-diff"] }),
       queryClient.invalidateQueries({ queryKey: ["git-log"] }),
       statusQuery.refetch(),
       diffQuery.refetch(),
       logQuery.refetch(),
       branchesQuery.refetch(),
+      stashQuery.refetch(),
     ]);
   };
 
@@ -222,7 +243,7 @@ export default function GitDashboardPage() {
     }
   };
 
-  // Push Modal Trigger
+  // Push Action
   const handlePush = async () => {
     const branch = currentBranch?.current || "HEAD";
     const remote = currentBranch?.upstream || "origin/" + branch;
@@ -284,10 +305,11 @@ export default function GitDashboardPage() {
     }
   };
 
-  // Pull Modal Trigger
-  const handlePull = async () => {
+  // Pull Action (with optional targetBranch)
+  const handlePull = async (targetBranch?: string) => {
     const branch = currentBranch?.current || "HEAD";
-    const remote = currentBranch?.upstream || "origin/" + branch;
+    const remote = targetBranch || currentBranch?.upstream || "origin/" + branch;
+    const pullCmd = targetBranch ? `git pull origin ${targetBranch}` : "git pull";
 
     setSyncModal({
       isOpen: true,
@@ -295,12 +317,15 @@ export default function GitDashboardPage() {
       status: "running",
       currentBranch: branch,
       remoteBranch: remote,
-      command: `git pull`,
+      command: pullCmd,
     });
 
     const startTime = Date.now();
     try {
-      const res = await apiClient.executeGitAction({ action: "pull" });
+      const res = await apiClient.executeGitAction({
+        action: "pull",
+        branch: targetBranch,
+      });
       const durationMs = Date.now() - startTime;
 
       if (res.success) {
@@ -310,7 +335,7 @@ export default function GitDashboardPage() {
           status: "success",
           currentBranch: branch,
           remoteBranch: remote,
-          command: `git pull`,
+          command: res.command || pullCmd,
           stdout: res.stdout || "Already up to date.",
           stderr: res.stderr,
           durationMs: res.durationMs || durationMs,
@@ -324,7 +349,7 @@ export default function GitDashboardPage() {
           status: "error",
           currentBranch: branch,
           remoteBranch: remote,
-          command: `git pull`,
+          command: res.command || pullCmd,
           stdout: res.stdout,
           stderr: res.stderr || res.error || "Pull failed",
           durationMs: res.durationMs || durationMs,
@@ -338,11 +363,50 @@ export default function GitDashboardPage() {
         status: "error",
         currentBranch: branch,
         remoteBranch: remote,
-        command: `git pull`,
+        command: pullCmd,
         stderr: (err as Error).message,
         durationMs: Date.now() - startTime,
       });
       playTone("error");
+    }
+  };
+
+  // Fetch & Prune Action
+  const handleFetchPrune = async () => {
+    playTone("click");
+    try {
+      const res = await apiClient.executeGitAction({ action: "fetch" });
+      if (res.success) {
+        showFeedback("success", "Remote tracking references pruned & updated");
+        await refetchGitState();
+      } else {
+        showFeedback("error", res.stderr || res.error || "Fetch failed");
+      }
+    } catch (err: unknown) {
+      showFeedback("error", (err as Error).message);
+    }
+  };
+
+  // Undo Last Commit (Soft Reset)
+  const handleUndoLastCommit = async () => {
+    if (
+      !window.confirm(
+        "Undo last commit (git reset --soft HEAD~1)? Your changes will be preserved in staged state.",
+      )
+    ) {
+      return;
+    }
+    playTone("click");
+    try {
+      const res = await apiClient.executeGitAction({ action: "undo-commit" });
+      if (res.success) {
+        showFeedback("success", "Last commit undone. Changes are now staged.");
+        await refetchGitState();
+      } else {
+        showFeedback("error", res.stderr || res.error || "Failed to undo commit");
+      }
+    } catch (err: unknown) {
+      showFeedback("error", (err as Error).message);
     }
   };
 
@@ -383,24 +447,6 @@ export default function GitDashboardPage() {
       showFeedback("error", (err as Error).message);
     } finally {
       setIsCommitting(false);
-    }
-  };
-
-  const handleCheckoutBranch = async (branchName: string) => {
-    try {
-      playTone("click");
-      const res = await apiClient.executeGitAction({
-        action: "checkout",
-        branch: branchName,
-      });
-      if (res.success) {
-        showFeedback("success", `Switched to branch "${branchName}"`);
-        await refetchGitState();
-      } else {
-        showFeedback("error", res.stderr || res.error || "Checkout failed");
-      }
-    } catch (err: unknown) {
-      showFeedback("error", (err as Error).message);
     }
   };
 
@@ -470,15 +516,146 @@ export default function GitDashboardPage() {
 
         {/* Global Git Action Buttons */}
         <div className="flex flex-wrap items-center gap-2">
-          <button
-            onClick={handlePull}
-            title="Pull latest changes from remote tracking branch"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border vh-border text-xs font-medium hover:bg-white/5 transition"
-          >
-            <DownloadCloud size={13} />
-            Pull
-          </button>
+          {/* Split Pull Button with Branch Dropdown */}
+          <div className="relative">
+            <div className="flex items-center rounded-lg border vh-border overflow-hidden bg-black/5 dark:bg-white/5">
+              <button
+                onClick={() => {
+                  setIsPullMenuOpen(false);
+                  void handlePull();
+                }}
+                title={`Pull latest changes from tracking branch (${currentBranch?.upstream || "origin/" + (currentBranch?.current || "HEAD")})`}
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium hover:bg-white/10 transition"
+              >
+                <DownloadCloud size={13} />
+                <span>Pull</span>
+              </button>
 
+              <button
+                onClick={() => {
+                  playTone("click");
+                  setIsPullMenuOpen((prev) => !prev);
+                }}
+                title="Pull from a different branch..."
+                className="px-2 py-1.5 border-l vh-border text-xs hover:bg-white/10 vh-text-dim hover:text-white transition"
+              >
+                <ChevronDown
+                  size={12}
+                  className={`transition-transform duration-150 ${isPullMenuOpen ? "rotate-180" : ""}`}
+                />
+              </button>
+            </div>
+
+            {/* Pull from Different Branch Dropdown Menu */}
+            {isPullMenuOpen && (
+              <div className="absolute right-0 top-full mt-1.5 w-80 rounded-xl border vh-border vh-bg-card shadow-2xl p-3 z-30 space-y-2.5 animate-in fade-in zoom-in-95 duration-100">
+                <div className="flex items-center justify-between pb-1.5 border-b vh-border">
+                  <div className="flex items-center gap-1.5">
+                    <DownloadCloud size={13} className="text-emerald-400" />
+                    <span className="text-xs font-bold vh-text-main">Pull from Branch</span>
+                  </div>
+                  <span className="text-[10px] vh-text-dim font-mono">
+                    into {currentBranch?.current || "HEAD"}
+                  </span>
+                </div>
+
+                {/* Default tracking branch quick-action */}
+                <button
+                  onClick={() => {
+                    setIsPullMenuOpen(false);
+                    void handlePull();
+                  }}
+                  className="w-full text-left p-2 rounded-lg text-xs bg-emerald-500/10 border border-emerald-500/25 text-emerald-300 hover:bg-emerald-500/20 transition flex items-center justify-between font-mono"
+                >
+                  <div className="flex items-center gap-1.5 min-w-0 pr-2">
+                    <GitBranch size={11} className="text-emerald-400 shrink-0" />
+                    <span className="truncate">
+                      Default: {currentBranch?.upstream || `origin/${currentBranch?.current || "main"}`}
+                    </span>
+                  </div>
+                  <span className="text-[9.5px] uppercase font-sans font-semibold text-emerald-400 shrink-0">
+                    Tracking
+                  </span>
+                </button>
+
+                {/* Search branch filter */}
+                <input
+                  type="text"
+                  value={pullSearchTerm}
+                  onChange={(e) => setPullSearchTerm(e.target.value)}
+                  placeholder="Filter available branches to pull..."
+                  className="w-full rounded-lg border vh-border vh-bg-app p-1.5 text-xs vh-text-main focus:outline-none"
+                />
+
+                {/* Available branch list */}
+                <div className="space-y-0.5 max-h-44 overflow-y-auto pr-1 font-mono text-[11px]">
+                  {selectableBranches.length === 0 ? (
+                    <p className="text-[11px] vh-text-dim py-2 text-center font-sans">
+                      No other branches found.
+                    </p>
+                  ) : (
+                    selectableBranches
+                      .filter((b) =>
+                        b.name.toLowerCase().includes(pullSearchTerm.toLowerCase()),
+                      )
+                      .map((b) => (
+                        <button
+                          key={b.name}
+                          onClick={() => {
+                            setIsPullMenuOpen(false);
+                            void handlePull(b.name);
+                          }}
+                          className="w-full text-left p-1.5 rounded-md hover:bg-white/10 vh-text-main transition flex items-center justify-between group"
+                        >
+                          <div className="flex items-center gap-1.5 min-w-0 pr-2">
+                            <GitBranch
+                              size={11}
+                              className={b.remote ? "text-purple-400 shrink-0" : "text-sky-400 shrink-0"}
+                            />
+                            <span className="truncate text-sky-400 group-hover:underline">
+                              {b.name}
+                            </span>
+                          </div>
+                          <span className="text-[9.5px] font-sans text-emerald-400 opacity-0 group-hover:opacity-100 transition">
+                            Pull →
+                          </span>
+                        </button>
+                      ))
+                  )}
+                </div>
+
+                {/* Custom branch input */}
+                <div className="pt-2 border-t vh-border flex items-center gap-1.5">
+                  <input
+                    type="text"
+                    value={customPullBranch}
+                    onChange={(e) => setCustomPullBranch(e.target.value)}
+                    placeholder="Other branch name (e.g. main)..."
+                    className="flex-1 rounded-lg border vh-border vh-bg-app px-2 py-1 text-[11px] font-mono vh-text-main focus:outline-none"
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" && customPullBranch.trim()) {
+                        setIsPullMenuOpen(false);
+                        void handlePull(customPullBranch.trim());
+                      }
+                    }}
+                  />
+                  <button
+                    disabled={!customPullBranch.trim()}
+                    onClick={() => {
+                      if (!customPullBranch.trim()) return;
+                      setIsPullMenuOpen(false);
+                      void handlePull(customPullBranch.trim());
+                    }}
+                    className="px-2.5 py-1 rounded-lg vh-bg-accent vh-text-accent text-[11px] font-semibold disabled:opacity-40 transition"
+                  >
+                    Pull
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Push Button */}
           <button
             onClick={handlePush}
             title="Push local commits to remote tracking branch"
@@ -488,6 +665,27 @@ export default function GitDashboardPage() {
             Push
           </button>
 
+          {/* Fetch & Prune */}
+          <button
+            onClick={handleFetchPrune}
+            title="Fetch all remotes and prune deleted tracking refs"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border vh-border text-xs font-medium hover:bg-white/5 transition"
+          >
+            <RefreshCw size={13} />
+            Fetch & Prune
+          </button>
+
+          {/* Undo Last Commit */}
+          <button
+            onClick={handleUndoLastCommit}
+            title="Undo last commit (git reset --soft HEAD~1), keeping files staged"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-amber-500/30 bg-amber-500/10 text-amber-400 hover:bg-amber-500/20 text-xs font-medium transition"
+          >
+            <Undo2 size={13} />
+            Undo Commit
+          </button>
+
+          {/* Sync Button */}
           <button
             onClick={refetchGitState}
             title="Refresh working tree & commit graph"
@@ -520,192 +718,185 @@ export default function GitDashboardPage() {
         </div>
       )}
 
-      {/* Main 2-Column Split */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
-        {/* Left Column: Side-by-Side Staging + Working Tree + Commit Box (5 cols) */}
-        <div className="lg:col-span-12 xl:col-span-6 space-y-4">
-          {/* SIDE-BY-SIDE: Staged Changes & Working Tree Changes */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-            {/* Staged Changes Card */}
-            <div className="vh-bg-card border vh-border rounded-xl p-3.5 shadow-sm space-y-2.5 flex flex-col h-72">
-              <div className="flex items-center justify-between pb-2 border-b vh-border shrink-0">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-semibold vh-text-main">Staged Changes</span>
-                  <span className="text-[10px] font-mono px-2 py-0.2 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-                    {stagedFiles.length}
-                  </span>
-                </div>
-                {stagedFiles.length > 0 && (
-                  <button
-                    onClick={handleUnstageAll}
-                    className="text-[11px] text-amber-400 hover:underline font-medium"
-                  >
-                    Unstage All
-                  </button>
-                )}
+      {/* SECTION 1: SIDE-BY-SIDE STAGING & WORKING TREE + COMMIT COMPOSER (FULL CONTAINER WIDTH) */}
+      <section className="space-y-3.5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Staged Changes Card */}
+          <div className="vh-bg-card border vh-border rounded-xl p-3.5 shadow-sm space-y-2.5 flex flex-col h-64">
+            <div className="flex items-center justify-between pb-2 border-b vh-border shrink-0">
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-semibold vh-text-main">Staged Changes</span>
+                <span className="text-[10px] font-mono px-2 py-0.2 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                  {stagedFiles.length}
+                </span>
               </div>
+              {stagedFiles.length > 0 && (
+                <button
+                  onClick={handleUnstageAll}
+                  className="text-[11px] text-amber-400 hover:underline font-medium"
+                >
+                  Unstage All
+                </button>
+              )}
+            </div>
 
-              {stagedFiles.length === 0 ? (
-                <div className="flex-1 flex flex-col items-center justify-center text-center p-3">
-                  <p className="text-[11.5px] vh-text-dim">No staged changes.</p>
-                  <p className="text-[10.5px] opacity-60 vh-text-dim mt-0.5">
-                    Click &quot;+&quot; on working tree files to stage.
-                  </p>
-                </div>
-              ) : (
-                <div className="space-y-1 overflow-y-auto flex-1 pr-1">
-                  {stagedFiles.map((file) => {
-                    const isSelected = selectedFile === file.path && selectedStaged;
+            {stagedFiles.length === 0 ? (
+              <div className="flex-1 flex flex-col items-center justify-center text-center p-3">
+                <p className="text-[11.5px] vh-text-dim">No staged changes.</p>
+                <p className="text-[10.5px] opacity-60 vh-text-dim mt-0.5">
+                  Click &quot;+&quot; on working tree files to stage.
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-1 overflow-y-auto flex-1 pr-1">
+                {stagedFiles.map((file) => {
+                  const isSelected = selectedFile === file.path && selectedStaged;
 
-                    return (
-                      <div
-                        key={file.path}
-                        onClick={() => {
-                          setSelectedFile(file.path);
-                          setSelectedStaged(true);
-                          setActiveTab("diff");
-                          playTone("click");
+                  return (
+                    <div
+                      key={file.path}
+                      onClick={() => {
+                        setSelectedFile(file.path);
+                        setSelectedStaged(true);
+                        setActiveTab("diff");
+                        playTone("click");
+                      }}
+                      className={`flex items-center justify-between p-2 rounded-lg text-xs font-mono transition cursor-pointer select-none group ${
+                        isSelected
+                          ? "bg-emerald-500/15 border border-emerald-500/30 text-emerald-300"
+                          : "hover:bg-white/5 border border-transparent"
+                      }`}
+                    >
+                      <div className="flex items-center gap-2 min-w-0 pr-2">
+                        <span className="text-[10px] font-bold px-1 rounded bg-emerald-500/20 text-emerald-400 shrink-0">
+                          {file.indexStatus?.slice(0, 1).toUpperCase() || "A"}
+                        </span>
+                        <span className="truncate" title={file.path}>
+                          {file.path}
+                        </span>
+                      </div>
+
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          void handleUnstageFile(file.path);
                         }}
-                        className={`flex items-center justify-between p-2 rounded-lg text-xs font-mono transition cursor-pointer select-none group ${
-                          isSelected
-                            ? "bg-emerald-500/15 border border-emerald-500/30 text-emerald-300"
-                            : "hover:bg-white/5 border border-transparent"
-                        }`}
+                        title="Unstage this file"
+                        className="opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-white/10 text-amber-400 transition"
                       >
-                        <div className="flex items-center gap-2 min-w-0 pr-2">
-                          <span className="text-[10px] font-bold px-1 rounded bg-emerald-500/20 text-emerald-400 shrink-0">
-                            {file.indexStatus?.slice(0, 1).toUpperCase() || "A"}
-                          </span>
-                          <span className="truncate" title={file.path}>
-                            {file.path}
-                          </span>
-                        </div>
+                        <Minus size={12} />
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          {/* Working Tree Changes Card */}
+          <div className="vh-bg-card border vh-border rounded-xl p-3.5 shadow-sm space-y-2.5 flex flex-col h-64">
+            <div className="flex items-center justify-between pb-2 border-b vh-border shrink-0">
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-semibold vh-text-main">Working Tree</span>
+                <span className="text-[10px] font-mono px-2 py-0.2 rounded-full bg-white/5 border vh-border vh-text-dim">
+                  {unstagedFiles.length}
+                </span>
+              </div>
+              {unstagedFiles.length > 0 && (
+                <button
+                  onClick={handleStageAll}
+                  className="text-[11px] text-emerald-400 hover:underline font-medium"
+                >
+                  Stage All
+                </button>
+              )}
+            </div>
+
+            {unstagedFiles.length === 0 ? (
+              <div className="flex-1 flex flex-col items-center justify-center text-center p-3">
+                <CheckCircle2 size={20} className="text-emerald-400 mb-1 opacity-70" />
+                <p className="text-[11.5px] vh-text-dim">Working tree clean.</p>
+              </div>
+            ) : (
+              <div className="space-y-1 overflow-y-auto flex-1 pr-1">
+                {unstagedFiles.map((file) => {
+                  const isSelected = selectedFile === file.path && !selectedStaged;
+
+                  return (
+                    <div
+                      key={file.path}
+                      onClick={() => {
+                        setSelectedFile(file.path);
+                        setSelectedStaged(false);
+                        setActiveTab("diff");
+                        playTone("click");
+                      }}
+                      className={`flex items-center justify-between p-2 rounded-lg text-xs font-mono transition cursor-pointer select-none group ${
+                        isSelected
+                          ? "bg-sky-500/15 border border-sky-500/30 text-sky-300"
+                          : "hover:bg-white/5 border border-transparent"
+                      }`}
+                    >
+                      <div className="flex items-center gap-2 min-w-0 pr-2">
+                        <span
+                          className={`text-[10px] font-bold px-1 rounded shrink-0 ${
+                            file.kind === "untracked"
+                              ? "bg-slate-500/20 text-slate-300"
+                              : file.kind === "deleted"
+                              ? "bg-rose-500/20 text-rose-400"
+                              : "bg-amber-500/20 text-amber-400"
+                          }`}
+                        >
+                          {file.kind === "untracked"
+                            ? "?"
+                            : file.workTreeStatus?.slice(0, 1).toUpperCase() || "M"}
+                        </span>
+                        <span className="truncate" title={file.path}>
+                          {file.path}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            void handleStageFile(file.path);
+                          }}
+                          title="Stage this file"
+                          className="p-1 rounded hover:bg-white/10 text-emerald-400 transition"
+                        >
+                          <Plus size={12} />
+                        </button>
 
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
-                            void handleUnstageFile(file.path);
+                            void handleDiscardFile(file.path);
                           }}
-                          title="Unstage this file"
-                          className="opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-white/10 text-amber-400 transition"
+                          title="Discard changes in this file"
+                          className="p-1 rounded hover:bg-white/10 text-rose-400 transition"
                         >
-                          <Minus size={12} />
+                          <Trash2 size={12} />
                         </button>
                       </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-
-            {/* Working Tree Changes Card */}
-            <div className="vh-bg-card border vh-border rounded-xl p-3.5 shadow-sm space-y-2.5 flex flex-col h-72">
-              <div className="flex items-center justify-between pb-2 border-b vh-border shrink-0">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-semibold vh-text-main">Working Tree</span>
-                  <span className="text-[10px] font-mono px-2 py-0.2 rounded-full bg-white/5 border vh-border vh-text-dim">
-                    {unstagedFiles.length}
-                  </span>
-                </div>
-                {unstagedFiles.length > 0 && (
-                  <button
-                    onClick={handleStageAll}
-                    className="text-[11px] text-emerald-400 hover:underline font-medium"
-                  >
-                    Stage All
-                  </button>
-                )}
+                    </div>
+                  );
+                })}
               </div>
-
-              {unstagedFiles.length === 0 ? (
-                <div className="flex-1 flex flex-col items-center justify-center text-center p-3">
-                  <CheckCircle2 size={20} className="text-emerald-400 mb-1 opacity-70" />
-                  <p className="text-[11.5px] vh-text-dim">Working tree clean.</p>
-                </div>
-              ) : (
-                <div className="space-y-1 overflow-y-auto flex-1 pr-1">
-                  {unstagedFiles.map((file) => {
-                    const isSelected = selectedFile === file.path && !selectedStaged;
-
-                    return (
-                      <div
-                        key={file.path}
-                        onClick={() => {
-                          setSelectedFile(file.path);
-                          setSelectedStaged(false);
-                          setActiveTab("diff");
-                          playTone("click");
-                        }}
-                        className={`flex items-center justify-between p-2 rounded-lg text-xs font-mono transition cursor-pointer select-none group ${
-                          isSelected
-                            ? "bg-sky-500/15 border border-sky-500/30 text-sky-300"
-                            : "hover:bg-white/5 border border-transparent"
-                        }`}
-                      >
-                        <div className="flex items-center gap-2 min-w-0 pr-2">
-                          <span
-                            className={`text-[10px] font-bold px-1 rounded shrink-0 ${
-                              file.kind === "untracked"
-                                ? "bg-slate-500/20 text-slate-300"
-                                : file.kind === "deleted"
-                                ? "bg-rose-500/20 text-rose-400"
-                                : "bg-amber-500/20 text-amber-400"
-                            }`}
-                          >
-                            {file.kind === "untracked"
-                              ? "?"
-                              : file.workTreeStatus?.slice(0, 1).toUpperCase() || "M"}
-                          </span>
-                          <span className="truncate" title={file.path}>
-                            {file.path}
-                          </span>
-                        </div>
-
-                        <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition">
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              void handleStageFile(file.path);
-                            }}
-                            title="Stage this file"
-                            className="p-1 rounded hover:bg-white/10 text-emerald-400 transition"
-                          >
-                            <Plus size={12} />
-                          </button>
-
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              void handleDiscardFile(file.path);
-                            }}
-                            title="Discard changes in this file"
-                            className="p-1 rounded hover:bg-white/10 text-rose-400 transition"
-                          >
-                            <Trash2 size={12} />
-                          </button>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
+            )}
           </div>
+        </div>
 
-          {/* Commit Composer Card */}
-          <div className="vh-bg-card border vh-border rounded-xl p-4 shadow-sm space-y-3">
-            <div className="flex items-center justify-between text-xs">
-              <span className="font-semibold vh-text-main flex items-center gap-1.5">
-                <GitCommit size={14} className="text-sky-400" />
-                Commit Staged Changes
-              </span>
-              <span className="text-[11px] vh-text-dim">
-                {stagedFiles.length} file{stagedFiles.length === 1 ? "" : "s"} ready to commit
-              </span>
-            </div>
+        {/* Full-Width Commit Composer */}
+        <div className="vh-bg-card border vh-border rounded-xl p-3.5 shadow-sm space-y-2.5">
+          <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
+            <span className="font-semibold vh-text-main flex items-center gap-1.5">
+              <GitCommit size={14} className="text-sky-400" />
+              Commit Staged Changes ({stagedFiles.length} file{stagedFiles.length === 1 ? "" : "s"})
+            </span>
 
             {/* Conventional Commit Presets */}
-            <div className="flex flex-wrap gap-1">
+            <div className="flex flex-wrap items-center gap-1">
               {commitPresets.map((p) => (
                 <button
                   key={p.label}
@@ -721,20 +912,28 @@ export default function GitDashboardPage() {
                 </button>
               ))}
             </div>
+          </div>
 
-            <textarea
-              rows={3}
+          <div className="flex flex-wrap sm:flex-nowrap items-center gap-2">
+            <input
+              type="text"
               value={commitMessage}
               onChange={(e) => setCommitMessage(e.target.value)}
-              placeholder="Commit summary or description..."
-              className="w-full rounded-lg border vh-border vh-bg-app p-2.5 text-xs font-mono vh-text-main focus:outline-none focus:border-sky-500 transition resize-none"
+              placeholder="Commit summary or conventional commit message..."
+              className="flex-1 rounded-lg border vh-border vh-bg-app px-3 py-2 text-xs font-mono vh-text-main focus:outline-none focus:border-sky-500 transition"
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  void handleCommit(false);
+                }
+              }}
             />
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 shrink-0">
               <button
                 disabled={isCommitting || stagedFiles.length === 0 || !commitMessage.trim()}
                 onClick={() => handleCommit(false)}
-                className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg vh-bg-accent vh-text-accent text-xs font-semibold disabled:opacity-40 transition shadow-sm"
+                className="flex items-center justify-center gap-1.5 py-2 px-4 rounded-lg vh-bg-accent vh-text-accent text-xs font-semibold disabled:opacity-40 transition shadow-sm"
               >
                 <GitCommit size={13} className={isCommitting ? "animate-spin" : ""} />
                 {isCommitting ? "Committing..." : "Commit"}
@@ -743,8 +942,8 @@ export default function GitDashboardPage() {
               <button
                 disabled={isCommitting || stagedFiles.length === 0 || !commitMessage.trim()}
                 onClick={() => handleCommit(true)}
-                title="Commit staged changes and immediately push to remote"
-                className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg border border-sky-500/30 bg-sky-500/10 text-sky-400 hover:bg-sky-500/20 text-xs font-semibold disabled:opacity-40 transition"
+                title="Commit staged changes and immediately push to remote tracking branch"
+                className="flex items-center justify-center gap-1.5 py-2 px-3.5 rounded-lg border border-sky-500/30 bg-sky-500/10 text-sky-400 hover:bg-sky-500/20 text-xs font-semibold disabled:opacity-40 transition"
               >
                 <UploadCloud size={13} />
                 Commit & Push
@@ -752,55 +951,58 @@ export default function GitDashboardPage() {
             </div>
           </div>
         </div>
+      </section>
 
-        {/* Right Column: Main Workspace Tabs (Diff, Commit Graph, Branches) */}
-        <div className="lg:col-span-12 xl:col-span-6 space-y-4">
-          {/* Main View Tabs */}
-          <div className="flex items-center justify-between border-b vh-border pb-2.5">
-            <div className="flex items-center gap-1">
-              {[
-                { id: "diff", label: "Diff Viewer", icon: FileCode },
-                { id: "log", label: "Commit Graph", icon: GitCommit },
-                { id: "branches", label: "Branches", icon: GitBranch },
-              ].map((tab) => {
-                const Icon = tab.icon;
-                const isActive = activeTab === tab.id;
+      {/* SECTION 2: FULL-WIDTH MAIN WORKSPACE TABS (DIFF VIEWER, COMMIT GRAPH, STASH, BRANCHES) */}
+      <section className="space-y-3">
+        {/* Full-Width View Tabs */}
+        <div className="flex flex-wrap items-center justify-between border-b vh-border pb-2.5 gap-2">
+          <div className="flex items-center gap-1">
+            {[
+              { id: "diff", label: "Diff Viewer", icon: FileCode },
+              { id: "log", label: "Commit Graph", icon: GitCommit },
+              { id: "stash", label: "Stash Manager", icon: Archive },
+              { id: "branches", label: "Branches & Merge", icon: GitBranch },
+            ].map((tab) => {
+              const Icon = tab.icon;
+              const isActive = activeTab === tab.id;
 
-                return (
-                  <button
-                    key={tab.id}
-                    onClick={() => {
-                      playTone("click");
-                      setActiveTab(tab.id as typeof activeTab);
-                    }}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition ${
-                      isActive
-                        ? "vh-bg-accent vh-text-accent border vh-border-accent shadow-sm"
-                        : "vh-text-dim hover:text-white hover:bg-white/5"
-                    }`}
-                  >
-                    <Icon size={13} />
-                    <span>{tab.label}</span>
-                  </button>
-                );
-              })}
-            </div>
-
-            {activeTab === "diff" && selectedFile && (
-              <button
-                onClick={() => {
-                  setSelectedFile(null);
-                  playTone("click");
-                }}
-                className="text-[11px] vh-text-dim hover:text-white"
-              >
-                Clear File Selection
-              </button>
-            )}
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => {
+                    playTone("click");
+                    setActiveTab(tab.id as typeof activeTab);
+                  }}
+                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-medium transition ${
+                    isActive
+                      ? "vh-bg-accent vh-text-accent border vh-border-accent shadow-sm"
+                      : "vh-text-dim hover:text-white hover:bg-white/5"
+                  }`}
+                >
+                  <Icon size={14} />
+                  <span>{tab.label}</span>
+                </button>
+              );
+            })}
           </div>
 
-          {/* Tab 1: Diff Viewer */}
-          {activeTab === "diff" && (
+          {activeTab === "diff" && selectedFile && (
+            <button
+              onClick={() => {
+                setSelectedFile(null);
+                playTone("click");
+              }}
+              className="text-[11px] vh-text-dim hover:text-white"
+            >
+              Clear File Selection
+            </button>
+          )}
+        </div>
+
+        {/* Tab 1: FULL-WIDTH Diff Viewer */}
+        {activeTab === "diff" && (
+          <div className="w-full">
             <DiffViewer
               diff={diffQuery.data?.diff ?? ""}
               filePath={selectedFile}
@@ -815,70 +1017,33 @@ export default function GitDashboardPage() {
               }}
               isActionLoading={diffQuery.isFetching}
             />
-          )}
+          </div>
+        )}
 
-          {/* Tab 2: Commit History & Graph */}
-          {activeTab === "log" && (
+        {/* Tab 2: FULL-WIDTH Commit History & Graph */}
+        {activeTab === "log" && (
+          <div className="w-full">
             <CommitHistory commits={logQuery.data?.commits ?? []} />
-          )}
+          </div>
+        )}
 
-          {/* Tab 3: Branches */}
-          {activeTab === "branches" && (
-            <div className="vh-bg-card border vh-border rounded-xl p-4 shadow-sm space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <GitBranch size={16} className="text-sky-400" />
-                  <h2 className="text-sm font-semibold vh-text-main">Repository Branches</h2>
-                </div>
-                <span className="text-xs vh-text-dim">
-                  {branchesQuery.data?.branches.length ?? 0} total branches
-                </span>
-              </div>
+        {/* Tab 3: FULL-WIDTH Stash Manager */}
+        {activeTab === "stash" && (
+          <div className="w-full">
+            <StashManager onRefreshWorkingTree={refetchGitState} />
+          </div>
+        )}
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 max-h-[600px] overflow-y-auto">
-                {branchesQuery.data?.branches.map((b) => (
-                  <div
-                    key={b.name}
-                    className={`p-3 rounded-xl border flex items-center justify-between transition ${
-                      b.current
-                        ? "border-sky-500/40 bg-sky-500/10"
-                        : "vh-border bg-black/5 dark:bg-white/5 hover:border-white/20"
-                    }`}
-                  >
-                    <div className="flex items-center gap-2 min-w-0 pr-2">
-                      <GitBranch
-                        size={14}
-                        className={b.current ? "text-sky-400 shrink-0" : "vh-text-dim shrink-0"}
-                      />
-                      <div className="min-w-0">
-                        <p className="font-mono text-xs font-semibold vh-text-main truncate">
-                          {b.name}
-                        </p>
-                        <p className="text-[10px] vh-text-dim">
-                          {b.remote ? "Remote tracking" : "Local branch"}
-                        </p>
-                      </div>
-                    </div>
-
-                    {b.current ? (
-                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-400 border border-sky-500/30">
-                        Active
-                      </span>
-                    ) : (
-                      <button
-                        onClick={() => void handleCheckoutBranch(b.name)}
-                        className="text-xs px-2.5 py-1 rounded-lg border vh-border bg-white/5 hover:bg-white/10 vh-text-main transition"
-                      >
-                        Checkout
-                      </button>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
+        {/* Tab 4: FULL-WIDTH Branches & Merge Manager */}
+        {activeTab === "branches" && (
+          <div className="w-full">
+            <BranchesManager
+              currentBranchName={currentBranch?.current}
+              onRefreshAll={refetchGitState}
+            />
+          </div>
+        )}
+      </section>
 
       {/* Push / Pull Detailed Modal */}
       <GitSyncModal

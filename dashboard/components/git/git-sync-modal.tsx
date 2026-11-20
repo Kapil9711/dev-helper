@@ -114,34 +114,69 @@ export function GitSyncModal({
         <div className="p-5 space-y-4 max-h-[70vh] overflow-y-auto">
           {/* Visual Branch Flow Diagram */}
           <div className="p-4 rounded-xl border vh-border bg-black/10 dark:bg-white/5 flex items-center justify-between gap-3 font-mono text-xs">
-            {/* Local Branch */}
-            <div className="flex items-center gap-2 min-w-0">
-              <div className="w-2.5 h-2.5 rounded-full bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.6)]" />
-              <div>
-                <p className="text-[10px] uppercase font-semibold vh-text-dim">Local Branch</p>
-                <p className="font-bold text-sky-400 truncate">{modalState.currentBranch || "HEAD"}</p>
-              </div>
-            </div>
+            {isPush ? (
+              <>
+                {/* Local Branch Source */}
+                <div className="flex items-center gap-2 min-w-0">
+                  <div className="w-2.5 h-2.5 rounded-full bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.6)]" />
+                  <div>
+                    <p className="text-[10px] uppercase font-semibold vh-text-dim">Local Source</p>
+                    <p className="font-bold text-sky-400 truncate">{modalState.currentBranch || "HEAD"}</p>
+                  </div>
+                </div>
 
-            {/* Flow Direction Indicator */}
-            <div className="flex flex-col items-center px-2">
-              <span className="text-[10px] uppercase tracking-wider font-sans vh-text-dim font-medium mb-1">
-                {isPush ? "Pushing" : "Pulling"}
-              </span>
-              <div className="flex items-center gap-1">
-                <div className={`h-0.5 w-8 rounded-full ${isRunning ? "bg-sky-400 animate-pulse" : "bg-white/20"}`} />
-                <ArrowRight size={14} className={isRunning ? "text-sky-400 animate-bounce" : "vh-text-dim"} />
-              </div>
-            </div>
+                {/* Flow Direction Indicator */}
+                <div className="flex flex-col items-center px-2">
+                  <span className="text-[10px] uppercase tracking-wider font-sans vh-text-dim font-medium mb-1">
+                    Pushing
+                  </span>
+                  <div className="flex items-center gap-1">
+                    <div className={`h-0.5 w-8 rounded-full ${isRunning ? "bg-sky-400 animate-pulse" : "bg-white/20"}`} />
+                    <ArrowRight size={14} className={isRunning ? "text-sky-400 animate-bounce" : "vh-text-dim"} />
+                  </div>
+                </div>
 
-            {/* Remote Branch */}
-            <div className="flex items-center gap-2 min-w-0 text-right">
-              <div>
-                <p className="text-[10px] uppercase font-semibold vh-text-dim">Remote Tracking</p>
-                <p className="font-bold text-emerald-400 truncate">{modalState.remoteBranch || "origin/main"}</p>
-              </div>
-              <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.6)]" />
-            </div>
+                {/* Remote Branch Destination */}
+                <div className="flex items-center gap-2 min-w-0 text-right">
+                  <div>
+                    <p className="text-[10px] uppercase font-semibold vh-text-dim">Remote Destination</p>
+                    <p className="font-bold text-emerald-400 truncate">{modalState.remoteBranch || "origin/main"}</p>
+                  </div>
+                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.6)]" />
+                </div>
+              </>
+            ) : (
+              <>
+                {/* Remote Branch Source */}
+                <div className="flex items-center gap-2 min-w-0">
+                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.6)]" />
+                  <div>
+                    <p className="text-[10px] uppercase font-semibold vh-text-dim">Remote Source</p>
+                    <p className="font-bold text-emerald-400 truncate">{modalState.remoteBranch || "origin/main"}</p>
+                  </div>
+                </div>
+
+                {/* Flow Direction Indicator */}
+                <div className="flex flex-col items-center px-2">
+                  <span className="text-[10px] uppercase tracking-wider font-sans vh-text-dim font-medium mb-1">
+                    Pulling Into
+                  </span>
+                  <div className="flex items-center gap-1">
+                    <div className={`h-0.5 w-8 rounded-full ${isRunning ? "bg-emerald-400 animate-pulse" : "bg-white/20"}`} />
+                    <ArrowRight size={14} className={isRunning ? "text-emerald-400 animate-bounce" : "vh-text-dim"} />
+                  </div>
+                </div>
+
+                {/* Local Branch Destination */}
+                <div className="flex items-center gap-2 min-w-0 text-right">
+                  <div>
+                    <p className="text-[10px] uppercase font-semibold vh-text-dim">Local Target</p>
+                    <p className="font-bold text-sky-400 truncate">{modalState.currentBranch || "HEAD"}</p>
+                  </div>
+                  <div className="w-2.5 h-2.5 rounded-full bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.6)]" />
+                </div>
+              </>
+            )}
           </div>
 
           {/* Status Alert Banner */}

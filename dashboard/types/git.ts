@@ -78,6 +78,21 @@ export interface GitBranchesResponse {
   branches: GitBranchItem[];
 }
 
+export interface GitStashItem {
+  ref: string;
+  message: string;
+}
+
+export interface GitStashListResponse {
+  stashes: GitStashItem[];
+}
+
+export interface GitStashDiffResponse {
+  stash: string;
+  diff: string;
+  error: string | null;
+}
+
 export interface GitActionPayload {
   action:
     | "stage"
@@ -87,11 +102,18 @@ export interface GitActionPayload {
     | "pull"
     | "checkout"
     | "discard"
-    | "stash";
+    | "stash"
+    | "create-branch"
+    | "delete-branch"
+    | "merge"
+    | "undo-commit"
+    | "fetch";
   files?: string[];
   file?: string;
   message?: string;
   branch?: string;
+  remote?: string;
+  stashRef?: string;
   subAction?: "push" | "pop" | "apply" | "drop" | "list";
 }
 

@@ -10,6 +10,8 @@ import type {
   GitLogResponse,
   GitCommitDetailResponse,
   GitBranchesResponse,
+  GitStashListResponse,
+  GitStashDiffResponse,
   GitActionPayload,
   GitActionResult,
 } from "@/types/git";
@@ -193,6 +195,14 @@ export const apiClient = {
 
   getGitBranches(): Promise<GitBranchesResponse> {
     return apiGet("/api/git/branches");
+  },
+
+  getGitStashList(): Promise<GitStashListResponse> {
+    return apiGet("/api/git/stash");
+  },
+
+  getGitStashDiff(stash: string): Promise<GitStashDiffResponse> {
+    return apiGet("/api/git/stash/diff", { stash });
   },
 
   async executeGitAction(payload: GitActionPayload): Promise<GitActionResult> {

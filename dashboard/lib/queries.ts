@@ -21,6 +21,8 @@ export const queryKeys = {
   gitLog: (limit: number) => ["git-log", limit] as const,
   gitCommitDetails: (hash: string) => ["git-commit", hash] as const,
   gitBranches: ["git-branches"] as const,
+  gitStash: ["git-stash"] as const,
+  gitStashDiff: (stash: string) => ["git-stash-diff", stash] as const,
 };
 
 export function useAppsQuery() {
@@ -98,5 +100,22 @@ export function useGitBranchesQuery() {
     queryKey: queryKeys.gitBranches,
     queryFn: () => apiClient.getGitBranches(),
     staleTime: 10_000,
+  });
+}
+
+export function useGitStashQuery() {
+  return useQuery({
+    queryKey: queryKeys.gitStash,
+    queryFn: () => apiClient.getGitStashList(),
+    staleTime: 5_000,
+  });
+}
+
+export function useGitStashDiffQuery(stash?: string) {
+  return useQuery({
+    queryKey: queryKeys.gitStashDiff(stash || ""),
+    queryFn: () => apiClient.getGitStashDiff(stash!),
+    enabled: Boolean(stash),
+    staleTime: 30_000,
   });
 }

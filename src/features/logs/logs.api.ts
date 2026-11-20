@@ -7,6 +7,8 @@ import {
   handleGitBranches,
   handleGitAction,
   handleGitCommitShow,
+  handleGitStashList,
+  handleGitStashDiff,
 } from "./logs.git.api.ts";
 
 type QueryValue = string | undefined;
@@ -570,6 +572,8 @@ export function createLogsApi(dbPath: string) {
       "/api/git/log",
       "/api/git/commit",
       "/api/git/branches",
+      "/api/git/stash",
+      "/api/git/stash/diff",
       "/api/git/action",
     ];
 
@@ -631,6 +635,16 @@ export function createLogsApi(dbPath: string) {
 
     if (pathname === "/api/git/branches") {
       void handleGitBranches(res);
+      return true;
+    }
+
+    if (pathname === "/api/git/stash") {
+      void handleGitStashList(res);
+      return true;
+    }
+
+    if (pathname === "/api/git/stash/diff") {
+      void handleGitStashDiff(searchParams, res);
       return true;
     }
 

@@ -309,35 +309,48 @@ html, body {
   font-family: "JetBrains Mono", "Fira Code", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
+[data-density="comfortable"] {
+  font-size: 15.5px;
+}
+[data-density="comfortable"] .p-5 {
+  padding: 1.35rem;
+}
+[data-density="comfortable"] .p-4 {
+  padding: 1.1rem;
+}
+
 [data-density="standard"] {
-  font-size: 13.5px;
+  font-size: 14.5px; /* Increased a little more as requested */
 }
 [data-density="standard"] .p-5 {
-  padding: 1.15rem;
+  padding: 1.25rem;
 }
 [data-density="standard"] .p-4 {
-  padding: 0.875rem;
+  padding: 0.975rem;
 }
 [data-density="standard"] .py-3 {
-  padding-top: 0.625rem;
-  padding-bottom: 0.625rem;
+  padding-top: 0.725rem;
+  padding-bottom: 0.725rem;
 }
 [data-density="standard"] .gap-3 {
-  gap: 0.65rem;
+  gap: 0.75rem;
 }
 
 [data-density="compact"] {
-  font-size: 13px;
+  font-size: 13.5px;
 }
 [data-density="compact"] .p-5 {
-  padding: 1rem;
+  padding: 1.125rem;
 }
 [data-density="compact"] .p-4 {
-  padding: 0.75rem;
+  padding: 0.825rem;
 }
 [data-density="compact"] .py-3 {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding-top: 0.575rem;
+  padding-bottom: 0.575rem;
+}
+[data-density="compact"] .gap-3 {
+  gap: 0.625rem;
 }
 
 /* Custom Scrollbar */
