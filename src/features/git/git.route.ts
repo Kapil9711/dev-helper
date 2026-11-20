@@ -21,6 +21,21 @@ class GitCommandRouter {
     this.gitCheckout();
     this.gitCheckoutWithCommitAndAdd();
     this.gitBranch();
+
+    // new commands
+    this.gitStash();
+    this.gitMerge();
+    this.gitDiff();
+    this.gitLog();
+    this.gitReset();
+    this.gitTag();
+    this.gitRebase();
+    this.gitRemote();
+    this.gitCherryPick();
+    this.gitClean();
+    this.gitRestore();
+    this.gitShow();
+    this.gitFetch();
   }
   private gitInit() {
     this.git
@@ -138,6 +153,127 @@ class GitCommandRouter {
       .option("-b, --new-branch")
       .argument("[branch]", "Branch Name")
       .action(gitCommandController.gitCheckoutWithCommitAndAdd);
+  }
+
+  // new command routes
+
+  private gitStash() {
+    this.git
+      .command("stash")
+      .description(
+        "Interactively stash changes, list stashes, or pop/apply/drop a stash",
+      )
+      .option("-j, --json")
+      .action(gitCommandController.gitStash);
+  }
+
+  private gitMerge() {
+    this.git
+      .command("merge")
+      .description("Merge a branch into the current branch")
+      .argument("[branch]", "Branch to merge")
+      .option("-j, --json")
+      .option("--abort", "Abort an in-progress merge")
+      .action(gitCommandController.gitMerge);
+  }
+
+  private gitDiff() {
+    this.git
+      .command("diff")
+      .description("Show changes between working tree and index")
+      .option("-j, --json")
+      .option("-s, --staged", "Show staged diff (git diff --staged)")
+      .action(gitCommandController.gitDiff);
+  }
+
+  private gitLog() {
+    this.git
+      .command("log")
+      .description("Show git commit log (oneline graph)")
+      .option("-j, --json")
+      .option("-n, --limit <num>", "Number of commits to show", parseInt)
+      .action(gitCommandController.gitLog);
+  }
+
+  private gitReset() {
+    this.git
+      .command("reset")
+      .description("Reset the last commit (soft or hard) or discard unstaged changes")
+      .option("-j, --json")
+      .option("--hard", "Hard reset — discard all changes")
+      .option("--soft", "Soft reset — keep changes staged")
+      .option("--head", "Reset to HEAD (discard all unstaged changes)")
+      .action(gitCommandController.gitReset);
+  }
+
+  private gitTag() {
+    this.git
+      .command("tag")
+      .description("List, create, or delete git tags")
+      .option("-j, --json")
+      .action(gitCommandController.gitTag);
+  }
+
+  private gitRebase() {
+    this.git
+      .command("rebase")
+      .description("Rebase current branch onto another branch")
+      .argument("[branch]", "Branch to rebase onto")
+      .option("-j, --json")
+      .option("--abort", "Abort an in-progress rebase")
+      .action(gitCommandController.gitRebase);
+  }
+
+  private gitRemote() {
+    this.git
+      .command("remote")
+      .description("Manage remote repositories (list, add, remove)")
+      .option("-j, --json")
+      .action(gitCommandController.gitRemote);
+  }
+
+  private gitCherryPick() {
+    this.git
+      .command("cherry-pick")
+      .description("Apply a specific commit onto the current branch")
+      .argument("[commit]", "Commit hash or ref to cherry-pick")
+      .option("-j, --json")
+      .action(gitCommandController.gitCherryPick);
+  }
+
+  private gitClean() {
+    this.git
+      .command("clean")
+      .description("Remove untracked files and directories (with preview + confirmation)")
+      .option("-j, --json")
+      .action(gitCommandController.gitClean);
+  }
+
+  private gitRestore() {
+    this.git
+      .command("restore")
+      .description("Discard changes in working tree for specific files (interactive)")
+      .argument("[file]", "File path to restore (omit for interactive picker)")
+      .option("-j, --json")
+      .action(gitCommandController.gitRestore);
+  }
+
+  private gitShow() {
+    this.git
+      .command("show")
+      .description("Show the full diff and metadata of a commit")
+      .argument("[commit]", "Commit hash or ref (omit for interactive picker)")
+      .option("-j, --json")
+      .action(gitCommandController.gitShow);
+  }
+
+  private gitFetch() {
+    this.git
+      .command("fetch")
+      .description("Fetch from remote without merging")
+      .option("-j, --json")
+      .option("-a, --all", "Fetch from all remotes with --prune")
+      .action(gitCommandController.gitFetch);
   }
 }
 

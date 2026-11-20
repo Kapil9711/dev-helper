@@ -7,6 +7,13 @@ export type CommandOptions = {
   force?: boolean;
   forceUnsafe: boolean;
   newBranch: boolean;
+  staged?: boolean;
+  limit?: number;
+  hard?: boolean;
+  soft?: boolean;
+  head?: boolean;
+  abort?: boolean;
+  all?: boolean;
 };
 
 class GitCommandController {
@@ -25,6 +32,19 @@ class GitCommandController {
     this.gitCheckoutWithCommitAndAdd =
       this.gitCheckoutWithCommitAndAdd.bind(this);
     this.gitBranch = this.gitBranch.bind(this);
+    this.gitStash = this.gitStash.bind(this);
+    this.gitMerge = this.gitMerge.bind(this);
+    this.gitDiff = this.gitDiff.bind(this);
+    this.gitLog = this.gitLog.bind(this);
+    this.gitReset = this.gitReset.bind(this);
+    this.gitTag = this.gitTag.bind(this);
+    this.gitRebase = this.gitRebase.bind(this);
+    this.gitRemote = this.gitRemote.bind(this);
+    this.gitCherryPick = this.gitCherryPick.bind(this);
+    this.gitClean = this.gitClean.bind(this);
+    this.gitRestore = this.gitRestore.bind(this);
+    this.gitShow = this.gitShow.bind(this);
+    this.gitFetch = this.gitFetch.bind(this);
   }
 
   async gitInit(options: CommandOptions) {
@@ -81,6 +101,95 @@ class GitCommandController {
 
   async gitBranch(options: CommandOptions) {
     const result = await gitCommandService.gitBranch();
+    await output.autoPrint(result, options);
+  }
+
+  async gitStash(options: CommandOptions) {
+    const result = await gitCommandService.gitStash();
+    await output.autoPrint(result, options);
+  }
+
+  async gitMerge(branch: string, options: CommandOptions) {
+    const result = await gitCommandService.gitMerge(branch, !!options.abort);
+    await output.autoPrint(result, options);
+  }
+
+  async gitDiff(options: CommandOptions) {
+    const result = await gitCommandService.gitDiff(!!options.staged);
+    if (result.success) {
+      await output.info(result.stdout);
+    } else {
+      await output.autoPrint(result, options);
+    }
+  }
+
+  async gitLog(options: CommandOptions) {
+    const result = await gitCommandService.gitLog(options.limit ?? 10);
+    if (result.success) {
+      await output.info(result.stdout);
+    } else {
+      await output.autoPrint(result, options);
+    }
+  }
+
+  async gitReset(options: CommandOptions) {
+    const result = await gitCommandService.gitReset(
+      !!options.hard,
+      !!options.soft,
+      !!options.head,
+    );
+    await output.autoPrint(result, options);
+  }
+
+  async gitTag(options: CommandOptions) {
+    const result = await gitCommandService.gitTag();
+    if (result.success) {
+      await output.info(result.stdout);
+    } else {
+      await output.autoPrint(result, options);
+    }
+  }
+
+  async gitRebase(branch: string, options: CommandOptions) {
+    const result = await gitCommandService.gitRebase(branch, !!options.abort);
+    await output.autoPrint(result, options);
+  }
+
+  async gitRemote(options: CommandOptions) {
+    const result = await gitCommandService.gitRemote();
+    if (result.success) {
+      await output.info(result.stdout);
+    } else {
+      await output.autoPrint(result, options);
+    }
+  }
+
+  async gitCherryPick(commit: string, options: CommandOptions) {
+    const result = await gitCommandService.gitCherryPick(commit);
+    await output.autoPrint(result, options);
+  }
+
+  async gitClean(options: CommandOptions) {
+    const result = await gitCommandService.gitClean();
+    await output.autoPrint(result, options);
+  }
+
+  async gitRestore(file: string, options: CommandOptions) {
+    const result = await gitCommandService.gitRestore(file);
+    await output.autoPrint(result, options);
+  }
+
+  async gitShow(commit: string, options: CommandOptions) {
+    const result = await gitCommandService.gitShow(commit);
+    if (result.success) {
+      await output.info(result.stdout);
+    } else {
+      await output.autoPrint(result, options);
+    }
+  }
+
+  async gitFetch(options: CommandOptions) {
+    const result = await gitCommandService.gitFetch(!!options.all);
     await output.autoPrint(result, options);
   }
 

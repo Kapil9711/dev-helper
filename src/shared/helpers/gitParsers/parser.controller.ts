@@ -66,7 +66,11 @@ export class GitParserController {
 
     return result.stdout.trim() !== "";
   }
-  async ensureUpstream(branch: string, remote = "origin"): Promise<ExecResult> {
+  async ensureUpstream(
+    branch: string,
+    remote = "origin",
+    timeoutMs = 10000,
+  ): Promise<ExecResult> {
     const successResult: ExecResult = {
       stdout: "",
       stderr: "",
@@ -95,7 +99,9 @@ export class GitParserController {
     }
 
     // Make sure the remote tracking ref exists locally.
-    const fetchResult = await exec(`git fetch ${remote}`);
+    const fetchResult = await exec(`git fetch ${remote}`, {
+      timeout: timeoutMs,
+    });
 
     if (!fetchResult.success) {
       return fetchResult;
@@ -103,6 +109,7 @@ export class GitParserController {
 
     const upstreamResult = await exec(
       `git branch --set-upstream-to=${remoteBranch}`,
+      { timeout: timeoutMs },
     );
 
     if (!upstreamResult.success) {
@@ -179,7 +186,7 @@ export class GitParserController {
     if (isFetch) {
       const now = Date.now();
       if (now - this.lastFetchAt > this.FETCH_TTL) {
-        const result = await exec("git fetch");
+        const result = await exec("git fetch", { timeout: 60000 });
         if (result.success) this.lastFetchAt = now;
       }
     }
