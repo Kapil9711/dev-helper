@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -12,32 +12,83 @@ import {
   Terminal,
   Zap,
   PanelLeftClose,
-  PanelLeft,
   Pin,
-  PinOff,
   BookOpen,
   Gauge,
   GitBranch,
+  GitCommit,
+  FolderGit2,
+  Archive,
+  FileCode,
 } from "lucide-react";
 import { useDashboardPreferences, playTone } from "@/lib/prefrences";
+import { useServerInfoQuery, useGitStatusQuery } from "@/lib/queries";
 
-const navigation = [
+interface NavItem {
+  label: string;
+  href: string;
+  icon: React.ComponentType<{ size?: number; className?: string }>;
+  tab?: string;
+}
+
+// Navigation links for VH Logs Dashboard (Git is removed as requested)
+const logsNavigation: NavItem[] = [
   { label: "Overview", href: "/", icon: Activity },
   { label: "Network", href: "/network/", icon: Network },
   { label: "API Docs", href: "/docs/", icon: BookOpen },
   { label: "Performance", href: "/performance/", icon: Gauge },
-  { label: "Git", href: "/git/", icon: GitBranch },
   { label: "Console", href: "/console/", icon: Terminal },
   { label: "Events", href: "/events/", icon: Zap },
   { label: "Projects", href: "/projects/", icon: Boxes },
   { label: "Settings", href: "/settings/", icon: Settings },
 ];
 
+// Navigation links for VH Git Dashboard (Only Git tabs & Git settings)
+const gitNavigation: NavItem[] = [
+  { label: "Diff & Staging", href: "/git/?tab=diff", tab: "diff", icon: FolderGit2 },
+  { label: "Live File Editor", href: "/git/?tab=editor", tab: "editor", icon: Code2 },
+  { label: "Commit Graph", href: "/git/?tab=log", tab: "log", icon: GitCommit },
+  { label: "Branches & Merge", href: "/git/?tab=branches", tab: "branches", icon: GitBranch },
+  { label: "Stash Manager", href: "/git/?tab=stash", tab: "stash", icon: Archive },
+  { label: "Settings", href: "/git/?tab=settings", tab: "settings", icon: Settings },
+];
+
 export function Sidebar() {
   const pathname = usePathname();
   const { preferences, updatePreferences, toggleSidebar } = useDashboardPreferences();
+  const serverInfoQuery = useServerInfoQuery();
+  const gitStatusQuery = useGitStatusQuery();
+
+  const isGitServer = serverInfoQuery.data?.mode === "git";
+  const isGitPath = pathname.startsWith("/git");
+  const isGitMode = isGitServer || isGitPath;
 
   const [isHovered, setIsHovered] = useState(false);
+  const [currentGitTab, setCurrentGitTab] = useState("diff");
+
+  // Track active git tab from URL or custom events
+  useEffect(() => {
+    const syncGitTab = () => {
+      if (typeof window === "undefined") return;
+      const tab = new URLSearchParams(window.location.search).get("tab") || "diff";
+      setCurrentGitTab(tab);
+    };
+
+    syncGitTab();
+
+    const handleCustomTab = (e: Event) => {
+      const detail = (e as CustomEvent<string>).detail;
+      if (detail) setCurrentGitTab(detail);
+    };
+
+    window.addEventListener("vh-git-tab-change", handleCustomTab);
+    window.addEventListener("popstate", syncGitTab);
+
+    return () => {
+      window.removeEventListener("vh-git-tab-change", handleCustomTab);
+      window.removeEventListener("popstate", syncGitTab);
+    };
+  }, []);
 
   // Expanded if NOT collapsed, OR if collapsed but currently hovered
   const isExpanded = !preferences.sidebarCollapsed || isHovered;
@@ -46,6 +97,19 @@ export function Sidebar() {
     toggleSidebar();
     playTone("click");
   };
+
+  const handleGitLinkClick = (tabId: string) => {
+    playTone("click");
+    setCurrentGitTab(tabId);
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.origin + "/git/");
+      url.searchParams.set("tab", tabId);
+      window.history.pushState({}, "", url.toString());
+      window.dispatchEvent(new CustomEvent("vh-git-tab-change", { detail: tabId }));
+    }
+  };
+
+  const currentNav = isGitMode ? gitNavigation : logsNavigation;
 
   return (
     <aside
@@ -59,7 +123,7 @@ export function Sidebar() {
       <div className="flex h-16 items-center justify-between border-b vh-border px-3.5">
         <div className="flex items-center gap-3 overflow-hidden">
           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl vh-bg-accent vh-text-accent border vh-border-accent">
-            <Code2 size={20} />
+            {isGitMode ? <FolderGit2 size={20} /> : <Code2 size={20} />}
           </div>
 
           <div
@@ -68,10 +132,10 @@ export function Sidebar() {
             }`}
           >
             <p className="font-bold text-sm tracking-tight vh-text-main whitespace-nowrap">
-              VH DevTools
+              {isGitMode ? "VH Git" : "VH DevTools"}
             </p>
             <p className="text-[10px] vh-text-dim whitespace-nowrap">
-              Developer observability
+              {isGitMode ? "Git Dashboard" : "Developer observability"}
             </p>
           </div>
         </div>
@@ -96,22 +160,66 @@ export function Sidebar() {
       <div className="px-2.5 pt-5 flex-1 overflow-y-auto">
         {isExpanded && (
           <p className="mb-2 px-2.5 text-[10px] font-semibold uppercase tracking-[0.16em] vh-text-dim transition-opacity duration-200">
-            Workspace
+            {isGitMode ? "Git Workspace" : "Workspace"}
           </p>
         )}
 
         <nav className="space-y-1">
-          {navigation.map(({ label, href, icon: Icon }) => {
-            const active =
-              href === "/"
-                ? pathname === "/" || pathname === ""
-                : pathname.startsWith(href) || pathname.startsWith(href.replace(/\/$/, ""));
+          {currentNav.map((item) => {
+            const Icon = item.icon;
+            let active = false;
+
+            if (isGitMode && item.tab) {
+              active = currentGitTab === item.tab;
+            } else {
+              active =
+                item.href === "/"
+                  ? pathname === "/" || pathname === ""
+                  : pathname.startsWith(item.href) ||
+                    pathname.startsWith(item.href.replace(/\/$/, ""));
+            }
+
+            if (isGitMode && item.tab) {
+              const tabId = item.tab;
+              return (
+                <button
+                  key={item.label}
+                  onClick={() => handleGitLinkClick(tabId)}
+                  title={!isExpanded ? item.label : undefined}
+                  className={`group relative flex w-full items-center rounded-xl transition ${
+                    isExpanded ? "px-3 py-2.5 gap-3 text-sm" : "h-11 w-11 justify-center mx-auto"
+                  } ${
+                    active
+                      ? "border vh-border-accent vh-bg-accent font-semibold vh-text-accent shadow-xs"
+                      : "vh-text-muted hover:bg-white/[0.04] hover:text-white"
+                  }`}
+                >
+                  <Icon size={18} className="shrink-0" />
+
+                  {isExpanded && (
+                    <span className="whitespace-nowrap truncate transition-opacity duration-200 text-left">
+                      {item.label}
+                    </span>
+                  )}
+
+                  {active && isExpanded && (
+                    <span className="ml-auto h-1.5 w-1.5 rounded-full bg-current shrink-0" />
+                  )}
+
+                  {!isExpanded && (
+                    <span className="pointer-events-none absolute left-full ml-2.5 hidden rounded-md border vh-border vh-bg-modal px-2.5 py-1 text-xs font-medium vh-text-main shadow-xl whitespace-nowrap group-hover:block z-50">
+                      {item.label}
+                    </span>
+                  )}
+                </button>
+              );
+            }
 
             return (
               <Link
-                key={href}
-                href={href}
-                title={!isExpanded ? label : undefined}
+                key={item.href}
+                href={item.href}
+                title={!isExpanded ? item.label : undefined}
                 className={`group relative flex items-center rounded-xl transition ${
                   isExpanded ? "px-3 py-2.5 gap-3 text-sm" : "h-11 w-11 justify-center mx-auto"
                 } ${
@@ -124,7 +232,7 @@ export function Sidebar() {
 
                 {isExpanded && (
                   <span className="whitespace-nowrap truncate transition-opacity duration-200">
-                    {label}
+                    {item.label}
                   </span>
                 )}
 
@@ -132,10 +240,9 @@ export function Sidebar() {
                   <span className="ml-auto h-1.5 w-1.5 rounded-full bg-current shrink-0" />
                 )}
 
-                {/* Floating tooltip when in narrow icon-only state */}
                 {!isExpanded && (
                   <span className="pointer-events-none absolute left-full ml-2.5 hidden rounded-md border vh-border vh-bg-modal px-2.5 py-1 text-xs font-medium vh-text-main shadow-xl whitespace-nowrap group-hover:block z-50">
-                    {label}
+                    {item.label}
                   </span>
                 )}
               </Link>
@@ -144,8 +251,8 @@ export function Sidebar() {
         </nav>
       </div>
 
-      {/* Active Project Filter pill in sidebar */}
-      {preferences.selectedProject !== "ALL" && (
+      {/* Active Project Filter pill (ONLY in Logs Dashboard mode) */}
+      {!isGitMode && preferences.selectedProject !== "ALL" && (
         <div className={`mx-2.5 mb-3 transition-all duration-200 ${isExpanded ? "p-3" : "p-1.5"}`}>
           {isExpanded ? (
             <div className="rounded-xl border vh-border-accent vh-bg-accent/40 p-3">
@@ -181,20 +288,36 @@ export function Sidebar() {
         {isExpanded ? (
           <div className="flex items-center gap-2.5 rounded-xl border vh-border-subtle vh-bg-card p-2.5">
             <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg vh-bg-accent vh-text-accent">
-              <Boxes size={14} />
+              {isGitMode ? <GitBranch size={14} /> : <Boxes size={14} />}
             </div>
             <div className="min-w-0 flex-1">
-              <p className="truncate text-xs font-medium vh-text-main">VH Local Server</p>
-              <p className="text-[10px] vh-text-dim">Port 4317 · SQLite</p>
+              <p className="truncate text-xs font-medium vh-text-main">
+                {isGitMode
+                  ? gitStatusQuery.data?.currentBranch?.current ||
+                    serverInfoQuery.data?.currentBranch ||
+                    "Git Local"
+                  : "VH Local Server"}
+              </p>
+              <p className="text-[10px] vh-text-dim">
+                {isGitMode ? "Port 4318 · Git" : "Port 4317 · SQLite"}
+              </p>
             </div>
             <span className="h-2 w-2 rounded-full bg-emerald-400 shrink-0 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
           </div>
         ) : (
           <div
-            title="VH Local Server connected on port 4317"
+            title={
+              isGitMode
+                ? `Git Dashboard connected (${serverInfoQuery.data?.currentBranch || "Local"})`
+                : "VH Local Server connected on port 4317"
+            }
             className="flex h-10 w-10 items-center justify-center rounded-xl vh-bg-card border vh-border-subtle mx-auto relative"
           >
-            <Boxes size={16} className="vh-text-accent" />
+            {isGitMode ? (
+              <GitBranch size={16} className="vh-text-accent" />
+            ) : (
+              <Boxes size={16} className="vh-text-accent" />
+            )}
             <span className="absolute top-1 right-1 h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
           </div>
         )}

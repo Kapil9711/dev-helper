@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import {
   GitBranch,
   GitCommit,
@@ -24,6 +24,8 @@ import {
   Undo2,
   GitMerge,
   Maximize2,
+  Settings,
+  Code2,
 } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 import {
@@ -40,6 +42,8 @@ import { DiffViewer } from "@/components/git/diff-viewer";
 import { CommitHistory } from "@/components/git/commit-history";
 import { StashManager } from "@/components/git/stash-manager";
 import { BranchesManager } from "@/components/git/branches-manager";
+import { LiveFileEditor } from "@/components/git/live-file-editor";
+import { GitSettings } from "@/components/git/git-settings";
 import { GitSyncModal, GitSyncModalState } from "@/components/git/git-sync-modal";
 import type { GitChangedFile, GitBranchItem } from "@/types/git";
 
@@ -51,8 +55,45 @@ export default function GitDashboardPage() {
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [selectedStaged, setSelectedStaged] = useState<boolean>(false);
 
-  // Active view tab in full-width main area: "diff" | "log" | "stash" | "branches"
-  const [activeTab, setActiveTab] = useState<"diff" | "log" | "stash" | "branches">("diff");
+  // Active view tab in full-width main area: "diff" | "editor" | "log" | "stash" | "branches" | "settings"
+  const [activeTab, setActiveTab] = useState<
+    "diff" | "editor" | "log" | "stash" | "branches" | "settings"
+  >("diff");
+
+  // Sync tab with URL search parameter & custom tab change events from sidebar
+  useEffect(() => {
+    const syncTab = () => {
+      if (typeof window === "undefined") return;
+      const params = new URLSearchParams(window.location.search);
+      const tab = params.get("tab");
+      if (
+        tab &&
+        ["diff", "editor", "log", "stash", "branches", "settings"].includes(tab)
+      ) {
+        setActiveTab(tab as typeof activeTab);
+      }
+    };
+
+    syncTab();
+
+    const handleCustomTab = (e: Event) => {
+      const detail = (e as CustomEvent<string>).detail;
+      if (
+        detail &&
+        ["diff", "editor", "log", "stash", "branches", "settings"].includes(detail)
+      ) {
+        setActiveTab(detail as typeof activeTab);
+      }
+    };
+
+    window.addEventListener("vh-git-tab-change", handleCustomTab);
+    window.addEventListener("popstate", syncTab);
+
+    return () => {
+      window.removeEventListener("vh-git-tab-change", handleCustomTab);
+      window.removeEventListener("popstate", syncTab);
+    };
+  }, []);
 
   // Commit form
   const [commitMessage, setCommitMessage] = useState("");
@@ -719,10 +760,11 @@ export default function GitDashboardPage() {
       )}
 
       {/* SECTION 1: SIDE-BY-SIDE STAGING & WORKING TREE + COMMIT COMPOSER (FULL CONTAINER WIDTH) */}
-      <section className="space-y-3.5">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Staged Changes Card */}
-          <div className="vh-bg-card border vh-border rounded-xl p-3.5 shadow-sm space-y-2.5 flex flex-col h-64">
+      {activeTab === "diff" && (
+        <section className="space-y-3.5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Staged Changes Card */}
+            <div className="vh-bg-card border vh-border rounded-xl p-3.5 shadow-sm space-y-2.5 flex flex-col h-64">
             <div className="flex items-center justify-between pb-2 border-b vh-border shrink-0">
               <div className="flex items-center gap-2">
                 <span className="text-xs font-semibold vh-text-main">Staged Changes</span>
@@ -952,17 +994,20 @@ export default function GitDashboardPage() {
           </div>
         </div>
       </section>
+      )}
 
-      {/* SECTION 2: FULL-WIDTH MAIN WORKSPACE TABS (DIFF VIEWER, COMMIT GRAPH, STASH, BRANCHES) */}
+      {/* SECTION 2: FULL-WIDTH MAIN WORKSPACE TABS */}
       <section className="space-y-3">
         {/* Full-Width View Tabs */}
         <div className="flex flex-wrap items-center justify-between border-b vh-border pb-2.5 gap-2">
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 overflow-x-auto no-scrollbar">
             {[
-              { id: "diff", label: "Diff Viewer", icon: FileCode },
+              { id: "diff", label: "Diff & Staging", icon: FileCode },
+              { id: "editor", label: "Live File Editor", icon: Code2 },
               { id: "log", label: "Commit Graph", icon: GitCommit },
-              { id: "stash", label: "Stash Manager", icon: Archive },
               { id: "branches", label: "Branches & Merge", icon: GitBranch },
+              { id: "stash", label: "Stash Manager", icon: Archive },
+              { id: "settings", label: "Git Settings", icon: Settings },
             ].map((tab) => {
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;
@@ -973,8 +1018,13 @@ export default function GitDashboardPage() {
                   onClick={() => {
                     playTone("click");
                     setActiveTab(tab.id as typeof activeTab);
+                    if (typeof window !== "undefined") {
+                      const url = new URL(window.location.href);
+                      url.searchParams.set("tab", tab.id);
+                      window.history.pushState({}, "", url.toString());
+                    }
                   }}
-                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-medium transition ${
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition ${
                     isActive
                       ? "vh-bg-accent vh-text-accent border vh-border-accent shadow-sm"
                       : "vh-text-dim hover:text-white hover:bg-white/5"
@@ -1020,27 +1070,41 @@ export default function GitDashboardPage() {
           </div>
         )}
 
-        {/* Tab 2: FULL-WIDTH Commit History & Graph */}
+        {/* Tab 2: FULL-WIDTH Live File Editor */}
+        {activeTab === "editor" && (
+          <div className="w-full">
+            <LiveFileEditor />
+          </div>
+        )}
+
+        {/* Tab 3: FULL-WIDTH Commit History & Graph */}
         {activeTab === "log" && (
           <div className="w-full">
             <CommitHistory commits={logQuery.data?.commits ?? []} />
           </div>
         )}
 
-        {/* Tab 3: FULL-WIDTH Stash Manager */}
+        {/* Tab 4: FULL-WIDTH Stash Manager */}
         {activeTab === "stash" && (
           <div className="w-full">
             <StashManager onRefreshWorkingTree={refetchGitState} />
           </div>
         )}
 
-        {/* Tab 4: FULL-WIDTH Branches & Merge Manager */}
+        {/* Tab 5: FULL-WIDTH Branches & Merge Manager */}
         {activeTab === "branches" && (
           <div className="w-full">
             <BranchesManager
               currentBranchName={currentBranch?.current}
               onRefreshAll={refetchGitState}
             />
+          </div>
+        )}
+
+        {/* Tab 6: FULL-WIDTH Git Settings */}
+        {activeTab === "settings" && (
+          <div className="w-full">
+            <GitSettings />
           </div>
         )}
       </section>

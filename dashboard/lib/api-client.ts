@@ -14,6 +14,10 @@ import type {
   GitStashDiffResponse,
   GitActionPayload,
   GitActionResult,
+  ServerInfoResponse,
+  GitLiveFilesResponse,
+  GitFileContentResponse,
+  GitConfigResponse,
 } from "@/types/git";
 
 type ApiParams = Record<string, string | number | boolean | null | undefined>;
@@ -213,5 +217,46 @@ export const apiClient = {
     });
 
     return (await res.json()) as GitActionResult;
+  },
+
+  getServerInfo(): Promise<ServerInfoResponse> {
+    return apiGet("/api/server-info");
+  },
+
+  getGitLiveFiles(): Promise<GitLiveFilesResponse> {
+    return apiGet("/api/git/live-files");
+  },
+
+  getGitFileContent(filePath: string): Promise<GitFileContentResponse> {
+    return apiGet("/api/git/file", { path: filePath });
+  },
+
+  async saveGitFile(
+    filePath: string,
+    content: string,
+  ): Promise<{ success: boolean; path: string; mtime: number; size: number }> {
+    const res = await fetch("/api/git/file", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ path: filePath, content }),
+    });
+    return (await res.json()) as { success: boolean; path: string; mtime: number; size: number };
+  },
+
+  getGitConfig(): Promise<GitConfigResponse> {
+    return apiGet("/api/git/config");
+  },
+
+  async saveGitConfig(config: {
+    userName?: string;
+    userEmail?: string;
+    defaultBranch?: string;
+  }): Promise<{ success: boolean }> {
+    const res = await fetch("/api/git/config", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(config),
+    });
+    return (await res.json()) as { success: boolean };
   },
 };

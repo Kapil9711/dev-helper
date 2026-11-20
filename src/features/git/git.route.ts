@@ -5,6 +5,8 @@ class GitCommandRouter {
   private git!: Command;
   register(program: Command) {
     this.git = program.command("git");
+    // dashboard command
+    this.gitDashboard();
     // acutal commands
     this.gitInit();
     this.gitStatus();
@@ -36,6 +38,15 @@ class GitCommandRouter {
     this.gitRestore();
     this.gitShow();
     this.gitFetch();
+  }
+  private gitDashboard() {
+    this.git
+      .command("dashboard")
+      .alias("serve")
+      .description("Start the standalone Git Dashboard server")
+      .option("-p, --port <port>", "Port to listen on", "4318")
+      .option("--no-open", "Do not open browser automatically")
+      .action(gitCommandController.gitDashboard);
   }
   private gitInit() {
     this.git

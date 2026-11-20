@@ -125,3 +125,40 @@ export interface GitActionResult {
   durationMs?: number;
   error?: string;
 }
+
+export interface ServerInfoResponse {
+  mode: "git" | "logs";
+  service: string;
+  repoRoot?: string;
+  currentBranch?: string;
+  projectName?: string;
+}
+
+export interface GitLiveFile {
+  path: string;
+  status: string;
+  mtime: number;
+  size: number;
+  language: string;
+}
+
+export interface GitLiveFilesResponse {
+  files: GitLiveFile[];
+  activeFile: string | null;
+}
+
+export interface GitFileContentResponse {
+  path: string;
+  content: string;
+  mtime: number;
+  size: number;
+  language: string;
+  isModified: boolean;
+}
+
+export interface GitConfigResponse {
+  userName: string;
+  userEmail: string;
+  defaultBranch: string;
+  remoteUrl: string;
+}

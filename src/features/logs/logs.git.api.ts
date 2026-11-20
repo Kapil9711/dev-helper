@@ -1,4 +1,6 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
+import fs from "node:fs/promises";
+import path from "node:path";
 import { exec } from "../../shared/helpers/shell/exec.ts";
 import { gitHelper } from "../../shared/helpers/gitParsers/parser.controller.ts";
 
@@ -16,6 +18,45 @@ function sendJson(res: ServerResponse, status: number, body: unknown): void {
 function sanitizeArg(val: string): string {
   // Allow normal file paths, branch names, commit hashes without dangerous shell chars
   return val.replace(/[`$;&|<>"\n\r]/g, "");
+}
+
+function getLanguageFromPath(filePath: string): string {
+  const ext = path.extname(filePath).toLowerCase();
+  switch (ext) {
+    case ".ts":
+      return "typescript";
+    case ".tsx":
+      return "typescriptreact";
+    case ".js":
+    case ".mjs":
+    case ".cjs":
+      return "javascript";
+    case ".jsx":
+      return "javascriptreact";
+    case ".json":
+      return "json";
+    case ".css":
+      return "css";
+    case ".html":
+    case ".htm":
+      return "html";
+    case ".md":
+    case ".markdown":
+      return "markdown";
+    case ".py":
+      return "python";
+    case ".sh":
+    case ".bash":
+    case ".zsh":
+      return "shell";
+    case ".yml":
+    case ".yaml":
+      return "yaml";
+    case ".sql":
+      return "sql";
+    default:
+      return "plaintext";
+  }
 }
 
 export async function handleGitStatus(res: ServerResponse): Promise<void> {
@@ -412,4 +453,254 @@ export async function handleGitAction(
       sendJson(res, 500, { error: error.message || "Failed to execute git action" });
     }
   });
+}
+
+export async function handleGitFileRead(
+  searchParams: URLSearchParams,
+  res: ServerResponse,
+): Promise<void> {
+  try {
+    const rawPath = searchParams.get("path");
+    if (!rawPath) {
+      sendJson(res, 400, { error: "File path is required" });
+      return;
+    }
+
+    const repoRoot = await gitHelper.getRepositoryRoot().catch(() => process.cwd());
+    const sanitized = sanitizeArg(rawPath);
+    const absolutePath = path.resolve(repoRoot, sanitized);
+
+    if (!absolutePath.startsWith(repoRoot)) {
+      sendJson(res, 403, { error: "Access denied: Path outside repository" });
+      return;
+    }
+
+    const stat = await fs.stat(absolutePath);
+    if (!stat.isFile()) {
+      sendJson(res, 400, { error: "Target is not a file" });
+      return;
+    }
+
+    if (stat.size > 5 * 1024 * 1024) {
+      sendJson(res, 400, { error: "File too large (exceeds 5MB)" });
+      return;
+    }
+
+    const content = await fs.readFile(absolutePath, "utf-8");
+    const language = getLanguageFromPath(sanitized);
+
+    const diffCheck = await exec(`git diff --name-only HEAD -- "${sanitized}"`);
+    const isModified = diffCheck.stdout.trim().length > 0;
+
+    sendJson(res, 200, {
+      path: sanitized,
+      content,
+      mtime: stat.mtimeMs,
+      size: stat.size,
+      language,
+      isModified,
+    });
+  } catch (err: unknown) {
+    const error = err as Error;
+    sendJson(res, 500, { error: error.message || "Failed to read file" });
+  }
+}
+
+export async function handleGitFileWrite(
+  req: IncomingMessage,
+  res: ServerResponse,
+): Promise<void> {
+  let body = "";
+  req.on("data", (chunk) => {
+    body += chunk;
+  });
+
+  req.on("end", async () => {
+    try {
+      const data = JSON.parse(body || "{}");
+      const rawPath = (data.path || "").trim();
+      const content = data.content;
+
+      if (!rawPath || typeof content !== "string") {
+        sendJson(res, 400, { error: "Valid path and content are required" });
+        return;
+      }
+
+      const repoRoot = await gitHelper.getRepositoryRoot().catch(() => process.cwd());
+      const sanitized = sanitizeArg(rawPath);
+      const absolutePath = path.resolve(repoRoot, sanitized);
+
+      if (!absolutePath.startsWith(repoRoot)) {
+        sendJson(res, 403, { error: "Access denied: Path outside repository" });
+        return;
+      }
+
+      await fs.writeFile(absolutePath, content, "utf-8");
+      const stat = await fs.stat(absolutePath);
+
+      sendJson(res, 200, {
+        success: true,
+        path: sanitized,
+        mtime: stat.mtimeMs,
+        size: stat.size,
+      });
+    } catch (err: unknown) {
+      const error = err as Error;
+      sendJson(res, 500, { error: error.message || "Failed to write file" });
+    }
+  });
+}
+
+export async function handleGitLiveFiles(res: ServerResponse): Promise<void> {
+  try {
+    const repoRoot = await gitHelper.getRepositoryRoot().catch(() => process.cwd());
+    const statusRes = await exec("git status --porcelain=v1", { timeout: 15000 });
+    const lines = statusRes.stdout.split("\n").filter(Boolean);
+
+    const fileList: Array<{
+      path: string;
+      status: string;
+      mtime: number;
+      size: number;
+      language: string;
+    }> = [];
+
+    for (const line of lines) {
+      const status = line.slice(0, 2).trim();
+      let rawPath = line.slice(3).trim();
+      if (rawPath.includes(" -> ")) {
+        rawPath = rawPath.split(" -> ")[1].trim();
+      }
+      rawPath = rawPath.replace(/^"|"$/g, "");
+      const sanitized = sanitizeArg(rawPath);
+      const absolutePath = path.resolve(repoRoot, sanitized);
+
+      try {
+        const stat = await fs.stat(absolutePath);
+        if (stat.isFile()) {
+          fileList.push({
+            path: sanitized,
+            status: status || "?",
+            mtime: stat.mtimeMs,
+            size: stat.size,
+            language: getLanguageFromPath(sanitized),
+          });
+        }
+      } catch {
+        // Ignored
+      }
+    }
+
+    fileList.sort((a, b) => b.mtime - a.mtime);
+
+    if (fileList.length === 0) {
+      const recentRes = await exec('git log -n 15 --name-only --pretty=""', { timeout: 15000 });
+      const recentFiles = Array.from(new Set(recentRes.stdout.split("\n").filter(Boolean)));
+      for (const rawPath of recentFiles) {
+        const sanitized = sanitizeArg(rawPath.trim());
+        const absolutePath = path.resolve(repoRoot, sanitized);
+        try {
+          const stat = await fs.stat(absolutePath);
+          if (stat.isFile()) {
+            fileList.push({
+              path: sanitized,
+              status: "clean",
+              mtime: stat.mtimeMs,
+              size: stat.size,
+              language: getLanguageFromPath(sanitized),
+            });
+          }
+        } catch {
+          // Ignored
+        }
+        if (fileList.length >= 10) break;
+      }
+    }
+
+    sendJson(res, 200, {
+      files: fileList,
+      activeFile: fileList[0]?.path || null,
+    });
+  } catch (err: unknown) {
+    const error = err as Error;
+    sendJson(res, 500, { error: error.message || "Failed to list live files" });
+  }
+}
+
+export async function handleGitConfigGet(res: ServerResponse): Promise<void> {
+  try {
+    const [nameRes, emailRes, branchRes, remoteRes] = await Promise.all([
+      exec("git config user.name").catch(() => ({ stdout: "" })),
+      exec("git config user.email").catch(() => ({ stdout: "" })),
+      exec("git config init.defaultBranch").catch(() => ({ stdout: "main" })),
+      exec("git remote get-url origin").catch(() => ({ stdout: "" })),
+    ]);
+
+    sendJson(res, 200, {
+      userName: nameRes.stdout.trim(),
+      userEmail: emailRes.stdout.trim(),
+      defaultBranch: branchRes.stdout.trim() || "main",
+      remoteUrl: remoteRes.stdout.trim(),
+    });
+  } catch (err: unknown) {
+    const error = err as Error;
+    sendJson(res, 500, { error: error.message || "Failed to get git config" });
+  }
+}
+
+export async function handleGitConfigSet(
+  req: IncomingMessage,
+  res: ServerResponse,
+): Promise<void> {
+  let body = "";
+  req.on("data", (chunk) => {
+    body += chunk;
+  });
+
+  req.on("end", async () => {
+    try {
+      const data = JSON.parse(body || "{}");
+      if (data.userName !== undefined) {
+        await exec(`git config user.name "${sanitizeArg(data.userName)}"`);
+      }
+      if (data.userEmail !== undefined) {
+        await exec(`git config user.email "${sanitizeArg(data.userEmail)}"`);
+      }
+      if (data.defaultBranch !== undefined) {
+        await exec(`git config init.defaultBranch "${sanitizeArg(data.defaultBranch)}"`);
+      }
+
+      sendJson(res, 200, { success: true });
+    } catch (err: unknown) {
+      const error = err as Error;
+      sendJson(res, 500, { error: error.message || "Failed to update git config" });
+    }
+  });
+}
+
+export async function handleServerInfo(
+  mode: "git" | "logs",
+  res: ServerResponse,
+): Promise<void> {
+  try {
+    const repoRoot = await gitHelper.getRepositoryRoot().catch(() => process.cwd());
+    const currentBranch = (await gitHelper.getCurrentBranch().catch(() => null)) || "main";
+    const projectName = path.basename(repoRoot);
+
+    sendJson(res, 200, {
+      mode,
+      service: mode === "git" ? "vh-git" : "vh-logs",
+      repoRoot,
+      currentBranch,
+      projectName,
+    });
+  } catch {
+    sendJson(res, 200, {
+      mode,
+      service: mode === "git" ? "vh-git" : "vh-logs",
+      repoRoot: process.cwd(),
+      currentBranch: "main",
+      projectName: "dev-helper",
+    });
+  }
 }

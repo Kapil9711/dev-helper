@@ -14,24 +14,31 @@ import {
   Shapes,
   Layers,
   Terminal,
+  GitBranch,
+  FolderGit2,
 } from "lucide-react";
 import { ConnectionStatus } from "./connection-status";
 import {
   useDashboardPreferences,
   AVAILABLE_THEMES,
   playTone,
-  type UIStyle,
 } from "@/lib/prefrences";
-import { useAppsQuery } from "@/lib/queries";
+import {
+  useAppsQuery,
+  useServerInfoQuery,
+  useGitStatusQuery,
+} from "@/lib/queries";
 
 const titles: Record<string, string> = {
   "/": "Overview",
   "/network": "Network",
   "/docs": "API Docs",
+  "/performance": "Performance",
   "/console": "Console",
   "/events": "Events",
   "/projects": "Projects",
   "/settings": "Settings",
+  "/git": "Git Dashboard",
 };
 
 export function Topbar() {
@@ -41,6 +48,13 @@ export function Topbar() {
   const { preferences, updatePreferences, toggleSidebar } =
     useDashboardPreferences();
   const appsQuery = useAppsQuery();
+  const serverInfoQuery = useServerInfoQuery();
+  const gitStatusQuery = useGitStatusQuery();
+
+  const isGitServer = serverInfoQuery.data?.mode === "git";
+  const isGitPath = pathname.startsWith("/git");
+  const isGitMode = isGitServer || isGitPath;
+
   const apps = appsQuery.data?.data ?? [];
 
   const [projectDropdownOpen, setProjectDropdownOpen] = useState(false);
@@ -80,6 +94,13 @@ export function Topbar() {
     playTone("click");
   };
 
+  const currentProjectName =
+    serverInfoQuery.data?.projectName || "Current Repository";
+  const currentBranchName =
+    gitStatusQuery.data?.currentBranch?.current ||
+    serverInfoQuery.data?.currentBranch ||
+    "main";
+
   return (
     <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b vh-border vh-bg-sidebar/95 px-4 backdrop-blur-md transition-colors md:px-7">
       <div className="flex items-center gap-3">
@@ -95,9 +116,10 @@ export function Topbar() {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-sm font-bold vh-text-main">
-              {titles[normalizedPath] ?? "Dashboard"}
+              {isGitMode ? "Git Dashboard" : titles[normalizedPath] ?? "Dashboard"}
             </h1>
-            {preferences.selectedProject !== "ALL" && (
+
+            {!isGitMode && preferences.selectedProject !== "ALL" && (
               <span className="flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-semibold vh-bg-accent vh-text-accent border vh-border-accent">
                 <Boxes size={11} />
                 {preferences.selectedProject}
@@ -112,92 +134,163 @@ export function Topbar() {
             )}
           </div>
           <p className="mt-0.5 text-[11px] vh-text-dim">
-            VH DevTools <span className="mx-1">/</span>{" "}
-            {titles[normalizedPath] ?? "Dashboard"}
+            {isGitMode ? (
+              <>
+                VH Git <span className="mx-1">/</span> {currentProjectName}
+              </>
+            ) : (
+              <>
+                VH DevTools <span className="mx-1">/</span>{" "}
+                {titles[normalizedPath] ?? "Dashboard"}
+              </>
+            )}
           </p>
         </div>
       </div>
 
       <div className="flex items-center gap-2.5">
-        {/* Global Project Switcher Dropdown */}
-        <div className="relative" ref={dropdownRef}>
-          <button
-            onClick={() => setProjectDropdownOpen((prev) => !prev)}
-            className="flex items-center gap-2 rounded-xl border vh-border vh-bg-card px-3 py-1.5 text-xs font-semibold vh-text-main transition hover:border-white/20 shadow-xs"
-          >
-            <Boxes size={14} className="vh-text-accent" />
-            <span className="max-w-[120px] truncate sm:max-w-[160px]">
-              {preferences.selectedProject === "ALL"
-                ? `All Projects (${apps.length})`
-                : preferences.selectedProject}
-            </span>
-            <ChevronDown size={13} className="vh-text-dim" />
-          </button>
-
-          {projectDropdownOpen && (
-            <div className="absolute right-0 mt-2 w-64 rounded-xl border vh-border vh-bg-modal p-1.5 shadow-2xl backdrop-blur-xl z-50">
-              <div className="px-2.5 py-1.5 text-[10px] font-semibold uppercase tracking-wider vh-text-dim">
-                Filter by Project
-              </div>
-              <div className="max-h-60 space-y-0.5 overflow-y-auto">
-                <button
-                  onClick={() => {
-                    updatePreferences({ selectedProject: "ALL" });
-                    setProjectDropdownOpen(false);
-                    playTone("click");
-                  }}
-                  className={`flex w-full items-center justify-between rounded-lg px-2.5 py-2 text-xs transition ${
-                    preferences.selectedProject === "ALL"
-                      ? "vh-bg-accent vh-text-accent font-semibold"
-                      : "vh-text-main hover:bg-white/5"
-                  }`}
-                >
-                  <span className="flex items-center gap-2">
-                    <Boxes size={14} />
-                    All Projects ({apps.length})
-                  </span>
-                  {preferences.selectedProject === "ALL" && <Check size={14} />}
-                </button>
-
-                {apps.map((app) => {
-                  const isSelected = preferences.selectedProject === app.app_name;
-                  const isRecent = Date.now() - app.last_seen < 60_000;
-                  return (
-                    <button
-                      key={app.app_name}
-                      onClick={() => {
-                        updatePreferences({ selectedProject: app.app_name });
-                        setProjectDropdownOpen(false);
-                        playTone("click");
-                      }}
-                      className={`flex w-full items-center justify-between rounded-lg px-2.5 py-2 text-xs transition ${
-                        isSelected
-                          ? "vh-bg-accent vh-text-accent font-semibold"
-                          : "vh-text-main hover:bg-white/5"
-                      }`}
-                    >
-                      <span className="flex items-center gap-2 truncate">
-                        <span
-                          className={`h-2 w-2 rounded-full shrink-0 ${
-                            isRecent ? "bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)]" : "bg-zinc-500"
-                          }`}
-                        />
-                        <span className="truncate">{app.app_name}</span>
-                      </span>
-                      {isSelected && <Check size={14} className="shrink-0" />}
-                    </button>
-                  );
-                })}
-
-                {apps.length === 0 && (
-                  <p className="px-3 py-3 text-center text-xs vh-text-muted">
-                    No projects registered yet
-                  </p>
-                )}
-              </div>
+        {/* IN GIT DASHBOARD MODE: Display Current Project & Active Branch Pills instead of Project Dropdown */}
+        {isGitMode ? (
+          <>
+            {/* Current Project / Repository Indicator */}
+            <div
+              title={`Active Git Repository: ${serverInfoQuery.data?.repoRoot || currentProjectName}`}
+              className="flex items-center gap-2 rounded-xl border vh-border vh-bg-card px-3 py-1.5 text-xs font-semibold vh-text-main shadow-xs"
+            >
+              <FolderGit2 size={14} className="vh-text-accent" />
+              <span className="max-w-[120px] truncate sm:max-w-[170px]">
+                {currentProjectName}
+              </span>
             </div>
-          )}
-        </div>
+
+            {/* Active Branch Badge */}
+            <div
+              title={`Active Branch: ${currentBranchName}`}
+              className="flex items-center gap-1.5 rounded-xl border border-emerald-500/25 bg-emerald-500/10 px-2.5 py-1.5 text-xs font-semibold text-emerald-400 shadow-xs"
+            >
+              <GitBranch size={13} />
+              <span className="max-w-[100px] truncate sm:max-w-[140px]">
+                {currentBranchName}
+              </span>
+              {Boolean(gitStatusQuery.data?.currentBranch?.ahead) && (
+                <span className="text-[10px] font-mono text-emerald-300">
+                  ↑{gitStatusQuery.data?.currentBranch?.ahead}
+                </span>
+              )}
+              {Boolean(gitStatusQuery.data?.currentBranch?.behind) && (
+                <span className="text-[10px] font-mono text-amber-300">
+                  ↓{gitStatusQuery.data?.currentBranch?.behind}
+                </span>
+              )}
+            </div>
+
+            {/* Working Tree Clean / Modified indicator */}
+            {gitStatusQuery.data && (
+              <div
+                className={`hidden md:flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-medium border ${
+                  (gitStatusQuery.data.files?.length || 0) === 0
+                    ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-300"
+                    : "border-amber-500/20 bg-amber-500/10 text-amber-300"
+                }`}
+              >
+                <span
+                  className={`h-1.5 w-1.5 rounded-full ${
+                    (gitStatusQuery.data.files?.length || 0) === 0
+                      ? "bg-emerald-400"
+                      : "bg-amber-400"
+                  }`}
+                />
+                <span>
+                  {(gitStatusQuery.data.files?.length || 0) === 0
+                    ? "Clean"
+                    : `${gitStatusQuery.data.files.length} changes`}
+                </span>
+              </div>
+            )}
+          </>
+        ) : (
+          /* IN LOGS DASHBOARD MODE: Global Project Switcher Dropdown */
+          <div className="relative" ref={dropdownRef}>
+            <button
+              onClick={() => setProjectDropdownOpen((prev) => !prev)}
+              className="flex items-center gap-2 rounded-xl border vh-border vh-bg-card px-3 py-1.5 text-xs font-semibold vh-text-main transition hover:border-white/20 shadow-xs"
+            >
+              <Boxes size={14} className="vh-text-accent" />
+              <span className="max-w-[120px] truncate sm:max-w-[160px]">
+                {preferences.selectedProject === "ALL"
+                  ? `All Projects (${apps.length})`
+                  : preferences.selectedProject}
+              </span>
+              <ChevronDown size={13} className="vh-text-dim" />
+            </button>
+
+            {projectDropdownOpen && (
+              <div className="absolute right-0 mt-2 w-64 rounded-xl border vh-border vh-bg-modal p-1.5 shadow-2xl backdrop-blur-xl z-50">
+                <div className="px-2.5 py-1.5 text-[10px] font-semibold uppercase tracking-wider vh-text-dim">
+                  Filter by Project
+                </div>
+                <div className="max-h-60 space-y-0.5 overflow-y-auto">
+                  <button
+                    onClick={() => {
+                      updatePreferences({ selectedProject: "ALL" });
+                      setProjectDropdownOpen(false);
+                      playTone("click");
+                    }}
+                    className={`flex w-full items-center justify-between rounded-lg px-2.5 py-2 text-xs transition ${
+                      preferences.selectedProject === "ALL"
+                        ? "vh-bg-accent vh-text-accent font-semibold"
+                        : "vh-text-main hover:bg-white/5"
+                    }`}
+                  >
+                    <span className="flex items-center gap-2">
+                      <Boxes size={14} />
+                      All Projects ({apps.length})
+                    </span>
+                    {preferences.selectedProject === "ALL" && <Check size={14} />}
+                  </button>
+
+                  {apps.map((app) => {
+                    const isSelected = preferences.selectedProject === app.app_name;
+                    const isRecent = Date.now() - app.last_seen < 60_000;
+                    return (
+                      <button
+                        key={app.app_name}
+                        onClick={() => {
+                          updatePreferences({ selectedProject: app.app_name });
+                          setProjectDropdownOpen(false);
+                          playTone("click");
+                        }}
+                        className={`flex w-full items-center justify-between rounded-lg px-2.5 py-2 text-xs transition ${
+                          isSelected
+                            ? "vh-bg-accent vh-text-accent font-semibold"
+                            : "vh-text-main hover:bg-white/5"
+                        }`}
+                      >
+                        <span className="flex items-center gap-2 truncate">
+                          <span
+                            className={`h-2 w-2 rounded-full shrink-0 ${
+                              isRecent
+                                ? "bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)]"
+                                : "bg-zinc-500"
+                            }`}
+                          />
+                          <span className="truncate">{app.app_name}</span>
+                        </span>
+                        {isSelected && <Check size={14} className="shrink-0" />}
+                      </button>
+                    );
+                  })}
+
+                  {apps.length === 0 && (
+                    <p className="px-3 py-3 text-center text-xs vh-text-muted">
+                      No projects registered yet
+                    </p>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Quick Theme Switcher */}
         <div className="relative" ref={themeRef}>

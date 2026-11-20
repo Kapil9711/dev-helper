@@ -23,6 +23,10 @@ export const queryKeys = {
   gitBranches: ["git-branches"] as const,
   gitStash: ["git-stash"] as const,
   gitStashDiff: (stash: string) => ["git-stash-diff", stash] as const,
+  serverInfo: ["server-info"] as const,
+  gitLiveFiles: ["git-live-files"] as const,
+  gitFileContent: (filePath: string) => ["git-file-content", filePath] as const,
+  gitConfig: ["git-config"] as const,
 };
 
 export function useAppsQuery() {
@@ -116,6 +120,42 @@ export function useGitStashDiffQuery(stash?: string) {
     queryKey: queryKeys.gitStashDiff(stash || ""),
     queryFn: () => apiClient.getGitStashDiff(stash!),
     enabled: Boolean(stash),
+    staleTime: 30_000,
+  });
+}
+
+export function useServerInfoQuery() {
+  return useQuery({
+    queryKey: queryKeys.serverInfo,
+    queryFn: () => apiClient.getServerInfo(),
+    staleTime: 60_000,
+    retry: 1,
+  });
+}
+
+export function useGitLiveFilesQuery(refetchInterval?: number) {
+  return useQuery({
+    queryKey: queryKeys.gitLiveFiles,
+    queryFn: () => apiClient.getGitLiveFiles(),
+    staleTime: 3_000,
+    refetchInterval: refetchInterval ?? false,
+  });
+}
+
+export function useGitFileContentQuery(filePath?: string | null, refetchInterval?: number) {
+  return useQuery({
+    queryKey: queryKeys.gitFileContent(filePath || ""),
+    queryFn: () => apiClient.getGitFileContent(filePath!),
+    enabled: Boolean(filePath),
+    staleTime: 2_000,
+    refetchInterval: refetchInterval ?? false,
+  });
+}
+
+export function useGitConfigQuery() {
+  return useQuery({
+    queryKey: queryKeys.gitConfig,
+    queryFn: () => apiClient.getGitConfig(),
     staleTime: 30_000,
   });
 }

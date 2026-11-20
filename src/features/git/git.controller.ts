@@ -45,6 +45,19 @@ class GitCommandController {
     this.gitRestore = this.gitRestore.bind(this);
     this.gitShow = this.gitShow.bind(this);
     this.gitFetch = this.gitFetch.bind(this);
+    this.gitDashboard = this.gitDashboard.bind(this);
+  }
+
+  async gitDashboard(options: { port?: string; open?: boolean }) {
+    const { startGitDashboardServer } = await import("./git.dashboard.server.ts");
+    const port = options.port ? Number(options.port) : 4318;
+    if (!Number.isInteger(port) || port < 1 || port > 65535) {
+      throw new Error("Port must be an integer from 1 to 65535");
+    }
+    await startGitDashboardServer({
+      port,
+      open: options.open !== false,
+    });
   }
 
   async gitInit(options: CommandOptions) {

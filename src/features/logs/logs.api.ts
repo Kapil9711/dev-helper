@@ -9,6 +9,12 @@ import {
   handleGitCommitShow,
   handleGitStashList,
   handleGitStashDiff,
+  handleGitFileRead,
+  handleGitFileWrite,
+  handleGitLiveFiles,
+  handleGitConfigGet,
+  handleGitConfigSet,
+  handleServerInfo,
 } from "./logs.git.api.ts";
 
 type QueryValue = string | undefined;
@@ -638,6 +644,11 @@ export function createLogsApi(dbPath: string) {
       return true;
     }
 
+    if (pathname === "/api/server-info") {
+      void handleServerInfo("logs", res);
+      return true;
+    }
+
     if (pathname === "/api/git/stash") {
       void handleGitStashList(res);
       return true;
@@ -645,6 +656,29 @@ export function createLogsApi(dbPath: string) {
 
     if (pathname === "/api/git/stash/diff") {
       void handleGitStashDiff(searchParams, res);
+      return true;
+    }
+
+    if (pathname === "/api/git/live-files") {
+      void handleGitLiveFiles(res);
+      return true;
+    }
+
+    if (pathname === "/api/git/file") {
+      if (req.method === "POST") {
+        void handleGitFileWrite(req, res);
+      } else {
+        void handleGitFileRead(searchParams, res);
+      }
+      return true;
+    }
+
+    if (pathname === "/api/git/config") {
+      if (req.method === "POST") {
+        void handleGitConfigSet(req, res);
+      } else {
+        void handleGitConfigGet(res);
+      }
       return true;
     }
 
