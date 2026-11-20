@@ -20,6 +20,7 @@ import {
   handleGitConfigSet,
   handleServerInfo,
 } from "../logs/logs.git.api.ts";
+import { workspaceWatcher } from "./workspace.watcher.ts";
 
 const dashboardDirectory = resolve(__dirname, "../../dashboard");
 
@@ -49,6 +50,9 @@ export async function startGitDashboardServer(
   ]);
 
   const currentBranch = currentBranchInfo || "main";
+
+  // Start real-time workspace filesystem watcher
+  await workspaceWatcher.start(repoRoot);
 
   const serveDashboard = sirv(dashboardDirectory, {
     dev: false,
@@ -138,6 +142,12 @@ export async function startGitDashboardServer(
       return;
     }
 
+    // Real-Time Workspace Live Stream (SSE for Live File Editor)
+    if (url.pathname === "/api/git/live-stream") {
+      workspaceWatcher.handleLiveStream(req, res);
+      return;
+    }
+
     // Git Live Files (for Live Editor)
     if (url.pathname === "/api/git/live-files") {
       void handleGitLiveFiles(res);
@@ -219,6 +229,7 @@ export async function startGitDashboardServer(
   const shutdown = () => {
     if (shuttingDown) return;
     shuttingDown = true;
+    workspaceWatcher.stop();
     console.log(chalk.yellow("\n[VH] Shutting down Git Dashboard server..."));
     httpServer.close(() => {
       console.log(chalk.green("[VH] Git Dashboard server stopped"));

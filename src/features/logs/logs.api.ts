@@ -16,6 +16,7 @@ import {
   handleGitConfigSet,
   handleServerInfo,
 } from "./logs.git.api.ts";
+import { workspaceWatcher } from "../git/workspace.watcher.ts";
 
 type QueryValue = string | undefined;
 
@@ -656,6 +657,13 @@ export function createLogsApi(dbPath: string) {
 
     if (pathname === "/api/git/stash/diff") {
       void handleGitStashDiff(searchParams, res);
+      return true;
+    }
+
+    if (pathname === "/api/git/live-stream") {
+      void workspaceWatcher.start().then(() => {
+        workspaceWatcher.handleLiveStream(req, res);
+      });
       return true;
     }
 

@@ -13,12 +13,12 @@ import {
   Check,
   RotateCcw,
   Plus,
-  Search,
   Clock,
   HardDrive,
-  AlertCircle,
   FileText,
-  FolderGit2,
+  Radio,
+  Zap,
+  Activity,
 } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 import {
@@ -28,13 +28,15 @@ import {
 } from "@/lib/queries";
 import { apiClient } from "@/lib/api-client";
 import { playTone } from "@/lib/prefrences";
-import type { GitLiveFile } from "@/types/git";
+import type { GitLiveFile, WorkspaceLiveStreamEvent } from "@/types/git";
 
 export function LiveFileEditor() {
   const queryClient = useQueryClient();
 
-  // Watch mode toggles periodic polling of modified files and content
+  // Watch mode toggles real-time stream / live watcher
   const [isLiveWatch, setIsLiveWatch] = useState(true);
+  const [autoFollow, setAutoFollow] = useState(true);
+  const [isSseConnected, setIsSseConnected] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [selectedFilePath, setSelectedFilePath] = useState<string | null>(null);
@@ -43,16 +45,91 @@ export function LiveFileEditor() {
   const [copySuccess, setCopySuccess] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [saveStatus, setSaveStatus] = useState<string | null>(null);
+  const [lastLiveUpdate, setLastLiveUpdate] = useState<number | null>(null);
+  const [isLiveFlash, setIsLiveFlash] = useState(false);
+
+  // In-memory stream state pushed from workspace filesystem watcher
+  const [streamActiveFiles, setStreamActiveFiles] = useState<GitLiveFile[] | null>(null);
+  const [streamCurrentFile, setStreamCurrentFile] = useState<{
+    path: string;
+    content: string;
+    mtime: number;
+    size: number;
+    language: string;
+    isNew?: boolean;
+  } | null>(null);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // Queries - Strictly limited to the top 2 files: current editing file and last edited file
-  const liveFilesQuery = useGitLiveFilesQuery(isLiveWatch && !hasUnsavedChanges ? 3000 : undefined);
-  const activeFiles = useMemo(() => {
-    return (liveFilesQuery.data?.files ?? []).slice(0, 2);
-  }, [liveFilesQuery.data?.files]);
+  // Real-Time Server-Sent Events (SSE) Stream from Workspace Watcher
+  useEffect(() => {
+    if (!isLiveWatch) {
+      setIsSseConnected(false);
+      return;
+    }
 
-  // Determine which file to display: user choice or the current editing file (index 0)
+    let es: EventSource | null = null;
+    try {
+      const streamUrl = apiClient.getGitLiveStreamUrl();
+      es = new EventSource(streamUrl);
+
+      es.onopen = () => {
+        setIsSseConnected(true);
+      };
+
+      es.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data) as WorkspaceLiveStreamEvent;
+          if (data.type === "init" || data.type === "file_change") {
+            if (data.activeFiles && data.activeFiles.length > 0) {
+              setStreamActiveFiles(data.activeFiles.slice(0, 2));
+            }
+            if (data.currentFile) {
+              setStreamCurrentFile(data.currentFile);
+              setLastLiveUpdate(Date.now());
+              setIsLiveFlash(true);
+              setTimeout(() => setIsLiveFlash(false), 1200);
+
+              // If autoFollow is active and user has not typed dirty edits, follow immediately
+              if (autoFollow && !hasUnsavedChanges) {
+                setSelectedFilePath(data.currentFile.path);
+                setFileDraft(data.currentFile.content);
+              }
+            }
+          }
+        } catch {
+          // Ignored parse error
+        }
+      };
+
+      es.onerror = () => {
+        setIsSseConnected(false);
+      };
+    } catch {
+      setIsSseConnected(false);
+    }
+
+    return () => {
+      if (es) {
+        es.close();
+      }
+      setIsSseConnected(false);
+    };
+  }, [isLiveWatch, autoFollow, hasUnsavedChanges]);
+
+  // REST Fallback Query - Strictly limited to top 2 files
+  const liveFilesQuery = useGitLiveFilesQuery(
+    isLiveWatch && !isSseConnected && !hasUnsavedChanges ? 2000 : undefined,
+  );
+
+  const activeFiles = useMemo(() => {
+    if (streamActiveFiles && streamActiveFiles.length > 0) {
+      return streamActiveFiles.slice(0, 2);
+    }
+    return (liveFilesQuery.data?.files ?? []).slice(0, 2);
+  }, [streamActiveFiles, liveFilesQuery.data?.files]);
+
+  // Determine current active file
   const currentFile = useMemo(() => {
     if (selectedFilePath) {
       const match = activeFiles.find((f) => f.path === selectedFilePath);
@@ -63,15 +140,20 @@ export function LiveFileEditor() {
 
   const activePath = currentFile?.path ?? null;
 
-  // Query file content from disk (poll only if not currently editing draft)
+  // Query file content from disk as fallback
   const fileContentQuery = useGitFileContentQuery(
     activePath,
-    isLiveWatch && !hasUnsavedChanges ? 2500 : undefined,
+    isLiveWatch && !hasUnsavedChanges && !isSseConnected ? 2000 : undefined,
   );
 
-  const serverContent = fileContentQuery.data?.content ?? "";
+  const serverContent = useMemo(() => {
+    if (streamCurrentFile && streamCurrentFile.path === activePath) {
+      return streamCurrentFile.content;
+    }
+    return fileContentQuery.data?.content ?? "";
+  }, [streamCurrentFile, activePath, fileContentQuery.data?.content]);
 
-  // Synchronize draft when server content updates (unless user has unsaved edits)
+  // Synchronize draft when serverContent updates
   useEffect(() => {
     if (!hasUnsavedChanges) {
       setFileDraft(serverContent);
@@ -210,8 +292,71 @@ export function LiveFileEditor() {
         isFullScreen
           ? "fixed inset-0 z-50 p-3 sm:p-5 bg-black/90 backdrop-blur-xl h-screen w-screen"
           : "rounded-2xl border vh-border vh-bg-card shadow-sm min-h-[640px]"
-      }`}
+      } ${isLiveFlash ? "ring-2 ring-emerald-500/50" : ""}`}
     >
+      {/* Real-Time Live Watcher Notification Strip */}
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-emerald-500/20 bg-emerald-950/25 px-4 py-2 text-xs">
+        <div className="flex items-center gap-2 min-w-0">
+          <span className="relative flex h-2.5 w-2.5 shrink-0">
+            <span
+              className={`inline-flex h-full w-full rounded-full bg-emerald-400 ${
+                isLiveWatch ? "animate-ping opacity-75" : "opacity-30"
+              }`}
+            />
+            <span
+              className={`relative inline-flex rounded-full h-2.5 w-2.5 ${
+                isLiveWatch ? "bg-emerald-500" : "bg-zinc-500"
+              }`}
+            />
+          </span>
+
+          <span className="font-semibold text-emerald-400 shrink-0 flex items-center gap-1">
+            <Radio size={13} className={isLiveWatch ? "animate-pulse" : ""} />
+            LIVE WORKSPACE WATCH:
+          </span>
+
+          <span className="font-mono text-[11px] text-zinc-300 truncate">
+            {currentFile?.path ? (
+              <>
+                <span className="text-emerald-300 font-bold">{currentFile.path}</span>
+                {lastLiveUpdate && (
+                  <span className="text-zinc-400 ml-1.5 opacity-80">
+                    ({relativeTime(lastLiveUpdate)})
+                  </span>
+                )}
+              </>
+            ) : (
+              "Waiting for file edits or creations in workspace..."
+            )}
+          </span>
+
+          {isSseConnected && (
+            <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+              <Zap size={10} />
+              Real-Time SSE
+            </span>
+          )}
+        </div>
+
+        <div className="flex items-center gap-2 shrink-0">
+          <button
+            onClick={() => {
+              setAutoFollow((prev) => !prev);
+              playTone("click");
+            }}
+            title="Auto-follow: Immediately display whichever file is actively being written or created"
+            className={`flex items-center gap-1 text-[11px] font-semibold px-2.5 py-0.5 rounded-lg border transition ${
+              autoFollow
+                ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/40 shadow-xs"
+                : "bg-white/5 text-zinc-400 border-white/10 hover:text-white"
+            }`}
+          >
+            <Activity size={11} className={autoFollow ? "text-emerald-400" : ""} />
+            <span>Auto-Follow: {autoFollow ? "ON" : "OFF"}</span>
+          </button>
+        </div>
+      </div>
+
       {/* Top Header Bar */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b vh-border px-4 py-3 bg-white/[0.02]">
         <div className="flex items-center gap-2.5 min-w-0">
@@ -222,11 +367,11 @@ export function LiveFileEditor() {
           <div className="min-w-0">
             <div className="flex items-center gap-2">
               <h3 className="font-bold text-xs sm:text-sm vh-text-main truncate">
-                {activePath || "No file selected"}
+                {activePath || "No active file"}
               </h3>
               {currentFile && (
-                <span className="rounded-full px-2 py-0.5 text-[10px] font-semibold border border-amber-500/20 bg-amber-500/10 text-amber-400">
-                  {currentFile.status}
+                <span className="rounded-full px-2 py-0.5 text-[10px] font-semibold border border-emerald-500/30 bg-emerald-500/10 text-emerald-400">
+                  {currentFile.isNew ? "NEW FILE" : currentFile.status || "EDITED"}
                 </span>
               )}
               {hasUnsavedChanges && (
@@ -243,7 +388,7 @@ export function LiveFileEditor() {
             <p className="text-[11px] vh-text-dim truncate">
               {lines.length} lines ·{" "}
               {currentFile?.size ? `${(currentFile.size / 1024).toFixed(1)} KB` : "0 KB"} ·{" "}
-              {currentFile ? `Modified ${relativeTime(currentFile.mtime)}` : "Live watcher"}
+              {currentFile ? `Updated ${relativeTime(currentFile.mtime)}` : "Live watcher ready"}
             </p>
           </div>
         </div>
@@ -256,7 +401,7 @@ export function LiveFileEditor() {
               setIsLiveWatch((prev) => !prev);
               playTone("click");
             }}
-            title={isLiveWatch ? "Live Watch ON: Auto-refreshing from disk" : "Live Watch OFF"}
+            title={isLiveWatch ? "Live Watch Active" : "Live Watch Paused"}
             className={`flex items-center gap-1.5 rounded-xl border px-2.5 py-1.5 text-xs font-semibold transition ${
               isLiveWatch
                 ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-400 shadow-xs"
@@ -267,7 +412,7 @@ export function LiveFileEditor() {
             <span className="hidden sm:inline">{isLiveWatch ? "Live Watch ON" : "Live Watch OFF"}</span>
           </button>
 
-          {/* Mode Switcher: View vs Edit */}
+          {/* Mode Switcher: Live View vs Edit */}
           <div className="flex items-center rounded-xl border vh-border vh-bg-card p-0.5 text-xs">
             <button
               onClick={() => {
@@ -375,7 +520,7 @@ export function LiveFileEditor() {
 
         {activeFiles.length === 0 ? (
           <span className="text-xs vh-text-dim italic">
-            Working tree clean — no active file edits
+            Working tree clean — watching for live file writes
           </span>
         ) : (
           activeFiles.map((file, idx) => {
@@ -463,7 +608,7 @@ export function LiveFileEditor() {
           ) : (
             <pre className="p-3 font-mono text-xs leading-5 vh-text-main whitespace-pre selection:bg-emerald-500/30">
               {fileDraft || (
-                <span className="vh-text-dim italic">File is empty or loading...</span>
+                <span className="vh-text-dim italic">Waiting for file content or live edits...</span>
               )}
             </pre>
           )}
@@ -480,7 +625,7 @@ export function LiveFileEditor() {
           <span className="hidden sm:inline">·</span>
           <span className="hidden sm:flex items-center gap-1">
             <Clock size={12} />
-            <span>Last Read: {new Date().toLocaleTimeString()}</span>
+            <span>Live Sync: {new Date().toLocaleTimeString()}</span>
           </span>
         </div>
 
@@ -492,7 +637,7 @@ export function LiveFileEditor() {
           )}
           {isEditMode && (
             <span className="text-emerald-400 font-medium">
-              Edit Mode Active (Tab = 2 spaces)
+              Manual Edit Mode (Tab = 2 spaces · ⌘S to save)
             </span>
           )}
         </div>

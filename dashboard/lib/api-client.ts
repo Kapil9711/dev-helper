@@ -223,6 +223,10 @@ export const apiClient = {
     return apiGet("/api/server-info");
   },
 
+  getGitLiveStreamUrl(): string {
+    return "/api/git/live-stream";
+  },
+
   getGitLiveFiles(): Promise<GitLiveFilesResponse> {
     return apiGet("/api/git/live-files");
   },

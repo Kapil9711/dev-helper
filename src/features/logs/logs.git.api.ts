@@ -3,6 +3,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { exec } from "../../shared/helpers/shell/exec.ts";
 import { gitHelper } from "../../shared/helpers/gitParsers/parser.controller.ts";
+import { workspaceWatcher } from "../git/workspace.watcher.ts";
 
 function sendJson(res: ServerResponse, status: number, body: unknown): void {
   res.writeHead(status, {
@@ -553,6 +554,15 @@ export async function handleGitFileWrite(
 
 export async function handleGitLiveFiles(res: ServerResponse): Promise<void> {
   try {
+    const watcherFiles = workspaceWatcher.getActiveFiles();
+    if (watcherFiles.length > 0) {
+      sendJson(res, 200, {
+        files: watcherFiles,
+        activeFile: watcherFiles[0]?.path || null,
+      });
+      return;
+    }
+
     const repoRoot = await gitHelper.getRepositoryRoot().catch(() => process.cwd());
     const statusRes = await exec("git status --porcelain=v1", { timeout: 15000 });
     const lines = statusRes.stdout.split("\n").filter(Boolean);

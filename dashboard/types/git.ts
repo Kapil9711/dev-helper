@@ -140,6 +140,23 @@ export interface GitLiveFile {
   mtime: number;
   size: number;
   language: string;
+  tag?: "Current Editing" | "Last Edited";
+  isNew?: boolean;
+}
+
+export interface WorkspaceLiveStreamEvent {
+  type: "init" | "file_change";
+  currentFile: {
+    path: string;
+    content: string;
+    mtime: number;
+    size: number;
+    language: string;
+    isNew?: boolean;
+    lastEventAt?: number;
+  } | null;
+  activeFiles: GitLiveFile[];
+  timestamp: number;
 }
 
 export interface GitLiveFilesResponse {
