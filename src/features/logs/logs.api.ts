@@ -1,5 +1,12 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
 import Database from "better-sqlite3";
+import {
+  handleGitStatus,
+  handleGitDiff,
+  handleGitLog,
+  handleGitBranches,
+  handleGitAction,
+} from "./logs.git.api.ts";
 
 type QueryValue = string | undefined;
 
@@ -557,6 +564,11 @@ export function createLogsApi(dbPath: string) {
       "/api/network-request-details",
       "/api/apps",
       "/api/proxy",
+      "/api/git/status",
+      "/api/git/diff",
+      "/api/git/log",
+      "/api/git/branches",
+      "/api/git/action",
     ];
 
     if (!supportedPaths.includes(pathname)) {
@@ -581,6 +593,37 @@ export function createLogsApi(dbPath: string) {
       }
 
       void handleProxyRequest(req, res);
+      return true;
+    }
+
+    if (pathname === "/api/git/action") {
+      if (req.method !== "POST") {
+        res.setHeader("allow", "POST, OPTIONS");
+        sendJson(res, 405, { error: "Method not allowed" });
+        return true;
+      }
+
+      void handleGitAction(req, res);
+      return true;
+    }
+
+    if (pathname === "/api/git/status") {
+      void handleGitStatus(res);
+      return true;
+    }
+
+    if (pathname === "/api/git/diff") {
+      void handleGitDiff(searchParams, res);
+      return true;
+    }
+
+    if (pathname === "/api/git/log") {
+      void handleGitLog(searchParams, res);
+      return true;
+    }
+
+    if (pathname === "/api/git/branches") {
+      void handleGitBranches(res);
       return true;
     }
 

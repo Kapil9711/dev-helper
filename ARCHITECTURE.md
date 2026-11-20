@@ -142,6 +142,9 @@ dev-helper/
 │   │   ├── page.tsx            # /  → Dashboard home (stats)
 │   │   ├── console/page.tsx    # /console → Console logs
 │   │   ├── network/page.tsx    # /network → Network requests
+│   │   ├── docs/page.tsx       # /docs → Swagger/Scalar interactive API docs
+│   │   ├── performance/page.tsx # /performance → Waterfall timeline & latency profiler
+│   │   ├── git/page.tsx        # /git → Visual Git dashboard (working tree, diffs, log)
 │   │   ├── events/page.tsx     # /events  → Events view
 │   │   ├── projects/page.tsx   # /projects
 │   │   └── settings/page.tsx   # /settings

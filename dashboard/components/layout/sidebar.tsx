@@ -16,6 +16,8 @@ import {
   Pin,
   PinOff,
   BookOpen,
+  Gauge,
+  GitBranch,
 } from "lucide-react";
 import { useDashboardPreferences, playTone } from "@/lib/prefrences";
 
@@ -23,6 +25,8 @@ const navigation = [
   { label: "Overview", href: "/", icon: Activity },
   { label: "Network", href: "/network/", icon: Network },
   { label: "API Docs", href: "/docs/", icon: BookOpen },
+  { label: "Performance", href: "/performance/", icon: Gauge },
+  { label: "Git", href: "/git/", icon: GitBranch },
   { label: "Console", href: "/console/", icon: Terminal },
   { label: "Events", href: "/events/", icon: Zap },
   { label: "Projects", href: "/projects/", icon: Boxes },

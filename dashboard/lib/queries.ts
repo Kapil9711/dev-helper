@@ -15,6 +15,11 @@ export const queryKeys = {
     appName && appName !== "ALL"
       ? (["network-request-details", limit, appName] as const)
       : (["network-request-details", limit] as const),
+  gitStatus: ["git-status"] as const,
+  gitDiff: (file?: string, staged?: boolean) =>
+    ["git-diff", file || "all", staged ? "staged" : "unstaged"] as const,
+  gitLog: (limit: number) => ["git-log", limit] as const,
+  gitBranches: ["git-branches"] as const,
 };
 
 export function useAppsQuery() {
@@ -50,5 +55,38 @@ export function useNetworkRequestDetailsQuery(limit = 100, appName?: string) {
     queryFn: () =>
       apiClient.getNetworkRequestDetails({ limit, appName: normalizedApp }),
     staleTime: 2_000,
+  });
+}
+
+export function useGitStatusQuery() {
+  return useQuery({
+    queryKey: queryKeys.gitStatus,
+    queryFn: () => apiClient.getGitStatus(),
+    refetchInterval: 5_000,
+    staleTime: 2_000,
+  });
+}
+
+export function useGitDiffQuery(file?: string, staged?: boolean) {
+  return useQuery({
+    queryKey: queryKeys.gitDiff(file, staged),
+    queryFn: () => apiClient.getGitDiff({ file, staged }),
+    staleTime: 2_000,
+  });
+}
+
+export function useGitLogQuery(limit = 30) {
+  return useQuery({
+    queryKey: queryKeys.gitLog(limit),
+    queryFn: () => apiClient.getGitLog(limit),
+    staleTime: 5_000,
+  });
+}
+
+export function useGitBranchesQuery() {
+  return useQuery({
+    queryKey: queryKeys.gitBranches,
+    queryFn: () => apiClient.getGitBranches(),
+    staleTime: 10_000,
   });
 }

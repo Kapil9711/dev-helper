@@ -4,6 +4,14 @@ import type {
   NetworkRequestsResponse,
   NetworkRequestDetailsResponse,
 } from "@/types/network";
+import type {
+  GitStatusResponse,
+  GitDiffResponse,
+  GitLogResponse,
+  GitBranchesResponse,
+  GitActionPayload,
+  GitActionResult,
+} from "@/types/git";
 
 type ApiParams = Record<string, string | number | boolean | null | undefined>;
 
@@ -160,5 +168,31 @@ export const apiClient = {
         };
       }
     }
+  },
+
+  getGitStatus(): Promise<GitStatusResponse> {
+    return apiGet("/api/git/status");
+  },
+
+  getGitDiff(params?: { file?: string; staged?: boolean }): Promise<GitDiffResponse> {
+    return apiGet("/api/git/diff", params);
+  },
+
+  getGitLog(limit = 30): Promise<GitLogResponse> {
+    return apiGet("/api/git/log", { limit });
+  },
+
+  getGitBranches(): Promise<GitBranchesResponse> {
+    return apiGet("/api/git/branches");
+  },
+
+  async executeGitAction(payload: GitActionPayload): Promise<GitActionResult> {
+    const res = await fetch("/api/git/action", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    return (await res.json()) as GitActionResult;
   },
 };
