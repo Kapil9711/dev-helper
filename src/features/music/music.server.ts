@@ -217,6 +217,74 @@ export async function startMusicServer(options: MusicServerOptions = {}): Promis
       return;
     }
 
+    // Direct stream download with Content-Disposition: attachment (Same-tab background download)
+    if (url.pathname === "/api/music/file-download") {
+      const songId = url.searchParams.get("songId");
+      const quality = (url.searchParams.get("quality") as SoundQuality) || "320kbps";
+      if (!songId) {
+        sendJson(res, { error: "Song ID required" }, 400);
+        return;
+      }
+      const song = musicService.getSongById(songId);
+      if (!song) {
+        sendJson(res, { error: "Song not found" }, 404);
+        return;
+      }
+
+      const matchUrl =
+        song.downloadUrl.find((u) => u.quality === quality)?.url ||
+        song.downloadUrl[song.downloadUrl.length - 1]?.url ||
+        song.downloadUrl[0]?.url;
+
+      if (!matchUrl) {
+        sendJson(res, { error: "No download URL available" }, 404);
+        return;
+      }
+
+      const primaryArtist = song.artists?.primary?.map((a) => a.name).join(", ") || "Unknown";
+      const cleanFileName = `${song.name} - ${primaryArtist}.mp4`.replace(/[\\/:*?"<>|]/g, "_");
+
+      const https = await import("node:https");
+      https
+        .get(matchUrl, (proxyRes) => {
+          if (
+            proxyRes.statusCode &&
+            proxyRes.statusCode >= 300 &&
+            proxyRes.statusCode < 400 &&
+            proxyRes.headers.location
+          ) {
+            https
+              .get(proxyRes.headers.location, (redirectRes) => {
+                res.writeHead(200, {
+                  "content-type": redirectRes.headers["content-type"] || "audio/mp4",
+                  "content-length": redirectRes.headers["content-length"] || "",
+                  "content-disposition": `attachment; filename="${encodeURIComponent(cleanFileName)}"`,
+                  "access-control-allow-origin": "*",
+                });
+                redirectRes.pipe(res);
+              })
+              .on("error", () => {
+                res.writeHead(500);
+                res.end("Stream error");
+              });
+            return;
+          }
+
+          res.writeHead(200, {
+            "content-type": proxyRes.headers["content-type"] || "audio/mp4",
+            "content-length": proxyRes.headers["content-length"] || "",
+            "content-disposition": `attachment; filename="${encodeURIComponent(cleanFileName)}"`,
+            "access-control-allow-origin": "*",
+          });
+          proxyRes.pipe(res);
+        })
+        .on("error", () => {
+          res.writeHead(500);
+          res.end("Download error");
+        });
+      return;
+    }
+
     // Download single song (redirect or stream info)
     if (url.pathname === "/api/music/download") {
       const songId = url.searchParams.get("songId");

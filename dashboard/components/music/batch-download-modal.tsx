@@ -81,14 +81,36 @@ export function BatchDownloadModal({
         song.downloadUrl[0]?.url;
 
       if (audioUrl) {
-        const link = document.createElement("a");
-        link.href = audioUrl;
         const primaryArtist = song.artists?.primary?.map((a) => a.name).join(", ") || "Unknown";
-        link.download = `${song.name} - ${primaryArtist}.mp4`;
-        link.target = "_blank";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        const cleanFileName = `${song.name} - ${primaryArtist}.mp4`.replace(/[\\/:*?"<>|]/g, "_");
+
+        try {
+          const res = await fetch(audioUrl);
+          if (res.ok) {
+            const blob = await res.blob();
+            const blobUrl = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = blobUrl;
+            link.download = cleanFileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            setTimeout(() => URL.revokeObjectURL(blobUrl), 20000);
+          } else {
+            throw new Error();
+          }
+        } catch {
+          // Fallback to hidden iframe in same tab
+          const iframe = document.createElement("iframe");
+          iframe.style.display = "none";
+          iframe.src = `/api/music/file-download?songId=${encodeURIComponent(song.id)}&quality=${downloadQuality}`;
+          document.body.appendChild(iframe);
+          setTimeout(() => {
+            try {
+              document.body.removeChild(iframe);
+            } catch {}
+          }, 30000);
+        }
       }
 
       // Small delay between triggers to prevent browser popup throttling

@@ -17,7 +17,17 @@ import { UpNextCard } from "@/components/music/up-next-card";
 import { MusicSettingsTab } from "@/components/music/music-settings";
 import { BatchDownloadModal } from "@/components/music/batch-download-modal";
 import type { SongData, SoundQuality, MusicSettings } from "@/types/music";
-import { Minimize2, Disc, Maximize2 } from "lucide-react";
+import { Minimize2, Disc, Maximize2, CheckCircle2, DownloadCloud, Loader2 } from "lucide-react";
+
+// Fisher-Yates pure array shuffle
+function shuffleList<T>(array: T[]): T[] {
+  const copy = [...array];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
 
 export default function MusicDashboardPage() {
   const queryClient = useQueryClient();
@@ -28,6 +38,19 @@ export default function MusicDashboardPage() {
 
   // Full Screen State
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
+
+  // Background download feedback toast
+  const [downloadToast, setDownloadToast] = useState<{
+    status: "downloading" | "success" | "error";
+    text: string;
+  } | null>(null);
+
+  const showToast = (text: string, status: "downloading" | "success" | "error" = "success") => {
+    setDownloadToast({ status, text });
+    if (status !== "downloading") {
+      setTimeout(() => setDownloadToast(null), 3000);
+    }
+  };
 
   // Sync tab with URL search parameter & custom events from sidebar
   useEffect(() => {
@@ -107,6 +130,8 @@ export default function MusicDashboardPage() {
   const [repeat, setRepeat] = useState<"off" | "all" | "one">("all");
   const [autoPlay, setAutoPlay] = useState<boolean>(true);
 
+  const isRandomMode = activeCategory === "random" || !activeCategory;
+
   // Sync state once persistent settings are loaded from SQLite
   const [isSettingsInitialized, setIsSettingsInitialized] = useState(false);
   useEffect(() => {
@@ -135,7 +160,9 @@ export default function MusicDashboardPage() {
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
 
-  // Pool of played song IDs in "random" mode to ensure NO repeats
+  // Shuffled Queue State
+  const [shuffledQueue, setShuffledQueue] = useState<SongData[]>([]);
+  // Pool of played song IDs in "random" / shuffle mode to ensure NO repeats
   const [playedSongIds, setPlayedSongIds] = useState<Set<string>>(new Set());
 
   // Batch download modal state
@@ -171,18 +198,43 @@ export default function MusicDashboardPage() {
     [],
   );
 
+  // Keep shuffledQueue populated whenever songs change or category switches
+  useEffect(() => {
+    if (songs.length > 0) {
+      if (isRandomMode || shuffle) {
+        setShuffledQueue((prev) => {
+          // If queue is empty or doesn't match current songs length, generate a fresh shuffle
+          if (prev.length === 0 || prev.length !== songs.length) {
+            return shuffleList(songs);
+          }
+          return prev;
+        });
+      } else {
+        setShuffledQueue([...songs]);
+      }
+    }
+  }, [songs, isRandomMode, shuffle]);
+
   // Initial song selection once songs are loaded
   useEffect(() => {
     if (songs.length > 0 && !currentSong) {
       const lastId = persistentSettings.lastSongId;
       const matchedLast = lastId ? songs.find((s) => s.id === lastId) : null;
-      const initial = matchedLast || songs[0];
-      setCurrentSong(initial);
-      if (persistentSettings.playbackPosition > 0 && matchedLast) {
-        setCurrentTime(persistentSettings.playbackPosition);
+
+      if (matchedLast) {
+        setCurrentSong(matchedLast);
+        if (persistentSettings.playbackPosition > 0) {
+          setCurrentTime(persistentSettings.playbackPosition);
+        }
+      } else if (isRandomMode) {
+        // In Random mode: pick a truly random song on initial start!
+        const randomInitial = songs[Math.floor(Math.random() * songs.length)];
+        setCurrentSong(randomInitial);
+      } else {
+        setCurrentSong(songs[0]);
       }
     }
-  }, [songs, currentSong, persistentSettings.lastSongId, persistentSettings.playbackPosition]);
+  }, [songs, currentSong, persistentSettings.lastSongId, persistentSettings.playbackPosition, isRandomMode]);
 
   // Initialize Audio element
   useEffect(() => {
@@ -223,7 +275,7 @@ export default function MusicDashboardPage() {
     }
   }, [volume, isMuted]);
 
-  // Song selection / change
+  // Play a specific song
   const playSong = useCallback(
     (song: SongData, resumeTime = 0) => {
       setCurrentSong(song);
@@ -255,31 +307,47 @@ export default function MusicDashboardPage() {
     [getAudioUrl, soundQuality, activeCategory, saveSettingsToDb],
   );
 
-  // Compute ONLY the single NEXT upcoming track
+  // Compute ONLY the single NEXT upcoming track based on active shuffle mode
   const nextUpcomingSong: SongData | null = useMemo(() => {
     if (songs.length === 0) return null;
     if (songs.length === 1) return songs[0];
 
-    if (activeCategory === "random" || shuffle) {
-      // Find candidate in unplayed pool
-      const unplayed = songs.filter(
+    const effectiveShuffle = isRandomMode || shuffle;
+
+    if (effectiveShuffle) {
+      const activeQueue = shuffledQueue.length > 0 ? shuffledQueue : songs;
+
+      // Find the next track in shuffledQueue that hasn't been played yet
+      const nextCandidate = activeQueue.find(
         (s) => !playedSongIds.has(s.id) && s.id !== currentSong?.id,
       );
-      if (unplayed.length > 0) return unplayed[0];
-      return songs.find((s) => s.id !== currentSong?.id) || songs[0];
+
+      if (nextCandidate) return nextCandidate;
+
+      // If all tracks in activeQueue have been played, cycle to an unplayed from songs or pick other
+      const fallback = songs.filter((s) => s.id !== currentSong?.id);
+      return fallback[Math.floor(Math.random() * fallback.length)] || songs[0];
     } else {
+      // Pure sequential mode in category
       const currentIndex = songs.findIndex((s) => s.id === currentSong?.id);
       if (currentIndex === -1) return songs[0];
       return songs[(currentIndex + 1) % songs.length];
     }
-  }, [songs, activeCategory, shuffle, playedSongIds, currentSong?.id]);
+  }, [songs, isRandomMode, shuffle, shuffledQueue, playedSongIds, currentSong?.id]);
 
   // Next Track Action
   const handleNext = useCallback(() => {
     if (nextUpcomingSong) {
+      // If we just exhausted the played set, clear it for the next round
+      if (playedSongIds.size >= songs.length - 1) {
+        setPlayedSongIds(new Set());
+        if (isRandomMode || shuffle) {
+          setShuffledQueue(shuffleList(songs));
+        }
+      }
       playSong(nextUpcomingSong, 0);
     }
-  }, [nextUpcomingSong, playSong]);
+  }, [nextUpcomingSong, playedSongIds.size, songs, isRandomMode, shuffle, playSong]);
 
   // Previous Track Action
   const handlePrev = useCallback(() => {
@@ -361,8 +429,24 @@ export default function MusicDashboardPage() {
 
   // Shuffle Toggle
   const handleToggleShuffle = () => {
+    if (isRandomMode) {
+      // In Random Mode, shuffle is permanently ON. Clicking it re-shuffles the entire library!
+      const freshShuffle = shuffleList(songs);
+      setShuffledQueue(freshShuffle);
+      setPlayedSongIds(new Set([currentSong?.id || ""]));
+      playTone("click");
+      showToast("🔀 Entire Library Re-Shuffled!", "success");
+      return;
+    }
+
     setShuffle((prev) => {
       const next = !prev;
+      if (next) {
+        setShuffledQueue(shuffleList(songs));
+        showToast("🔀 Shuffle Enabled", "success");
+      } else {
+        showToast("▶ Sequential Order Enabled", "success");
+      }
       void saveSettingsToDb({ shuffle: next });
       return next;
     });
@@ -399,36 +483,74 @@ export default function MusicDashboardPage() {
   const handleSelectCategory = (catId: string) => {
     setActiveCategory(catId);
     setPlayedSongIds(new Set());
-    void saveSettingsToDb({ activeCategory: catId });
+
+    const becomesRandom = catId === "random";
+    if (becomesRandom) {
+      setShuffle(true);
+      void saveSettingsToDb({ activeCategory: "random", shuffle: true });
+    } else {
+      void saveSettingsToDb({ activeCategory: catId });
+    }
 
     void apiClient.getMusicSongs(catId).then((res) => {
       if (res.songs?.length > 0) {
-        if (catId === "random") {
-          const rand = res.songs[Math.floor(Math.random() * res.songs.length)];
-          playSong(rand, 0);
+        if (becomesRandom) {
+          const fresh = shuffleList(res.songs);
+          setShuffledQueue(fresh);
+          playSong(fresh[0], 0);
+          showToast("🔀 Random Shuffle Active", "success");
         } else {
+          setShuffledQueue(shuffle ? shuffleList(res.songs) : [...res.songs]);
           playSong(res.songs[0], 0);
         }
       }
     });
   };
 
-  // Single Song Download
+  // Same-Tab Background Downloader (Zero tab opening, zero redirection!)
   const handleDownloadSong = async (song: SongData) => {
     const audioUrl = getAudioUrl(song, downloadQuality);
     if (!audioUrl) return;
 
     const primaryArtist =
       song.artists?.primary?.map((a) => a.name).join(", ") || "Unknown";
-    const fileName = `${song.name} - ${primaryArtist}.mp4`;
+    const cleanFileName = `${song.name} - ${primaryArtist}.mp4`.replace(/[\\/:*?"<>|]/g, "_");
 
-    const a = document.createElement("a");
-    a.href = audioUrl;
-    a.download = fileName;
-    a.target = "_blank";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    showToast(`Downloading "${song.name}"...`, "downloading");
+
+    // Method 1: Fetch directly as a local Blob (Same-origin object URL ensures 100% background save in same tab)
+    try {
+      const res = await fetch(audioUrl);
+      if (res.ok) {
+        const blob = await res.blob();
+        const blobUrl = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = blobUrl;
+        link.download = cleanFileName;
+        // NO target="_blank"! Download happens seamlessly in the current tab.
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        setTimeout(() => URL.revokeObjectURL(blobUrl), 30000);
+        showToast(`✓ Saved "${cleanFileName}" to Downloads`, "success");
+        return;
+      }
+    } catch {
+      // Method 2: Fallback to server attachment stream via invisible iframe in the same tab
+      const iframe = document.createElement("iframe");
+      iframe.style.display = "none";
+      iframe.src = `/api/music/file-download?songId=${encodeURIComponent(
+        song.id,
+      )}&quality=${downloadQuality}`;
+      document.body.appendChild(iframe);
+      setTimeout(() => {
+        try {
+          document.body.removeChild(iframe);
+        } catch {}
+      }, 45000);
+      showToast(`✓ Downloading "${cleanFileName}"`, "success");
+    }
   };
 
   // Toggle Fullscreen Mode
@@ -469,6 +591,7 @@ export default function MusicDashboardPage() {
       setIsMuted(false);
       setShuffle(true);
       setRepeat("all");
+      showToast("Settings reset to defaults", "success");
     } catch (err) {
       console.error("Failed to reset settings:", err);
     }
@@ -486,6 +609,18 @@ export default function MusicDashboardPage() {
 
   return (
     <>
+      {/* Toast Notification (Never redirects, stays in same tab!) */}
+      {downloadToast && (
+        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 rounded-2xl border border-rose-500/30 bg-zinc-950/95 px-4 py-3 text-xs font-semibold text-rose-300 shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-bottom-3 duration-200">
+          {downloadToast.status === "downloading" ? (
+            <Loader2 size={16} className="animate-spin text-rose-400" />
+          ) : (
+            <CheckCircle2 size={16} className="text-emerald-400" />
+          )}
+          <span>{downloadToast.text}</span>
+        </div>
+      )}
+
       {/* IMMERSIVE FULL SCREEN THEATER OVERLAY */}
       {isFullscreen && (
         <div className="fixed inset-0 z-50 bg-[#060a12] p-6 sm:p-10 overflow-y-auto flex flex-col justify-between animate-in fade-in duration-300">
@@ -527,6 +662,7 @@ export default function MusicDashboardPage() {
               shuffle={shuffle}
               repeat={repeat}
               isFullscreen={true}
+              isRandomMode={isRandomMode}
               onPlayPause={handlePlayPause}
               onNext={handleNext}
               onPrev={handlePrev}
@@ -623,6 +759,7 @@ export default function MusicDashboardPage() {
               shuffle={shuffle}
               repeat={repeat}
               isFullscreen={false}
+              isRandomMode={isRandomMode}
               onPlayPause={handlePlayPause}
               onNext={handleNext}
               onPrev={handlePrev}

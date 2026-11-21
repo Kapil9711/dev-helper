@@ -35,6 +35,7 @@ interface CdPlayerProps {
   shuffle: boolean;
   repeat: "off" | "all" | "one";
   isFullscreen: boolean;
+  isRandomMode?: boolean;
   onPlayPause: () => void;
   onNext: () => void;
   onPrev: () => void;
@@ -74,6 +75,7 @@ export function CdPlayer({
   shuffle,
   repeat,
   isFullscreen,
+  isRandomMode = false,
   onPlayPause,
   onNext,
   onPrev,
@@ -143,12 +145,12 @@ export function CdPlayer({
 
   return (
     <div
-      className={`relative w-full overflow-hidden rounded-3xl border vh-border vh-bg-card shadow-2xl transition-all ${
+      className={`relative w-full rounded-3xl border vh-border vh-bg-card shadow-2xl transition-all ${
         isFullscreen ? "p-4 sm:p-8" : ""
       }`}
     >
       {/* Top Vintage Bezel Bar */}
-      <div className="flex items-center justify-between border-b vh-border bg-black/60 px-5 py-3.5 backdrop-blur-md">
+      <div className="relative z-40 flex items-center justify-between border-b vh-border bg-black/60 px-5 py-3.5 backdrop-blur-md rounded-t-3xl">
         <div className="flex items-center gap-2.5">
           <span className="flex h-3 w-3 items-center justify-center rounded-full bg-rose-500/80 shadow-[0_0_8px_rgba(244,63,94,0.8)]">
             <span
@@ -168,7 +170,7 @@ export function CdPlayer({
         {/* Right Controls: Sound Quality Selector & Fullscreen Toggle */}
         <div className="flex items-center gap-2.5">
           {/* Sound Quality Selector in Player Header */}
-          <div className="relative" ref={qualityDropdownRef}>
+          <div className="relative z-50" ref={qualityDropdownRef}>
             <button
               onClick={() => setIsQualityOpen((prev) => !prev)}
               className="flex items-center gap-1.5 rounded-xl border border-pink-500/40 bg-pink-500/15 px-3 py-1.5 text-xs font-mono font-semibold text-pink-300 hover:bg-pink-500/25 transition shadow-xs"
@@ -182,7 +184,7 @@ export function CdPlayer({
             </button>
 
             {isQualityOpen && (
-              <div className="absolute right-0 mt-2 w-56 rounded-xl border vh-border vh-bg-modal p-2 shadow-2xl backdrop-blur-xl z-50 animate-in fade-in zoom-in-95 duration-150">
+              <div className="absolute right-0 mt-2 w-56 rounded-xl border border-white/20 vh-bg-modal p-2 shadow-[0_20px_50px_rgba(0,0,0,0.9)] backdrop-blur-2xl z-50 animate-in fade-in zoom-in-95 duration-150">
                 <div className="px-2 py-1 text-[10px] font-bold uppercase tracking-wider vh-text-dim border-b vh-border mb-1">
                   Audio Stream Quality
                 </div>
@@ -239,7 +241,7 @@ export function CdPlayer({
       </div>
 
       {/* Main Player Body */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 p-6 sm:p-10 items-center">
+      <div className="relative z-10 rounded-b-3xl grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 p-6 sm:p-10 items-center">
         {/* Left Col: Running CD / Vinyl Player Graphic */}
         <div className="md:col-span-5 flex flex-col items-center justify-center">
           <div className="relative flex items-center justify-center">
@@ -450,11 +452,17 @@ export function CdPlayer({
                   playTone("click");
                 }}
                 className={`p-2.5 rounded-xl transition ${
-                  shuffle
+                  isRandomMode || shuffle
                     ? "bg-rose-500/20 text-rose-400 border border-rose-500/40 shadow-xs"
                     : "vh-text-dim hover:text-white hover:bg-white/5 border border-transparent"
                 }`}
-                title={shuffle ? "Shuffle ON" : "Shuffle OFF"}
+                title={
+                  isRandomMode
+                    ? "Random Shuffle Mode (Click to Re-shuffle Library)"
+                    : shuffle
+                    ? "Shuffle ON (Click to toggle)"
+                    : "Shuffle OFF (Click to toggle)"
+                }
               >
                 <Shuffle size={16} />
               </button>
