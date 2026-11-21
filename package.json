@@ -1,6 +1,6 @@
 {
   "name": "vh-dev-helper",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Developer productivity CLI and dashboard toolkit",
   "type": "commonjs",
   "main": "dist/bin/index.js",
