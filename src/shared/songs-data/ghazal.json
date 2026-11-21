@@ -1,0 +1,5353 @@
+[
+  {
+    "id": "q6C9g95y",
+    "name": "Sab Kuchh Tha",
+    "type": "song",
+    "year": "2023",
+    "releaseDate": "2023-07-07",
+    "duration": 304,
+    "label": "Red Ribbon Entertainment Pvt. Ltd.",
+    "explicitContent": false,
+    "playCount": 532581,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/sab-kuchh-tha/AV4oCBMJAko",
+    "copyright": "© 2023 Red Ribbon Entertainment Pvt. Ltd.",
+    "album": {
+      "id": "46389533",
+      "name": "Sab Kuchh Tha",
+      "url": "https://www.jiosaavn.com/album/sab-kuchh-tha/8SvO84cxN6I_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "455969",
+          "name": "Talat Aziz",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Talat_Aziz_002_20250623071323_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Talat_Aziz_002_20250623071323_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Talat_Aziz_002_20250623071323_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/talat-aziz-songs/Js7Ng4hLpgA_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "455969",
+          "name": "Talat Aziz",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Talat_Aziz_002_20250623071323_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Talat_Aziz_002_20250623071323_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Talat_Aziz_002_20250623071323_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/talat-aziz-songs/Js7Ng4hLpgA_"
+        },
+        {
+          "id": "455969",
+          "name": "Talat Aziz",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Talat_Aziz_002_20250623071323_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Talat_Aziz_002_20250623071323_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Talat_Aziz_002_20250623071323_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/talat-aziz-songs/Js7Ng4hLpgA_"
+        },
+        {
+          "id": "505055",
+          "name": "Kamlesh Sonawala",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kamlesh_Sonawala_000_20240819103837_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kamlesh_Sonawala_000_20240819103837_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kamlesh_Sonawala_000_20240819103837_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kamlesh-sonawala-songs/qwH7j7XHl9M_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/277/Sab-Kuchh-Tha-Hindi-2023-20230630232011-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/277/Sab-Kuchh-Tha-Hindi-2023-20230630232011-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/277/Sab-Kuchh-Tha-Hindi-2023-20230630232011-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/277/86c955690760f298a38a5c5530cc0b7b_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/277/86c955690760f298a38a5c5530cc0b7b_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/277/86c955690760f298a38a5c5530cc0b7b_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/277/86c955690760f298a38a5c5530cc0b7b_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/277/86c955690760f298a38a5c5530cc0b7b_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "dVjHTbws",
+    "name": "Hazaaron Khwahishein Aisi",
+    "type": "song",
+    "year": "2019",
+    "releaseDate": "2019-05-16",
+    "duration": 546,
+    "label": "Dinesh Kumar Dube",
+    "explicitContent": false,
+    "playCount": 178532,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/hazaaron-khwahishein-aisi/FD4BeSBSQEA",
+    "copyright": "© 2019 Dinesh Kumar Dube",
+    "album": {
+      "id": "15891734",
+      "name": "Hazaaron Khwahishein Aisi",
+      "url": "https://www.jiosaavn.com/album/hazaaron-khwahishein-aisi/o8l,axfDJL4_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "496860",
+          "name": "Dinesh Kumar Dube",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Dinesh_Kumar_Dube_20190520093140_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Dinesh_Kumar_Dube_20190520093140_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Dinesh_Kumar_Dube_20190520093140_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/dinesh-kumar-dube-songs/N262IMK0ws4_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "496860",
+          "name": "Dinesh Kumar Dube",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Dinesh_Kumar_Dube_20190520093140_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Dinesh_Kumar_Dube_20190520093140_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Dinesh_Kumar_Dube_20190520093140_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/dinesh-kumar-dube-songs/N262IMK0ws4_"
+        },
+        {
+          "id": "496860",
+          "name": "Dinesh Kumar Dube",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Dinesh_Kumar_Dube_20190520093140_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Dinesh_Kumar_Dube_20190520093140_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Dinesh_Kumar_Dube_20190520093140_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/dinesh-kumar-dube-songs/N262IMK0ws4_"
+        },
+        {
+          "id": "460898",
+          "name": "Mirza Ghalib",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/000/default_Saregama_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/000/default_Saregama_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/000/default_Saregama_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/mirza-ghalib-songs/76yQdjXnkkM_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/281/Hazaaron-Khwahishein-Aisi-Hindi-2019-20190514192358-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/281/Hazaaron-Khwahishein-Aisi-Hindi-2019-20190514192358-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/281/Hazaaron-Khwahishein-Aisi-Hindi-2019-20190514192358-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/281/6cd407e5a632e639c410d05d893f512d_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/281/6cd407e5a632e639c410d05d893f512d_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/281/6cd407e5a632e639c410d05d893f512d_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/281/6cd407e5a632e639c410d05d893f512d_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/281/6cd407e5a632e639c410d05d893f512d_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "PdqGqYx0",
+    "name": "Padharo (From &quot;Widow's Shadow&quot;)",
+    "type": "song",
+    "year": "2025",
+    "releaseDate": "2025-04-08",
+    "duration": 309,
+    "label": "Panorama Music",
+    "explicitContent": false,
+    "playCount": 10825,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/padharo-from-widows-shadow/IAwadgVpTwM",
+    "copyright": "℗ 2025 Panorama Music",
+    "album": {
+      "id": "63450931",
+      "name": "Padharo (From &quot;Widow's Shadow&quot;)",
+      "url": "https://www.jiosaavn.com/album/padharo-from-widows-shadow/08JNO-lz,JU_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "4575566",
+          "name": "Suman Adhikary",
+          "role": "primary_artists",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/suman-adhikary-songs/HpgByl09GCw_"
+        },
+        {
+          "id": "455422",
+          "name": "Shubha Mudgal",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Shubha_Mudgal_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Shubha_Mudgal_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Shubha_Mudgal_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/shubha-mudgal-songs/U0nA4AJFVHk_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "455422",
+          "name": "Shubha Mudgal",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Shubha_Mudgal_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Shubha_Mudgal_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Shubha_Mudgal_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/shubha-mudgal-songs/U0nA4AJFVHk_"
+        },
+        {
+          "id": "4575566",
+          "name": "Suman Adhikary",
+          "role": "music",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/suman-adhikary-songs/HpgByl09GCw_"
+        },
+        {
+          "id": "4575566",
+          "name": "Suman Adhikary",
+          "role": "lyricist",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/suman-adhikary-songs/HpgByl09GCw_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/251/Padharo-From-Widow-s-Shadow-Hindi-2025-20250403161434-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/251/Padharo-From-Widow-s-Shadow-Hindi-2025-20250403161434-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/251/Padharo-From-Widow-s-Shadow-Hindi-2025-20250403161434-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/251/bd98616dcd193b8fb5641c2ce1d61f28_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/251/bd98616dcd193b8fb5641c2ce1d61f28_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/251/bd98616dcd193b8fb5641c2ce1d61f28_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/251/bd98616dcd193b8fb5641c2ce1d61f28_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/251/bd98616dcd193b8fb5641c2ce1d61f28_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "IiahnLew",
+    "name": "Mehsoos (From &quot;Jashn -E- Ghazal&quot;)",
+    "type": "song",
+    "year": "2024",
+    "releaseDate": "2024-12-09",
+    "duration": 306,
+    "label": "Taaleem Music",
+    "explicitContent": false,
+    "playCount": 55749,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/mehsoos-from-jashn-e-ghazal/OQEKWRp8UkQ",
+    "copyright": "℗ 2024 TAALEEM MUSIC",
+    "album": {
+      "id": "60370458",
+      "name": "Mehsoos (From &quot;Jashn -E- Ghazal&quot;)",
+      "url": "https://www.jiosaavn.com/album/mehsoos-from-jashn-e-ghazal/K81SBMxtB-E_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "469315",
+          "name": "Papon",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Papon_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Papon_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Papon_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/papon-songs/2tTaLghITxs_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "469315",
+          "name": "Papon",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Papon_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Papon_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Papon_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/papon-songs/2tTaLghITxs_"
+        },
+        {
+          "id": "705169",
+          "name": "Sajid Wajid",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Sajid-Wajid_20180507092451_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Sajid-Wajid_20180507092451_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Sajid-Wajid_20180507092451_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/sajid-wajid-songs/mAYUldoMZa8_"
+        },
+        {
+          "id": "21190347",
+          "name": "Subhash Pathak",
+          "role": "lyricist",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/subhash-pathak-songs/zKh34IyRYoE_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/812/Mehsoos-From-Jashn-E-Ghazal-Hindi-2024-20241210124645-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/812/Mehsoos-From-Jashn-E-Ghazal-Hindi-2024-20241210124645-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/812/Mehsoos-From-Jashn-E-Ghazal-Hindi-2024-20241210124645-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/812/8120d6c9a2edb8a91910e4c9ff45573d_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/812/8120d6c9a2edb8a91910e4c9ff45573d_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/812/8120d6c9a2edb8a91910e4c9ff45573d_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/812/8120d6c9a2edb8a91910e4c9ff45573d_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/812/8120d6c9a2edb8a91910e4c9ff45573d_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "mU9QcoVA",
+    "name": "Jab Bhi Wo Muskurane Lagte Hai",
+    "type": "song",
+    "year": "2025",
+    "releaseDate": "2025-06-06",
+    "duration": 208,
+    "label": "SaReGaMA India Ltd",
+    "explicitContent": false,
+    "playCount": 44300,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/jab-bhi-wo-muskurane-lagte-hai/HT1SYBdfYXI",
+    "copyright": "℗ 2025 Saregama India Ltd",
+    "album": {
+      "id": "65101847",
+      "name": "Ghazal Ho Gayi",
+      "url": "https://www.jiosaavn.com/album/ghazal-ho-gayi/KWDpPZPfVpY_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "22582506",
+          "name": "Haider Amaan Haider",
+          "role": "primary_artists",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/haider-amaan-haider-songs/LM6xm1thkKo_"
+        },
+        {
+          "id": "455135",
+          "name": "Shaan",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Shaan_006_20261012091314_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Shaan_006_20261012091314_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Shaan_006_20261012091314_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/shaan-songs/4OWVZe3KEes_"
+        }
+      ],
+      "featured": [
+        {
+          "id": "2071145",
+          "name": "Rishi Verma",
+          "role": "featured_artists",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/rishi-verma-songs/sHeXqG0zlTU_"
+        },
+        {
+          "id": "25294186",
+          "name": "Aradhaya Tan",
+          "role": "featured_artists",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/aradhaya-tan-songs/qdGwoHsV8fw_"
+        }
+      ],
+      "all": [
+        {
+          "id": "455135",
+          "name": "Shaan",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Shaan_006_20261012091314_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Shaan_006_20261012091314_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Shaan_006_20261012091314_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/shaan-songs/4OWVZe3KEes_"
+        },
+        {
+          "id": "22582506",
+          "name": "Haider Amaan Haider",
+          "role": "music",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/haider-amaan-haider-songs/LM6xm1thkKo_"
+        },
+        {
+          "id": "1456824",
+          "name": "Via Vallen",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/349/Meraih-Bintang-Indonesian-2018-20180625192536-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/349/Meraih-Bintang-Indonesian-2018-20180625192536-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/349/Meraih-Bintang-Indonesian-2018-20180625192536-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/via-vallen-songs/kYQ8cGA0dP8_"
+        },
+        {
+          "id": "22582506",
+          "name": "Haider Amaan Haider",
+          "role": "lyricist",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/haider-amaan-haider-songs/LM6xm1thkKo_"
+        },
+        {
+          "id": "2071145",
+          "name": "Rishi Verma",
+          "role": "starring",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/rishi-verma-songs/sHeXqG0zlTU_"
+        },
+        {
+          "id": "25294186",
+          "name": "Aradhaya Tan",
+          "role": "starring",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/aradhaya-tan-songs/qdGwoHsV8fw_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/897/Ghazal-Ho-Gayi-Hindi-2025-20250602083651-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/897/Ghazal-Ho-Gayi-Hindi-2025-20250602083651-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/897/Ghazal-Ho-Gayi-Hindi-2025-20250602083651-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/897/07480d2c42beeaa581db7dd640305cc5_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/897/07480d2c42beeaa581db7dd640305cc5_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/897/07480d2c42beeaa581db7dd640305cc5_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/897/07480d2c42beeaa581db7dd640305cc5_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/897/07480d2c42beeaa581db7dd640305cc5_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "eAd3wAgj",
+    "name": "Mehka Mehka",
+    "type": "song",
+    "year": "2026",
+    "releaseDate": "2026-09-16",
+    "duration": 258,
+    "label": "SaReGaMA India Ltd",
+    "explicitContent": false,
+    "playCount": 391,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/mehka-mehka/FSkPAgNxUFk",
+    "copyright": "℗ 2026 Saregama India Ltd",
+    "album": {
+      "id": "80364166",
+      "name": "Mehka Mehka",
+      "url": "https://www.jiosaavn.com/album/mehka-mehka/yvVc5S,0Mxk_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "8638434",
+          "name": "Dr Anamika Singh",
+          "role": "primary_artists",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/dr-anamika-singh-songs/,Eo,RRrnsus_"
+        },
+        {
+          "id": "455967",
+          "name": "Ahmed Hussain",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/097/T-G-M-Ahmed-N-Mhd-Hussain-Mausam-Aayeng-2000-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/097/T-G-M-Ahmed-N-Mhd-Hussain-Mausam-Aayeng-2000-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/097/T-G-M-Ahmed-N-Mhd-Hussain-Mausam-Aayeng-2000-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/ahmed-hussain-songs/LN0ALMpDS5M_"
+        },
+        {
+          "id": "455968",
+          "name": "Mohammed Hussain",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/194/Best-Of-Ahmed-Hussain-And-Mohammed-Hussain-Urdu-1999-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/194/Best-Of-Ahmed-Hussain-And-Mohammed-Hussain-Urdu-1999-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/194/Best-Of-Ahmed-Hussain-And-Mohammed-Hussain-Urdu-1999-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/mohammed-hussain-songs/dgE3nUk7zNA_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "455967",
+          "name": "Ahmed Hussain",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/097/T-G-M-Ahmed-N-Mhd-Hussain-Mausam-Aayeng-2000-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/097/T-G-M-Ahmed-N-Mhd-Hussain-Mausam-Aayeng-2000-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/097/T-G-M-Ahmed-N-Mhd-Hussain-Mausam-Aayeng-2000-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/ahmed-hussain-songs/LN0ALMpDS5M_"
+        },
+        {
+          "id": "455968",
+          "name": "Mohammed Hussain",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/194/Best-Of-Ahmed-Hussain-And-Mohammed-Hussain-Urdu-1999-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/194/Best-Of-Ahmed-Hussain-And-Mohammed-Hussain-Urdu-1999-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/194/Best-Of-Ahmed-Hussain-And-Mohammed-Hussain-Urdu-1999-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/mohammed-hussain-songs/dgE3nUk7zNA_"
+        },
+        {
+          "id": "2585153",
+          "name": "Mohammed Saif Babar",
+          "role": "lyricist",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/mohammed-saif-babar-songs/pnWUD57Zq5U_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/299/Mehka-Mehka-Hindi-2026-20260910093906-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/299/Mehka-Mehka-Hindi-2026-20260910093906-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/299/Mehka-Mehka-Hindi-2026-20260910093906-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/299/2f29ad8a336a9b2e7b45444e9f4e3648_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/299/2f29ad8a336a9b2e7b45444e9f4e3648_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/299/2f29ad8a336a9b2e7b45444e9f4e3648_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/299/2f29ad8a336a9b2e7b45444e9f4e3648_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/299/2f29ad8a336a9b2e7b45444e9f4e3648_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "BF3_mHbg",
+    "name": "Kabhi Dil Ne Chaha",
+    "type": "song",
+    "year": "2026",
+    "releaseDate": "2026-10-06",
+    "duration": 272,
+    "label": "Red Ribbon Entertainment Pvt. Ltd.",
+    "explicitContent": false,
+    "playCount": 216,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/kabhi-dil-ne-chaha/Mi5Ybhl4VVQ",
+    "copyright": "© 2026 Red Ribbon Entertainment Pvt. Ltd.",
+    "album": {
+      "id": "80938802",
+      "name": "Kabhi Dil Ne Chaha",
+      "url": "https://www.jiosaavn.com/album/kabhi-dil-ne-chaha/O8S5R5LTyfk_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "455162",
+          "name": "Hariharan",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Hariharan_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Hariharan_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Hariharan_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/hariharan-songs/Z2qyrGA65Yo_"
+        },
+        {
+          "id": "480487",
+          "name": "Ahsan Ahmed",
+          "role": "primary_artists",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/ahsan-ahmed-songs/l32Vi,WBDt0_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "480487",
+          "name": "Ahsan Ahmed",
+          "role": "music",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/ahsan-ahmed-songs/l32Vi,WBDt0_"
+        },
+        {
+          "id": "505055",
+          "name": "Kamlesh Sonawala",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kamlesh_Sonawala_000_20240819103837_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kamlesh_Sonawala_000_20240819103837_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kamlesh_Sonawala_000_20240819103837_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kamlesh-sonawala-songs/qwH7j7XHl9M_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/894/Kabhi-Dil-Ne-Chaha-Hindi-2026-20260922162401-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/894/Kabhi-Dil-Ne-Chaha-Hindi-2026-20260922162401-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/894/Kabhi-Dil-Ne-Chaha-Hindi-2026-20260922162401-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/894/e1f7be84c702bd7752c9b1396413c8b5_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/894/e1f7be84c702bd7752c9b1396413c8b5_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/894/e1f7be84c702bd7752c9b1396413c8b5_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/894/e1f7be84c702bd7752c9b1396413c8b5_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/894/e1f7be84c702bd7752c9b1396413c8b5_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "epzsQXFY",
+    "name": "Naazuq",
+    "type": "song",
+    "year": "2025",
+    "releaseDate": "2025-12-15",
+    "duration": 290,
+    "label": "Ajjay Gosswami",
+    "explicitContent": false,
+    "playCount": 3652,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/naazuq/FRgRQiVocWo",
+    "copyright": "(C)2025 Ajjay Gosswami",
+    "album": {
+      "id": "70317391",
+      "name": "Naazuq",
+      "url": "https://www.jiosaavn.com/album/naazuq/t6FBdcRyWBA_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "455948",
+          "name": "Jagjit Singh",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Jagjit_Singh_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Jagjit_Singh_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Jagjit_Singh_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/jagjit-singh-songs/EMskk1sVOtM_"
+        },
+        {
+          "id": "8388450",
+          "name": "Ajjay Gosswami",
+          "role": "primary_artists",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/ajjay-gosswami-songs/Xa-GPwdnayk_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "8388450",
+          "name": "Ajjay Gosswami",
+          "role": "music",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/ajjay-gosswami-songs/Xa-GPwdnayk_"
+        },
+        {
+          "id": "455948",
+          "name": "Jagjit Singh",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Jagjit_Singh_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Jagjit_Singh_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Jagjit_Singh_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/jagjit-singh-songs/EMskk1sVOtM_"
+        },
+        {
+          "id": "8388450",
+          "name": "Ajjay Gosswami",
+          "role": "singer",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/ajjay-gosswami-songs/Xa-GPwdnayk_"
+        },
+        {
+          "id": "8388450",
+          "name": "Ajjay Gosswami",
+          "role": "lyricist",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/ajjay-gosswami-songs/Xa-GPwdnayk_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/978/Naazuq-Hindi-2025-20251203121247-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/978/Naazuq-Hindi-2025-20251203121247-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/978/Naazuq-Hindi-2025-20251203121247-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/978/9f91a4790d6a0f3ca9b1c5d90447a1b4_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/978/9f91a4790d6a0f3ca9b1c5d90447a1b4_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/978/9f91a4790d6a0f3ca9b1c5d90447a1b4_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/978/9f91a4790d6a0f3ca9b1c5d90447a1b4_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/978/9f91a4790d6a0f3ca9b1c5d90447a1b4_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "P80GWWiE",
+    "name": "Tu Aaye Na",
+    "type": "song",
+    "year": "2025",
+    "releaseDate": "2025-11-01",
+    "duration": 155,
+    "label": "VIBRAPHONE JEET GANNGULI",
+    "explicitContent": false,
+    "playCount": 13604,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/tu-aaye-na/IFBbdiNnXnY",
+    "copyright": "© 2025 Jeet Gannguli",
+    "album": {
+      "id": "68940816",
+      "name": "Tu Aaye Na",
+      "url": "https://www.jiosaavn.com/album/tu-aaye-na/ndR2ZYKTt3I_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "464912",
+          "name": "Jeet Gannguli",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Jeet_Gannguli_003_20241209065157_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Jeet_Gannguli_003_20241209065157_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Jeet_Gannguli_003_20241209065157_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/jeet-gannguli-songs/37adMqLwAgI_"
+        },
+        {
+          "id": "4919750",
+          "name": "Ranita Banerjee",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Ranita_Banerjee_000_20250617181655_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Ranita_Banerjee_000_20250617181655_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Ranita_Banerjee_000_20250617181655_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/ranita-banerjee-songs/Vb,oj0PTdvo_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "464912",
+          "name": "Jeet Gannguli",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Jeet_Gannguli_003_20241209065157_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Jeet_Gannguli_003_20241209065157_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Jeet_Gannguli_003_20241209065157_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/jeet-gannguli-songs/37adMqLwAgI_"
+        },
+        {
+          "id": "4919750",
+          "name": "Ranita Banerjee",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Ranita_Banerjee_000_20250617181655_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Ranita_Banerjee_000_20250617181655_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Ranita_Banerjee_000_20250617181655_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/ranita-banerjee-songs/Vb,oj0PTdvo_"
+        },
+        {
+          "id": "476950",
+          "name": "Tanveer Ghazi",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/594/Mohabbataan-Hindi-2019-20191024151125-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/594/Mohabbataan-Hindi-2019-20191024151125-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/594/Mohabbataan-Hindi-2019-20191024151125-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/tanveer-ghazi-songs/uQBB,AIlsDM_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/855/Tu-Aaye-Na-Hindi-2025-20251016193848-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/855/Tu-Aaye-Na-Hindi-2025-20251016193848-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/855/Tu-Aaye-Na-Hindi-2025-20251016193848-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/855/7343ce7648edd7f310ea21dfc3f14397_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/855/7343ce7648edd7f310ea21dfc3f14397_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/855/7343ce7648edd7f310ea21dfc3f14397_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/855/7343ce7648edd7f310ea21dfc3f14397_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/855/7343ce7648edd7f310ea21dfc3f14397_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "MzugGRt_",
+    "name": "Bas Mere Khwab",
+    "type": "song",
+    "year": "2026",
+    "releaseDate": "2026-02-15",
+    "duration": 350,
+    "label": "Sufiscore",
+    "explicitContent": false,
+    "playCount": 1204,
+    "language": "hindi",
+    "hasLyrics": true,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/bas-mere-khwab/PRIeVjNiQ2w",
+    "copyright": "℗ 2026 Sufiscore",
+    "album": {
+      "id": "72430873",
+      "name": "Jaan Meri",
+      "url": "https://www.jiosaavn.com/album/jaan-meri/hh2ZthDwqCQ_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "455162",
+          "name": "Hariharan",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Hariharan_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Hariharan_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Hariharan_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/hariharan-songs/Z2qyrGA65Yo_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "455162",
+          "name": "Hariharan",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Hariharan_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Hariharan_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Hariharan_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/hariharan-songs/Z2qyrGA65Yo_"
+        },
+        {
+          "id": "471343",
+          "name": "Akshay",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Akshay_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Akshay_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Akshay_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/akshay-songs/92zNkGFrH8k_"
+        },
+        {
+          "id": "455162",
+          "name": "Hariharan",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Hariharan_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Hariharan_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Hariharan_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/hariharan-songs/Z2qyrGA65Yo_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/093/Jaan-Meri-Hindi-2026-20260212135154-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/093/Jaan-Meri-Hindi-2026-20260212135154-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/093/Jaan-Meri-Hindi-2026-20260212135154-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/093/a6d31a291b6e2f3114eff7ff09d7d261_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/093/a6d31a291b6e2f3114eff7ff09d7d261_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/093/a6d31a291b6e2f3114eff7ff09d7d261_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/093/a6d31a291b6e2f3114eff7ff09d7d261_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/093/a6d31a291b6e2f3114eff7ff09d7d261_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "0yGz-iYc",
+    "name": "Hai toh Hai",
+    "type": "song",
+    "year": "2026",
+    "releaseDate": "2026-02-13",
+    "duration": 247,
+    "label": "Kavita Seth",
+    "explicitContent": false,
+    "playCount": 5705,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/hai-toh-hai/QBEsS1lZblA",
+    "copyright": "℗ 2025 Kavita Seth",
+    "album": {
+      "id": "71180287",
+      "name": "Dil Safar",
+      "url": "https://www.jiosaavn.com/album/dil-safar/XT-s9nGWOqQ_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "459150",
+          "name": "Kavita Seth",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kavita_Seth_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kavita_Seth_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kavita_Seth_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kavita-seth-songs/2IV8WsAqM,E_"
+        },
+        {
+          "id": "481676",
+          "name": "Kanishk Seth",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kanishk_Seth_000_20220218093537_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kanishk_Seth_000_20220218093537_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kanishk_Seth_000_20220218093537_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kanishk-seth-songs/bu7kc6EBcMI_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "459150",
+          "name": "Kavita Seth",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kavita_Seth_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kavita_Seth_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kavita_Seth_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kavita-seth-songs/2IV8WsAqM,E_"
+        },
+        {
+          "id": "481676",
+          "name": "Kanishk Seth",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kanishk_Seth_000_20220218093537_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kanishk_Seth_000_20220218093537_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kanishk_Seth_000_20220218093537_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kanishk-seth-songs/bu7kc6EBcMI_"
+        },
+        {
+          "id": "9159969",
+          "name": "Dipti Misra",
+          "role": "lyricist",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/dipti-misra-songs/AbfwEdoIe5g_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/328/Dil-Safar-Hindi-2026-20251231183357-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/328/Dil-Safar-Hindi-2026-20251231183357-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/328/Dil-Safar-Hindi-2026-20251231183357-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/328/add2c97303663d0a282ef5a3f9778f81_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/328/add2c97303663d0a282ef5a3f9778f81_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/328/add2c97303663d0a282ef5a3f9778f81_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/328/add2c97303663d0a282ef5a3f9778f81_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/328/add2c97303663d0a282ef5a3f9778f81_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "D-tuUWxF",
+    "name": "Yaqeen Na Tha",
+    "type": "song",
+    "year": "2024",
+    "releaseDate": "2024-02-23",
+    "duration": 197,
+    "label": "Novice Records LLC",
+    "explicitContent": false,
+    "playCount": 142211,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/yaqeen-na-tha/NEUfRCFnT3U",
+    "copyright": "© 2024 Novice Records LLC",
+    "album": {
+      "id": "60355521",
+      "name": "Yaqeen Na Tha",
+      "url": "https://www.jiosaavn.com/album/yaqeen-na-tha/6pMpOo4iCCA_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "469315",
+          "name": "Papon",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Papon_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Papon_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Papon_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/papon-songs/2tTaLghITxs_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "469315",
+          "name": "Papon",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Papon_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Papon_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Papon_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/papon-songs/2tTaLghITxs_"
+        },
+        {
+          "id": "4115324",
+          "name": "Mandeep Panghal",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Mandeep_Panghal_001_20260622072147_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Mandeep_Panghal_001_20260622072147_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Mandeep_Panghal_001_20260622072147_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/mandeep-panghal-songs/F,7SNe8ynkI_"
+        },
+        {
+          "id": "1879466",
+          "name": "Youngveer",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/036/Mangwi-Kameez-Punjabi-2018-20180623070418-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/036/Mangwi-Kameez-Punjabi-2018-20180623070418-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/036/Mangwi-Kameez-Punjabi-2018-20180623070418-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/youngveer-songs/ijMImp,pq4Q_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/595/Yaqeen-Na-Tha-Hindi-2024-20241210004226-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/595/Yaqeen-Na-Tha-Hindi-2024-20241210004226-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/595/Yaqeen-Na-Tha-Hindi-2024-20241210004226-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/595/d9ce8f02723f89e253f7f2cbe8181f31_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/595/d9ce8f02723f89e253f7f2cbe8181f31_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/595/d9ce8f02723f89e253f7f2cbe8181f31_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/595/d9ce8f02723f89e253f7f2cbe8181f31_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/595/d9ce8f02723f89e253f7f2cbe8181f31_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "EhuxBLxp",
+    "name": "Tumhe Yaad Ho Ke Na",
+    "type": "song",
+    "year": "2025",
+    "releaseDate": "2025-12-05",
+    "duration": 276,
+    "label": "Firdaus Production",
+    "explicitContent": false,
+    "playCount": 13279,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/tumhe-yaad-ho-ke-na/NQAeSTZ8T0M",
+    "copyright": "℗ 2025 Firdaus Production",
+    "album": {
+      "id": "70344225",
+      "name": "Tumhe Yaad Ho Ke Na",
+      "url": "https://www.jiosaavn.com/album/tumhe-yaad-ho-ke-na/TD1930OyK24_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "673166",
+          "name": "Satinder Sartaaj",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Satinder_Sartaaj_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Satinder_Sartaaj_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Satinder_Sartaaj_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/satinder-sartaaj-songs/YJHcm3jFEr0_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "673166",
+          "name": "Satinder Sartaaj",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Satinder_Sartaaj_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Satinder_Sartaaj_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Satinder_Sartaaj_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/satinder-sartaaj-songs/YJHcm3jFEr0_"
+        },
+        {
+          "id": "455090",
+          "name": "Traditional",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/186/Krishna-Bhajans-Hindi-2010-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/186/Krishna-Bhajans-Hindi-2010-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/186/Krishna-Bhajans-Hindi-2010-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/traditional-songs/1W8p9iMeXm4_"
+        },
+        {
+          "id": "2135738",
+          "name": "Yaseer Desai",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Yasser_Desai_001_20190327090133_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Yasser_Desai_001_20190327090133_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Yasser_Desai_001_20190327090133_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/yaseer-desai-songs/8PNZTyPGf,8_"
+        },
+        {
+          "id": "697946",
+          "name": "Shashaa Tirupati",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Shashaa_Tirupati_003_20261006060738_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Shashaa_Tirupati_003_20261006060738_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Shashaa_Tirupati_003_20261006060738_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/shashaa-tirupati-songs/,T0PZDWC4Xc_"
+        },
+        {
+          "id": "455090",
+          "name": "Traditional",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/186/Krishna-Bhajans-Hindi-2010-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/186/Krishna-Bhajans-Hindi-2010-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/186/Krishna-Bhajans-Hindi-2010-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/traditional-songs/1W8p9iMeXm4_"
+        },
+        {
+          "id": "702466",
+          "name": "Kiara Advani",
+          "role": "starring",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kiara_Advani_002_20230726172900_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kiara_Advani_002_20230726172900_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kiara_Advani_002_20230726172900_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kiara-advani-songs/pxV2A60cbkI_"
+        },
+        {
+          "id": "18639522",
+          "name": "Mustafa Burmawala",
+          "role": "starring",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/mustafa-burmawala-songs/BbmZvpwBsoc_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/936/Tumhe-Yaad-Ho-Ke-Na-Hindi-2025-20251204170300-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/936/Tumhe-Yaad-Ho-Ke-Na-Hindi-2025-20251204170300-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/936/Tumhe-Yaad-Ho-Ke-Na-Hindi-2025-20251204170300-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/936/a4e19a5952d2495c9918c2953f366ec1_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/936/a4e19a5952d2495c9918c2953f366ec1_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/936/a4e19a5952d2495c9918c2953f366ec1_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/936/a4e19a5952d2495c9918c2953f366ec1_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/936/a4e19a5952d2495c9918c2953f366ec1_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "tGTdAZJN",
+    "name": "Dil-E-Nadan",
+    "type": "song",
+    "year": "2022",
+    "releaseDate": "2022-01-14",
+    "duration": 296,
+    "label": "Red Ribbon Entertainment Pvt. Ltd.",
+    "explicitContent": false,
+    "playCount": 59862,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/dil-e-nadan/BC8-VTVqfX0",
+    "copyright": "© 2022 Red Ribbon Entertainment Pvt. Ltd.",
+    "album": {
+      "id": "31949043",
+      "name": "Dil-e-Nadan",
+      "url": "https://www.jiosaavn.com/album/dil-e-nadan/VU5PfiI95eY_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "12168332",
+          "name": "Javed Kalawant",
+          "role": "primary_artists",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/javed-kalawant-songs/ttyHxjTWUWQ_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "12168334",
+          "name": "Afzal - Shafakat",
+          "role": "music",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/afzal-shafakat-songs/tnEvc04IkdY_"
+        },
+        {
+          "id": "12168332",
+          "name": "Javed Kalawant",
+          "role": "singer",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/javed-kalawant-songs/ttyHxjTWUWQ_"
+        },
+        {
+          "id": "12168333",
+          "name": "Priyank Mehta",
+          "role": "lyricist",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/priyank-mehta-songs/WbarxjMkHR4_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/200/Dil-e-Nadan-Hindi-2022-20220106183600-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/200/Dil-e-Nadan-Hindi-2022-20220106183600-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/200/Dil-e-Nadan-Hindi-2022-20220106183600-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/200/939ba18728fcfec1f38ad6655ab7340e_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/200/939ba18728fcfec1f38ad6655ab7340e_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/200/939ba18728fcfec1f38ad6655ab7340e_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/200/939ba18728fcfec1f38ad6655ab7340e_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/200/939ba18728fcfec1f38ad6655ab7340e_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "4gGERLBa",
+    "name": "Dard-e-Ishq",
+    "type": "song",
+    "year": "2025",
+    "releaseDate": "2025-06-27",
+    "duration": 388,
+    "label": "Red Ribbon Entertainment Pvt. Ltd.",
+    "explicitContent": false,
+    "playCount": 8395,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/dard-e-ishq/RA8sdCZ8dVI",
+    "copyright": "© 2025 Red Ribbon Entertainment Pvt. Ltd.",
+    "album": {
+      "id": "65630333",
+      "name": "Dard-e-Ishq",
+      "url": "https://www.jiosaavn.com/album/dard-e-ishq/-mz7yQe,eiA_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "455969",
+          "name": "Talat Aziz",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Talat_Aziz_002_20250623071323_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Talat_Aziz_002_20250623071323_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Talat_Aziz_002_20250623071323_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/talat-aziz-songs/Js7Ng4hLpgA_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "455969",
+          "name": "Talat Aziz",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Talat_Aziz_002_20250623071323_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Talat_Aziz_002_20250623071323_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Talat_Aziz_002_20250623071323_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/talat-aziz-songs/Js7Ng4hLpgA_"
+        },
+        {
+          "id": "455969",
+          "name": "Talat Aziz",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Talat_Aziz_002_20250623071323_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Talat_Aziz_002_20250623071323_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Talat_Aziz_002_20250623071323_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/talat-aziz-songs/Js7Ng4hLpgA_"
+        },
+        {
+          "id": "505055",
+          "name": "Kamlesh Sonawala",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kamlesh_Sonawala_000_20240819103837_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kamlesh_Sonawala_000_20240819103837_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kamlesh_Sonawala_000_20240819103837_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kamlesh-sonawala-songs/qwH7j7XHl9M_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/087/Dard-e-Ishq-Hindi-2025-20250621164510-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/087/Dard-e-Ishq-Hindi-2025-20250621164510-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/087/Dard-e-Ishq-Hindi-2025-20250621164510-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/087/299605e132db00bef6a7cff10cf27714_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/087/299605e132db00bef6a7cff10cf27714_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/087/299605e132db00bef6a7cff10cf27714_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/087/299605e132db00bef6a7cff10cf27714_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/087/299605e132db00bef6a7cff10cf27714_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "xCUCmTBI",
+    "name": "Dard Pattharon Ko",
+    "type": "song",
+    "year": "2022",
+    "releaseDate": "2022-12-07",
+    "duration": 283,
+    "label": "SaReGaMA India Ltd",
+    "explicitContent": false,
+    "playCount": 83209,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/dard-pattharon-ko/CCs,chlkdXo",
+    "copyright": "℗ 2022 Saregama India Ltd",
+    "album": {
+      "id": "40377748",
+      "name": "Sukoon",
+      "url": "https://www.jiosaavn.com/album/sukoon/aYvs9KAeqew_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "464882",
+          "name": "Sanjay Leela Bhansali",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Sanjay_Leela_Bhansali_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Sanjay_Leela_Bhansali_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Sanjay_Leela_Bhansali_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/sanjay-leela-bhansali-songs/jffFT7ULsxg_"
+        },
+        {
+          "id": "469315",
+          "name": "Papon",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Papon_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Papon_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Papon_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/papon-songs/2tTaLghITxs_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "464882",
+          "name": "Sanjay Leela Bhansali",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Sanjay_Leela_Bhansali_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Sanjay_Leela_Bhansali_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Sanjay_Leela_Bhansali_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/sanjay-leela-bhansali-songs/jffFT7ULsxg_"
+        },
+        {
+          "id": "469315",
+          "name": "Papon",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Papon_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Papon_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Papon_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/papon-songs/2tTaLghITxs_"
+        },
+        {
+          "id": "455665",
+          "name": "Kumaar",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kumaar_001_20240516094915_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kumaar_001_20240516094915_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kumaar_001_20240516094915_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kumaar-songs/jXhf,IMIGGs_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/329/Sukoon-Hindi-2022-20240628073615-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/329/Sukoon-Hindi-2022-20240628073615-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/329/Sukoon-Hindi-2022-20240628073615-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/329/0b47d9a560ff580a8dcd7ba36a2194bc_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/329/0b47d9a560ff580a8dcd7ba36a2194bc_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/329/0b47d9a560ff580a8dcd7ba36a2194bc_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/329/0b47d9a560ff580a8dcd7ba36a2194bc_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/329/0b47d9a560ff580a8dcd7ba36a2194bc_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "sKmnWDBO",
+    "name": "Labon Se Baat - The Ghazal",
+    "type": "song",
+    "year": "2023",
+    "releaseDate": "2023-07-27",
+    "duration": 311,
+    "label": "Ggaruda Music Pvt. Ltd.",
+    "explicitContent": false,
+    "playCount": 67131,
+    "language": "hindi",
+    "hasLyrics": true,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/labon-se-baat-the-ghazal/AyMGXyN0dXw",
+    "copyright": "(P) 2023 Ggaruda Music Pvt. Ltd",
+    "album": {
+      "id": "46576442",
+      "name": "Labon Se Baat - The Ghazal",
+      "url": "https://www.jiosaavn.com/album/labon-se-baat-the-ghazal/AOtyYXhdUMA_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "459883",
+          "name": "Shekhar Ravjiani",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Shekhar_Ravjiani_003_20231030085118_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Shekhar_Ravjiani_003_20231030085118_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Shekhar_Ravjiani_003_20231030085118_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/shekhar-ravjiani-songs/uJWQLrQp8Og_"
+        },
+        {
+          "id": "670466",
+          "name": "Madhubanti Bagchi",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Madhubanti_Bagchi_003_20250124101814_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Madhubanti_Bagchi_003_20250124101814_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Madhubanti_Bagchi_003_20250124101814_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/madhubanti-bagchi-songs/2WGyBWpxfxM_"
+        },
+        {
+          "id": "673160",
+          "name": "Priya Saraiya",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Priya_Saraiya_003_20211123104635_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Priya_Saraiya_003_20211123104635_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Priya_Saraiya_003_20211123104635_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/priya-saraiya-songs/DhHUFwiOfxE_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "459883",
+          "name": "Shekhar Ravjiani",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Shekhar_Ravjiani_003_20231030085118_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Shekhar_Ravjiani_003_20231030085118_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Shekhar_Ravjiani_003_20231030085118_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/shekhar-ravjiani-songs/uJWQLrQp8Og_"
+        },
+        {
+          "id": "670466",
+          "name": "Madhubanti Bagchi",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Madhubanti_Bagchi_003_20250124101814_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Madhubanti_Bagchi_003_20250124101814_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Madhubanti_Bagchi_003_20250124101814_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/madhubanti-bagchi-songs/2WGyBWpxfxM_"
+        },
+        {
+          "id": "673160",
+          "name": "Priya Saraiya",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Priya_Saraiya_003_20211123104635_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Priya_Saraiya_003_20211123104635_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Priya_Saraiya_003_20211123104635_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/priya-saraiya-songs/DhHUFwiOfxE_"
+        },
+        {
+          "id": "673160",
+          "name": "Priya Saraiya",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Priya_Saraiya_003_20211123104635_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Priya_Saraiya_003_20211123104635_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Priya_Saraiya_003_20211123104635_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/priya-saraiya-songs/DhHUFwiOfxE_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/798/Labon-Se-Baat-The-Ghazal-Hindi-2023-20230710062439-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/798/Labon-Se-Baat-The-Ghazal-Hindi-2023-20230710062439-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/798/Labon-Se-Baat-The-Ghazal-Hindi-2023-20230710062439-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/798/9fb18de64ec00f0cd17a27bcad448c3a_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/798/9fb18de64ec00f0cd17a27bcad448c3a_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/798/9fb18de64ec00f0cd17a27bcad448c3a_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/798/9fb18de64ec00f0cd17a27bcad448c3a_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/798/9fb18de64ec00f0cd17a27bcad448c3a_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "eroY7UF8",
+    "name": "Dilkash",
+    "type": "song",
+    "year": "2023",
+    "releaseDate": "2023-02-25",
+    "duration": 269,
+    "label": "Zee Music Co.",
+    "explicitContent": false,
+    "playCount": 58528,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/dilkash/FRoEaENlcQs",
+    "copyright": "© 2023 Zee Music Company",
+    "album": {
+      "id": "42728578",
+      "name": "Gulmohar",
+      "url": "https://www.jiosaavn.com/album/gulmohar/88Hdx1Ob19w_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "455969",
+          "name": "Talat Aziz",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Talat_Aziz_002_20250623071323_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Talat_Aziz_002_20250623071323_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Talat_Aziz_002_20250623071323_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/talat-aziz-songs/Js7Ng4hLpgA_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "628280",
+          "name": "Siddhartha Khosla",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/910/This-Is-Us-Original-Score--English-2018-20180201003226-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/910/This-Is-Us-Original-Score--English-2018-20180201003226-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/910/This-Is-Us-Original-Score--English-2018-20180201003226-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/siddhartha-khosla-songs/V0FjfpeGg5I_"
+        },
+        {
+          "id": "455969",
+          "name": "Talat Aziz",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Talat_Aziz_002_20250623071323_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Talat_Aziz_002_20250623071323_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Talat_Aziz_002_20250623071323_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/talat-aziz-songs/Js7Ng4hLpgA_"
+        },
+        {
+          "id": "459142",
+          "name": "Shellee",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/707/Jugni-Hindi-2016-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/707/Jugni-Hindi-2016-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/707/Jugni-Hindi-2016-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/shellee-songs/hINH73nUdqE_"
+        },
+        {
+          "id": "761051",
+          "name": "Manoj Bajpayee",
+          "role": "starring",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/manoj-bajpayee-songs/fmNPtkHse5A_"
+        },
+        {
+          "id": "456101",
+          "name": "Sharmila Tagore",
+          "role": "starring",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Sharmila_Tagore_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Sharmila_Tagore_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Sharmila_Tagore_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/sharmila-tagore-songs/qjeO66ub9qo_"
+        },
+        {
+          "id": "15411430",
+          "name": "Kaveri Seth",
+          "role": "starring",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kaveri-seth-songs/yILNL1Qdr8E_"
+        },
+        {
+          "id": "2880233",
+          "name": "Suraj Sharma",
+          "role": "starring",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/075/Tani-Uthaw-Ghaghriya-English-2018-20180220113653-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/075/Tani-Uthaw-Ghaghriya-English-2018-20180220113653-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/075/Tani-Uthaw-Ghaghriya-English-2018-20180220113653-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/suraj-sharma-songs/qE5tYN-N2K0_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/386/Gulmohar-Hindi-2023-20230225151348-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/386/Gulmohar-Hindi-2023-20230225151348-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/386/Gulmohar-Hindi-2023-20230225151348-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/386/697764a74c34c905d359bf97a1141f6f_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/386/697764a74c34c905d359bf97a1141f6f_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/386/697764a74c34c905d359bf97a1141f6f_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/386/697764a74c34c905d359bf97a1141f6f_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/386/697764a74c34c905d359bf97a1141f6f_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "p_emnkSy",
+    "name": "Jo Tum Mile",
+    "type": "song",
+    "year": "2024",
+    "releaseDate": "2024-04-30",
+    "duration": 320,
+    "label": "Songdew",
+    "explicitContent": false,
+    "playCount": 21644,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/jo-tum-mile/ADcOXBpbZEo",
+    "copyright": "© 2024 Songdew",
+    "album": {
+      "id": "53370849",
+      "name": "Jo Tum Mile",
+      "url": "https://www.jiosaavn.com/album/jo-tum-mile/5irjekvtX-o_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "1722591",
+          "name": "Avra Banerjee",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Avra_Banerjee_001_20230516122827_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Avra_Banerjee_001_20230516122827_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Avra_Banerjee_001_20230516122827_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/avra-banerjee-songs/N8sjRWNxNoI_"
+        },
+        {
+          "id": "455162",
+          "name": "Hariharan",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Hariharan_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Hariharan_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Hariharan_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/hariharan-songs/Z2qyrGA65Yo_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "1722591",
+          "name": "Avra Banerjee",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Avra_Banerjee_001_20230516122827_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Avra_Banerjee_001_20230516122827_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Avra_Banerjee_001_20230516122827_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/avra-banerjee-songs/N8sjRWNxNoI_"
+        },
+        {
+          "id": "1722591",
+          "name": "Avra Banerjee",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Avra_Banerjee_001_20230516122827_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Avra_Banerjee_001_20230516122827_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Avra_Banerjee_001_20230516122827_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/avra-banerjee-songs/N8sjRWNxNoI_"
+        },
+        {
+          "id": "455162",
+          "name": "Hariharan",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Hariharan_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Hariharan_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Hariharan_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/hariharan-songs/Z2qyrGA65Yo_"
+        },
+        {
+          "id": "1722591",
+          "name": "Avra Banerjee",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Avra_Banerjee_001_20230516122827_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Avra_Banerjee_001_20230516122827_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Avra_Banerjee_001_20230516122827_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/avra-banerjee-songs/N8sjRWNxNoI_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/984/Jo-Tum-Mile-Hindi-2024-20240412153512-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/984/Jo-Tum-Mile-Hindi-2024-20240412153512-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/984/Jo-Tum-Mile-Hindi-2024-20240412153512-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/984/a9940a8675e5a92cc58e63708d857721_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/984/a9940a8675e5a92cc58e63708d857721_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/984/a9940a8675e5a92cc58e63708d857721_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/984/a9940a8675e5a92cc58e63708d857721_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/984/a9940a8675e5a92cc58e63708d857721_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "sZ2sW3iN",
+    "name": "Har Ek Baat",
+    "type": "song",
+    "year": "2022",
+    "releaseDate": "2022-12-07",
+    "duration": 240,
+    "label": "SaReGaMA India Ltd",
+    "explicitContent": false,
+    "playCount": 38497,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/har-ek-baat/AzJZQiMDXn0",
+    "copyright": "℗ 2022 Saregama India Ltd",
+    "album": {
+      "id": "40377748",
+      "name": "Sukoon",
+      "url": "https://www.jiosaavn.com/album/sukoon/aYvs9KAeqew_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "464882",
+          "name": "Sanjay Leela Bhansali",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Sanjay_Leela_Bhansali_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Sanjay_Leela_Bhansali_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Sanjay_Leela_Bhansali_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/sanjay-leela-bhansali-songs/jffFT7ULsxg_"
+        },
+        {
+          "id": "2122238",
+          "name": "Pratibha Baghel",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Pratibha_Singh_Baghel_20191215150815_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Pratibha_Singh_Baghel_20191215150815_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Pratibha_Singh_Baghel_20191215150815_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/pratibha-baghel-songs/7WMlzcm11Oc_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "464882",
+          "name": "Sanjay Leela Bhansali",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Sanjay_Leela_Bhansali_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Sanjay_Leela_Bhansali_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Sanjay_Leela_Bhansali_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/sanjay-leela-bhansali-songs/jffFT7ULsxg_"
+        },
+        {
+          "id": "2122238",
+          "name": "Pratibha Baghel",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Pratibha_Singh_Baghel_20191215150815_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Pratibha_Singh_Baghel_20191215150815_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Pratibha_Singh_Baghel_20191215150815_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/pratibha-baghel-songs/7WMlzcm11Oc_"
+        },
+        {
+          "id": "1379195",
+          "name": "Aditya Singh",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/703/Hazaron-Khwahishein-Assorted-Ghazals-Hindi-2016-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/703/Hazaron-Khwahishein-Assorted-Ghazals-Hindi-2016-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/703/Hazaron-Khwahishein-Assorted-Ghazals-Hindi-2016-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/aditya-singh-songs/1Q7ooO0a2aQ_"
+        },
+        {
+          "id": "818848",
+          "name": "Ghalib",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/085/Analogy-English-2015-20190826191950-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/085/Analogy-English-2015-20190826191950-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/085/Analogy-English-2015-20190826191950-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/ghalib-songs/mCfh7FKuuNI_"
+        },
+        {
+          "id": "686012",
+          "name": "Saswata Chatterjee",
+          "role": "starring",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/097/Monchuri-Bengali-2015-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/097/Monchuri-Bengali-2015-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/097/Monchuri-Bengali-2015-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/saswata-chatterjee-songs/R7I,2UWyDHQ_"
+        },
+        {
+          "id": "455444",
+          "name": "Anupam Kher",
+          "role": "starring",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Anupam_Kher_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Anupam_Kher_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Anupam_Kher_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/anupam-kher-songs/2ju,RkjV688_"
+        },
+        {
+          "id": "467233",
+          "name": "Neena Gupta",
+          "role": "starring",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/089/Kaarnaama-1989-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/089/Kaarnaama-1989-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/089/Kaarnaama-1989-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/neena-gupta-songs/ho2VA0Kd8gU_"
+        },
+        {
+          "id": "1567599",
+          "name": "Pankaj Tripathi",
+          "role": "starring",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/pankaj-tripathi-songs/VmgHajy4TfM_"
+        },
+        {
+          "id": "456055",
+          "name": "Konkona Sen Sharma",
+          "role": "starring",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Konkona_Sen_Sharma_20210409185435_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Konkona_Sen_Sharma_20210409185435_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Konkona_Sen_Sharma_20210409185435_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/konkona-sen-sharma-songs/SzJkQacobSU_"
+        },
+        {
+          "id": "2436981",
+          "name": "Fatima Sana Shaikh",
+          "role": "starring",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/fatima-sana-shaikh-songs/5entAQJf2jw_"
+        },
+        {
+          "id": "460216",
+          "name": "Ali Fazal",
+          "role": "starring",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/ali-fazal-songs/liPeBxiQQVc_"
+        },
+        {
+          "id": "5607405",
+          "name": "Sara Ali Khan",
+          "role": "starring",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Sara_Ali_Khan_001_20240318125414_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Sara_Ali_Khan_001_20240318125414_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Sara_Ali_Khan_001_20240318125414_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/sara-ali-khan-songs/R8Muu,CMC78_"
+        },
+        {
+          "id": "669125",
+          "name": "Aditya Roy Kapur",
+          "role": "starring",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Aditya_Roy_Kapur_20201027070801_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Aditya_Roy_Kapur_20201027070801_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Aditya_Roy_Kapur_20201027070801_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/aditya-roy-kapur-songs/2rYodGIZ25w_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/329/Sukoon-Hindi-2022-20240628073615-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/329/Sukoon-Hindi-2022-20240628073615-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/329/Sukoon-Hindi-2022-20240628073615-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/329/f6b0125aecfee27399e2099c0fa8e6ac_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/329/f6b0125aecfee27399e2099c0fa8e6ac_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/329/f6b0125aecfee27399e2099c0fa8e6ac_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/329/f6b0125aecfee27399e2099c0fa8e6ac_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/329/f6b0125aecfee27399e2099c0fa8e6ac_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "_L7D3iUf",
+    "name": "Baat Itni Si",
+    "type": "song",
+    "year": "2024",
+    "releaseDate": "2024-11-08",
+    "duration": 334,
+    "label": "Ggaruda Music Pvt. Ltd.",
+    "explicitContent": false,
+    "playCount": 16395,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/baat-itni-si/LyRcdUdZYlU",
+    "copyright": "(P) 2024 Ggaruda Music Pvt. Ltd",
+    "album": {
+      "id": "58647088",
+      "name": "Baat Itni Si",
+      "url": "https://www.jiosaavn.com/album/baat-itni-si/OSFLwpbfES0_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "459883",
+          "name": "Shekhar Ravjiani",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Shekhar_Ravjiani_003_20231030085118_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Shekhar_Ravjiani_003_20231030085118_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Shekhar_Ravjiani_003_20231030085118_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/shekhar-ravjiani-songs/uJWQLrQp8Og_"
+        },
+        {
+          "id": "2122238",
+          "name": "Pratibha Singh Baghel",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Pratibha_Singh_Baghel_20191215150815_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Pratibha_Singh_Baghel_20191215150815_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Pratibha_Singh_Baghel_20191215150815_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/pratibha-singh-baghel-songs/7WMlzcm11Oc_"
+        },
+        {
+          "id": "670466",
+          "name": "Madhubanti Bagchi",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Madhubanti_Bagchi_003_20250124101814_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Madhubanti_Bagchi_003_20250124101814_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Madhubanti_Bagchi_003_20250124101814_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/madhubanti-bagchi-songs/2WGyBWpxfxM_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "459883",
+          "name": "Shekhar Ravjiani",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Shekhar_Ravjiani_003_20231030085118_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Shekhar_Ravjiani_003_20231030085118_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Shekhar_Ravjiani_003_20231030085118_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/shekhar-ravjiani-songs/uJWQLrQp8Og_"
+        },
+        {
+          "id": "2122238",
+          "name": "Pratibha Singh Baghel",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Pratibha_Singh_Baghel_20191215150815_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Pratibha_Singh_Baghel_20191215150815_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Pratibha_Singh_Baghel_20191215150815_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/pratibha-singh-baghel-songs/7WMlzcm11Oc_"
+        },
+        {
+          "id": "670466",
+          "name": "Madhubanti Bagchi",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Madhubanti_Bagchi_003_20250124101814_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Madhubanti_Bagchi_003_20250124101814_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Madhubanti_Bagchi_003_20250124101814_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/madhubanti-bagchi-songs/2WGyBWpxfxM_"
+        },
+        {
+          "id": "21257210",
+          "name": "Priya Sarariya",
+          "role": "music",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/priya-sarariya-songs/JfAK3PfaYbQ_"
+        },
+        {
+          "id": "673160",
+          "name": "Priya Saraiya",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Priya_Saraiya_003_20211123104635_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Priya_Saraiya_003_20211123104635_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Priya_Saraiya_003_20211123104635_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/priya-saraiya-songs/DhHUFwiOfxE_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/854/Baat-Itni-Si-Hindi-2024-20241007071016-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/854/Baat-Itni-Si-Hindi-2024-20241007071016-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/854/Baat-Itni-Si-Hindi-2024-20241007071016-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/854/206c8b0179337cbc46d91b0233b8cc90_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/854/206c8b0179337cbc46d91b0233b8cc90_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/854/206c8b0179337cbc46d91b0233b8cc90_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/854/206c8b0179337cbc46d91b0233b8cc90_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/854/206c8b0179337cbc46d91b0233b8cc90_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "hUnJahT5",
+    "name": "Ghazal Bahaar Anthem",
+    "type": "song",
+    "year": "2026",
+    "releaseDate": "2026-09-21",
+    "duration": 192,
+    "label": "Jazim Productions",
+    "explicitContent": false,
+    "playCount": 28433,
+    "language": "urdu",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/ghazal-bahaar-anthem/GD0FexVYYwY",
+    "copyright": "© 2026 Jazim Productions",
+    "album": {
+      "id": "80891391",
+      "name": "Ghazal Bahaar Anthem",
+      "url": "https://www.jiosaavn.com/album/ghazal-bahaar-anthem/MwA3Yk-IlNU_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "455165",
+          "name": "Jaspinder Narula",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Jaspinder_Narula_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Jaspinder_Narula_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Jaspinder_Narula_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/jaspinder-narula-songs/49xsjnG9Rnk_"
+        },
+        {
+          "id": "457041",
+          "name": "Ashok Khosla",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/099/Aftaab-Hindi-1985-20190924060935-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/099/Aftaab-Hindi-1985-20190924060935-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/099/Aftaab-Hindi-1985-20190924060935-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/ashok-khosla-songs/exthl9fV9I8_"
+        },
+        {
+          "id": "492854",
+          "name": "Radhika Chopra",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/499/Vyah-Di-Rasmein-Punjabi-2010-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/499/Vyah-Di-Rasmein-Punjabi-2010-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/499/Vyah-Di-Rasmein-Punjabi-2010-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/radhika-chopra-songs/8kYVHhQZm94_"
+        },
+        {
+          "id": "683064",
+          "name": "Jazim Sharma",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Jazim_Sharma_002_20211117150050.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Jazim_Sharma_002_20211117150050.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Jazim_Sharma_002_20211117150050.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/jazim-sharma-songs/itQpnb3wS0M_"
+        },
+        {
+          "id": "455849",
+          "name": "Anup Jalota",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Anup_Jalota_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Anup_Jalota_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Anup_Jalota_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/anup-jalota-songs/Vo6VNzTFJBw_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "683064",
+          "name": "Jazim Sharma",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Jazim_Sharma_002_20211117150050.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Jazim_Sharma_002_20211117150050.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Jazim_Sharma_002_20211117150050.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/jazim-sharma-songs/itQpnb3wS0M_"
+        },
+        {
+          "id": "457041",
+          "name": "Ashok Khosla",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/099/Aftaab-Hindi-1985-20190924060935-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/099/Aftaab-Hindi-1985-20190924060935-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/099/Aftaab-Hindi-1985-20190924060935-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/ashok-khosla-songs/exthl9fV9I8_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/115/Ghazal-Bahaar-Anthem-Urdu-2026-20260921223822-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/115/Ghazal-Bahaar-Anthem-Urdu-2026-20260921223822-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/115/Ghazal-Bahaar-Anthem-Urdu-2026-20260921223822-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/115/8a4b4306ecc8e373f23e1d12a7a235e1_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/115/8a4b4306ecc8e373f23e1d12a7a235e1_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/115/8a4b4306ecc8e373f23e1d12a7a235e1_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/115/8a4b4306ecc8e373f23e1d12a7a235e1_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/115/8a4b4306ecc8e373f23e1d12a7a235e1_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "xOk5d3Q-",
+    "name": "Zindagi",
+    "type": "song",
+    "year": "2021",
+    "releaseDate": "2021-07-07",
+    "duration": 311,
+    "label": "Malini Awasthi",
+    "explicitContent": false,
+    "playCount": 24675,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/zindagi/CCcABBADZh4",
+    "copyright": "℗ 2021 Malini Awasthi",
+    "album": {
+      "id": "28116570",
+      "name": "Zindagi",
+      "url": "https://www.jiosaavn.com/album/zindagi/bLmtSaqaDik_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "464477",
+          "name": "Malini Awasthi",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/480/Banno-Re-Banno-English-2020-20200129125132-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/480/Banno-Re-Banno-English-2020-20200129125132-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/480/Banno-Re-Banno-English-2020-20200129125132-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/malini-awasthi-songs/W8-RyqSNNi4_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "464477",
+          "name": "Malini Awasthi",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/480/Banno-Re-Banno-English-2020-20200129125132-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/480/Banno-Re-Banno-English-2020-20200129125132-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/480/Banno-Re-Banno-English-2020-20200129125132-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/malini-awasthi-songs/W8-RyqSNNi4_"
+        },
+        {
+          "id": "476356",
+          "name": "Ahmad Faraz",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/081/Paigham-E-Mohabbat-Songs-of-Love-English-2000-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/081/Paigham-E-Mohabbat-Songs-of-Love-English-2000-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/081/Paigham-E-Mohabbat-Songs-of-Love-English-2000-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/ahmad-faraz-songs/VxEkEvhrUlo_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/638/Zindagi-Hindi-2021-20210628214437-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/638/Zindagi-Hindi-2021-20210628214437-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/638/Zindagi-Hindi-2021-20210628214437-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/638/be0ada2d233a9c64c84428abc644b75f_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/638/be0ada2d233a9c64c84428abc644b75f_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/638/be0ada2d233a9c64c84428abc644b75f_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/638/be0ada2d233a9c64c84428abc644b75f_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/638/be0ada2d233a9c64c84428abc644b75f_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "LqAockWq",
+    "name": "Tanha Bhari Shaam",
+    "type": "song",
+    "year": "2021",
+    "releaseDate": "2021-12-03",
+    "duration": 361,
+    "label": "Red Ribbon Entertainment Pvt. Ltd.",
+    "explicitContent": false,
+    "playCount": 21979,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/tanha-bhari-shaam/PBkqXhdbYEI",
+    "copyright": "© 2021 Red Ribbon Entertainment Pvt. Ltd.",
+    "album": {
+      "id": "31099188",
+      "name": "Tanha Bhari Shaam",
+      "url": "https://www.jiosaavn.com/album/tanha-bhari-shaam/cXsDDQyRJf4_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "455161",
+          "name": "Suresh Wadkar",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Suresh_Wadkar_005_20230825062730_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Suresh_Wadkar_005_20230825062730_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Suresh_Wadkar_005_20230825062730_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/suresh-wadkar-songs/vhzcOWfBqsk_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "11913251",
+          "name": "Ahsaan Ahmad",
+          "role": "music",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/ahsaan-ahmad-songs/KxYBuCfa8Ew_"
+        },
+        {
+          "id": "455161",
+          "name": "Suresh Wadkar",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Suresh_Wadkar_005_20230825062730_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Suresh_Wadkar_005_20230825062730_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Suresh_Wadkar_005_20230825062730_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/suresh-wadkar-songs/vhzcOWfBqsk_"
+        },
+        {
+          "id": "505055",
+          "name": "Kamlesh Sonawala",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kamlesh_Sonawala_000_20240819103837_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kamlesh_Sonawala_000_20240819103837_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kamlesh_Sonawala_000_20240819103837_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kamlesh-sonawala-songs/qwH7j7XHl9M_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/869/Tanha-Bhari-Shaam-Hindi-2021-20211126165745-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/869/Tanha-Bhari-Shaam-Hindi-2021-20211126165745-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/869/Tanha-Bhari-Shaam-Hindi-2021-20211126165745-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/869/d46d978a299c6196960681b182161a09_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/869/d46d978a299c6196960681b182161a09_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/869/d46d978a299c6196960681b182161a09_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/869/d46d978a299c6196960681b182161a09_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/869/d46d978a299c6196960681b182161a09_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "sA4NGFqi",
+    "name": "Gham Na Hone",
+    "type": "song",
+    "year": "2022",
+    "releaseDate": "2022-12-07",
+    "duration": 302,
+    "label": "SaReGaMA India Ltd",
+    "explicitContent": false,
+    "playCount": 23782,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/gham-na-hone/AylffzN2Rlo",
+    "copyright": "℗ 2022 Saregama India Ltd",
+    "album": {
+      "id": "40377748",
+      "name": "Sukoon",
+      "url": "https://www.jiosaavn.com/album/sukoon/aYvs9KAeqew_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "464882",
+          "name": "Sanjay Leela Bhansali",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Sanjay_Leela_Bhansali_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Sanjay_Leela_Bhansali_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Sanjay_Leela_Bhansali_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/sanjay-leela-bhansali-songs/jffFT7ULsxg_"
+        },
+        {
+          "id": "455922",
+          "name": "Rashid Khan",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Rashid_Khan_000_20240822073217_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Rashid_Khan_000_20240822073217_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Rashid_Khan_000_20240822073217_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/rashid-khan-songs/d73YLSIPB2o_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "464882",
+          "name": "Sanjay Leela Bhansali",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Sanjay_Leela_Bhansali_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Sanjay_Leela_Bhansali_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Sanjay_Leela_Bhansali_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/sanjay-leela-bhansali-songs/jffFT7ULsxg_"
+        },
+        {
+          "id": "455922",
+          "name": "Rashid Khan",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Rashid_Khan_000_20240822073217_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Rashid_Khan_000_20240822073217_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Rashid_Khan_000_20240822073217_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/rashid-khan-songs/d73YLSIPB2o_"
+        },
+        {
+          "id": "469703",
+          "name": "A.M. Turaz",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/A_M__Turaz_000_20261004072934_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/A_M__Turaz_000_20261004072934_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/A_M__Turaz_000_20261004072934_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/a.m.-turaz-songs/3MHSTgRWdQA_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/329/Sukoon-Hindi-2022-20240628073615-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/329/Sukoon-Hindi-2022-20240628073615-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/329/Sukoon-Hindi-2022-20240628073615-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/329/cd31aa1b62437e7a95712672306b18a9_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/329/cd31aa1b62437e7a95712672306b18a9_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/329/cd31aa1b62437e7a95712672306b18a9_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/329/cd31aa1b62437e7a95712672306b18a9_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/329/cd31aa1b62437e7a95712672306b18a9_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "ReUQiYYT",
+    "name": "Wo Jab Bhi Udaas",
+    "type": "song",
+    "year": "2016",
+    "releaseDate": "2016-09-30",
+    "duration": 322,
+    "label": "Artist Aloud",
+    "explicitContent": false,
+    "playCount": 1750,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/wo-jab-bhi-udaas/Ig0,YB1pbmc",
+    "copyright": "© 2016 Sayani Palit",
+    "album": {
+      "id": "63873543",
+      "name": "Wo Jab Bhi Udaas",
+      "url": "https://www.jiosaavn.com/album/wo-jab-bhi-udaas/jP8CQwFqQRQ_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "680747",
+          "name": "Sayani Palit",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Sayani_Palit_000_20210927142413_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Sayani_Palit_000_20210927142413_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Sayani_Palit_000_20210927142413_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/sayani-palit-songs/Q3E0-U1DlEc_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "680747",
+          "name": "Sayani Palit",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Sayani_Palit_000_20210927142413_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Sayani_Palit_000_20210927142413_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Sayani_Palit_000_20210927142413_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/sayani-palit-songs/Q3E0-U1DlEc_"
+        },
+        {
+          "id": "531639",
+          "name": "Neeti Mohan",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Neeti_Mohan_009_20260821092757_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Neeti_Mohan_009_20260821092757_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Neeti_Mohan_009_20260821092757_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/neeti-mohan-songs/3rVrdWgQlqs_"
+        },
+        {
+          "id": "465404",
+          "name": "Siddharth Mahadevan",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Siddharth_Mahadevan.png"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Siddharth_Mahadevan.png"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Siddharth_Mahadevan.png"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/siddharth-mahadevan-songs/DHsgJYK1ixM_"
+        },
+        {
+          "id": "887896",
+          "name": "QARAN",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Qaran_002_20250527085124_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Qaran_002_20250527085124_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Qaran_002_20250527085124_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/qaran-songs/FPdO63y5Qus_"
+        },
+        {
+          "id": "458921",
+          "name": "Ritu Pathak",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/210/Peeyu-Datt-Ke-From-Marjaavaan--Hindi-2019-20191203115413-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/210/Peeyu-Datt-Ke-From-Marjaavaan--Hindi-2019-20191203115413-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/210/Peeyu-Datt-Ke-From-Marjaavaan--Hindi-2019-20191203115413-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/ritu-pathak-songs/6MNcjT0eH78_"
+        },
+        {
+          "id": "459576",
+          "name": "Nikhil D’Souza",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Nikhil_Dsouza_004_20260903072044_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Nikhil_Dsouza_004_20260903072044_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Nikhil_Dsouza_004_20260903072044_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/nikhil-d%e2%80%99souza-songs/-dscRpTcQBo_"
+        },
+        {
+          "id": "671369",
+          "name": "Rasika Shekhar",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/934/Uproar-English-2017-20180416223030-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/934/Uproar-English-2017-20180416223030-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/934/Uproar-English-2017-20180416223030-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/rasika-shekhar-songs/j8Biw-dMJ6k_"
+        },
+        {
+          "id": "455275",
+          "name": "Shankar Mahadevan",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Shankar_Mahadevan_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Shankar_Mahadevan_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Shankar_Mahadevan_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/shankar-mahadevan-songs/,QE2Oks7qzI_"
+        },
+        {
+          "id": "660771",
+          "name": "Mohan Kannan",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/420/Kaamyaab-From-Why-Cheat-India--Hindi-2019-20190112104001-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/420/Kaamyaab-From-Why-Cheat-India--Hindi-2019-20190112104001-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/420/Kaamyaab-From-Why-Cheat-India--Hindi-2019-20190112104001-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/mohan-kannan-songs/PiFkLP84bHc_"
+        },
+        {
+          "id": "482886",
+          "name": "Siddharth Basrur",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Siddharth_Basrur_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Siddharth_Basrur_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Siddharth_Basrur_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/siddharth-basrur-songs/uDwDFPrgbjI_"
+        },
+        {
+          "id": "2175860",
+          "name": "Digvijay Singh Pariyar",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/310/Na-Jaane-Tu-Mera-Hai-Kaun-Hindi-2017-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/310/Na-Jaane-Tu-Mera-Hai-Kaun-Hindi-2017-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/310/Na-Jaane-Tu-Mera-Hai-Kaun-Hindi-2017-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/digvijay-singh-pariyar-songs/22lsnoSu2TM_"
+        },
+        {
+          "id": "456286",
+          "name": "Raman Mahadevan",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Raman_Mahadevan_20190802095851_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Raman_Mahadevan_20190802095851_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Raman_Mahadevan_20190802095851_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/raman-mahadevan-songs/2Tiom709jb8_"
+        },
+        {
+          "id": "680747",
+          "name": "Sayani Palit",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Sayani_Palit_000_20210927142413_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Sayani_Palit_000_20210927142413_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Sayani_Palit_000_20210927142413_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/sayani-palit-songs/Q3E0-U1DlEc_"
+        },
+        {
+          "id": "9779227",
+          "name": "PK Rawat",
+          "role": "lyricist",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/pk-rawat-songs/gGOPOmmBrHc_"
+        },
+        {
+          "id": "467779",
+          "name": "Imran Khan",
+          "role": "starring",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/imran-khan-songs/gy3BTHTLQGU_"
+        },
+        {
+          "id": "468067",
+          "name": "Kangana Ranaut",
+          "role": "starring",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kangana_Ranaut_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kangana_Ranaut_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kangana_Ranaut_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kangana-ranaut-songs/4W0udo5kAlQ_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/292/Wo-Jab-Bhi-Udaas-Hindi-2016-20250418013332-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/292/Wo-Jab-Bhi-Udaas-Hindi-2016-20250418013332-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/292/Wo-Jab-Bhi-Udaas-Hindi-2016-20250418013332-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/292/2c8927b253e12937336a1b6f5c9e90ee_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/292/2c8927b253e12937336a1b6f5c9e90ee_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/292/2c8927b253e12937336a1b6f5c9e90ee_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/292/2c8927b253e12937336a1b6f5c9e90ee_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/292/2c8927b253e12937336a1b6f5c9e90ee_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "fN8k2Xma",
+    "name": "Jab Tumne Ghazal Sunai",
+    "type": "song",
+    "year": "2021",
+    "releaseDate": "2021-07-16",
+    "duration": 345,
+    "label": "Red Ribbon Ent. Pvt. Ltd.",
+    "explicitContent": false,
+    "playCount": 20245,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/jab-tumne-ghazal-sunai/FiZTWkZoWlI",
+    "copyright": "© 2021 Red Ribbon Ent. Pvt. Ltd.",
+    "album": {
+      "id": "28343769",
+      "name": "Jab Tumne Ghazal Sunai",
+      "url": "https://www.jiosaavn.com/album/jab-tumne-ghazal-sunai/0q53tqtf0dM_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "455849",
+          "name": "Anup Jalota",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Anup_Jalota_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Anup_Jalota_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Anup_Jalota_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/anup-jalota-songs/Vo6VNzTFJBw_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "455849",
+          "name": "Anup Jalota",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Anup_Jalota_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Anup_Jalota_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Anup_Jalota_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/anup-jalota-songs/Vo6VNzTFJBw_"
+        },
+        {
+          "id": "455849",
+          "name": "Anup Jalota",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Anup_Jalota_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Anup_Jalota_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Anup_Jalota_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/anup-jalota-songs/Vo6VNzTFJBw_"
+        },
+        {
+          "id": "505055",
+          "name": "Kamlesh Sonawala",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kamlesh_Sonawala_000_20240819103837_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kamlesh_Sonawala_000_20240819103837_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kamlesh_Sonawala_000_20240819103837_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kamlesh-sonawala-songs/qwH7j7XHl9M_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/153/Jab-Tumne-Ghazal-Sunai-Hindi-2021-20210710004254-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/153/Jab-Tumne-Ghazal-Sunai-Hindi-2021-20210710004254-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/153/Jab-Tumne-Ghazal-Sunai-Hindi-2021-20210710004254-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/153/9de588994760e465e20d5bdda9b41862_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/153/9de588994760e465e20d5bdda9b41862_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/153/9de588994760e465e20d5bdda9b41862_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/153/9de588994760e465e20d5bdda9b41862_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/153/9de588994760e465e20d5bdda9b41862_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "GrVGroZc",
+    "name": "Intihaa",
+    "type": "song",
+    "year": "2021",
+    "releaseDate": "2021-01-22",
+    "duration": 220,
+    "label": "Samraj Music Rights Management Pvt Ltd (on behalf of Gayatri Asokan)",
+    "explicitContent": false,
+    "playCount": 7399,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/intihaa/Nxo9dgZfbVA",
+    "copyright": "℗ 2021 Samraj Music Rights Management Pvt Ltd (on behalf of Gayatri Asokan)",
+    "album": {
+      "id": "51771329",
+      "name": "Intihaa",
+      "url": "https://www.jiosaavn.com/album/intihaa/VtxVcyUbl5c_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "666519",
+          "name": "Gayatri Asokan",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Gayatri_Asokan-20170719100743_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Gayatri_Asokan-20170719100743_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Gayatri_Asokan-20170719100743_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/gayatri-asokan-songs/8yS9FxcMFV0_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "666519",
+          "name": "Gayatri Asokan",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Gayatri_Asokan-20170719100743_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Gayatri_Asokan-20170719100743_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Gayatri_Asokan-20170719100743_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/gayatri-asokan-songs/8yS9FxcMFV0_"
+        },
+        {
+          "id": "503421",
+          "name": "Purbayan Chatterjee",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Purbayan_Chatterjee_000_20230516182224_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Purbayan_Chatterjee_000_20230516182224_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Purbayan_Chatterjee_000_20230516182224_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/purbayan-chatterjee-songs/IUlV-x9bpEc_"
+        },
+        {
+          "id": "458325",
+          "name": "Allama Iqbal",
+          "role": "lyricist",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/allama-iqbal-songs/M-HQanrAkm4_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/434/Intihaa-Hindi-2021-20240209031222-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/434/Intihaa-Hindi-2021-20240209031222-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/434/Intihaa-Hindi-2021-20240209031222-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/434/f55cf3889b412918f48193c2cbfe09ee_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/434/f55cf3889b412918f48193c2cbfe09ee_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/434/f55cf3889b412918f48193c2cbfe09ee_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/434/f55cf3889b412918f48193c2cbfe09ee_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/434/f55cf3889b412918f48193c2cbfe09ee_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "fyx63oMD",
+    "name": "Waqt Ka Ye Parinda Ruka Hai Kahan",
+    "type": "song",
+    "year": "1995",
+    "releaseDate": null,
+    "duration": 364,
+    "label": "T-Series",
+    "explicitContent": false,
+    "playCount": 6091466,
+    "language": "hindi",
+    "hasLyrics": true,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/waqt-ka-ye-parinda-ruka-hai-kahan/FhETB0dfenc",
+    "copyright": "©  1995 T-Series",
+    "album": {
+      "id": "1048056",
+      "name": "Shikhar",
+      "url": "https://www.jiosaavn.com/album/shikhar/QECkk4xCXAY_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "457123",
+          "name": "Nikhil",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Nikhil_20200122131150_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Nikhil_20200122131150_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Nikhil_20200122131150_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/nikhil-songs/ro9wuqR8b24_"
+        },
+        {
+          "id": "486146",
+          "name": "Vibhushan Duay",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/056/Shikhar-1995-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/056/Shikhar-1995-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/056/Shikhar-1995-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/vibhushan-duay-songs/R8oFRAIAheQ_"
+        },
+        {
+          "id": "472014",
+          "name": "Jaswant Singh",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/676/Ek-Shaam-Hindi-2017-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/676/Ek-Shaam-Hindi-2017-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/676/Ek-Shaam-Hindi-2017-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/jaswant-singh-songs/ko51MoIzLn4_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "457123",
+          "name": "Nikhil",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Nikhil_20200122131150_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Nikhil_20200122131150_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Nikhil_20200122131150_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/nikhil-songs/ro9wuqR8b24_"
+        },
+        {
+          "id": "486146",
+          "name": "Vibhushan Duay",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/056/Shikhar-1995-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/056/Shikhar-1995-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/056/Shikhar-1995-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/vibhushan-duay-songs/R8oFRAIAheQ_"
+        },
+        {
+          "id": "472014",
+          "name": "Jaswant Singh",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/676/Ek-Shaam-Hindi-2017-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/676/Ek-Shaam-Hindi-2017-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/676/Ek-Shaam-Hindi-2017-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/jaswant-singh-songs/ko51MoIzLn4_"
+        },
+        {
+          "id": "456043",
+          "name": "Yogesh",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Yogesh_002_20211002165737_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Yogesh_002_20211002165737_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Yogesh_002_20211002165737_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/yogesh-songs/4tDKafX23yk_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/056/Shikhar-1995-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/056/Shikhar-1995-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/056/Shikhar-1995-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/056/f11ef98737e5f1a60fef8575fde4975e_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/056/f11ef98737e5f1a60fef8575fde4975e_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/056/f11ef98737e5f1a60fef8575fde4975e_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/056/f11ef98737e5f1a60fef8575fde4975e_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/056/f11ef98737e5f1a60fef8575fde4975e_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "8E_AiS-7",
+    "name": "Us Mod Se Shuroo Karen",
+    "type": "song",
+    "year": "2016",
+    "releaseDate": "1982-06-17",
+    "duration": 339,
+    "label": "Sony Music India / 550 Music",
+    "explicitContent": false,
+    "playCount": 3292983,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/us-mod-se-shuroo-karen/SC00cB1jGgQ",
+    "copyright": "(P) 1982 Sony Music Entertainment India Pvt. Ltd.",
+    "album": {
+      "id": "2380747",
+      "name": "The Latest",
+      "url": "https://www.jiosaavn.com/album/the-latest/M1Hvbh66Gr4_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "455948",
+          "name": "Jagjit Singh",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Jagjit_Singh_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Jagjit_Singh_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Jagjit_Singh_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/jagjit-singh-songs/EMskk1sVOtM_"
+        },
+        {
+          "id": "455974",
+          "name": "Chitra Singh",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Chitra_Singh_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Chitra_Singh_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Chitra_Singh_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/chitra-singh-songs/O32b8Dd2OCs_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "455948",
+          "name": "Jagjit Singh",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Jagjit_Singh_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Jagjit_Singh_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Jagjit_Singh_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/jagjit-singh-songs/EMskk1sVOtM_"
+        },
+        {
+          "id": "455948",
+          "name": "Jagjit Singh",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Jagjit_Singh_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Jagjit_Singh_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Jagjit_Singh_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/jagjit-singh-songs/EMskk1sVOtM_"
+        },
+        {
+          "id": "455974",
+          "name": "Chitra Singh",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Chitra_Singh_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Chitra_Singh_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Chitra_Singh_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/chitra-singh-songs/O32b8Dd2OCs_"
+        },
+        {
+          "id": "463328",
+          "name": "Sudarshan Faakir",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/742/Best-Of-Begum-Akhtar-Urdu-1981-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/742/Best-Of-Begum-Akhtar-Urdu-1981-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/742/Best-Of-Begum-Akhtar-Urdu-1981-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/sudarshan-faakir-songs/X47MQj15QqA_"
+        },
+        {
+          "id": "482938",
+          "name": "Rajkiran",
+          "role": "starring",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Rajkiran_002_20190802095551_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Rajkiran_002_20190802095551_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Rajkiran_002_20190802095551_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/rajkiran-songs/zQjWUFYq,Wc_"
+        },
+        {
+          "id": "459009",
+          "name": "Shabana Azmi",
+          "role": "starring",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Shabana_Azmi_20190904072221_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Shabana_Azmi_20190904072221_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Shabana_Azmi_20190904072221_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/shabana-azmi-songs/w8MFLeuzjzM_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/650/The-Latest-Hindi-2016-20260120201359-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/650/The-Latest-Hindi-2016-20260120201359-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/650/The-Latest-Hindi-2016-20260120201359-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/650/59f746f7022be23c68fccd63cc2719a3_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/650/59f746f7022be23c68fccd63cc2719a3_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/650/59f746f7022be23c68fccd63cc2719a3_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/650/59f746f7022be23c68fccd63cc2719a3_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/650/59f746f7022be23c68fccd63cc2719a3_320.mp4"
+      }
+    ]
+  }
+]

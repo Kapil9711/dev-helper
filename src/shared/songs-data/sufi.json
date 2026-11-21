@@ -1,0 +1,4341 @@
+[
+  {
+    "id": "mCYHPwCR",
+    "name": "Maula Mere Maula",
+    "type": "song",
+    "year": "2007",
+    "releaseDate": "2006-08-30",
+    "duration": 364,
+    "label": "Saregama",
+    "explicitContent": false,
+    "playCount": 45145552,
+    "language": "hindi",
+    "hasLyrics": true,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/maula-mere-maula/HSsyeSRHdGE",
+    "copyright": "©  2007 Saregama",
+    "album": {
+      "id": "1064965",
+      "name": "Anwar",
+      "url": "https://www.jiosaavn.com/album/anwar/7yEdcKRFdiU_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "455459",
+          "name": "Roopkumar Rathod",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Roop_Kumar_Rathod_000_20190927134935_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Roop_Kumar_Rathod_000_20190927134935_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Roop_Kumar_Rathod_000_20190927134935_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/roopkumar-rathod-songs/P90cXzg83OY_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "702592",
+          "name": "Mithoon",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Mithoon_002_20200908073735_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Mithoon_002_20200908073735_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Mithoon_002_20200908073735_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/mithoon-songs/nQKQiNRsTKs_"
+        },
+        {
+          "id": "455459",
+          "name": "Roopkumar Rathod",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Roop_Kumar_Rathod_000_20190927134935_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Roop_Kumar_Rathod_000_20190927134935_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Roop_Kumar_Rathod_000_20190927134935_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/roopkumar-rathod-songs/P90cXzg83OY_"
+        },
+        {
+          "id": "461412",
+          "name": "Pankaj Awasthi",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/242/Sameer-Hindi-2017-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/242/Sameer-Hindi-2017-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/242/Sameer-Hindi-2017-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/pankaj-awasthi-songs/jVRRHBbCQyw_"
+        },
+        {
+          "id": "3342203",
+          "name": "Shyam Ravindran",
+          "role": "lyricist",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/shyam-ravindran-songs/PdaG,z1TY3Y_"
+        },
+        {
+          "id": "669007",
+          "name": "Sayeed Quadri",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Sayeed_Quadri_001_20210616180918_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Sayeed_Quadri_001_20210616180918_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Sayeed_Quadri_001_20210616180918_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/sayeed-quadri-songs/CkMFUTAeb,c_"
+        },
+        {
+          "id": "461418",
+          "name": "Dharam Sarthi",
+          "role": "lyricist",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/dharam-sarthi-songs/otnEDLN6xpw_"
+        },
+        {
+          "id": "459598",
+          "name": "Hasan Kamal",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/content/1/album/N/NTQ3N2I0MjJkZmVlNzk0YjNiMmM2MWY5MDg4MTVjZTM_-thumb_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/content/1/album/N/NTQ3N2I0MjJkZmVlNzk0YjNiMmM2MWY5MDg4MTVjZTM_-thumb_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/content/1/album/N/NTQ3N2I0MjJkZmVlNzk0YjNiMmM2MWY5MDg4MTVjZTM_-thumb_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/hasan-kamal-songs/1wgVUWKhGzA_"
+        },
+        {
+          "id": "1967525",
+          "name": "Siddarth Koirala",
+          "role": "starring",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/siddarth-koirala-songs/TJQCLakoUVc_"
+        },
+        {
+          "id": "455898",
+          "name": "Nauheed Cyrusi",
+          "role": "starring",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Nauheed_Cyrusi_000_20240103065746_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Nauheed_Cyrusi_000_20240103065746_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Nauheed_Cyrusi_000_20240103065746_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/nauheed-cyrusi-songs/O6OYqeWaxs8_"
+        },
+        {
+          "id": "455443",
+          "name": "Manisha Koirala",
+          "role": "starring",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Manisha_Koirala_001_20230605093709_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Manisha_Koirala_001_20230605093709_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Manisha_Koirala_001_20230605093709_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/manisha-koirala-songs/3GneRsn5Z1k_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/524/Anwar-Hindi-2007-20180112-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/524/Anwar-Hindi-2007-20180112-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/524/Anwar-Hindi-2007-20180112-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/524/67a2ec08ed5b373ab38e6c9b462f2d73_sar_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/524/67a2ec08ed5b373ab38e6c9b462f2d73_sar_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/524/67a2ec08ed5b373ab38e6c9b462f2d73_sar_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/524/67a2ec08ed5b373ab38e6c9b462f2d73_sar_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/524/67a2ec08ed5b373ab38e6c9b462f2d73_sar_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "V6-X43c0",
+    "name": "Ishq Anokha",
+    "type": "song",
+    "year": "2016",
+    "releaseDate": "2016-03-18",
+    "duration": 279,
+    "label": "Saregama",
+    "explicitContent": false,
+    "playCount": 203913,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/ishq-anokha/Jl5GaUADVAM",
+    "copyright": "©  2016 Saregama",
+    "album": {
+      "id": "2009533",
+      "name": "Kailasa Ishq Anokha",
+      "url": "https://www.jiosaavn.com/album/kailasa-ishq-anokha/W44UgnK1JqQ_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "455425",
+          "name": "Kailash Kher",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kailash-kher-songs/vidifVDY4c4_"
+        },
+        {
+          "id": "490201",
+          "name": "Paresh Kamath",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/paresh-kamath-songs/JsddMkW8OG0_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "455425",
+          "name": "Kailash Kher",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kailash-kher-songs/vidifVDY4c4_"
+        },
+        {
+          "id": "490201",
+          "name": "Paresh Kamath",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/paresh-kamath-songs/JsddMkW8OG0_"
+        },
+        {
+          "id": "455425",
+          "name": "Kailash Kher",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kailash-kher-songs/vidifVDY4c4_"
+        },
+        {
+          "id": "455425",
+          "name": "Kailash Kher",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kailash-kher-songs/vidifVDY4c4_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/136/Kailasa-Ishq-Anokha-Hindi-2016-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/136/Kailasa-Ishq-Anokha-Hindi-2016-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/136/Kailasa-Ishq-Anokha-Hindi-2016-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/136/f3c2290b5aa5b0deaef1e47115cbde94_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/136/f3c2290b5aa5b0deaef1e47115cbde94_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/136/f3c2290b5aa5b0deaef1e47115cbde94_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/136/f3c2290b5aa5b0deaef1e47115cbde94_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/136/f3c2290b5aa5b0deaef1e47115cbde94_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "B85eSI-2",
+    "name": "Waris Shah Nu",
+    "type": "song",
+    "year": "2003",
+    "releaseDate": "2003-08-31",
+    "duration": 543,
+    "label": "Saregama",
+    "explicitContent": false,
+    "playCount": 111076,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/waris-shah-nu/MlBeVCd5GgE",
+    "copyright": "℗ 2003 Saregama India Ltd",
+    "album": {
+      "id": "1066354",
+      "name": "Pinjar",
+      "url": "https://www.jiosaavn.com/album/pinjar/SnG4uGFlQVw_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "459799",
+          "name": "Wadali Brothers",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Wadali_Brothers_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Wadali_Brothers_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Wadali_Brothers_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/wadali-brothers-songs/8jQwl3SdrF8_"
+        },
+        {
+          "id": "487911",
+          "name": "Preeti Uttam",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/616/Devi-Dhun-Sanskrit-2005-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/616/Devi-Dhun-Sanskrit-2005-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/616/Devi-Dhun-Sanskrit-2005-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/preeti-uttam-songs/V8cr2-yEQh0_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "459799",
+          "name": "Wadali Brothers",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Wadali_Brothers_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Wadali_Brothers_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Wadali_Brothers_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/wadali-brothers-songs/8jQwl3SdrF8_"
+        },
+        {
+          "id": "487911",
+          "name": "Preeti Uttam",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/616/Devi-Dhun-Sanskrit-2005-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/616/Devi-Dhun-Sanskrit-2005-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/616/Devi-Dhun-Sanskrit-2005-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/preeti-uttam-songs/V8cr2-yEQh0_"
+        },
+        {
+          "id": "461323",
+          "name": "Uttam Singh",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Uttam_Singh_000_20220916183212_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Uttam_Singh_000_20220916183212_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Uttam_Singh_000_20220916183212_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/uttam-singh-songs/oNUhFwf,KLc_"
+        },
+        {
+          "id": "487911",
+          "name": "Preeti Uttam Singh",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/616/Devi-Dhun-Sanskrit-2005-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/616/Devi-Dhun-Sanskrit-2005-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/616/Devi-Dhun-Sanskrit-2005-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/preeti-uttam-singh-songs/V8cr2-yEQh0_"
+        },
+        {
+          "id": "455704",
+          "name": "Gulzar",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Gulzar_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Gulzar_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Gulzar_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/gulzar-songs/EMq6T2d8xBc_"
+        },
+        {
+          "id": "455082",
+          "name": "Ameesha Patel",
+          "role": "starring",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Ameesha_Patel_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Ameesha_Patel_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Ameesha_Patel_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/ameesha-patel-songs/CW4hmC7S0yo_"
+        },
+        {
+          "id": "455627",
+          "name": "Sunny Deol",
+          "role": "starring",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Sunny_Deol_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Sunny_Deol_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Sunny_Deol_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/sunny-deol-songs/OpniZFFn41o_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/190/Pinjar-Hindi-2003-20200905113946-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/190/Pinjar-Hindi-2003-20200905113946-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/190/Pinjar-Hindi-2003-20200905113946-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/190/57fb008cc5a60a191c6be5ce05a73420_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/190/57fb008cc5a60a191c6be5ce05a73420_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/190/57fb008cc5a60a191c6be5ce05a73420_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/190/57fb008cc5a60a191c6be5ce05a73420_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/190/57fb008cc5a60a191c6be5ce05a73420_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "ZjKpvXML",
+    "name": "Meharbani Teri",
+    "type": "song",
+    "year": "2016",
+    "releaseDate": "2016-03-18",
+    "duration": 386,
+    "label": "Saregama",
+    "explicitContent": false,
+    "playCount": 386669,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/meharbani-teri/KgIgQQJoen8",
+    "copyright": "©  2016 Saregama",
+    "album": {
+      "id": "2009533",
+      "name": "Kailasa Ishq Anokha",
+      "url": "https://www.jiosaavn.com/album/kailasa-ishq-anokha/W44UgnK1JqQ_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "455425",
+          "name": "Kailash Kher",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kailash-kher-songs/vidifVDY4c4_"
+        },
+        {
+          "id": "472349",
+          "name": "Naresh Kamath",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/naresh-kamath-songs/JKOjnjecyY0_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "455425",
+          "name": "Kailash Kher",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kailash-kher-songs/vidifVDY4c4_"
+        },
+        {
+          "id": "472349",
+          "name": "Naresh Kamath",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/naresh-kamath-songs/JKOjnjecyY0_"
+        },
+        {
+          "id": "455425",
+          "name": "Kailash Kher",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kailash-kher-songs/vidifVDY4c4_"
+        },
+        {
+          "id": "455425",
+          "name": "Kailash Kher",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kailash-kher-songs/vidifVDY4c4_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/136/Kailasa-Ishq-Anokha-Hindi-2016-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/136/Kailasa-Ishq-Anokha-Hindi-2016-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/136/Kailasa-Ishq-Anokha-Hindi-2016-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/136/a34976059504fb3d56418f757fc77b5a_sar_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/136/a34976059504fb3d56418f757fc77b5a_sar_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/136/a34976059504fb3d56418f757fc77b5a_sar_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/136/a34976059504fb3d56418f757fc77b5a_sar_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/136/a34976059504fb3d56418f757fc77b5a_sar_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "PbcQQZQf",
+    "name": "Mahi",
+    "type": "song",
+    "year": "2024",
+    "releaseDate": "2024-01-13",
+    "duration": 46,
+    "label": "T-Series",
+    "explicitContent": false,
+    "playCount": 258009,
+    "language": "telugu",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/mahi/IAoIYCVqZlU",
+    "copyright": "℗ 2024 Super Cassettes Industries Private Limited",
+    "album": {
+      "id": "51102827",
+      "name": "Hi Nanna Ost’S Side - A",
+      "url": "https://www.jiosaavn.com/album/hi-nanna-ost%e2%80%99s-side-a/0r7TBc3QC4U_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "1720724",
+          "name": "Hesham Abdul Wahab",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Hesham_Abdul_Wahab_001_20220919094035_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Hesham_Abdul_Wahab_001_20220919094035_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Hesham_Abdul_Wahab_001_20220919094035_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/hesham-abdul-wahab-songs/QxgtkxOBF7I_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "1720724",
+          "name": "Hesham Abdul Wahab",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Hesham_Abdul_Wahab_001_20220919094035_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Hesham_Abdul_Wahab_001_20220919094035_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Hesham_Abdul_Wahab_001_20220919094035_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/hesham-abdul-wahab-songs/QxgtkxOBF7I_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/103/Hi-Nanna-Ost-S-Side-A-Telugu-2024-20240113161119-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/103/Hi-Nanna-Ost-S-Side-A-Telugu-2024-20240113161119-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/103/Hi-Nanna-Ost-S-Side-A-Telugu-2024-20240113161119-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/103/4ec9de5615fad94761af4ed6013be3f7_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/103/4ec9de5615fad94761af4ed6013be3f7_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/103/4ec9de5615fad94761af4ed6013be3f7_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/103/4ec9de5615fad94761af4ed6013be3f7_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/103/4ec9de5615fad94761af4ed6013be3f7_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "Yq_RFefS",
+    "name": "Haal Da Marham (Qawwali)",
+    "type": "song",
+    "year": "2013",
+    "releaseDate": "2013-11-08",
+    "duration": 307,
+    "label": "Saregama",
+    "explicitContent": false,
+    "playCount": 68875,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/haal-da-marham-qawwali/KRk0YzJVUWA",
+    "copyright": "©  2013 Saregama",
+    "album": {
+      "id": "1146655",
+      "name": "Lucky Kabootar",
+      "url": "https://www.jiosaavn.com/album/lucky-kabootar/YiLsIr,bKdU_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "485811",
+          "name": "Santokh Singh Dhaliwal",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/407/A-Strange-Love-Story-2011-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/407/A-Strange-Love-Story-2011-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/407/A-Strange-Love-Story-2011-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/santokh-singh-dhaliwal-songs/8mDsOGdadvk_"
+        },
+        {
+          "id": "455141",
+          "name": "Kamaal Khan",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/792/Non-Stop-Bollywood-Dandiya-Hindi-2019-20190927231545-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/792/Non-Stop-Bollywood-Dandiya-Hindi-2019-20190927231545-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/792/Non-Stop-Bollywood-Dandiya-Hindi-2019-20190927231545-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kamaal-khan-songs/-pZmfIiflgU_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "485811",
+          "name": "Santokh Singh Dhaliwal",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/407/A-Strange-Love-Story-2011-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/407/A-Strange-Love-Story-2011-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/407/A-Strange-Love-Story-2011-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/santokh-singh-dhaliwal-songs/8mDsOGdadvk_"
+        },
+        {
+          "id": "455141",
+          "name": "Kamaal Khan",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/792/Non-Stop-Bollywood-Dandiya-Hindi-2019-20190927231545-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/792/Non-Stop-Bollywood-Dandiya-Hindi-2019-20190927231545-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/792/Non-Stop-Bollywood-Dandiya-Hindi-2019-20190927231545-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kamaal-khan-songs/-pZmfIiflgU_"
+        },
+        {
+          "id": "485811",
+          "name": "Santokh Singh Dhaliwal",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/407/A-Strange-Love-Story-2011-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/407/A-Strange-Love-Story-2011-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/407/A-Strange-Love-Story-2011-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/santokh-singh-dhaliwal-songs/8mDsOGdadvk_"
+        },
+        {
+          "id": "455415",
+          "name": "Sameer",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Sameer_002_20260619094151_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Sameer_002_20260619094151_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Sameer_002_20260619094151_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/sameer-songs/zbXOIZIhW-8_"
+        },
+        {
+          "id": "679978",
+          "name": "Eijaz Khan",
+          "role": "starring",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/eijaz-khan-songs/w4-RrMW1c,E_"
+        },
+        {
+          "id": "465555",
+          "name": "Kulraj Randhawa",
+          "role": "starring",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kulraj-randhawa-songs/hBWWicbvw9w_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/275/Lucky-Kabootar-2013-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/275/Lucky-Kabootar-2013-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/275/Lucky-Kabootar-2013-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/275/25a063155f1cd549e3085795b2fc9ad1_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/275/25a063155f1cd549e3085795b2fc9ad1_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/275/25a063155f1cd549e3085795b2fc9ad1_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/275/25a063155f1cd549e3085795b2fc9ad1_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/275/25a063155f1cd549e3085795b2fc9ad1_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "NWWiABZW",
+    "name": "Mere Khwaja Meri Zindagi",
+    "type": "song",
+    "year": "2014",
+    "releaseDate": "2014-06-20",
+    "duration": 553,
+    "label": "Saregama",
+    "explicitContent": false,
+    "playCount": 27068,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/mere-khwaja-meri-zindagi/Pj88WDVybWQ",
+    "copyright": "©  2014 Saregama",
+    "album": {
+      "id": "1162012",
+      "name": "Satrangee",
+      "url": "https://www.jiosaavn.com/album/satrangee/O94AO9J7ITg_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "462243",
+          "name": "Azaan Khan",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/620/Azaan-Khan-Philo-Sufi-2012-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/620/Azaan-Khan-Philo-Sufi-2012-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/620/Azaan-Khan-Philo-Sufi-2012-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/azaan-khan-songs/4JuhiDkwNYI_"
+        },
+        {
+          "id": "494292",
+          "name": "Ustad Shujat Khan",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Ustad_Shujaat_Hussain_Khan_000_20240819103534_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Ustad_Shujaat_Hussain_Khan_000_20240819103534_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Ustad_Shujaat_Hussain_Khan_000_20240819103534_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/ustad-shujat-khan-songs/OVTVjB-JF30_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "462243",
+          "name": "Azaan Khan",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/620/Azaan-Khan-Philo-Sufi-2012-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/620/Azaan-Khan-Philo-Sufi-2012-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/620/Azaan-Khan-Philo-Sufi-2012-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/azaan-khan-songs/4JuhiDkwNYI_"
+        },
+        {
+          "id": "494292",
+          "name": "Ustad Shujat Khan",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Ustad_Shujaat_Hussain_Khan_000_20240819103534_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Ustad_Shujaat_Hussain_Khan_000_20240819103534_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Ustad_Shujaat_Hussain_Khan_000_20240819103534_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/ustad-shujat-khan-songs/OVTVjB-JF30_"
+        },
+        {
+          "id": "455415",
+          "name": "Sameer Anjan",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Sameer_002_20260619094151_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Sameer_002_20260619094151_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Sameer_002_20260619094151_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/sameer-anjan-songs/zbXOIZIhW-8_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/486/Satrangee-Hindi-2014-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/486/Satrangee-Hindi-2014-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/486/Satrangee-Hindi-2014-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/486/81f8a5a50d9de7cbae8ebf8900480686_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/486/81f8a5a50d9de7cbae8ebf8900480686_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/486/81f8a5a50d9de7cbae8ebf8900480686_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/486/81f8a5a50d9de7cbae8ebf8900480686_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/486/81f8a5a50d9de7cbae8ebf8900480686_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "NhTKcmCh",
+    "name": "O Jogi",
+    "type": "song",
+    "year": "2016",
+    "releaseDate": "2016-03-18",
+    "duration": 205,
+    "label": "Saregama",
+    "explicitContent": false,
+    "playCount": 378543,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/o-jogi/PgA-ehdddFs",
+    "copyright": "©  2016 Saregama",
+    "album": {
+      "id": "2009533",
+      "name": "Kailasa Ishq Anokha",
+      "url": "https://www.jiosaavn.com/album/kailasa-ishq-anokha/W44UgnK1JqQ_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "455425",
+          "name": "Kailash Kher",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kailash-kher-songs/vidifVDY4c4_"
+        },
+        {
+          "id": "472349",
+          "name": "Naresh Kamath",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/naresh-kamath-songs/JKOjnjecyY0_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "455425",
+          "name": "Kailash Kher",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kailash-kher-songs/vidifVDY4c4_"
+        },
+        {
+          "id": "472349",
+          "name": "Naresh Kamath",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/naresh-kamath-songs/JKOjnjecyY0_"
+        },
+        {
+          "id": "455425",
+          "name": "Kailash Kher",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kailash-kher-songs/vidifVDY4c4_"
+        },
+        {
+          "id": "455425",
+          "name": "Kailash Kher",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kailash-kher-songs/vidifVDY4c4_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/136/Kailasa-Ishq-Anokha-Hindi-2016-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/136/Kailasa-Ishq-Anokha-Hindi-2016-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/136/Kailasa-Ishq-Anokha-Hindi-2016-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/136/d9db5e9cd6c5c6b53ce24f8cc71f4b9c_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/136/d9db5e9cd6c5c6b53ce24f8cc71f4b9c_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/136/d9db5e9cd6c5c6b53ce24f8cc71f4b9c_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/136/d9db5e9cd6c5c6b53ce24f8cc71f4b9c_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/136/d9db5e9cd6c5c6b53ce24f8cc71f4b9c_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "2Qkygfwl",
+    "name": "Vaari Vaari",
+    "type": "song",
+    "year": "2016",
+    "releaseDate": "2016-03-18",
+    "duration": 285,
+    "label": "Saregama",
+    "explicitContent": false,
+    "playCount": 56797,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/vaari-vaari/QjkASBNWQF8",
+    "copyright": "©  2016 Saregama",
+    "album": {
+      "id": "2009533",
+      "name": "Kailasa Ishq Anokha",
+      "url": "https://www.jiosaavn.com/album/kailasa-ishq-anokha/W44UgnK1JqQ_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "455425",
+          "name": "Kailash Kher",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kailash-kher-songs/vidifVDY4c4_"
+        },
+        {
+          "id": "490201",
+          "name": "Paresh Kamath",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/paresh-kamath-songs/JsddMkW8OG0_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "455425",
+          "name": "Kailash Kher",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kailash-kher-songs/vidifVDY4c4_"
+        },
+        {
+          "id": "490201",
+          "name": "Paresh Kamath",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/paresh-kamath-songs/JsddMkW8OG0_"
+        },
+        {
+          "id": "455425",
+          "name": "Kailash Kher",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kailash-kher-songs/vidifVDY4c4_"
+        },
+        {
+          "id": "455425",
+          "name": "Kailash Kher",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kailash-kher-songs/vidifVDY4c4_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/136/Kailasa-Ishq-Anokha-Hindi-2016-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/136/Kailasa-Ishq-Anokha-Hindi-2016-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/136/Kailasa-Ishq-Anokha-Hindi-2016-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/136/d094874e47d5ed508754dfe3cbf3dae5_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/136/d094874e47d5ed508754dfe3cbf3dae5_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/136/d094874e47d5ed508754dfe3cbf3dae5_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/136/d094874e47d5ed508754dfe3cbf3dae5_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/136/d094874e47d5ed508754dfe3cbf3dae5_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "dtT05pup",
+    "name": "Ghoonghat Chuk O Sajna With Commentary",
+    "type": "song",
+    "year": "2005",
+    "releaseDate": "2005-04-30",
+    "duration": 388,
+    "label": "Saregama",
+    "explicitContent": false,
+    "playCount": 64321,
+    "language": "punjabi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/ghoonghat-chuk-o-sajna-with-commentary/FBw-AUFAQkM",
+    "copyright": "©  2005 Saregama",
+    "album": {
+      "id": "2408642",
+      "name": "Best Of Sufi",
+      "url": "https://www.jiosaavn.com/album/best-of-sufi/9dK5QX4r3Bs_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "459799",
+          "name": "Wadali Brothers",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Wadali_Brothers_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Wadali_Brothers_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Wadali_Brothers_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/wadali-brothers-songs/8jQwl3SdrF8_"
+        },
+        {
+          "id": "1932788",
+          "name": "Pooran Chand Wadali",
+          "role": "primary_artists",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/pooran-chand-wadali-songs/CX9z-xblzDQ_"
+        }
+      ],
+      "featured": [
+        {
+          "id": "9827122",
+          "name": "Kritika Sobti",
+          "role": "featured_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kritika_Sobti_000_20210711113141_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kritika_Sobti_000_20210711113141_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kritika_Sobti_000_20210711113141_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kritika-sobti-songs/I39wj2INaC8_"
+        }
+      ],
+      "all": [
+        {
+          "id": "1932788",
+          "name": "Pooran Chand Wadali",
+          "role": "music",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/pooran-chand-wadali-songs/CX9z-xblzDQ_"
+        },
+        {
+          "id": "459799",
+          "name": "Wadali Brothers",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Wadali_Brothers_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Wadali_Brothers_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Wadali_Brothers_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/wadali-brothers-songs/8jQwl3SdrF8_"
+        },
+        {
+          "id": "471382",
+          "name": "Bulleh Shah",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/080/Bhakton-Ka-Khat-Mata-Ke-Naam-2009-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/080/Bhakton-Ka-Khat-Mata-Ke-Naam-2009-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/080/Bhakton-Ka-Khat-Mata-Ke-Naam-2009-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/bulleh-shah-songs/z6hs5vCY,KA_"
+        },
+        {
+          "id": "456342",
+          "name": "Urmila Matondkar",
+          "role": "starring",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Urmila_Matondkar_001_20230605095147_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Urmila_Matondkar_001_20230605095147_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Urmila_Matondkar_001_20230605095147_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/urmila-matondkar-songs/3wfvGzryt9M_"
+        },
+        {
+          "id": "761051",
+          "name": "Manoj Bajpayee",
+          "role": "starring",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/manoj-bajpayee-songs/fmNPtkHse5A_"
+        },
+        {
+          "id": "456202",
+          "name": "Sanjay Suri",
+          "role": "starring",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/sanjay-suri-songs/0UlKH1xC5J0_"
+        },
+        {
+          "id": "468468",
+          "name": "Isha Sharvani",
+          "role": "starring",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Isha_Sharvani_20190801135602_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Isha_Sharvani_20190801135602_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Isha_Sharvani_20190801135602_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/isha-sharvani-songs/exkYaBQoYps_"
+        },
+        {
+          "id": "464380",
+          "name": "Others",
+          "role": "starring",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/153/Passage-to-India-Traditional-English-2006-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/153/Passage-to-India-Traditional-English-2006-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/153/Passage-to-India-Traditional-English-2006-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/others-songs/uTED904bTBU_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/774/Best-Of-Sufi-Punjabi-2005-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/774/Best-Of-Sufi-Punjabi-2005-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/774/Best-Of-Sufi-Punjabi-2005-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/774/11e7e264d363e342d8ed10db7d223973_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/774/11e7e264d363e342d8ed10db7d223973_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/774/11e7e264d363e342d8ed10db7d223973_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/774/11e7e264d363e342d8ed10db7d223973_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/774/11e7e264d363e342d8ed10db7d223973_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "QQnXtbfL",
+    "name": "Berukhiyan",
+    "type": "song",
+    "year": "2016",
+    "releaseDate": "2016-03-18",
+    "duration": 270,
+    "label": "Saregama",
+    "explicitContent": false,
+    "playCount": 82927,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/berukhiyan/ITkFaQBSUX8",
+    "copyright": "©  2016 Saregama",
+    "album": {
+      "id": "2009533",
+      "name": "Kailasa Ishq Anokha",
+      "url": "https://www.jiosaavn.com/album/kailasa-ishq-anokha/W44UgnK1JqQ_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "455425",
+          "name": "Kailash Kher",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kailash-kher-songs/vidifVDY4c4_"
+        },
+        {
+          "id": "472349",
+          "name": "Naresh Kamath",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/naresh-kamath-songs/JKOjnjecyY0_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "455425",
+          "name": "Kailash Kher",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kailash-kher-songs/vidifVDY4c4_"
+        },
+        {
+          "id": "472349",
+          "name": "Naresh Kamath",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/naresh-kamath-songs/JKOjnjecyY0_"
+        },
+        {
+          "id": "455425",
+          "name": "Kailash Kher",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kailash-kher-songs/vidifVDY4c4_"
+        },
+        {
+          "id": "455425",
+          "name": "Kailash Kher",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kailash-kher-songs/vidifVDY4c4_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/136/Kailasa-Ishq-Anokha-Hindi-2016-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/136/Kailasa-Ishq-Anokha-Hindi-2016-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/136/Kailasa-Ishq-Anokha-Hindi-2016-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/136/4c038224657c1e83cc88a67c829d76fa_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/136/4c038224657c1e83cc88a67c829d76fa_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/136/4c038224657c1e83cc88a67c829d76fa_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/136/4c038224657c1e83cc88a67c829d76fa_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/136/4c038224657c1e83cc88a67c829d76fa_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "rQY7ULLb",
+    "name": "Siyah Tara",
+    "type": "song",
+    "year": "2016",
+    "releaseDate": "2016-03-18",
+    "duration": 243,
+    "label": "Saregama",
+    "explicitContent": false,
+    "playCount": 42558,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/siyah-tara/AjkyBiF8e1E",
+    "copyright": "©  2016 Saregama",
+    "album": {
+      "id": "2009533",
+      "name": "Kailasa Ishq Anokha",
+      "url": "https://www.jiosaavn.com/album/kailasa-ishq-anokha/W44UgnK1JqQ_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "455425",
+          "name": "Kailash Kher",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kailash-kher-songs/vidifVDY4c4_"
+        },
+        {
+          "id": "490201",
+          "name": "Paresh Kamath",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/paresh-kamath-songs/JsddMkW8OG0_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "455425",
+          "name": "Kailash Kher",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kailash-kher-songs/vidifVDY4c4_"
+        },
+        {
+          "id": "490201",
+          "name": "Paresh Kamath",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/paresh-kamath-songs/JsddMkW8OG0_"
+        },
+        {
+          "id": "455425",
+          "name": "Kailash Kher",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kailash-kher-songs/vidifVDY4c4_"
+        },
+        {
+          "id": "455425",
+          "name": "Kailash Kher",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kailash-kher-songs/vidifVDY4c4_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/136/Kailasa-Ishq-Anokha-Hindi-2016-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/136/Kailasa-Ishq-Anokha-Hindi-2016-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/136/Kailasa-Ishq-Anokha-Hindi-2016-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/136/c89269a0bb9600c4b8a53dcd8842d8b0_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/136/c89269a0bb9600c4b8a53dcd8842d8b0_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/136/c89269a0bb9600c4b8a53dcd8842d8b0_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/136/c89269a0bb9600c4b8a53dcd8842d8b0_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/136/c89269a0bb9600c4b8a53dcd8842d8b0_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "XpTtQhT8",
+    "name": "Tohe Piya Milenge-Ghungat Ke Pat Khol Ni",
+    "type": "song",
+    "year": "2012",
+    "releaseDate": "2012-10-31",
+    "duration": 344,
+    "label": "Saregama",
+    "explicitContent": false,
+    "playCount": 34703,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/tohe-piya-milenge-ghungat-ke-pat-khol-ni/KBg-RSVYYws",
+    "copyright": "©  2012 Saregama",
+    "album": {
+      "id": "1104823",
+      "name": "Thagni",
+      "url": "https://www.jiosaavn.com/album/thagni/MaUKjvd1iRA_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "19066566",
+          "name": "Shreyas",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Shreyas_000_20240319191615_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Shreyas_000_20240319191615_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Shreyas_000_20240319191615_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/shreyas-songs/a,6idgGAXV4_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "19066566",
+          "name": "Shreyas",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Shreyas_000_20240319191615_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Shreyas_000_20240319191615_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Shreyas_000_20240319191615_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/shreyas-songs/a,6idgGAXV4_"
+        },
+        {
+          "id": "19066566",
+          "name": "Shreyas",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Shreyas_000_20240319191615_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Shreyas_000_20240319191615_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Shreyas_000_20240319191615_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/shreyas-songs/a,6idgGAXV4_"
+        },
+        {
+          "id": "458831",
+          "name": "Sant Kabir",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/864/Jiboner-Dhrubotara-Bengali-2015-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/864/Jiboner-Dhrubotara-Bengali-2015-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/864/Jiboner-Dhrubotara-Bengali-2015-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/sant-kabir-songs/x99yeV5NsiU_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/647/Thagni-2012-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/647/Thagni-2012-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/647/Thagni-2012-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/647/4761815094079cb84fb7efe9babb7634_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/647/4761815094079cb84fb7efe9babb7634_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/647/4761815094079cb84fb7efe9babb7634_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/647/4761815094079cb84fb7efe9babb7634_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/647/4761815094079cb84fb7efe9babb7634_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "0kSUnvT1",
+    "name": "Turiya Turiya",
+    "type": "song",
+    "year": "2016",
+    "releaseDate": "2016-03-18",
+    "duration": 241,
+    "label": "Saregama",
+    "explicitContent": false,
+    "playCount": 110526,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/turiya-turiya/QAM4ZBpGYwI",
+    "copyright": "©  2016 Saregama",
+    "album": {
+      "id": "2009533",
+      "name": "Kailasa Ishq Anokha",
+      "url": "https://www.jiosaavn.com/album/kailasa-ishq-anokha/W44UgnK1JqQ_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "455425",
+          "name": "Kailash Kher",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kailash-kher-songs/vidifVDY4c4_"
+        },
+        {
+          "id": "490201",
+          "name": "Paresh Kamath",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/paresh-kamath-songs/JsddMkW8OG0_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "455425",
+          "name": "Kailash Kher",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kailash-kher-songs/vidifVDY4c4_"
+        },
+        {
+          "id": "490201",
+          "name": "Paresh Kamath",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/paresh-kamath-songs/JsddMkW8OG0_"
+        },
+        {
+          "id": "455425",
+          "name": "Kailash Kher",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kailash-kher-songs/vidifVDY4c4_"
+        },
+        {
+          "id": "471608",
+          "name": "Baba Farid",
+          "role": "lyricist",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/baba-farid-songs/Y3RCL6O6Ri8_"
+        },
+        {
+          "id": "455425",
+          "name": "Kailash Kher",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kailash-kher-songs/vidifVDY4c4_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/136/Kailasa-Ishq-Anokha-Hindi-2016-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/136/Kailasa-Ishq-Anokha-Hindi-2016-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/136/Kailasa-Ishq-Anokha-Hindi-2016-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/136/6469377770fec205f1bd3de98a5899d3_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/136/6469377770fec205f1bd3de98a5899d3_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/136/6469377770fec205f1bd3de98a5899d3_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/136/6469377770fec205f1bd3de98a5899d3_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/136/6469377770fec205f1bd3de98a5899d3_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "F3kDn3Cb",
+    "name": "Guru Ghantaal",
+    "type": "song",
+    "year": "2016",
+    "releaseDate": "2016-03-18",
+    "duration": 252,
+    "label": "Saregama",
+    "explicitContent": false,
+    "playCount": 71161,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/guru-ghantaal/NlsAdRoDdFE",
+    "copyright": "©  2016 Saregama",
+    "album": {
+      "id": "2009533",
+      "name": "Kailasa Ishq Anokha",
+      "url": "https://www.jiosaavn.com/album/kailasa-ishq-anokha/W44UgnK1JqQ_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "455425",
+          "name": "Kailash Kher",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kailash-kher-songs/vidifVDY4c4_"
+        },
+        {
+          "id": "490201",
+          "name": "Paresh Kamath",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/paresh-kamath-songs/JsddMkW8OG0_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "455425",
+          "name": "Kailash Kher",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kailash-kher-songs/vidifVDY4c4_"
+        },
+        {
+          "id": "490201",
+          "name": "Paresh Kamath",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/052/Kailasa-Jhoomo-Re-Hindi-2011-20180316163258-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/paresh-kamath-songs/JsddMkW8OG0_"
+        },
+        {
+          "id": "455425",
+          "name": "Kailash Kher",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kailash-kher-songs/vidifVDY4c4_"
+        },
+        {
+          "id": "455425",
+          "name": "Kailash Kher",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Kailash_Kher_003_20200114120508_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kailash-kher-songs/vidifVDY4c4_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/136/Kailasa-Ishq-Anokha-Hindi-2016-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/136/Kailasa-Ishq-Anokha-Hindi-2016-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/136/Kailasa-Ishq-Anokha-Hindi-2016-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/136/6fefcafd5b3a60dd6a157efc94ea9569_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/136/6fefcafd5b3a60dd6a157efc94ea9569_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/136/6fefcafd5b3a60dd6a157efc94ea9569_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/136/6fefcafd5b3a60dd6a157efc94ea9569_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/136/6fefcafd5b3a60dd6a157efc94ea9569_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "30pesEaR",
+    "name": "Man Lago Mero Yaar",
+    "type": "song",
+    "year": "2012",
+    "releaseDate": "2012-10-31",
+    "duration": 354,
+    "label": "Saregama",
+    "explicitContent": false,
+    "playCount": 562291,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/man-lago-mero-yaar/Q1gbVAd1VmE",
+    "copyright": "©  2012 Saregama",
+    "album": {
+      "id": "1104823",
+      "name": "Thagni",
+      "url": "https://www.jiosaavn.com/album/thagni/MaUKjvd1iRA_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "19066566",
+          "name": "Shreyas",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Shreyas_000_20240319191615_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Shreyas_000_20240319191615_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Shreyas_000_20240319191615_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/shreyas-songs/a,6idgGAXV4_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "19066566",
+          "name": "Shreyas",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Shreyas_000_20240319191615_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Shreyas_000_20240319191615_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Shreyas_000_20240319191615_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/shreyas-songs/a,6idgGAXV4_"
+        },
+        {
+          "id": "19066566",
+          "name": "Shreyas",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Shreyas_000_20240319191615_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Shreyas_000_20240319191615_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Shreyas_000_20240319191615_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/shreyas-songs/a,6idgGAXV4_"
+        },
+        {
+          "id": "458831",
+          "name": "Sant Kabir",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/864/Jiboner-Dhrubotara-Bengali-2015-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/864/Jiboner-Dhrubotara-Bengali-2015-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/864/Jiboner-Dhrubotara-Bengali-2015-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/sant-kabir-songs/x99yeV5NsiU_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/647/Thagni-2012-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/647/Thagni-2012-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/647/Thagni-2012-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/647/4c10eaa66e7616c31b5dd272f21d0236_sar_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/647/4c10eaa66e7616c31b5dd272f21d0236_sar_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/647/4c10eaa66e7616c31b5dd272f21d0236_sar_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/647/4c10eaa66e7616c31b5dd272f21d0236_sar_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/647/4c10eaa66e7616c31b5dd272f21d0236_sar_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "LNO4mypZ",
+    "name": "Mora Saiyan",
+    "type": "song",
+    "year": "2012",
+    "releaseDate": "2012-10-31",
+    "duration": 319,
+    "label": "Saregama",
+    "explicitContent": false,
+    "playCount": 103938,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/mora-saiyan/PCYkBRlJR2k",
+    "copyright": "©  2012 Saregama",
+    "album": {
+      "id": "1104823",
+      "name": "Thagni",
+      "url": "https://www.jiosaavn.com/album/thagni/MaUKjvd1iRA_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "19066566",
+          "name": "Shreyas",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Shreyas_000_20240319191615_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Shreyas_000_20240319191615_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Shreyas_000_20240319191615_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/shreyas-songs/a,6idgGAXV4_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "19066566",
+          "name": "Shreyas",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Shreyas_000_20240319191615_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Shreyas_000_20240319191615_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Shreyas_000_20240319191615_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/shreyas-songs/a,6idgGAXV4_"
+        },
+        {
+          "id": "19066566",
+          "name": "Shreyas",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Shreyas_000_20240319191615_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Shreyas_000_20240319191615_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Shreyas_000_20240319191615_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/shreyas-songs/a,6idgGAXV4_"
+        },
+        {
+          "id": "538313",
+          "name": "Kamali",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/082/No-Rules-English-2018-20180809174210-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/082/No-Rules-English-2018-20180809174210-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/082/No-Rules-English-2018-20180809174210-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/kamali-songs/KA4SZydx4A4_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/647/Thagni-2012-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/647/Thagni-2012-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/647/Thagni-2012-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/647/0cb1a333d397fced371beb80497d297c_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/647/0cb1a333d397fced371beb80497d297c_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/647/0cb1a333d397fced371beb80497d297c_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/647/0cb1a333d397fced371beb80497d297c_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/647/0cb1a333d397fced371beb80497d297c_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "uwflWP6N",
+    "name": "Naina Lagai Ke - Shujaat Khan",
+    "type": "song",
+    "year": "2010",
+    "releaseDate": "2010-10-01",
+    "duration": 419,
+    "label": "Saregama",
+    "explicitContent": false,
+    "playCount": 14432,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/naina-lagai-ke-shujaat-khan/BR8NXSNgAX0",
+    "copyright": "℗ 2010 Saregama India Ltd",
+    "album": {
+      "id": "1055871",
+      "name": "Naina Lagai Ke",
+      "url": "https://www.jiosaavn.com/album/naina-lagai-ke/fMH7k67kUwI_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "493908",
+          "name": "Shujaat Khan",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/830/The-Magic-Of-Indian-Classical-Music-Sitar-Hindustani-2004-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/830/The-Magic-Of-Indian-Classical-Music-Sitar-Hindustani-2004-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/830/The-Magic-Of-Indian-Classical-Music-Sitar-Hindustani-2004-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/shujaat-khan-songs/bpgtil6yZb0_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "493908",
+          "name": "Shujaat Khan",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/830/The-Magic-Of-Indian-Classical-Music-Sitar-Hindustani-2004-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/830/The-Magic-Of-Indian-Classical-Music-Sitar-Hindustani-2004-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/830/The-Magic-Of-Indian-Classical-Music-Sitar-Hindustani-2004-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/shujaat-khan-songs/bpgtil6yZb0_"
+        },
+        {
+          "id": "455090",
+          "name": "Traditional",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/186/Krishna-Bhajans-Hindi-2010-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/186/Krishna-Bhajans-Hindi-2010-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/186/Krishna-Bhajans-Hindi-2010-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/traditional-songs/1W8p9iMeXm4_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/693/Naina-Lagai-Ke-Hindi-2010-20200913073909-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/693/Naina-Lagai-Ke-Hindi-2010-20200913073909-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/693/Naina-Lagai-Ke-Hindi-2010-20200913073909-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/693/8b1eac39294ebe0f771f65f401910d9c_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/693/8b1eac39294ebe0f771f65f401910d9c_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/693/8b1eac39294ebe0f771f65f401910d9c_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/693/8b1eac39294ebe0f771f65f401910d9c_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/693/8b1eac39294ebe0f771f65f401910d9c_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "Fb92tm6m",
+    "name": "Main To Piya Se Naina",
+    "type": "song",
+    "year": "2009",
+    "releaseDate": "2009-04-30",
+    "duration": 341,
+    "label": "Saregama",
+    "explicitContent": false,
+    "playCount": 12179,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/main-to-piya-se-naina/NgpSAwBdAV4",
+    "copyright": "©  2009 Saregama",
+    "album": {
+      "id": "1075236",
+      "name": "Tajalli",
+      "url": "https://www.jiosaavn.com/album/tajalli/oOf6f-aF8Ik_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "540709",
+          "name": "Anita Singhvi",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/000/default_Saregama_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/000/default_Saregama_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/000/default_Saregama_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/anita-singhvi-songs/XB9AAgb8Hdw_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "540709",
+          "name": "Anita Singhvi",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/000/default_Saregama_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/000/default_Saregama_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/000/default_Saregama_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/anita-singhvi-songs/XB9AAgb8Hdw_"
+        },
+        {
+          "id": "540709",
+          "name": "Anita Singhvi",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/000/default_Saregama_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/000/default_Saregama_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/000/default_Saregama_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/anita-singhvi-songs/XB9AAgb8Hdw_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/000/default_Saregama-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/000/default_Saregama-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/000/default_Saregama-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/140/65000afb7b4a9c15a847836e6a844412_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/140/65000afb7b4a9c15a847836e6a844412_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/140/65000afb7b4a9c15a847836e6a844412_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/140/65000afb7b4a9c15a847836e6a844412_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/140/65000afb7b4a9c15a847836e6a844412_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "Nt_1hu4Z",
+    "name": "Sanu Ek Pal",
+    "type": "song",
+    "year": "2016",
+    "releaseDate": "2016-05-11",
+    "duration": 286,
+    "label": "Saregama",
+    "explicitContent": false,
+    "playCount": 1341591,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/sanu-ek-pal/Phw0ABxFA2k",
+    "copyright": "©  2016 Saregama",
+    "album": {
+      "id": "2304448",
+      "name": "Sanu Ek Pal - Ashish Chhabra",
+      "url": "https://www.jiosaavn.com/album/sanu-ek-pal-ashish-chhabra/Aw3LsCBRhb8_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "1837156",
+          "name": "Ashish Chhabra",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Ashish_Chhabra_000_20241111091124_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Ashish_Chhabra_000_20241111091124_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Ashish_Chhabra_000_20241111091124_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/ashish-chhabra-songs/tvHI6cqQpJI_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "1837156",
+          "name": "Ashish Chhabra",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Ashish_Chhabra_000_20241111091124_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Ashish_Chhabra_000_20241111091124_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Ashish_Chhabra_000_20241111091124_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/ashish-chhabra-songs/tvHI6cqQpJI_"
+        },
+        {
+          "id": "1837156",
+          "name": "Ashish Chhabra",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Ashish_Chhabra_000_20241111091124_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Ashish_Chhabra_000_20241111091124_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Ashish_Chhabra_000_20241111091124_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/ashish-chhabra-songs/tvHI6cqQpJI_"
+        },
+        {
+          "id": "1837156",
+          "name": "Ashish Chhabra",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Ashish_Chhabra_000_20241111091124_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Ashish_Chhabra_000_20241111091124_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Ashish_Chhabra_000_20241111091124_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/ashish-chhabra-songs/tvHI6cqQpJI_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/811/Sanu-Ek-Pal-Ashish-Chhabra-Hindi-2016-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/811/Sanu-Ek-Pal-Ashish-Chhabra-Hindi-2016-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/811/Sanu-Ek-Pal-Ashish-Chhabra-Hindi-2016-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/811/68eda5d683ad792803706189250960b8_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/811/68eda5d683ad792803706189250960b8_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/811/68eda5d683ad792803706189250960b8_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/811/68eda5d683ad792803706189250960b8_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/811/68eda5d683ad792803706189250960b8_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "GfHAnEp9",
+    "name": "Saiyyon Ni Asin Nainan De With Commentary",
+    "type": "song",
+    "year": "2005",
+    "releaseDate": "2005-04-30",
+    "duration": 227,
+    "label": "Saregama",
+    "explicitContent": false,
+    "playCount": 14091,
+    "language": "punjabi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/saiyyon-ni-asin-nainan-de-with-commentary/Nw4jcBp1Rwo",
+    "copyright": "©  2005 Saregama",
+    "album": {
+      "id": "2408642",
+      "name": "Best Of Sufi",
+      "url": "https://www.jiosaavn.com/album/best-of-sufi/9dK5QX4r3Bs_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "471372",
+          "name": "Puran Shah Koti",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/774/Best-Of-Sufi-Punjabi-2005-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/774/Best-Of-Sufi-Punjabi-2005-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/774/Best-Of-Sufi-Punjabi-2005-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/puran-shah-koti-songs/IuIZC75XA5s_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "471372",
+          "name": "Puran Shah Koti",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/774/Best-Of-Sufi-Punjabi-2005-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/774/Best-Of-Sufi-Punjabi-2005-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/774/Best-Of-Sufi-Punjabi-2005-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/puran-shah-koti-songs/IuIZC75XA5s_"
+        },
+        {
+          "id": "471372",
+          "name": "Puran Shah Koti",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/774/Best-Of-Sufi-Punjabi-2005-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/774/Best-Of-Sufi-Punjabi-2005-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/774/Best-Of-Sufi-Punjabi-2005-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/puran-shah-koti-songs/IuIZC75XA5s_"
+        },
+        {
+          "id": "471374",
+          "name": "Shah Hussain",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/160/Rasha-Danana-Yara-Pashto-2018-20180618180345-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/160/Rasha-Danana-Yara-Pashto-2018-20180618180345-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/160/Rasha-Danana-Yara-Pashto-2018-20180618180345-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/shah-hussain-songs/Zve2QWpc9mg_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/774/Best-Of-Sufi-Punjabi-2005-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/774/Best-Of-Sufi-Punjabi-2005-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/774/Best-Of-Sufi-Punjabi-2005-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/774/7f58537394c8e337e439875a7fb62d28_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/774/7f58537394c8e337e439875a7fb62d28_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/774/7f58537394c8e337e439875a7fb62d28_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/774/7f58537394c8e337e439875a7fb62d28_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/774/7f58537394c8e337e439875a7fb62d28_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "rturqYb4",
+    "name": "Main Sufi Hoon",
+    "type": "song",
+    "year": "2016",
+    "releaseDate": "2016-05-08",
+    "duration": 274,
+    "label": "Saregama",
+    "explicitContent": false,
+    "playCount": 6004,
+    "language": "punjabi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/main-sufi-hoon/AhweQwVpVQc",
+    "copyright": "© 2016 Saregama",
+    "album": {
+      "id": "20234407",
+      "name": "Main Sufi Hoon",
+      "url": "https://www.jiosaavn.com/album/main-sufi-hoon/o0TQo5x,5e0_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "1748007",
+          "name": "Saif Samejo",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/241/You-Urdu-2016-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/241/You-Urdu-2016-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/241/You-Urdu-2016-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/saif-samejo-songs/m3k-qEVizE0_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "1748007",
+          "name": "Saif Samejo",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/241/You-Urdu-2016-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/241/You-Urdu-2016-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/241/You-Urdu-2016-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/saif-samejo-songs/m3k-qEVizE0_"
+        },
+        {
+          "id": "1748007",
+          "name": "Saif Samejo",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/241/You-Urdu-2016-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/241/You-Urdu-2016-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/241/You-Urdu-2016-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/saif-samejo-songs/m3k-qEVizE0_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/760/Main-Sufi-Hoon-Punjabi-2016-20200506111109-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/760/Main-Sufi-Hoon-Punjabi-2016-20200506111109-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/760/Main-Sufi-Hoon-Punjabi-2016-20200506111109-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/760/55c35974430f2744f809f546a294f542_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/760/55c35974430f2744f809f546a294f542_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/760/55c35974430f2744f809f546a294f542_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/760/55c35974430f2744f809f546a294f542_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/760/55c35974430f2744f809f546a294f542_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "pgymr8FV",
+    "name": "Rabba Mere Haal Da Mehram Tu",
+    "type": "song",
+    "year": "2017",
+    "releaseDate": "2017-06-04",
+    "duration": 267,
+    "label": "Saregama",
+    "explicitContent": false,
+    "playCount": 178923,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/rabba-mere-haal-da-mehram-tu/AA8SXAYIcWU",
+    "copyright": "©  2017 Saregama",
+    "album": {
+      "id": "10957912",
+      "name": "Sufi Saints - Shah Hussain",
+      "url": "https://www.jiosaavn.com/album/sufi-saints-shah-hussain/16wdH12BqCI_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "455109",
+          "name": "Lata Mangeshkar",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Lata_Mangeshkar_004_20230623105323_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Lata_Mangeshkar_004_20230623105323_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Lata_Mangeshkar_004_20230623105323_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/lata-mangeshkar-songs/FCtl69DObYg_"
+        },
+        {
+          "id": "701719",
+          "name": "Baiju Mangeshkar",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Baiju_Mangeshkar_20210304081431.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Baiju_Mangeshkar_20210304081431.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Baiju_Mangeshkar_20210304081431.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/baiju-mangeshkar-songs/WxRhCtkAalU_"
+        }
+      ],
+      "featured": [
+        {
+          "id": "531640",
+          "name": "Skanda",
+          "role": "featured_artists",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/skanda-songs/YoNmxDbUack_"
+        }
+      ],
+      "all": [
+        {
+          "id": "701719",
+          "name": "Baiju Mangeshkar",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Baiju_Mangeshkar_20210304081431.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Baiju_Mangeshkar_20210304081431.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Baiju_Mangeshkar_20210304081431.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/baiju-mangeshkar-songs/WxRhCtkAalU_"
+        },
+        {
+          "id": "455109",
+          "name": "Lata Mangeshkar",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Lata_Mangeshkar_004_20230623105323_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Lata_Mangeshkar_004_20230623105323_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Lata_Mangeshkar_004_20230623105323_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/lata-mangeshkar-songs/FCtl69DObYg_"
+        },
+        {
+          "id": "701719",
+          "name": "Baiju Mangeshkar",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/artists/Baiju_Mangeshkar_20210304081431.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/artists/Baiju_Mangeshkar_20210304081431.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/artists/Baiju_Mangeshkar_20210304081431.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/baiju-mangeshkar-songs/WxRhCtkAalU_"
+        },
+        {
+          "id": "471374",
+          "name": "Shah Hussain",
+          "role": "lyricist",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/160/Rasha-Danana-Yara-Pashto-2018-20180618180345-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/160/Rasha-Danana-Yara-Pashto-2018-20180618180345-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/160/Rasha-Danana-Yara-Pashto-2018-20180618180345-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/shah-hussain-songs/Zve2QWpc9mg_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/876/Sufi-Saints-Shah-Hussain-Hindi-2017-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/876/Sufi-Saints-Shah-Hussain-Hindi-2017-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/876/Sufi-Saints-Shah-Hussain-Hindi-2017-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/876/29624e2d1e89a8fd1e79d52939c7c487_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/876/29624e2d1e89a8fd1e79d52939c7c487_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/876/29624e2d1e89a8fd1e79d52939c7c487_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/876/29624e2d1e89a8fd1e79d52939c7c487_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/876/29624e2d1e89a8fd1e79d52939c7c487_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "k9M5rpvy",
+    "name": "A Piya More Naina Mein",
+    "type": "song",
+    "year": "2008",
+    "releaseDate": "2008-09-30",
+    "duration": 371,
+    "label": "Saregama",
+    "explicitContent": false,
+    "playCount": 6519,
+    "language": "hindi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/a-piya-more-naina-mein/G1EmBAZAQUo",
+    "copyright": "©  2008 Saregama",
+    "album": {
+      "id": "1056015",
+      "name": "Parvati Kumari - Jiya Re Jhoome",
+      "url": "https://www.jiosaavn.com/album/parvati-kumari-jiya-re-jhoome/ri067GlkUY8_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "491867",
+          "name": "Parvati Kumari",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/000/default_Saregama_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/000/default_Saregama_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/000/default_Saregama_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/parvati-kumari-songs/odFe-NdmxLs_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "470342",
+          "name": "Gaurav Issar",
+          "role": "music",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/117/Meditation-Hindi-2017-20171115-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/117/Meditation-Hindi-2017-20171115-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/117/Meditation-Hindi-2017-20171115-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/gaurav-issar-songs/kd1hQ23dRK8_"
+        },
+        {
+          "id": "491867",
+          "name": "Parvati Kumari",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/000/default_Saregama_50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/000/default_Saregama_150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/000/default_Saregama_500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/parvati-kumari-songs/odFe-NdmxLs_"
+        },
+        {
+          "id": "479456",
+          "name": "Ekhlaas",
+          "role": "lyricist",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/ekhlaas-songs/,SddQ3je-O8_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/000/default_Saregama-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/000/default_Saregama-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/000/default_Saregama-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/186/176cdf36db365b4c9ce4bfc0072ab33d_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/186/176cdf36db365b4c9ce4bfc0072ab33d_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/186/176cdf36db365b4c9ce4bfc0072ab33d_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/186/176cdf36db365b4c9ce4bfc0072ab33d_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/186/176cdf36db365b4c9ce4bfc0072ab33d_320.mp4"
+      }
+    ]
+  },
+  {
+    "id": "vYVRw7Ss",
+    "name": "Allah Meharbaan",
+    "type": "song",
+    "year": "2021",
+    "releaseDate": "2021-12-03",
+    "duration": 264,
+    "label": "Saga Music",
+    "explicitContent": false,
+    "playCount": 263482,
+    "language": "punjabi",
+    "hasLyrics": false,
+    "lyricsId": null,
+    "url": "https://www.jiosaavn.com/song/allah-meharbaan/BjE9YwMHZEA",
+    "copyright": "© 2021 Saga Music",
+    "album": {
+      "id": "31233393",
+      "name": "Allah Meharbaan",
+      "url": "https://www.jiosaavn.com/album/allah-meharbaan/QYalBibHChk_"
+    },
+    "artists": {
+      "primary": [
+        {
+          "id": "2667160",
+          "name": "G Khan",
+          "role": "primary_artists",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/019/Chandigarh-Shehr-Punjabi-2019-20190424145437-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/019/Chandigarh-Shehr-Punjabi-2019-20190424145437-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/019/Chandigarh-Shehr-Punjabi-2019-20190424145437-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/g-khan-songs/YDlFV5uRwNI_"
+        }
+      ],
+      "featured": [],
+      "all": [
+        {
+          "id": "11686940",
+          "name": "ARV Music",
+          "role": "music",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/arv-music-songs/fpG,dN-pbnU_"
+        },
+        {
+          "id": "2667160",
+          "name": "G Khan",
+          "role": "singer",
+          "image": [
+            {
+              "quality": "50x50",
+              "url": "https://c.saavncdn.com/019/Chandigarh-Shehr-Punjabi-2019-20190424145437-50x50.jpg"
+            },
+            {
+              "quality": "150x150",
+              "url": "https://c.saavncdn.com/019/Chandigarh-Shehr-Punjabi-2019-20190424145437-150x150.jpg"
+            },
+            {
+              "quality": "500x500",
+              "url": "https://c.saavncdn.com/019/Chandigarh-Shehr-Punjabi-2019-20190424145437-500x500.jpg"
+            }
+          ],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/g-khan-songs/YDlFV5uRwNI_"
+        },
+        {
+          "id": "5009014",
+          "name": "Raj Dhinjan",
+          "role": "lyricist",
+          "image": [],
+          "type": "artist",
+          "url": "https://www.jiosaavn.com/artist/raj-dhinjan-songs/odbRfV5otOI_"
+        }
+      ]
+    },
+    "image": [
+      {
+        "quality": "50x50",
+        "url": "https://c.saavncdn.com/213/Allah-Meharbaan-Hindi-2021-20211130231550-50x50.jpg"
+      },
+      {
+        "quality": "150x150",
+        "url": "https://c.saavncdn.com/213/Allah-Meharbaan-Hindi-2021-20211130231550-150x150.jpg"
+      },
+      {
+        "quality": "500x500",
+        "url": "https://c.saavncdn.com/213/Allah-Meharbaan-Hindi-2021-20211130231550-500x500.jpg"
+      }
+    ],
+    "downloadUrl": [
+      {
+        "quality": "12kbps",
+        "url": "https://aac.saavncdn.com/213/1161056adc9a519e35bd7c1261791fc8_12.mp4"
+      },
+      {
+        "quality": "48kbps",
+        "url": "https://aac.saavncdn.com/213/1161056adc9a519e35bd7c1261791fc8_48.mp4"
+      },
+      {
+        "quality": "96kbps",
+        "url": "https://aac.saavncdn.com/213/1161056adc9a519e35bd7c1261791fc8_96.mp4"
+      },
+      {
+        "quality": "160kbps",
+        "url": "https://aac.saavncdn.com/213/1161056adc9a519e35bd7c1261791fc8_160.mp4"
+      },
+      {
+        "quality": "320kbps",
+        "url": "https://aac.saavncdn.com/213/1161056adc9a519e35bd7c1261791fc8_320.mp4"
+      }
+    ]
+  }
+]
