@@ -217,6 +217,77 @@ export async function startMusicServer(options: MusicServerOptions = {}): Promis
       return;
     }
 
+    // Audio stream proxy with CORS and Range headers support
+    if (url.pathname === "/api/music/audio-stream") {
+      const songId = url.searchParams.get("songId");
+      const quality = (url.searchParams.get("quality") as SoundQuality) || "320kbps";
+      const directUrl = url.searchParams.get("url");
+
+      let targetUrl = directUrl;
+      if (!targetUrl && songId) {
+        const song = musicService.getSongById(songId);
+        if (song) {
+          targetUrl =
+            song.downloadUrl.find((u) => u.quality === quality)?.url ||
+            song.downloadUrl[song.downloadUrl.length - 1]?.url ||
+            song.downloadUrl[0]?.url ||
+            null;
+        }
+      }
+
+      if (!targetUrl) {
+        sendJson(res, { error: "No target stream found" }, 404);
+        return;
+      }
+
+      const https = await import("node:https");
+      const headers: Record<string, string | string[] | undefined> = {};
+      if (req.headers.range) {
+        headers.range = req.headers.range;
+      }
+
+      https
+        .get(targetUrl, { headers }, (proxyRes) => {
+          if (
+            proxyRes.statusCode &&
+            proxyRes.statusCode >= 300 &&
+            proxyRes.statusCode < 400 &&
+            proxyRes.headers.location
+          ) {
+            https
+              .get(proxyRes.headers.location, { headers }, (redirectRes) => {
+                res.writeHead(redirectRes.statusCode || 200, {
+                  "content-type": redirectRes.headers["content-type"] || "audio/mp4",
+                  "content-length": redirectRes.headers["content-length"] || "",
+                  "content-range": redirectRes.headers["content-range"] || "",
+                  "accept-ranges": "bytes",
+                  "access-control-allow-origin": "*",
+                });
+                redirectRes.pipe(res);
+              })
+              .on("error", () => {
+                res.writeHead(500);
+                res.end("Stream error");
+              });
+            return;
+          }
+
+          res.writeHead(proxyRes.statusCode || 200, {
+            "content-type": proxyRes.headers["content-type"] || "audio/mp4",
+            "content-length": proxyRes.headers["content-length"] || "",
+            "content-range": proxyRes.headers["content-range"] || "",
+            "accept-ranges": "bytes",
+            "access-control-allow-origin": "*",
+          });
+          proxyRes.pipe(res);
+        })
+        .on("error", () => {
+          res.writeHead(500);
+          res.end("Stream error");
+        });
+      return;
+    }
+
     // Direct stream download with Content-Disposition: attachment (Same-tab background download)
     if (url.pathname === "/api/music/file-download") {
       const songId = url.searchParams.get("songId");

@@ -65,10 +65,10 @@ export interface DashboardPreferences {
 
 const DEFAULT_PREFERENCES: DashboardPreferences = {
   theme: "midnight",
-  uiStyle: "modern",
-  iconStyle: "default",
-  accentColor: "blue",
-  density: "comfortable",
+  uiStyle: "cyberpunk",
+  iconStyle: "glow",
+  accentColor: "cyan",
+  density: "standard",
   timestampFormat: "relative",
   selectedProject: "ALL",
   autoScrollLogs: true,
@@ -253,7 +253,7 @@ interface PreferencesContextValue {
 
 const PreferencesContext = createContext<PreferencesContextValue | null>(null);
 
-const STORAGE_KEY = "vh-dashboard-preferences-v6";
+const STORAGE_KEY = "vh-dashboard-preferences-v8";
 
 export function PreferencesProvider({ children }: { children: ReactNode }) {
   const [preferences, setPreferences] =

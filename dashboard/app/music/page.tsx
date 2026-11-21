@@ -17,6 +17,7 @@ import { UpNextCard } from "@/components/music/up-next-card";
 import { MusicSettingsTab } from "@/components/music/music-settings";
 import { BatchDownloadModal } from "@/components/music/batch-download-modal";
 import type { SongData, SoundQuality, MusicSettings } from "@/types/music";
+import { audioFXEngine } from "@/lib/audio-engine";
 import { Minimize2, Disc, Maximize2, CheckCircle2, DownloadCloud, Loader2 } from "lucide-react";
 
 // Fisher-Yates pure array shuffle
@@ -114,8 +115,10 @@ export default function MusicDashboardPage() {
         shuffle: true,
         repeat: "all",
         autoPlay: true,
+        eqMode: "flat",
+        reverbPercent: 40,
         theme: "midnight",
-        uiStyle: "modern",
+        uiStyle: "cyberpunk",
       }
     );
   }, [settingsQuery.data?.settings]);
@@ -129,6 +132,8 @@ export default function MusicDashboardPage() {
   const [shuffle, setShuffle] = useState<boolean>(true);
   const [repeat, setRepeat] = useState<"off" | "all" | "one">("all");
   const [autoPlay, setAutoPlay] = useState<boolean>(true);
+  const [eqMode, setEqMode] = useState<string>("flat");
+  const [reverbPercent, setReverbPercent] = useState<number>(40);
 
   const isRandomMode = activeCategory === "random" || !activeCategory;
 
@@ -145,6 +150,20 @@ export default function MusicDashboardPage() {
       setShuffle(typeof s.shuffle === "boolean" ? s.shuffle : true);
       setRepeat(s.repeat || "all");
       setAutoPlay(typeof s.autoPlay === "boolean" ? s.autoPlay : true);
+      if (s.eqMode) {
+        setEqMode(s.eqMode);
+        audioFXEngine.setEQ(s.eqMode);
+      } else {
+        setEqMode("flat");
+        audioFXEngine.setEQ("flat");
+      }
+      if (typeof s.reverbPercent === "number") {
+        setReverbPercent(s.reverbPercent);
+        audioFXEngine.setReverb(s.reverbPercent);
+      } else {
+        setReverbPercent(40);
+        audioFXEngine.setReverb(40);
+      }
       setIsSettingsInitialized(true);
     }
   }, [settingsQuery.data?.settings, isSettingsInitialized]);
@@ -275,6 +294,23 @@ export default function MusicDashboardPage() {
     }
   }, [volume, isMuted]);
 
+  // Best album art for current song
+  const currentSongAlbumArt = useMemo(() => {
+    if (currentSong?.image?.length) {
+      const high = currentSong.image.find((i) => i.quality === "500x500");
+      const mid = currentSong.image.find((i) => i.quality === "150x150");
+      const found = high?.url || mid?.url || currentSong.image[0]?.url;
+      if (found) return found;
+    }
+    const artistImg = currentSong?.artists?.primary?.[0]?.image;
+    if (artistImg?.length) {
+      const high = artistImg.find((i) => i.quality === "500x500");
+      const found = high?.url || artistImg[0]?.url;
+      if (found) return found;
+    }
+    return "";
+  }, [currentSong]);
+
   // Play a specific song
   const playSong = useCallback(
     (song: SongData, resumeTime = 0) => {
@@ -284,6 +320,8 @@ export default function MusicDashboardPage() {
       if (audioRef.current) {
         audioRef.current.src = url;
         audioRef.current.currentTime = resumeTime;
+        audioFXEngine.init(audioRef.current, eqMode, reverbPercent);
+        audioFXEngine.resume();
         audioRef.current
           .play()
           .then(() => setIsPlaying(true))
@@ -304,7 +342,7 @@ export default function MusicDashboardPage() {
         return next;
       });
     },
-    [getAudioUrl, soundQuality, activeCategory, saveSettingsToDb],
+    [getAudioUrl, soundQuality, activeCategory, saveSettingsToDb, eqMode, reverbPercent],
   );
 
   // Compute ONLY the single NEXT upcoming track based on active shuffle mode
@@ -391,6 +429,8 @@ export default function MusicDashboardPage() {
       setIsPlaying(false);
       void saveSettingsToDb({ playbackPosition: Math.floor(currentTime) });
     } else {
+      audioFXEngine.init(audioRef.current, eqMode, reverbPercent);
+      audioFXEngine.resume();
       if (!audioRef.current.src && currentSong) {
         playSong(currentSong, currentTime);
       } else {
@@ -400,6 +440,22 @@ export default function MusicDashboardPage() {
           .catch(() => setIsPlaying(false));
       }
     }
+  };
+
+  // EQ Mode Change
+  const handleEQChange = (newMode: string) => {
+    setEqMode(newMode);
+    audioFXEngine.setEQ(newMode);
+    void saveSettingsToDb({ eqMode: newMode });
+    showToast(`Equalizer: ${newMode.toUpperCase()}`, "success");
+  };
+
+  // Reverb Percent Change
+  const handleReverbChange = (newPercent: number) => {
+    const clamped = Math.max(0, Math.min(100, newPercent));
+    setReverbPercent(clamped);
+    audioFXEngine.setReverb(clamped);
+    void saveSettingsToDb({ reverbPercent: clamped });
   };
 
   // Seek
@@ -582,6 +638,8 @@ export default function MusicDashboardPage() {
         shuffle: true,
         repeat: "all",
         autoPlay: true,
+        eqMode: "flat",
+        reverbPercent: 0,
       });
       void queryClient.invalidateQueries({ queryKey: queryKeys.musicSettings });
       setSoundQuality("320kbps");
@@ -591,6 +649,10 @@ export default function MusicDashboardPage() {
       setIsMuted(false);
       setShuffle(true);
       setRepeat("all");
+      setEqMode("flat");
+      setReverbPercent(40);
+      audioFXEngine.setEQ("flat");
+      audioFXEngine.setReverb(40);
       showToast("Settings reset to defaults", "success");
     } catch (err) {
       console.error("Failed to reset settings:", err);
@@ -621,28 +683,85 @@ export default function MusicDashboardPage() {
         </div>
       )}
 
-      {/* IMMERSIVE FULL SCREEN THEATER OVERLAY */}
+      {/* IMMERSIVE FULL SCREEN THEATER OVERLAY WITH DYNAMIC ALBUM ART GLASS BACKGROUND */}
       {isFullscreen && (
-        <div className="fixed inset-0 z-50 bg-[#060a12] p-6 sm:p-10 overflow-y-auto flex flex-col justify-between animate-in fade-in duration-300">
-          {/* Fullscreen Header */}
-          <div className="flex items-center justify-between pb-4 border-b border-white/10">
+        <div
+          className="fixed inset-0 overflow-y-auto overflow-x-hidden flex flex-col justify-between p-4 sm:p-8 animate-in fade-in duration-300 bg-[#05070d]"
+          style={{ zIndex: 100 }}
+        >
+          {/* FULL SCREEN BACKGROUND: VISIBLE AMBIENT GLASS EFFECT WITH BLURRED PLAYING SONG IMAGE */}
+          <div
+            className="fixed inset-0 pointer-events-none overflow-hidden select-none"
+            style={{ zIndex: 0 }}
+          >
+            {/* Dynamic Album Art Image with Visible Vibrant Blur */}
+            {currentSongAlbumArt ? (
+              <img
+                src={currentSongAlbumArt}
+                alt=""
+                className="absolute inset-0 w-full h-full object-cover pointer-events-none transition-all duration-700 ease-in-out"
+                style={{
+                  filter: "blur(40px) saturate(180%) brightness(0.65)",
+                  WebkitFilter: "blur(40px) saturate(180%) brightness(0.65)",
+                  transform: "scale(1.25)",
+                  transformOrigin: "center center",
+                  opacity: 0.85,
+                }}
+              />
+            ) : (
+              <div
+                className="absolute inset-0 w-full h-full"
+                style={{
+                  background:
+                    "radial-gradient(ellipse at center, #1e1b4b 0%, #0c0a1f 60%, #03050a 100%)",
+                }}
+              />
+            )}
+
+            {/* Frosted Glass Layer Over Image */}
+            <div className="absolute inset-0 pointer-events-none bg-black/40 backdrop-blur-md" />
+
+            {/* Ambient Radial Vignette darkening edges for cinematic depth */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background:
+                  "radial-gradient(ellipse at center, transparent 35%, rgba(0,0,0,0.75) 100%)",
+              }}
+            />
+
+            {/* Subtle Frosted Dot Grid Texture for tactile glass depth */}
+            <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:28px_28px] opacity-40 pointer-events-none" />
+          </div>
+
+          {/* Fullscreen Header with Frosted Glass styling */}
+          <div
+            className="relative flex items-center justify-between pb-4 border-b border-white/15 backdrop-blur-md rounded-2xl px-5 py-3.5 bg-black/50 shadow-xl"
+            style={{ zIndex: 10 }}
+          >
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-rose-500/20 text-rose-400 border border-rose-500/30">
-                <Disc size={22} className="animate-spin" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-rose-500/20 text-rose-400 border border-rose-500/30 shadow-[0_0_15px_rgba(244,63,94,0.3)]">
+                <Disc size={22} className={isPlaying ? "animate-spin" : ""} />
               </div>
               <div>
                 <h2 className="text-base font-bold text-white tracking-wide">
-                  VH Music · Immersive Hi-Fi Theater
+                  VH Music · Immersive Glass Theater
                 </h2>
-                <p className="text-xs text-zinc-400 font-mono">
-                  {activeCategoryName} · {soundQuality} Lossless Stream
-                </p>
+                <div className="flex flex-wrap items-center gap-2 text-xs font-mono text-zinc-300">
+                  <span>{activeCategoryName}</span>
+                  <span>·</span>
+                  <span className="text-rose-300 font-bold">{soundQuality}</span>
+                  <span>·</span>
+                  <span className="text-violet-300 uppercase">EQ: {eqMode}</span>
+                  <span>·</span>
+                  <span className="text-emerald-300">REV: {reverbPercent}%</span>
+                </div>
               </div>
             </div>
 
             <button
               onClick={handleToggleFullscreen}
-              className="flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-4 py-2 text-xs font-bold text-white hover:bg-white/20 transition shadow-lg"
+              className="flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-4 py-2 text-xs font-bold text-white hover:bg-white/20 transition shadow-lg backdrop-blur-sm"
             >
               <Minimize2 size={15} />
               <span>Exit Full Screen (Esc)</span>
@@ -650,7 +769,7 @@ export default function MusicDashboardPage() {
           </div>
 
           {/* Fullscreen Center Player */}
-          <div className="my-auto py-6 max-w-5xl mx-auto w-full">
+          <div className="relative my-auto py-6 max-w-5xl mx-auto w-full" style={{ zIndex: 10 }}>
             <CdPlayer
               currentSong={currentSong}
               isPlaying={isPlaying}
@@ -663,6 +782,8 @@ export default function MusicDashboardPage() {
               repeat={repeat}
               isFullscreen={true}
               isRandomMode={isRandomMode}
+              eqMode={eqMode}
+              reverbPercent={reverbPercent}
               onPlayPause={handlePlayPause}
               onNext={handleNext}
               onPrev={handlePrev}
@@ -672,6 +793,8 @@ export default function MusicDashboardPage() {
               onToggleShuffle={handleToggleShuffle}
               onToggleRepeat={handleToggleRepeat}
               onQualityChange={handleQualityChange}
+              onEQChange={handleEQChange}
+              onReverbChange={handleReverbChange}
               onDownloadCurrentSong={() => {
                 if (currentSong) void handleDownloadSong(currentSong);
               }}
@@ -691,8 +814,11 @@ export default function MusicDashboardPage() {
             </div>
           </div>
 
-          <div className="text-center font-mono text-[11px] text-zinc-500 pt-4 border-t border-white/10">
-            VH DevTools · System 900 Audio Engine · SQLite Persistence Active
+          <div
+            className="relative text-center font-mono text-[11px] text-zinc-400 pt-4 border-t border-white/15 backdrop-blur-xs"
+            style={{ zIndex: 10 }}
+          >
+            VH DevTools · System 900 Ambient Glass Theater · SQLite Persistence Active
           </div>
         </div>
       )}
@@ -741,6 +867,10 @@ export default function MusicDashboardPage() {
             <span className="rounded bg-sky-500/20 px-2 py-0.5 font-bold text-sky-300 border border-sky-500/30">
               {downloadQuality}
             </span>
+            <span className="mx-1">·</span>
+            <span className="text-violet-400 font-bold uppercase">EQ: {eqMode}</span>
+            <span className="mx-1">·</span>
+            <span className="text-emerald-400 font-bold">REV: {reverbPercent}%</span>
           </div>
         </div>
 
@@ -760,6 +890,8 @@ export default function MusicDashboardPage() {
               repeat={repeat}
               isFullscreen={false}
               isRandomMode={isRandomMode}
+              eqMode={eqMode}
+              reverbPercent={reverbPercent}
               onPlayPause={handlePlayPause}
               onNext={handleNext}
               onPrev={handlePrev}
@@ -769,6 +901,8 @@ export default function MusicDashboardPage() {
               onToggleShuffle={handleToggleShuffle}
               onToggleRepeat={handleToggleRepeat}
               onQualityChange={handleQualityChange}
+              onEQChange={handleEQChange}
+              onReverbChange={handleReverbChange}
               onDownloadCurrentSong={() => {
                 if (currentSong) void handleDownloadSong(currentSong);
               }}
@@ -815,6 +949,8 @@ export default function MusicDashboardPage() {
                 shuffle,
                 repeat,
                 autoPlay,
+                eqMode,
+                reverbPercent,
               }}
               stats={statsQuery.data}
               onUpdateSettings={(partial) => {
@@ -822,6 +958,14 @@ export default function MusicDashboardPage() {
                 if (partial.downloadQuality) setDownloadQuality(partial.downloadQuality);
                 if (partial.autoPlay !== undefined) setAutoPlay(partial.autoPlay);
                 if (partial.shuffle !== undefined) setShuffle(partial.shuffle);
+                if (partial.eqMode) {
+                  setEqMode(partial.eqMode);
+                  audioFXEngine.setEQ(partial.eqMode);
+                }
+                if (partial.reverbPercent !== undefined) {
+                  setReverbPercent(partial.reverbPercent);
+                  audioFXEngine.setReverb(partial.reverbPercent);
+                }
                 void saveSettingsToDb(partial);
               }}
               onResetSettings={handleResetSettings}

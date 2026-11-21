@@ -22,8 +22,10 @@ import {
   Maximize2,
   Type,
   LayoutGrid,
+  Waves,
 } from "lucide-react";
 import type { MusicSettings, SoundQuality, MusicStatsResponse } from "@/types/music";
+import { EQ_PRESETS, REVERB_PRESETS, type EQPresetKey } from "@/lib/audio-engine";
 import {
   useDashboardPreferences,
   AVAILABLE_THEMES,
@@ -240,6 +242,131 @@ export function MusicSettingsTab({
               <p className="text-[11px] vh-text-dim">Ensures zero repeats until full category is finished</p>
             </div>
           </label>
+        </div>
+      </section>
+
+      {/* Audio DSP: Equalizer & Reverb Section */}
+      <section className="rounded-2xl border vh-border vh-bg-card p-6 shadow-sm space-y-6">
+        <div className="flex items-center gap-3 pb-4 border-b vh-border">
+          <div className="rounded-xl border vh-border vh-bg-accent p-2.5 vh-text-accent">
+            <SlidersHorizontal size={20} />
+          </div>
+          <div>
+            <h2 className="text-sm font-bold vh-text-main">Web Audio DSP: Equalizer & Reverb</h2>
+            <p className="text-xs vh-text-dim">
+              Fine-tune the acoustic profile with real-time 5-band biquad filters and algorithmic stereo reverb.
+            </p>
+          </div>
+        </div>
+
+        {/* EQ Profiles */}
+        <div>
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-xs font-bold font-mono uppercase tracking-wider text-violet-300">
+              Equalizer Curve Profiles
+            </h3>
+            <span className="text-xs font-mono text-zinc-400">
+              Current: {EQ_PRESETS[(settings.eqMode || "flat") as EQPresetKey]?.name || "Pure Flat"}
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            {(Object.keys(EQ_PRESETS) as EQPresetKey[]).map((key) => {
+              const preset = EQ_PRESETS[key];
+              const active = (settings.eqMode || "flat") === key;
+              return (
+                <div
+                  key={key}
+                  onClick={() => {
+                    onUpdateSettings({ eqMode: key });
+                    playTone("click");
+                    triggerToast(`Equalizer mode: ${preset.name}`);
+                  }}
+                  className={`p-3.5 rounded-xl border cursor-pointer transition flex flex-col justify-between ${
+                    active
+                      ? "border-violet-500/60 bg-violet-500/15 shadow-[0_0_15px_rgba(139,92,246,0.2)]"
+                      : "vh-border vh-bg-input hover:border-white/20"
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-semibold text-xs vh-text-main">{preset.name}</span>
+                    <span
+                      className={`rounded font-mono text-[9px] px-1.5 py-0.5 font-bold ${
+                        active ? "bg-violet-500 text-white" : "bg-white/10 vh-text-dim"
+                      }`}
+                    >
+                      {preset.badge}
+                    </span>
+                  </div>
+                  <p className="mt-1.5 text-[11px] vh-text-dim">{preset.description}</p>
+                  {active && (
+                    <div className="mt-2.5 flex items-center gap-1 text-[10px] font-bold text-violet-400">
+                      <Check size={12} />
+                      <span>Active Equalizer</span>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Reverb Atmosphere */}
+        <div className="pt-4 border-t vh-border">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <Waves size={16} className="text-emerald-400" />
+              <h3 className="text-xs font-bold font-mono uppercase tracking-wider text-emerald-300">
+                Algorithmic Reverb Effect
+              </h3>
+            </div>
+            <span className="font-mono text-xs font-bold text-emerald-400">
+              {settings.reverbPercent ?? 0}% {((settings.reverbPercent ?? 0) === 0) ? "(Direct Dry)" : "(Wet Acoustic Space)"}
+            </span>
+          </div>
+
+          <div className="bg-black/30 p-4 rounded-xl border vh-border space-y-3">
+            <div className="flex items-center justify-between text-xs font-mono text-zinc-400">
+              <span>0% Dry (Direct)</span>
+              <span>50% Concert Hall</span>
+              <span>100% Cosmic Tail</span>
+            </div>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              step="1"
+              value={settings.reverbPercent ?? 0}
+              onChange={(e) => {
+                const val = parseInt(e.target.value, 10);
+                onUpdateSettings({ reverbPercent: val });
+              }}
+              className="h-2.5 w-full cursor-pointer accent-emerald-500 rounded-lg bg-zinc-800"
+            />
+
+            <div className="flex flex-wrap gap-2 pt-2">
+              {REVERB_PRESETS.map((p) => {
+                const active = (settings.reverbPercent ?? 0) === p.percent;
+                return (
+                  <button
+                    key={p.percent}
+                    onClick={() => {
+                      onUpdateSettings({ reverbPercent: p.percent });
+                      playTone("click");
+                      triggerToast(`Reverb set to: ${p.label} (${p.percent}%)`);
+                    }}
+                    className={`rounded-xl px-3 py-1.5 text-xs font-mono font-semibold transition border ${
+                      active
+                        ? "bg-emerald-500/25 border-emerald-500 text-emerald-300 shadow-xs"
+                        : "vh-border vh-bg-input text-zinc-300 hover:text-white hover:border-white/20"
+                    }`}
+                  >
+                    {p.label} {p.percent}%
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </section>
 

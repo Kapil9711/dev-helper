@@ -20,9 +20,12 @@ import {
   Disc3,
   Maximize2,
   Minimize2,
+  SlidersHorizontal,
+  Waves,
 } from "lucide-react";
 import type { SongData, SoundQuality } from "@/types/music";
 import { playTone } from "@/lib/prefrences";
+import { EQ_PRESETS, REVERB_PRESETS, type EQPresetKey } from "@/lib/audio-engine";
 
 interface CdPlayerProps {
   currentSong: SongData | null;
@@ -36,6 +39,8 @@ interface CdPlayerProps {
   repeat: "off" | "all" | "one";
   isFullscreen: boolean;
   isRandomMode?: boolean;
+  eqMode?: string;
+  reverbPercent?: number;
   onPlayPause: () => void;
   onNext: () => void;
   onPrev: () => void;
@@ -47,6 +52,8 @@ interface CdPlayerProps {
   onQualityChange: (quality: SoundQuality) => void;
   onDownloadCurrentSong: () => void;
   onToggleFullscreen: () => void;
+  onEQChange?: (mode: string) => void;
+  onReverbChange?: (percent: number) => void;
 }
 
 const QUALITY_OPTIONS: { label: string; value: SoundQuality; desc: string; badge: string }[] = [
@@ -76,6 +83,8 @@ export function CdPlayer({
   repeat,
   isFullscreen,
   isRandomMode = false,
+  eqMode = "flat",
+  reverbPercent = 40,
   onPlayPause,
   onNext,
   onPrev,
@@ -87,15 +96,19 @@ export function CdPlayer({
   onQualityChange,
   onDownloadCurrentSong,
   onToggleFullscreen,
+  onEQChange,
+  onReverbChange,
 }: CdPlayerProps) {
   const [isQualityOpen, setIsQualityOpen] = useState(false);
+  const [isFxOpen, setIsFxOpen] = useState(false);
   const [hoverSeekTime, setHoverSeekTime] = useState<number | null>(null);
   const [isDraggingSeek, setIsDraggingSeek] = useState(false);
   const [dragTime, setDragTime] = useState(0);
   const progressBarRef = useRef<HTMLDivElement>(null);
   const qualityDropdownRef = useRef<HTMLDivElement>(null);
+  const fxDropdownRef = useRef<HTMLDivElement>(null);
 
-  // Close quality dropdown when clicking outside
+  // Close dropdowns when clicking outside
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (
@@ -103,6 +116,12 @@ export function CdPlayer({
         !qualityDropdownRef.current.contains(e.target as Node)
       ) {
         setIsQualityOpen(false);
+      }
+      if (
+        fxDropdownRef.current &&
+        !fxDropdownRef.current.contains(e.target as Node)
+      ) {
+        setIsFxOpen(false);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
@@ -148,9 +167,13 @@ export function CdPlayer({
       className={`relative w-full rounded-3xl border vh-border vh-bg-card shadow-2xl transition-all ${
         isFullscreen ? "p-4 sm:p-8" : ""
       }`}
+      style={{ zIndex: 20 }}
     >
       {/* Top Vintage Bezel Bar */}
-      <div className="relative z-40 flex items-center justify-between border-b vh-border bg-black/60 px-5 py-3.5 backdrop-blur-md rounded-t-3xl">
+      <div
+        className="relative flex items-center justify-between border-b vh-border bg-black/60 px-5 py-3.5 backdrop-blur-md rounded-t-3xl"
+        style={{ zIndex: 50 }}
+      >
         <div className="flex items-center gap-2.5">
           <span className="flex h-3 w-3 items-center justify-center rounded-full bg-rose-500/80 shadow-[0_0_8px_rgba(244,63,94,0.8)]">
             <span
@@ -167,10 +190,169 @@ export function CdPlayer({
           </span>
         </div>
 
-        {/* Right Controls: Sound Quality Selector & Fullscreen Toggle */}
-        <div className="flex items-center gap-2.5">
+        {/* Right Controls: Audio FX (EQ & Reverb), Sound Quality & Fullscreen */}
+        <div className="flex items-center gap-2 sm:gap-2.5">
+          {/* Audio FX (EQ & Reverb) DSP Popover */}
+          <div className="relative" ref={fxDropdownRef} style={{ zIndex: 60 }}>
+            <button
+              onClick={() => setIsFxOpen((prev) => !prev)}
+              className="flex items-center gap-1.5 rounded-xl border border-violet-500/40 bg-violet-500/15 px-3 py-1.5 text-xs font-mono font-semibold text-violet-300 hover:bg-violet-500/25 transition shadow-xs"
+              title="Studio Equalizer & Algorithmic Reverb DSP"
+            >
+              <SlidersHorizontal size={13} />
+              <span className="hidden xs:inline">EQ & FX</span>
+              <span className="rounded bg-violet-500/30 px-1 text-[9px] font-bold uppercase text-violet-200">
+                {EQ_PRESETS[eqMode as EQPresetKey]?.badge || "HI-FI"}
+              </span>
+              {reverbPercent > 0 && (
+                <span className="rounded bg-emerald-500/30 px-1 text-[9px] font-bold text-emerald-300">
+                  REV {reverbPercent}%
+                </span>
+              )}
+            </button>
+
+            {isFxOpen && (
+              <div
+                className="absolute right-0 sm:right-auto sm:left-0 mt-2 w-80 sm:w-96 rounded-2xl border border-white/20 vh-bg-modal p-4 shadow-[0_25px_60px_rgba(0,0,0,0.95)] backdrop-blur-2xl animate-in fade-in zoom-in-95 duration-150"
+                style={{ zIndex: 70 }}
+              >
+                {/* Header */}
+                <div className="flex items-center justify-between pb-2.5 border-b vh-border">
+                  <div className="flex items-center gap-2">
+                    <div className="rounded-lg bg-violet-500/20 p-1.5 text-violet-300 border border-violet-500/30">
+                      <SlidersHorizontal size={14} />
+                    </div>
+                    <div>
+                      <h3 className="text-xs font-bold text-white uppercase tracking-wider font-mono">
+                        Studio DSP Effects
+                      </h3>
+                      <p className="text-[10px] vh-text-dim">5-Band Equalizer & Stereo Reverb</p>
+                    </div>
+                  </div>
+                  <span className="rounded bg-emerald-500/20 px-2 py-0.5 text-[9px] font-mono font-bold text-emerald-300 border border-emerald-500/30">
+                    DSP ACTIVE
+                  </span>
+                </div>
+
+                {/* Section 1: Equalizer Modes */}
+                <div className="mt-3">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-violet-300 font-mono">
+                      Equalizer Profile
+                    </span>
+                    <span className="text-[10px] font-mono text-zinc-400">
+                      Active: {EQ_PRESETS[eqMode as EQPresetKey]?.name || "Pure Flat"}
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-1.5">
+                    {(Object.keys(EQ_PRESETS) as EQPresetKey[]).map((key) => {
+                      const preset = EQ_PRESETS[key];
+                      const active = eqMode === key;
+                      return (
+                        <button
+                          key={key}
+                          onClick={() => {
+                            onEQChange?.(key);
+                            playTone("click");
+                          }}
+                          className={`flex flex-col items-start p-2 rounded-xl text-left transition border ${
+                            active
+                              ? "bg-violet-500/25 border-violet-500 text-white shadow-[0_0_12px_rgba(139,92,246,0.3)]"
+                              : "bg-white/5 border-white/10 vh-text-dim hover:bg-white/10 hover:text-white"
+                          }`}
+                        >
+                          <div className="flex items-center justify-between w-full">
+                            <span className="text-xs font-bold font-mono">{preset.name}</span>
+                            <span
+                              className={`rounded text-[9px] px-1 font-mono font-bold ${
+                                active
+                                  ? "bg-violet-500 text-white"
+                                  : "bg-white/10 text-zinc-400"
+                              }`}
+                            >
+                              {preset.badge}
+                            </span>
+                          </div>
+                          <p className="text-[9px] text-zinc-400 mt-0.5 truncate w-full">
+                            {preset.description}
+                          </p>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Section 2: Algorithmic Reverb with Percentage Slider */}
+                <div className="mt-4 pt-3 border-t vh-border">
+                  <div className="flex items-center justify-between mb-1.5">
+                    <div className="flex items-center gap-1.5">
+                      <Waves size={13} className="text-emerald-400" />
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-300 font-mono">
+                        Reverb Atmosphere
+                      </span>
+                    </div>
+                    <span className="font-mono text-xs font-bold text-emerald-400">
+                      {reverbPercent}% {reverbPercent === 0 ? "(Dry)" : "(Wet Mix)"}
+                    </span>
+                  </div>
+
+                  {/* Reverb Slider */}
+                  <div className="space-y-1.5 bg-black/40 p-2.5 rounded-xl border border-white/10">
+                    <div className="flex items-center justify-between text-[10px] font-mono text-zinc-400">
+                      <span>0% Dry</span>
+                      <span>50% Hall</span>
+                      <span>100% Space</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="0"
+                      max="100"
+                      step="1"
+                      value={reverbPercent}
+                      onChange={(e) => {
+                        const val = parseInt(e.target.value, 10);
+                        onReverbChange?.(val);
+                      }}
+                      className="h-2 w-full cursor-pointer accent-emerald-500 rounded-lg bg-zinc-800"
+                    />
+                  </div>
+
+                  {/* Quick Reverb Presets */}
+                  <div className="flex flex-wrap gap-1 mt-2">
+                    {REVERB_PRESETS.map((p) => {
+                      const active = reverbPercent === p.percent;
+                      return (
+                        <button
+                          key={p.percent}
+                          onClick={() => {
+                            onReverbChange?.(p.percent);
+                            playTone("click");
+                          }}
+                          className={`rounded-lg px-2 py-1 text-[10px] font-mono font-semibold transition border ${
+                            active
+                              ? "bg-emerald-500/25 border-emerald-500 text-emerald-300"
+                              : "bg-white/5 border-white/10 text-zinc-400 hover:text-white hover:bg-white/10"
+                          }`}
+                          title={p.desc}
+                        >
+                          {p.label} {p.percent}%
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="mt-3 border-t vh-border pt-2 text-[9px] vh-text-dim flex items-center justify-between">
+                  <span>✓ Real-time Web Audio API DSP</span>
+                  <span>Auto-saved to SQLite</span>
+                </div>
+              </div>
+            )}
+          </div>
+
           {/* Sound Quality Selector in Player Header */}
-          <div className="relative z-50" ref={qualityDropdownRef}>
+          <div className="relative" ref={qualityDropdownRef} style={{ zIndex: 60 }}>
             <button
               onClick={() => setIsQualityOpen((prev) => !prev)}
               className="flex items-center gap-1.5 rounded-xl border border-pink-500/40 bg-pink-500/15 px-3 py-1.5 text-xs font-mono font-semibold text-pink-300 hover:bg-pink-500/25 transition shadow-xs"
@@ -184,7 +366,10 @@ export function CdPlayer({
             </button>
 
             {isQualityOpen && (
-              <div className="absolute right-0 mt-2 w-56 rounded-xl border border-white/20 vh-bg-modal p-2 shadow-[0_20px_50px_rgba(0,0,0,0.9)] backdrop-blur-2xl z-50 animate-in fade-in zoom-in-95 duration-150">
+              <div
+                className="absolute right-0 mt-2 w-56 rounded-xl border border-white/20 vh-bg-modal p-2 shadow-[0_20px_50px_rgba(0,0,0,0.9)] backdrop-blur-2xl animate-in fade-in zoom-in-95 duration-150"
+                style={{ zIndex: 70 }}
+              >
                 <div className="px-2 py-1 text-[10px] font-bold uppercase tracking-wider vh-text-dim border-b vh-border mb-1">
                   Audio Stream Quality
                 </div>
@@ -241,7 +426,10 @@ export function CdPlayer({
       </div>
 
       {/* Main Player Body */}
-      <div className="relative z-10 rounded-b-3xl grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 p-6 sm:p-10 items-center">
+      <div
+        className="relative rounded-b-3xl grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 p-6 sm:p-10 items-center"
+        style={{ zIndex: 10 }}
+      >
         {/* Left Col: Running CD / Vinyl Player Graphic */}
         <div className="md:col-span-5 flex flex-col items-center justify-center">
           <div className="relative flex items-center justify-center">
@@ -318,7 +506,10 @@ export function CdPlayer({
         {/* Right Col: Song Meta, LED Equalizer & Tactile Controls */}
         <div className="md:col-span-7 flex flex-col justify-between space-y-6">
           {/* Retro LED Track Info Screen */}
-          <div className="rounded-2xl border border-rose-500/30 bg-black/80 p-5 shadow-[inset_0_2px_12px_rgba(0,0,0,0.9)] backdrop-blur-sm relative overflow-hidden">
+          <div
+            className="rounded-2xl border border-rose-500/30 bg-black/80 p-5 shadow-[inset_0_2px_12px_rgba(0,0,0,0.9)] backdrop-blur-sm relative overflow-hidden"
+            style={{ zIndex: 1 }}
+          >
             {/* CRT scanline overlay */}
             <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.3)_50%)] bg-[length:100%_4px] pointer-events-none" />
 
@@ -346,6 +537,16 @@ export function CdPlayer({
                     Album: {currentSong.album.name}
                   </p>
                 )}
+
+                {/* DSP Status Badges (EQ Mode & Reverb Level) */}
+                <div className="mt-2.5 flex flex-wrap items-center gap-2">
+                  <span className="rounded bg-violet-500/20 px-2 py-0.5 font-mono text-[10px] font-bold text-violet-300 border border-violet-500/30">
+                    EQ: {EQ_PRESETS[eqMode as EQPresetKey]?.name || "Pure Flat"}
+                  </span>
+                  <span className="rounded bg-emerald-500/20 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-300 border border-emerald-500/30">
+                    REVERB: {reverbPercent}%
+                  </span>
+                </div>
               </div>
 
               {/* Download Current Song Button */}

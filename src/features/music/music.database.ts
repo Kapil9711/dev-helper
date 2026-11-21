@@ -21,8 +21,10 @@ export const DEFAULT_MUSIC_SETTINGS: MusicSettings = {
   shuffle: true,
   repeat: "all",
   autoPlay: true,
+  eqMode: "flat",
+  reverbPercent: 40,
   theme: "midnight",
-  uiStyle: "modern",
+  uiStyle: "cyberpunk",
 };
 
 function resolveDatabasePath(customPath?: string): string {
@@ -139,6 +141,8 @@ export class MusicDatabase {
       shuffle: typeof settingsMap.shuffle === "boolean" ? settingsMap.shuffle : DEFAULT_MUSIC_SETTINGS.shuffle,
       repeat: (settingsMap.repeat as "off" | "all" | "one") || DEFAULT_MUSIC_SETTINGS.repeat,
       autoPlay: typeof settingsMap.autoPlay === "boolean" ? settingsMap.autoPlay : DEFAULT_MUSIC_SETTINGS.autoPlay,
+      eqMode: (settingsMap.eqMode as string) || DEFAULT_MUSIC_SETTINGS.eqMode,
+      reverbPercent: typeof settingsMap.reverbPercent === "number" ? settingsMap.reverbPercent : DEFAULT_MUSIC_SETTINGS.reverbPercent,
       theme: (settingsMap.theme as string) || DEFAULT_MUSIC_SETTINGS.theme,
       uiStyle: (settingsMap.uiStyle as string) || DEFAULT_MUSIC_SETTINGS.uiStyle,
     };

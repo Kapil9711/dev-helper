@@ -72,6 +72,8 @@ export interface MusicSettings {
   shuffle: boolean;
   repeat: "off" | "all" | "one";
   autoPlay: boolean;
+  eqMode?: string;
+  reverbPercent?: number;
   theme?: string;
   uiStyle?: string;
 }

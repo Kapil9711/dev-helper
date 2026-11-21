@@ -108,7 +108,10 @@ export function Topbar() {
     "main";
 
   return (
-    <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b vh-border vh-bg-sidebar/95 px-4 backdrop-blur-md transition-colors md:px-7">
+    <header
+      className="sticky top-0 flex h-16 items-center justify-between border-b vh-border vh-bg-sidebar/95 px-4 backdrop-blur-md transition-colors md:px-7"
+      style={{ zIndex: 90 }}
+    >
       <div className="flex items-center gap-3">
         {/* Mobile / Desktop Quick Sidebar Toggle */}
         <button
@@ -240,7 +243,10 @@ export function Topbar() {
             </button>
 
             {projectDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-64 rounded-xl border vh-border vh-bg-modal p-1.5 shadow-2xl backdrop-blur-xl z-50">
+              <div
+                className="absolute right-0 mt-2 w-64 rounded-xl border vh-border vh-bg-modal p-1.5 shadow-2xl backdrop-blur-xl"
+                style={{ zIndex: 100 }}
+              >
                 <div className="px-2.5 py-1.5 text-[10px] font-semibold uppercase tracking-wider vh-text-dim">
                   Filter by Project
                 </div>
@@ -318,7 +324,10 @@ export function Topbar() {
           </button>
 
           {themeDropdownOpen && (
-            <div className="absolute right-0 mt-2 w-56 rounded-xl border vh-border vh-bg-modal p-1.5 shadow-2xl backdrop-blur-xl z-50">
+            <div
+              className="absolute right-0 mt-2 w-56 rounded-xl border vh-border vh-bg-modal p-1.5 shadow-2xl backdrop-blur-xl"
+              style={{ zIndex: 100 }}
+            >
               <div className="px-2.5 py-1.5 text-[10px] font-semibold uppercase tracking-wider vh-text-dim">
                 Dashboard Theme ({AVAILABLE_THEMES.length})
               </div>
@@ -381,7 +390,10 @@ export function Topbar() {
           </button>
 
           {styleDropdownOpen && (
-            <div className="absolute right-0 mt-2 w-60 rounded-xl border vh-border vh-bg-modal p-1.5 shadow-2xl backdrop-blur-xl z-50">
+            <div
+              className="absolute right-0 mt-2 w-60 rounded-xl border vh-border vh-bg-modal p-1.5 shadow-2xl backdrop-blur-xl"
+              style={{ zIndex: 100 }}
+            >
               <div className="px-2.5 py-1.5 text-[10px] font-semibold uppercase tracking-wider vh-text-dim">
                 Design System Paradigm
               </div>
