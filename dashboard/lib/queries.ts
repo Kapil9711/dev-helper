@@ -27,6 +27,11 @@ export const queryKeys = {
   gitLiveFiles: ["git-live-files"] as const,
   gitFileContent: (filePath: string) => ["git-file-content", filePath] as const,
   gitConfig: ["git-config"] as const,
+  musicCategories: ["music-categories"] as const,
+  musicSongs: (category?: string) => ["music-songs", category || "random"] as const,
+  musicSettings: ["music-settings"] as const,
+  musicStats: ["music-stats"] as const,
+  musicFavorites: ["music-favorites"] as const,
 };
 
 export function useAppsQuery() {
@@ -159,3 +164,46 @@ export function useGitConfigQuery() {
     staleTime: 30_000,
   });
 }
+
+// ---------------- MUSIC QUERIES ----------------
+
+export function useMusicCategoriesQuery() {
+  return useQuery({
+    queryKey: queryKeys.musicCategories,
+    queryFn: () => apiClient.getMusicCategories(),
+    staleTime: 10_000,
+  });
+}
+
+export function useMusicSongsQuery(category?: string) {
+  return useQuery({
+    queryKey: queryKeys.musicSongs(category),
+    queryFn: () => apiClient.getMusicSongs(category),
+    staleTime: 10_000,
+  });
+}
+
+export function useMusicSettingsQuery() {
+  return useQuery({
+    queryKey: queryKeys.musicSettings,
+    queryFn: () => apiClient.getMusicSettings(),
+    staleTime: 2_000,
+  });
+}
+
+export function useMusicStatsQuery() {
+  return useQuery({
+    queryKey: queryKeys.musicStats,
+    queryFn: () => apiClient.getMusicStats(),
+    staleTime: 10_000,
+  });
+}
+
+export function useMusicFavoritesQuery() {
+  return useQuery({
+    queryKey: queryKeys.musicFavorites,
+    queryFn: () => apiClient.getMusicFavorites(),
+    staleTime: 5_000,
+  });
+}
+

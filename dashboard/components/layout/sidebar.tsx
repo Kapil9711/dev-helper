@@ -20,6 +20,8 @@ import {
   FolderGit2,
   Archive,
   FileCode,
+  Disc,
+  Music,
 } from "lucide-react";
 import { useDashboardPreferences, playTone } from "@/lib/prefrences";
 import { useServerInfoQuery, useGitStatusQuery } from "@/lib/queries";
@@ -53,6 +55,12 @@ const gitNavigation: NavItem[] = [
   { label: "Settings", href: "/git/?tab=settings", tab: "settings", icon: Settings },
 ];
 
+// Navigation links for VH Music Dashboard (Initially only Song tab and Settings tab)
+const musicNavigation: NavItem[] = [
+  { label: "Song", href: "/music/?tab=song", tab: "song", icon: Disc },
+  { label: "Settings", href: "/music/?tab=settings", tab: "settings", icon: Settings },
+];
+
 export function Sidebar() {
   const pathname = usePathname();
   const { preferences, updatePreferences, toggleSidebar } = useDashboardPreferences();
@@ -63,8 +71,13 @@ export function Sidebar() {
   const isGitPath = pathname.startsWith("/git");
   const isGitMode = isGitServer || isGitPath;
 
+  const isMusicServer = serverInfoQuery.data?.mode === "music";
+  const isMusicPath = pathname.startsWith("/music");
+  const isMusicMode = isMusicServer || isMusicPath;
+
   const [isHovered, setIsHovered] = useState(false);
   const [currentGitTab, setCurrentGitTab] = useState("diff");
+  const [currentMusicTab, setCurrentMusicTab] = useState("song");
 
   // Track active git tab from URL or custom events
   useEffect(() => {
@@ -90,6 +103,30 @@ export function Sidebar() {
     };
   }, []);
 
+  // Track active music tab from URL or custom events
+  useEffect(() => {
+    const syncMusicTab = () => {
+      if (typeof window === "undefined") return;
+      const tab = new URLSearchParams(window.location.search).get("tab") || "song";
+      setCurrentMusicTab(tab);
+    };
+
+    syncMusicTab();
+
+    const handleCustomMusicTab = (e: Event) => {
+      const detail = (e as CustomEvent<string>).detail;
+      if (detail) setCurrentMusicTab(detail);
+    };
+
+    window.addEventListener("vh-music-tab-change", handleCustomMusicTab);
+    window.addEventListener("popstate", syncMusicTab);
+
+    return () => {
+      window.removeEventListener("vh-music-tab-change", handleCustomMusicTab);
+      window.removeEventListener("popstate", syncMusicTab);
+    };
+  }, []);
+
   // Expanded if NOT collapsed, OR if collapsed but currently hovered
   const isExpanded = !preferences.sidebarCollapsed || isHovered;
 
@@ -109,7 +146,22 @@ export function Sidebar() {
     }
   };
 
-  const currentNav = isGitMode ? gitNavigation : logsNavigation;
+  const handleMusicLinkClick = (tabId: string) => {
+    playTone("click");
+    setCurrentMusicTab(tabId);
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.origin + "/music/");
+      url.searchParams.set("tab", tabId);
+      window.history.pushState({}, "", url.toString());
+      window.dispatchEvent(new CustomEvent("vh-music-tab-change", { detail: tabId }));
+    }
+  };
+
+  const currentNav = isMusicMode
+    ? musicNavigation
+    : isGitMode
+    ? gitNavigation
+    : logsNavigation;
 
   return (
     <aside
@@ -123,7 +175,7 @@ export function Sidebar() {
       <div className="flex h-16 items-center justify-between border-b vh-border px-3.5">
         <div className="flex items-center gap-3 overflow-hidden">
           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl vh-bg-accent vh-text-accent border vh-border-accent">
-            {isGitMode ? <FolderGit2 size={20} /> : <Code2 size={20} />}
+            {isMusicMode ? <Disc size={20} className="animate-[spin_12s_linear_infinite]" /> : isGitMode ? <FolderGit2 size={20} /> : <Code2 size={20} />}
           </div>
 
           <div
@@ -132,10 +184,10 @@ export function Sidebar() {
             }`}
           >
             <p className="font-bold text-sm tracking-tight vh-text-main whitespace-nowrap">
-              {isGitMode ? "VH Git" : "VH DevTools"}
+              {isMusicMode ? "VH Music" : isGitMode ? "VH Git" : "VH DevTools"}
             </p>
             <p className="text-[10px] vh-text-dim whitespace-nowrap">
-              {isGitMode ? "Git Dashboard" : "Developer observability"}
+              {isMusicMode ? "Song Player" : isGitMode ? "Git Dashboard" : "Developer observability"}
             </p>
           </div>
         </div>
@@ -160,7 +212,7 @@ export function Sidebar() {
       <div className="px-2.5 pt-5 flex-1 overflow-y-auto">
         {isExpanded && (
           <p className="mb-2 px-2.5 text-[10px] font-semibold uppercase tracking-[0.16em] vh-text-dim transition-opacity duration-200">
-            {isGitMode ? "Git Workspace" : "Workspace"}
+            {isMusicMode ? "Music Player" : isGitMode ? "Git Workspace" : "Workspace"}
           </p>
         )}
 
@@ -169,7 +221,9 @@ export function Sidebar() {
             const Icon = item.icon;
             let active = false;
 
-            if (isGitMode && item.tab) {
+            if (isMusicMode && item.tab) {
+              active = currentMusicTab === item.tab;
+            } else if (isGitMode && item.tab) {
               active = currentGitTab === item.tab;
             } else {
               active =
@@ -179,12 +233,16 @@ export function Sidebar() {
                     pathname.startsWith(item.href.replace(/\/$/, ""));
             }
 
-            if (isGitMode && item.tab) {
+            if ((isMusicMode || isGitMode) && item.tab) {
               const tabId = item.tab;
+              const clickHandler = isMusicMode
+                ? () => handleMusicLinkClick(tabId)
+                : () => handleGitLinkClick(tabId);
+
               return (
                 <button
                   key={item.label}
-                  onClick={() => handleGitLinkClick(tabId)}
+                  onClick={clickHandler}
                   title={!isExpanded ? item.label : undefined}
                   className={`group relative flex w-full items-center rounded-xl transition ${
                     isExpanded ? "px-3 py-2.5 gap-3 text-sm" : "h-11 w-11 justify-center mx-auto"
@@ -252,7 +310,7 @@ export function Sidebar() {
       </div>
 
       {/* Active Project Filter pill (ONLY in Logs Dashboard mode) */}
-      {!isGitMode && preferences.selectedProject !== "ALL" && (
+      {!isGitMode && !isMusicMode && preferences.selectedProject !== "ALL" && (
         <div className={`mx-2.5 mb-3 transition-all duration-200 ${isExpanded ? "p-3" : "p-1.5"}`}>
           {isExpanded ? (
             <div className="rounded-xl border vh-border-accent vh-bg-accent/40 p-3">
@@ -288,18 +346,24 @@ export function Sidebar() {
         {isExpanded ? (
           <div className="flex items-center gap-2.5 rounded-xl border vh-border-subtle vh-bg-card p-2.5">
             <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg vh-bg-accent vh-text-accent">
-              {isGitMode ? <GitBranch size={14} /> : <Boxes size={14} />}
+              {isMusicMode ? <Disc size={14} className="animate-[spin_8s_linear_infinite]" /> : isGitMode ? <GitBranch size={14} /> : <Boxes size={14} />}
             </div>
             <div className="min-w-0 flex-1">
               <p className="truncate text-xs font-medium vh-text-main">
-                {isGitMode
+                {isMusicMode
+                  ? "VH Music Player"
+                  : isGitMode
                   ? gitStatusQuery.data?.currentBranch?.current ||
                     serverInfoQuery.data?.currentBranch ||
                     "Git Local"
                   : "VH Local Server"}
               </p>
               <p className="text-[10px] vh-text-dim">
-                {isGitMode ? "Port 4318 · Git" : "Port 4317 · SQLite"}
+                {isMusicMode
+                  ? `Port ${serverInfoQuery.data?.port || 4319} · SQLite`
+                  : isGitMode
+                  ? "Port 4318 · Git"
+                  : "Port 4317 · SQLite"}
               </p>
             </div>
             <span className="h-2 w-2 rounded-full bg-emerald-400 shrink-0 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
@@ -307,13 +371,17 @@ export function Sidebar() {
         ) : (
           <div
             title={
-              isGitMode
+              isMusicMode
+                ? "VH Music Player connected (SQLite)"
+                : isGitMode
                 ? `Git Dashboard connected (${serverInfoQuery.data?.currentBranch || "Local"})`
                 : "VH Local Server connected on port 4317"
             }
             className="flex h-10 w-10 items-center justify-center rounded-xl vh-bg-card border vh-border-subtle mx-auto relative"
           >
-            {isGitMode ? (
+            {isMusicMode ? (
+              <Disc size={16} className="vh-text-accent" />
+            ) : isGitMode ? (
               <GitBranch size={16} className="vh-text-accent" />
             ) : (
               <Boxes size={16} className="vh-text-accent" />

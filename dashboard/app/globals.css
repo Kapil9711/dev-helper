@@ -781,3 +781,24 @@ div:has(> input) > input.bg-transparent {
 [data-icon-style="minimal"] svg {
   filter: none !important;
 }
+
+/* ========================================================
+   VINYL & CD ROTATION ANIMATION
+   ======================================================== */
+@keyframes cd-disc-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-cd-spin {
+  animation: cd-disc-spin 6s linear infinite;
+}
+
+.animate-cd-spin-slow {
+  animation: cd-disc-spin 12s linear infinite;
+}
+

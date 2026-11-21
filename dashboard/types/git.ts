@@ -127,11 +127,13 @@ export interface GitActionResult {
 }
 
 export interface ServerInfoResponse {
-  mode: "git" | "logs";
-  service: string;
+  mode: "git" | "logs" | "music";
+  service?: string;
   repoRoot?: string;
   currentBranch?: string;
   projectName?: string;
+  port?: number;
+  [key: string]: unknown;
 }
 
 export interface GitLiveFile {

@@ -16,6 +16,8 @@ import {
   Terminal,
   GitBranch,
   FolderGit2,
+  Disc,
+  Music,
 } from "lucide-react";
 import { ConnectionStatus } from "./connection-status";
 import {
@@ -54,6 +56,10 @@ export function Topbar() {
   const isGitServer = serverInfoQuery.data?.mode === "git";
   const isGitPath = pathname.startsWith("/git");
   const isGitMode = isGitServer || isGitPath;
+
+  const isMusicServer = serverInfoQuery.data?.mode === "music";
+  const isMusicPath = pathname.startsWith("/music");
+  const isMusicMode = isMusicServer || isMusicPath;
 
   const apps = appsQuery.data?.data ?? [];
 
@@ -116,10 +122,10 @@ export function Topbar() {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-sm font-bold vh-text-main">
-              {isGitMode ? "Git Dashboard" : titles[normalizedPath] ?? "Dashboard"}
+              {isMusicMode ? "VH Music" : isGitMode ? "Git Dashboard" : titles[normalizedPath] ?? "Dashboard"}
             </h1>
 
-            {!isGitMode && preferences.selectedProject !== "ALL" && (
+            {!isGitMode && !isMusicMode && preferences.selectedProject !== "ALL" && (
               <span className="flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-semibold vh-bg-accent vh-text-accent border vh-border-accent">
                 <Boxes size={11} />
                 {preferences.selectedProject}
@@ -134,7 +140,11 @@ export function Topbar() {
             )}
           </div>
           <p className="mt-0.5 text-[11px] vh-text-dim">
-            {isGitMode ? (
+            {isMusicMode ? (
+              <>
+                VH Music <span className="mx-1">/</span> Hi-Fi Retro Player
+              </>
+            ) : isGitMode ? (
               <>
                 VH Git <span className="mx-1">/</span> {currentProjectName}
               </>
@@ -149,8 +159,13 @@ export function Topbar() {
       </div>
 
       <div className="flex items-center gap-2.5">
-        {/* IN GIT DASHBOARD MODE: Display Current Project & Active Branch Pills instead of Project Dropdown */}
-        {isGitMode ? (
+        {/* IN MUSIC MODE: Show Music Player Badge */}
+        {isMusicMode ? (
+          <div className="flex items-center gap-2 rounded-xl border border-pink-500/25 bg-pink-500/10 px-3 py-1.5 text-xs font-semibold text-pink-400 shadow-xs">
+            <Disc size={14} className="animate-[spin_6s_linear_infinite]" />
+            <span className="hidden sm:inline">Hi-Fi Audio Player</span>
+          </div>
+        ) : isGitMode ? (
           <>
             {/* Current Project / Repository Indicator */}
             <div

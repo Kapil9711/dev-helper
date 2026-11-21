@@ -1,0 +1,707 @@
+"use client";
+
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import {
+  useMusicCategoriesQuery,
+  useMusicSongsQuery,
+  useMusicSettingsQuery,
+  useMusicStatsQuery,
+  queryKeys,
+} from "@/lib/queries";
+import { apiClient } from "@/lib/api-client";
+import { useDashboardPreferences, playTone } from "@/lib/prefrences";
+import { CdPlayer } from "@/components/music/cd-player";
+import { CategorySelector } from "@/components/music/category-selector";
+import { UpNextCard } from "@/components/music/up-next-card";
+import { MusicSettingsTab } from "@/components/music/music-settings";
+import { BatchDownloadModal } from "@/components/music/batch-download-modal";
+import type { SongData, SoundQuality, MusicSettings } from "@/types/music";
+import { Minimize2, Disc, Maximize2 } from "lucide-react";
+
+export default function MusicDashboardPage() {
+  const queryClient = useQueryClient();
+  const { preferences, updatePreferences } = useDashboardPreferences();
+
+  // Active view tab: "song" | "settings"
+  const [activeTab, setActiveTab] = useState<"song" | "settings">("song");
+
+  // Full Screen State
+  const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
+
+  // Sync tab with URL search parameter & custom events from sidebar
+  useEffect(() => {
+    const syncTab = () => {
+      if (typeof window === "undefined") return;
+      const params = new URLSearchParams(window.location.search);
+      const tab = params.get("tab");
+      if (tab === "song" || tab === "settings") {
+        setActiveTab(tab);
+      }
+    };
+
+    syncTab();
+
+    const handleCustomTab = (e: Event) => {
+      const detail = (e as CustomEvent<string>).detail;
+      if (detail === "song" || detail === "settings") {
+        setActiveTab(detail);
+      }
+    };
+
+    window.addEventListener("vh-music-tab-change", handleCustomTab);
+    window.addEventListener("popstate", syncTab);
+
+    return () => {
+      window.removeEventListener("vh-music-tab-change", handleCustomTab);
+      window.removeEventListener("popstate", syncTab);
+    };
+  }, []);
+
+  // Listen for Escape key to exit fullscreen
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isFullscreen) {
+        setIsFullscreen(false);
+        if (document.fullscreenElement) {
+          void document.exitFullscreen().catch(() => {});
+        }
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isFullscreen]);
+
+  // Queries
+  const categoriesQuery = useMusicCategoriesQuery();
+  const settingsQuery = useMusicSettingsQuery();
+  const statsQuery = useMusicStatsQuery();
+
+  // Persistent Settings from SQLite
+  const persistentSettings: MusicSettings = useMemo(() => {
+    return (
+      settingsQuery.data?.settings || {
+        soundQuality: "320kbps",
+        downloadQuality: "320kbps",
+        activeCategory: "random",
+        lastSongId: null,
+        playbackPosition: 0,
+        volume: 0.8,
+        isMuted: false,
+        shuffle: true,
+        repeat: "all",
+        autoPlay: true,
+        theme: "midnight",
+        uiStyle: "modern",
+      }
+    );
+  }, [settingsQuery.data?.settings]);
+
+  // Local state initialized with fallback
+  const [activeCategory, setActiveCategory] = useState<string>("random");
+  const [soundQuality, setSoundQuality] = useState<SoundQuality>("320kbps");
+  const [downloadQuality, setDownloadQuality] = useState<SoundQuality>("320kbps");
+  const [volume, setVolume] = useState<number>(0.8);
+  const [isMuted, setIsMuted] = useState<boolean>(false);
+  const [shuffle, setShuffle] = useState<boolean>(true);
+  const [repeat, setRepeat] = useState<"off" | "all" | "one">("all");
+  const [autoPlay, setAutoPlay] = useState<boolean>(true);
+
+  // Sync state once persistent settings are loaded from SQLite
+  const [isSettingsInitialized, setIsSettingsInitialized] = useState(false);
+  useEffect(() => {
+    if (settingsQuery.data?.settings && !isSettingsInitialized) {
+      const s = settingsQuery.data.settings;
+      setActiveCategory(s.activeCategory || "random");
+      setSoundQuality(s.soundQuality || "320kbps");
+      setDownloadQuality(s.downloadQuality || "320kbps");
+      setVolume(typeof s.volume === "number" ? s.volume : 0.8);
+      setIsMuted(Boolean(s.isMuted));
+      setShuffle(typeof s.shuffle === "boolean" ? s.shuffle : true);
+      setRepeat(s.repeat || "all");
+      setAutoPlay(typeof s.autoPlay === "boolean" ? s.autoPlay : true);
+      setIsSettingsInitialized(true);
+    }
+  }, [settingsQuery.data?.settings, isSettingsInitialized]);
+
+  // Fetch songs for the active category
+  const songsQuery = useMusicSongsQuery(activeCategory);
+  const songs = songsQuery.data?.songs ?? [];
+
+  // Playback & HTML5 Audio State
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [currentSong, setCurrentSong] = useState<SongData | null>(null);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [currentTime, setCurrentTime] = useState<number>(0);
+  const [duration, setDuration] = useState<number>(0);
+
+  // Pool of played song IDs in "random" mode to ensure NO repeats
+  const [playedSongIds, setPlayedSongIds] = useState<Set<string>>(new Set());
+
+  // Batch download modal state
+  const [isDownloadModalOpen, setIsDownloadModalOpen] = useState(false);
+  const [downloadModalCategory, setDownloadModalCategory] = useState<string>("random");
+
+  // Helper to persist partial settings to SQLite
+  const saveSettingsToDb = useCallback(
+    async (partial: Partial<MusicSettings>) => {
+      try {
+        await apiClient.updateMusicSettings(partial);
+        void queryClient.invalidateQueries({ queryKey: queryKeys.musicSettings });
+        void queryClient.invalidateQueries({ queryKey: queryKeys.musicStats });
+      } catch (err) {
+        console.error("Failed to save settings to SQLite DB:", err);
+      }
+    },
+    [queryClient],
+  );
+
+  // Compute Audio URL matching sound quality
+  const getAudioUrl = useCallback(
+    (song: SongData | null, quality: SoundQuality): string => {
+      if (!song?.downloadUrl?.length) return "";
+      const matched = song.downloadUrl.find((u) => u.quality === quality);
+      return (
+        matched?.url ||
+        song.downloadUrl[song.downloadUrl.length - 1]?.url ||
+        song.downloadUrl[0]?.url ||
+        ""
+      );
+    },
+    [],
+  );
+
+  // Initial song selection once songs are loaded
+  useEffect(() => {
+    if (songs.length > 0 && !currentSong) {
+      const lastId = persistentSettings.lastSongId;
+      const matchedLast = lastId ? songs.find((s) => s.id === lastId) : null;
+      const initial = matchedLast || songs[0];
+      setCurrentSong(initial);
+      if (persistentSettings.playbackPosition > 0 && matchedLast) {
+        setCurrentTime(persistentSettings.playbackPosition);
+      }
+    }
+  }, [songs, currentSong, persistentSettings.lastSongId, persistentSettings.playbackPosition]);
+
+  // Initialize Audio element
+  useEffect(() => {
+    const audio = new Audio();
+    audio.preload = "auto";
+    audioRef.current = audio;
+
+    const onTimeUpdate = () => {
+      if (audio) setCurrentTime(audio.currentTime);
+    };
+
+    const onLoadedMetadata = () => {
+      if (audio) setDuration(audio.duration || 0);
+    };
+
+    const onPlay = () => setIsPlaying(true);
+    const onPause = () => setIsPlaying(false);
+
+    audio.addEventListener("timeupdate", onTimeUpdate);
+    audio.addEventListener("loadedmetadata", onLoadedMetadata);
+    audio.addEventListener("play", onPlay);
+    audio.addEventListener("pause", onPause);
+
+    return () => {
+      audio.pause();
+      audio.removeEventListener("timeupdate", onTimeUpdate);
+      audio.removeEventListener("loadedmetadata", onLoadedMetadata);
+      audio.removeEventListener("play", onPlay);
+      audio.removeEventListener("pause", onPause);
+      audio.src = "";
+    };
+  }, []);
+
+  // Update volume and mute state on audio element
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = isMuted ? 0 : volume;
+    }
+  }, [volume, isMuted]);
+
+  // Song selection / change
+  const playSong = useCallback(
+    (song: SongData, resumeTime = 0) => {
+      setCurrentSong(song);
+      const url = getAudioUrl(song, soundQuality);
+
+      if (audioRef.current) {
+        audioRef.current.src = url;
+        audioRef.current.currentTime = resumeTime;
+        audioRef.current
+          .play()
+          .then(() => setIsPlaying(true))
+          .catch((err) => {
+            console.warn("Auto-play prevented by browser policy:", err);
+            setIsPlaying(false);
+          });
+      }
+
+      // Record in play history & update last played song in SQLite
+      void apiClient.recordMusicHistory(song.id, activeCategory);
+      void saveSettingsToDb({ lastSongId: song.id, playbackPosition: resumeTime });
+
+      // Add to played set
+      setPlayedSongIds((prev) => {
+        const next = new Set(prev);
+        next.add(song.id);
+        return next;
+      });
+    },
+    [getAudioUrl, soundQuality, activeCategory, saveSettingsToDb],
+  );
+
+  // Compute ONLY the single NEXT upcoming track
+  const nextUpcomingSong: SongData | null = useMemo(() => {
+    if (songs.length === 0) return null;
+    if (songs.length === 1) return songs[0];
+
+    if (activeCategory === "random" || shuffle) {
+      // Find candidate in unplayed pool
+      const unplayed = songs.filter(
+        (s) => !playedSongIds.has(s.id) && s.id !== currentSong?.id,
+      );
+      if (unplayed.length > 0) return unplayed[0];
+      return songs.find((s) => s.id !== currentSong?.id) || songs[0];
+    } else {
+      const currentIndex = songs.findIndex((s) => s.id === currentSong?.id);
+      if (currentIndex === -1) return songs[0];
+      return songs[(currentIndex + 1) % songs.length];
+    }
+  }, [songs, activeCategory, shuffle, playedSongIds, currentSong?.id]);
+
+  // Next Track Action
+  const handleNext = useCallback(() => {
+    if (nextUpcomingSong) {
+      playSong(nextUpcomingSong, 0);
+    }
+  }, [nextUpcomingSong, playSong]);
+
+  // Previous Track Action
+  const handlePrev = useCallback(() => {
+    if (songs.length === 0) return;
+    if (currentTime > 3) {
+      if (audioRef.current) audioRef.current.currentTime = 0;
+      setCurrentTime(0);
+      return;
+    }
+
+    const currentIndex = songs.findIndex((s) => s.id === currentSong?.id);
+    const prevIndex = (currentIndex - 1 + songs.length) % songs.length;
+    playSong(songs[prevIndex], 0);
+  }, [songs, currentSong?.id, currentTime, playSong]);
+
+  // Handle Track Finished Event
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const onEnded = () => {
+      if (repeat === "one") {
+        audio.currentTime = 0;
+        void audio.play();
+      } else if (repeat === "all" || autoPlay) {
+        handleNext();
+      } else {
+        setIsPlaying(false);
+      }
+    };
+
+    audio.addEventListener("ended", onEnded);
+    return () => audio.removeEventListener("ended", onEnded);
+  }, [repeat, autoPlay, handleNext]);
+
+  // Play / Pause Toggle
+  const handlePlayPause = () => {
+    if (!audioRef.current) return;
+    if (isPlaying) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+      void saveSettingsToDb({ playbackPosition: Math.floor(currentTime) });
+    } else {
+      if (!audioRef.current.src && currentSong) {
+        playSong(currentSong, currentTime);
+      } else {
+        audioRef.current
+          .play()
+          .then(() => setIsPlaying(true))
+          .catch(() => setIsPlaying(false));
+      }
+    }
+  };
+
+  // Seek
+  const handleSeek = (newTime: number) => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = newTime;
+      setCurrentTime(newTime);
+      void saveSettingsToDb({ playbackPosition: Math.floor(newTime) });
+    }
+  };
+
+  // Volume Change
+  const handleVolumeChange = (newVolume: number) => {
+    setVolume(newVolume);
+    setIsMuted(false);
+    void saveSettingsToDb({ volume: newVolume, isMuted: false });
+  };
+
+  // Mute Toggle
+  const handleToggleMute = () => {
+    setIsMuted((prev) => {
+      const next = !prev;
+      void saveSettingsToDb({ isMuted: next });
+      return next;
+    });
+  };
+
+  // Shuffle Toggle
+  const handleToggleShuffle = () => {
+    setShuffle((prev) => {
+      const next = !prev;
+      void saveSettingsToDb({ shuffle: next });
+      return next;
+    });
+  };
+
+  // Repeat Mode Toggle
+  const handleToggleRepeat = () => {
+    setRepeat((prev) => {
+      const next = prev === "off" ? "all" : prev === "all" ? "one" : "off";
+      void saveSettingsToDb({ repeat: next });
+      return next;
+    });
+  };
+
+  // Change Sound Quality
+  const handleQualityChange = (newQuality: SoundQuality) => {
+    setSoundQuality(newQuality);
+    void saveSettingsToDb({ soundQuality: newQuality });
+
+    if (currentSong && audioRef.current) {
+      const wasPlaying = isPlaying;
+      const preserveTime = audioRef.current.currentTime;
+      const newUrl = getAudioUrl(currentSong, newQuality);
+
+      audioRef.current.src = newUrl;
+      audioRef.current.currentTime = preserveTime;
+      if (wasPlaying) {
+        void audioRef.current.play();
+      }
+    }
+  };
+
+  // Category Selection
+  const handleSelectCategory = (catId: string) => {
+    setActiveCategory(catId);
+    setPlayedSongIds(new Set());
+    void saveSettingsToDb({ activeCategory: catId });
+
+    void apiClient.getMusicSongs(catId).then((res) => {
+      if (res.songs?.length > 0) {
+        if (catId === "random") {
+          const rand = res.songs[Math.floor(Math.random() * res.songs.length)];
+          playSong(rand, 0);
+        } else {
+          playSong(res.songs[0], 0);
+        }
+      }
+    });
+  };
+
+  // Single Song Download
+  const handleDownloadSong = async (song: SongData) => {
+    const audioUrl = getAudioUrl(song, downloadQuality);
+    if (!audioUrl) return;
+
+    const primaryArtist =
+      song.artists?.primary?.map((a) => a.name).join(", ") || "Unknown";
+    const fileName = `${song.name} - ${primaryArtist}.mp4`;
+
+    const a = document.createElement("a");
+    a.href = audioUrl;
+    a.download = fileName;
+    a.target = "_blank";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+
+  // Toggle Fullscreen Mode
+  const handleToggleFullscreen = () => {
+    setIsFullscreen((prev) => {
+      const next = !prev;
+      if (next) {
+        if (document.documentElement.requestFullscreen) {
+          void document.documentElement.requestFullscreen().catch(() => {});
+        }
+      } else {
+        if (document.fullscreenElement) {
+          void document.exitFullscreen().catch(() => {});
+        }
+      }
+      return next;
+    });
+  };
+
+  // Reset Settings
+  const handleResetSettings = async () => {
+    try {
+      await apiClient.updateMusicSettings({
+        soundQuality: "320kbps",
+        downloadQuality: "320kbps",
+        activeCategory: "random",
+        volume: 0.8,
+        isMuted: false,
+        shuffle: true,
+        repeat: "all",
+        autoPlay: true,
+      });
+      void queryClient.invalidateQueries({ queryKey: queryKeys.musicSettings });
+      setSoundQuality("320kbps");
+      setDownloadQuality("320kbps");
+      setActiveCategory("random");
+      setVolume(0.8);
+      setIsMuted(false);
+      setShuffle(true);
+      setRepeat("all");
+    } catch (err) {
+      console.error("Failed to reset settings:", err);
+    }
+  };
+
+  const categories = categoriesQuery.data?.categories ?? [];
+  const totalLibrarySongs =
+    statsQuery.data?.totalSongs ?? categories.reduce((sum, c) => sum + c.count, 0);
+
+  const activeCategoryObj = categories.find((c) => c.id === activeCategory);
+  const activeCategoryName =
+    activeCategory === "random" ? "Random Library" : activeCategoryObj?.name || activeCategory;
+
+  const remainingQueueCount = Math.max(0, songs.length - playedSongIds.size);
+
+  return (
+    <>
+      {/* IMMERSIVE FULL SCREEN THEATER OVERLAY */}
+      {isFullscreen && (
+        <div className="fixed inset-0 z-50 bg-[#060a12] p-6 sm:p-10 overflow-y-auto flex flex-col justify-between animate-in fade-in duration-300">
+          {/* Fullscreen Header */}
+          <div className="flex items-center justify-between pb-4 border-b border-white/10">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-rose-500/20 text-rose-400 border border-rose-500/30">
+                <Disc size={22} className="animate-spin" />
+              </div>
+              <div>
+                <h2 className="text-base font-bold text-white tracking-wide">
+                  VH Music · Immersive Hi-Fi Theater
+                </h2>
+                <p className="text-xs text-zinc-400 font-mono">
+                  {activeCategoryName} · {soundQuality} Lossless Stream
+                </p>
+              </div>
+            </div>
+
+            <button
+              onClick={handleToggleFullscreen}
+              className="flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-4 py-2 text-xs font-bold text-white hover:bg-white/20 transition shadow-lg"
+            >
+              <Minimize2 size={15} />
+              <span>Exit Full Screen (Esc)</span>
+            </button>
+          </div>
+
+          {/* Fullscreen Center Player */}
+          <div className="my-auto py-6 max-w-5xl mx-auto w-full">
+            <CdPlayer
+              currentSong={currentSong}
+              isPlaying={isPlaying}
+              currentTime={currentTime}
+              duration={duration}
+              volume={volume}
+              isMuted={isMuted}
+              soundQuality={soundQuality}
+              shuffle={shuffle}
+              repeat={repeat}
+              isFullscreen={true}
+              onPlayPause={handlePlayPause}
+              onNext={handleNext}
+              onPrev={handlePrev}
+              onSeek={handleSeek}
+              onVolumeChange={handleVolumeChange}
+              onToggleMute={handleToggleMute}
+              onToggleShuffle={handleToggleShuffle}
+              onToggleRepeat={handleToggleRepeat}
+              onQualityChange={handleQualityChange}
+              onDownloadCurrentSong={() => {
+                if (currentSong) void handleDownloadSong(currentSong);
+              }}
+              onToggleFullscreen={handleToggleFullscreen}
+            />
+
+            {/* Next Track Preview inside Fullscreen */}
+            <div className="mt-6">
+              <UpNextCard
+                nextSong={nextUpcomingSong}
+                categoryName={activeCategoryName}
+                totalQueueCount={remainingQueueCount}
+                downloadQuality={downloadQuality}
+                onPlayNext={handleNext}
+                onDownloadSong={handleDownloadSong}
+              />
+            </div>
+          </div>
+
+          <div className="text-center font-mono text-[11px] text-zinc-500 pt-4 border-t border-white/10">
+            VH DevTools · System 900 Audio Engine · SQLite Persistence Active
+          </div>
+        </div>
+      )}
+
+      {/* STANDARD DASHBOARD VIEW */}
+      <main className="min-h-[calc(100vh-4rem)] p-4 sm:p-6 lg:p-8 space-y-6 max-w-7xl mx-auto">
+        {/* Top Tab Bar: Song Player vs Settings */}
+        <div className="flex items-center justify-between border-b vh-border pb-3">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => {
+                setActiveTab("song");
+                playTone("click");
+              }}
+              className={`flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-semibold transition ${
+                activeTab === "song"
+                  ? "bg-rose-500/20 text-rose-300 border border-rose-500/30 shadow-xs"
+                  : "vh-text-dim hover:text-white hover:bg-white/5"
+              }`}
+            >
+              <span>Song Player</span>
+            </button>
+
+            <button
+              onClick={() => {
+                setActiveTab("settings");
+                playTone("click");
+              }}
+              className={`flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-semibold transition ${
+                activeTab === "settings"
+                  ? "bg-rose-500/20 text-rose-300 border border-rose-500/30 shadow-xs"
+                  : "vh-text-dim hover:text-white hover:bg-white/5"
+              }`}
+            >
+              <span>Settings</span>
+            </button>
+          </div>
+
+          <div className="hidden sm:flex items-center gap-2.5 text-xs font-mono vh-text-dim">
+            <span>Streaming:</span>
+            <span className="rounded bg-rose-500/20 px-2 py-0.5 font-bold text-rose-300 border border-rose-500/30">
+              {soundQuality}
+            </span>
+            <span className="mx-1">·</span>
+            <span>Download:</span>
+            <span className="rounded bg-sky-500/20 px-2 py-0.5 font-bold text-sky-300 border border-sky-500/30">
+              {downloadQuality}
+            </span>
+          </div>
+        </div>
+
+        {/* TAB 1: SONG PLAYER TAB */}
+        {activeTab === "song" && (
+          <div className="space-y-6 animate-in fade-in duration-200">
+            {/* Running CD / Turntable Retro Player Chassis */}
+            <CdPlayer
+              currentSong={currentSong}
+              isPlaying={isPlaying}
+              currentTime={currentTime}
+              duration={duration}
+              volume={volume}
+              isMuted={isMuted}
+              soundQuality={soundQuality}
+              shuffle={shuffle}
+              repeat={repeat}
+              isFullscreen={false}
+              onPlayPause={handlePlayPause}
+              onNext={handleNext}
+              onPrev={handlePrev}
+              onSeek={handleSeek}
+              onVolumeChange={handleVolumeChange}
+              onToggleMute={handleToggleMute}
+              onToggleShuffle={handleToggleShuffle}
+              onToggleRepeat={handleToggleRepeat}
+              onQualityChange={handleQualityChange}
+              onDownloadCurrentSong={() => {
+                if (currentSong) void handleDownloadSong(currentSong);
+              }}
+              onToggleFullscreen={handleToggleFullscreen}
+            />
+
+            {/* Category / Playlist Buttons Bar (Random, Evergreen, etc.) */}
+            <CategorySelector
+              categories={categories}
+              activeCategory={activeCategory}
+              totalSongs={totalLibrarySongs}
+              downloadQuality={downloadQuality}
+              onSelectCategory={handleSelectCategory}
+              onDownloadWholeList={(catId) => {
+                setDownloadModalCategory(catId);
+                setIsDownloadModalOpen(true);
+              }}
+            />
+
+            {/* ONLY ONE UPCOMING SONG CARD (Replaces the long list of songs!) */}
+            <UpNextCard
+              nextSong={nextUpcomingSong}
+              categoryName={activeCategoryName}
+              totalQueueCount={remainingQueueCount}
+              downloadQuality={downloadQuality}
+              onPlayNext={handleNext}
+              onDownloadSong={handleDownloadSong}
+            />
+          </div>
+        )}
+
+        {/* TAB 2: SETTINGS TAB (Theme, Icon Style, Accent Color, Spacing, Audio Quality) */}
+        {activeTab === "settings" && (
+          <div className="animate-in fade-in duration-200">
+            <MusicSettingsTab
+              settings={{
+                soundQuality,
+                downloadQuality,
+                activeCategory,
+                lastSongId: currentSong?.id || null,
+                playbackPosition: Math.floor(currentTime),
+                volume,
+                isMuted,
+                shuffle,
+                repeat,
+                autoPlay,
+              }}
+              stats={statsQuery.data}
+              onUpdateSettings={(partial) => {
+                if (partial.soundQuality) setSoundQuality(partial.soundQuality);
+                if (partial.downloadQuality) setDownloadQuality(partial.downloadQuality);
+                if (partial.autoPlay !== undefined) setAutoPlay(partial.autoPlay);
+                if (partial.shuffle !== undefined) setShuffle(partial.shuffle);
+                void saveSettingsToDb(partial);
+              }}
+              onResetSettings={handleResetSettings}
+            />
+          </div>
+        )}
+
+        {/* Whole List Batch Download Modal */}
+        <BatchDownloadModal
+          isOpen={isDownloadModalOpen}
+          category={downloadModalCategory}
+          categoryName={activeCategoryName}
+          songs={songs}
+          downloadQuality={downloadQuality}
+          onClose={() => setIsDownloadModalOpen(false)}
+        />
+      </main>
+    </>
+  );
+}

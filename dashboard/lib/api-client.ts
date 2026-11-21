@@ -263,4 +263,73 @@ export const apiClient = {
     });
     return (await res.json()) as { success: boolean };
   },
+
+  // ---------------- MUSIC API ----------------
+
+  getMusicCategories(): Promise<{ categories: import("@/types/music").SongCategory[]; totalSongs: number }> {
+    return apiGet("/api/music/categories");
+  },
+
+  getMusicSongs(category?: string): Promise<{ category: string; count: number; songs: import("@/types/music").SongData[] }> {
+    return apiGet("/api/music/songs", { category });
+  },
+
+  getMusicSong(id: string): Promise<{ song: import("@/types/music").SongData }> {
+    return apiGet("/api/music/song", { id });
+  },
+
+  getMusicRandom(category?: string, exclude?: string): Promise<{ song?: import("@/types/music").SongData }> {
+    return apiGet("/api/music/random", { category, exclude });
+  },
+
+  getMusicSettings(): Promise<{ settings: import("@/types/music").MusicSettings }> {
+    return apiGet("/api/music/settings");
+  },
+
+  async updateMusicSettings(
+    settings: Partial<import("@/types/music").MusicSettings>,
+  ): Promise<{ settings: import("@/types/music").MusicSettings }> {
+    const res = await fetch("/api/music/settings", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(settings),
+    });
+    return (await res.json()) as { settings: import("@/types/music").MusicSettings };
+  },
+
+  getMusicStats(): Promise<import("@/types/music").MusicStatsResponse> {
+    return apiGet("/api/music/stats");
+  },
+
+  async recordMusicHistory(songId: string, category: string): Promise<{ success: boolean }> {
+    const res = await fetch("/api/music/history", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ songId, category }),
+    });
+    return (await res.json()) as { success: boolean };
+  },
+
+  async toggleMusicFavorite(songId: string): Promise<{ songId: string; isFavorite: boolean }> {
+    const res = await fetch("/api/music/favorite", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ songId }),
+    });
+    return (await res.json()) as { songId: string; isFavorite: boolean };
+  },
+
+  getMusicFavorites(): Promise<{ favorites: string[] }> {
+    return apiGet("/api/music/favorite");
+  },
+
+  getMusicDownloadInfo(songId: string, quality?: string): Promise<{
+    songId: string;
+    name: string;
+    fileName: string;
+    quality: string;
+    downloadUrl: string;
+  }> {
+    return apiGet("/api/music/download", { songId, quality });
+  },
 };

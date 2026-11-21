@@ -24,7 +24,8 @@
     "build:dashboard": "cd dashboard && npx next build --webpack",
     "build:server": "tsc -p tsconfig.json",
     "copy:dashboard": "mkdir -p dist/dashboard && cp -R dashboard/out/. dist/dashboard/",
-    "build": "rm -rf dist && npm run build:dashboard && npm run build:server && npm run copy:dashboard"
+    "copy:songs": "mkdir -p dist/shared/songs-data && cp -R src/shared/songs-data/. dist/shared/songs-data/",
+    "build": "rm -rf dist && npm run build:dashboard && npm run build:server && npm run copy:dashboard && npm run copy:songs"
   },
   "keywords": [
     "cli",
