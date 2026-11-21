@@ -95,3 +95,39 @@ export interface MusicDatabaseStats {
   totalFavorites: number;
   settingsCount: number;
 }
+
+export interface GroupPlaybackState {
+  active: boolean;
+  serverGroupMode: boolean;
+  song: SongData | null;
+  isPlaying: boolean;
+  currentTime: number;
+  duration: number;
+  updatedAt: number;
+  category: string;
+  categoryName: string;
+  shuffle: boolean;
+  repeat: "off" | "all" | "one";
+  sessionVersion: number;
+  listenersCount: number;
+  lastAction?: {
+    type: string;
+    by?: string;
+    timestamp: number;
+  };
+}
+
+export type GroupAction =
+  | { type: "play"; by?: string }
+  | { type: "pause"; by?: string }
+  | { type: "toggle-play"; by?: string }
+  | { type: "seek"; time: number; by?: string }
+  | { type: "next"; by?: string }
+  | { type: "prev"; by?: string }
+  | { type: "set-song"; songId: string; by?: string }
+  | { type: "set-category"; category: string; by?: string }
+  | { type: "toggle-shuffle"; shuffle?: boolean; by?: string }
+  | { type: "activate-group"; by?: string }
+  | { type: "deactivate-group"; by?: string }
+  | { type: "sync-time"; time: number; by?: string };
+

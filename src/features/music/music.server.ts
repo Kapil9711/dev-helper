@@ -5,9 +5,11 @@ import chalk from "chalk";
 import sirv from "sirv";
 import { exec } from "../../shared/helpers/shell/exec.ts";
 import { findAvailablePort } from "../../shared/helpers/server/port.helper.ts";
+import { getLocalNetworkIp } from "../../shared/helpers/server/network.helper.ts";
+import { musicGroupService } from "./music-group.service.ts";
 import { musicService } from "./music.service.ts";
 import { musicDatabase } from "./music.database.ts";
-import type { MusicSettings, SoundQuality } from "./music.types.ts";
+import type { GroupAction, MusicSettings, SoundQuality } from "./music.types.ts";
 
 function getDashboardDirectory(): string {
   const candidates = [
@@ -25,6 +27,7 @@ function getDashboardDirectory(): string {
 export interface MusicServerOptions {
   port?: number;
   open?: boolean;
+  group?: boolean;
 }
 
 function parseJsonBody<T>(req: IncomingMessage): Promise<T> {
@@ -68,6 +71,9 @@ export async function startMusicServer(options: MusicServerOptions = {}): Promis
   musicService.reloadData();
   const stats = musicService.getStats();
 
+  // Initialize group session state
+  musicGroupService.init({ groupMode: !!options.group });
+
   const dashboardDir = getDashboardDirectory();
   const serveDashboard = sirv(dashboardDir, {
     dev: false,
@@ -92,16 +98,49 @@ export async function startMusicServer(options: MusicServerOptions = {}): Promis
     // Server Info
     if (url.pathname === "/api/server-info") {
       sendJson(res, {
-        mode: "music",
+        mode: options.group ? "group" : "music",
         name: "VH Music",
         version: "1.0.6",
         port,
+        groupMode: musicGroupService.isGroupMode(),
+        serverGroupMode: !!options.group,
+        listenersCount: musicGroupService.getState().listenersCount,
+        networkIp: getLocalNetworkIp(),
         libraryStats: {
           totalSongs: stats.totalSongs,
           totalCategories: stats.totalCategories,
         },
         dbPath: stats.dbStats.dbPath,
       });
+      return;
+    }
+
+    // Group Session SSE Event Stream (Realtime server-to-browser sync)
+    if (url.pathname === "/api/music/group/events") {
+      musicGroupService.addClient(res);
+      return;
+    }
+
+    // Group Session State Snapshot
+    if (url.pathname === "/api/music/group/state") {
+      sendJson(res, { state: musicGroupService.getState() });
+      return;
+    }
+
+    // Group Session Client Actions (Play, Pause, Next, Prev, Seek, Set Song/Category)
+    if (url.pathname === "/api/music/group/action") {
+      if (req.method === "POST") {
+        try {
+          const action = await parseJsonBody<GroupAction>(req);
+          const state = musicGroupService.handleAction(action);
+          sendJson(res, { success: true, state });
+        } catch (err: unknown) {
+          const msg = err instanceof Error ? err.message : "Invalid action";
+          sendJson(res, { error: msg }, 400);
+        }
+      } else {
+        sendJson(res, { state: musicGroupService.getState() });
+      }
       return;
     }
 
@@ -460,20 +499,50 @@ export async function startMusicServer(options: MusicServerOptions = {}): Promis
 
   httpServer.listen(port, "0.0.0.0", () => {
     const dashboardUrl = `http://localhost:${port}/music/`;
-    console.log(chalk.bold.hex("#ec4899")("\n=============================================="));
-    console.log(chalk.bold.hex("#ec4899")("           VH MUSIC DASHBOARD SERVER          "));
-    console.log(chalk.bold.hex("#ec4899")("=============================================="));
-    console.log(`${chalk.gray("Library:")}      ${chalk.white.bold(`${stats.totalSongs} songs`)} across ${chalk.cyan.bold(`${stats.totalCategories} playlist files`)}`);
-    console.log(`${chalk.gray("Categories:")}   ${chalk.yellow(stats.categories.map((c) => c.name).join(", ") || "None")}`);
-    console.log(`${chalk.gray("SQLite DB:")}    ${chalk.white(stats.dbStats.dbPath)}`);
-    console.log(`${chalk.gray("Dashboard:")}    ${chalk.green.underline(dashboardUrl)}`);
-    console.log(
-      `${chalk.gray("Port:")}         ${chalk.yellow(port)} ${
-        wasChanged ? chalk.gray(`(auto-assigned; ${requestedPort} in use)`) : ""
-      }`,
-    );
-    console.log(chalk.gray("----------------------------------------------"));
-    console.log(chalk.gray("Press Ctrl+C to stop the Music Dashboard server.\n"));
+    const networkIp = getLocalNetworkIp();
+    const networkUrl = networkIp ? `http://${networkIp}:${port}/music/` : null;
+
+    if (options.group) {
+      console.log(chalk.bold.hex("#06b6d4")("\n=============================================="));
+      console.log(chalk.bold.hex("#06b6d4")("      VH MUSIC GROUP SESSION (SYNC MODE)      "));
+      console.log(chalk.bold.hex("#06b6d4")("=============================================="));
+      console.log(`${chalk.gray("Mode:")}         ${chalk.cyan.bold("SYNCHRONIZED MULTI-DEVICE PLAYBACK")}`);
+      console.log(`${chalk.gray("Host URL:")}     ${chalk.green.underline(dashboardUrl)}`);
+      if (networkUrl) {
+        console.log(`${chalk.gray("Network URL:")}  ${chalk.yellow.bold.underline(networkUrl)}`);
+        console.log(`${chalk.gray("Share with:")}   ${chalk.white("Open Network URL on other laptops/phones on your Wi-Fi!")}`);
+      }
+      console.log(`${chalk.gray("Sync:")}         ${chalk.magenta("All connected laptops will play the same song in sync!")}`);
+      console.log(`${chalk.gray("Library:")}      ${chalk.white.bold(`${stats.totalSongs} songs`)} across ${chalk.cyan.bold(`${stats.totalCategories} playlist files`)}`);
+      console.log(`${chalk.gray("Categories:")}   ${chalk.yellow(stats.categories.map((c) => c.name).join(", ") || "None")}`);
+      console.log(`${chalk.gray("SQLite DB:")}    ${chalk.white(stats.dbStats.dbPath)}`);
+      console.log(
+        `${chalk.gray("Port:")}         ${chalk.yellow(port)} ${
+          wasChanged ? chalk.gray(`(auto-assigned; ${requestedPort} in use)`) : ""
+        }`,
+      );
+      console.log(chalk.gray("----------------------------------------------"));
+      console.log(chalk.gray("Press Ctrl+C to stop the Music Group server.\n"));
+    } else {
+      console.log(chalk.bold.hex("#ec4899")("\n=============================================="));
+      console.log(chalk.bold.hex("#ec4899")("           VH MUSIC DASHBOARD SERVER          "));
+      console.log(chalk.bold.hex("#ec4899")("=============================================="));
+      console.log(`${chalk.gray("Mode:")}         ${chalk.white("Solo Player (Default)")}`);
+      console.log(`${chalk.gray("Library:")}      ${chalk.white.bold(`${stats.totalSongs} songs`)} across ${chalk.cyan.bold(`${stats.totalCategories} playlist files`)}`);
+      console.log(`${chalk.gray("Categories:")}   ${chalk.yellow(stats.categories.map((c) => c.name).join(", ") || "None")}`);
+      console.log(`${chalk.gray("SQLite DB:")}    ${chalk.white(stats.dbStats.dbPath)}`);
+      console.log(`${chalk.gray("Dashboard:")}    ${chalk.green.underline(dashboardUrl)}`);
+      if (networkUrl) {
+        console.log(`${chalk.gray("Network:")}      ${chalk.cyan.underline(networkUrl)}`);
+      }
+      console.log(
+        `${chalk.gray("Port:")}         ${chalk.yellow(port)} ${
+          wasChanged ? chalk.gray(`(auto-assigned; ${requestedPort} in use)`) : ""
+        }`,
+      );
+      console.log(chalk.gray("----------------------------------------------"));
+      console.log(chalk.gray("Tip: Run ") + chalk.cyan.bold("vh music group") + chalk.gray(" to play synchronously across laptops!\n"));
+    }
 
     if (options.open !== false) {
       const openCmd =
@@ -491,6 +560,7 @@ export async function startMusicServer(options: MusicServerOptions = {}): Promis
     if (shuttingDown) return;
     shuttingDown = true;
     console.log(chalk.yellow("\n[VH] Shutting down Music Dashboard server..."));
+    musicGroupService.destroy();
     musicDatabase.close();
     httpServer.close(() => {
       console.log(chalk.green("[VH] Music Dashboard server stopped"));

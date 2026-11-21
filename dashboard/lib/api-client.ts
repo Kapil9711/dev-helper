@@ -332,4 +332,19 @@ export const apiClient = {
   }> {
     return apiGet("/api/music/download", { songId, quality });
   },
+
+  getMusicGroupState(): Promise<{ state: import("@/types/music").GroupPlaybackState }> {
+    return apiGet("/api/music/group/state");
+  },
+
+  async sendMusicGroupAction(
+    action: import("@/types/music").GroupAction,
+  ): Promise<{ success: boolean; state: import("@/types/music").GroupPlaybackState }> {
+    const res = await fetch("/api/music/group/action", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(action),
+    });
+    return (await res.json()) as { success: boolean; state: import("@/types/music").GroupPlaybackState };
+  },
 };

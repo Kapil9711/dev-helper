@@ -41,6 +41,8 @@ interface CdPlayerProps {
   isRandomMode?: boolean;
   eqMode?: string;
   reverbPercent?: number;
+  isGroupMode?: boolean;
+  groupListenersCount?: number;
   onPlayPause: () => void;
   onNext: () => void;
   onPrev: () => void;
@@ -85,6 +87,8 @@ export function CdPlayer({
   isRandomMode = false,
   eqMode = "flat",
   reverbPercent = 40,
+  isGroupMode = false,
+  groupListenersCount = 1,
   onPlayPause,
   onNext,
   onPrev,
@@ -185,9 +189,16 @@ export function CdPlayer({
           <span className="font-mono text-[11px] font-bold tracking-widest uppercase text-zinc-300">
             VH-AUDIO · RETRO HI-FI DECK
           </span>
-          <span className="hidden sm:inline-block rounded-md border border-white/10 bg-white/5 px-2 py-0.5 font-mono text-[10px] text-zinc-400">
-            OPTICAL DISC RUNNER
-          </span>
+          {isGroupMode ? (
+            <span className="flex items-center gap-1.5 rounded-md border border-cyan-500/40 bg-cyan-500/20 px-2 py-0.5 font-mono text-[10px] text-cyan-300 shadow-[0_0_12px_rgba(6,182,212,0.4)] animate-pulse">
+              <span className="h-1.5 w-1.5 rounded-full bg-cyan-400" />
+              <span>SYNC PARTY ({groupListenersCount} {groupListenersCount === 1 ? "DEVICE" : "DEVICES"})</span>
+            </span>
+          ) : (
+            <span className="hidden sm:inline-block rounded-md border border-white/10 bg-white/5 px-2 py-0.5 font-mono text-[10px] text-zinc-400">
+              OPTICAL DISC RUNNER
+            </span>
+          )}
         </div>
 
         {/* Right Controls: Audio FX (EQ & Reverb), Sound Quality & Fullscreen */}

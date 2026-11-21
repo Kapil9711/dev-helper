@@ -7,6 +7,7 @@ import {
   useMusicSongsQuery,
   useMusicSettingsQuery,
   useMusicStatsQuery,
+  useServerInfoQuery,
   queryKeys,
 } from "@/lib/queries";
 import { apiClient } from "@/lib/api-client";
@@ -16,9 +17,19 @@ import { CategorySelector } from "@/components/music/category-selector";
 import { UpNextCard } from "@/components/music/up-next-card";
 import { MusicSettingsTab } from "@/components/music/music-settings";
 import { BatchDownloadModal } from "@/components/music/batch-download-modal";
-import type { SongData, SoundQuality, MusicSettings } from "@/types/music";
+import type { SongData, SoundQuality, MusicSettings, GroupPlaybackState } from "@/types/music";
 import { audioFXEngine } from "@/lib/audio-engine";
-import { Minimize2, Disc, Maximize2, CheckCircle2, DownloadCloud, Loader2 } from "lucide-react";
+import {
+  Minimize2,
+  Disc,
+  Maximize2,
+  CheckCircle2,
+  DownloadCloud,
+  Loader2,
+  Radio,
+  Users,
+  Wifi,
+} from "lucide-react";
 
 // Fisher-Yates pure array shuffle
 function shuffleList<T>(array: T[]): T[] {
@@ -100,6 +111,19 @@ export default function MusicDashboardPage() {
   const categoriesQuery = useMusicCategoriesQuery();
   const settingsQuery = useMusicSettingsQuery();
   const statsQuery = useMusicStatsQuery();
+  const serverInfoQuery = useServerInfoQuery();
+
+  // Group Sync Session State
+  const [isGroupMode, setIsGroupMode] = useState<boolean>(false);
+  const [groupListenersCount, setGroupListenersCount] = useState<number>(1);
+  const [audioBlocked, setAudioBlocked] = useState<boolean>(false);
+
+  // Initialize group mode automatically if server was started with `vh music group`
+  useEffect(() => {
+    if (serverInfoQuery.data?.groupMode !== undefined) {
+      setIsGroupMode(Boolean(serverInfoQuery.data.groupMode));
+    }
+  }, [serverInfoQuery.data?.groupMode]);
 
   // Persistent Settings from SQLite
   const persistentSettings: MusicSettings = useMemo(() => {
@@ -311,9 +335,148 @@ export default function MusicDashboardPage() {
     return "";
   }, [currentSong]);
 
+  // Group Sync Session Realtime Synchronization via SSE
+  useEffect(() => {
+    if (!isGroupMode) return;
+
+    const es = new EventSource("/api/music/group/events");
+
+    const handleIncomingState = (groupState: GroupPlaybackState) => {
+      if (typeof groupState.listenersCount === "number") {
+        setGroupListenersCount(groupState.listenersCount);
+      }
+
+      // Sync song
+      if (groupState.song) {
+        setCurrentSong((prev) => {
+          if (prev?.id !== groupState.song?.id) {
+            const url = getAudioUrl(groupState.song, soundQuality);
+            if (audioRef.current) {
+              audioRef.current.src = url;
+              audioFXEngine.init(audioRef.current, eqMode, reverbPercent);
+              const targetTime =
+                groupState.currentTime +
+                (groupState.isPlaying ? (Date.now() - groupState.updatedAt) / 1000 : 0);
+              audioRef.current.currentTime = Math.max(0, targetTime);
+              if (groupState.isPlaying) {
+                audioRef.current
+                  .play()
+                  .then(() => {
+                    setIsPlaying(true);
+                    setAudioBlocked(false);
+                  })
+                  .catch((err) => {
+                    console.warn("Browser blocked audio autoplay:", err);
+                    setAudioBlocked(true);
+                  });
+              } else {
+                audioRef.current.pause();
+                setIsPlaying(false);
+              }
+            }
+            return groupState.song;
+          } else {
+            // Same song: check play/pause and drift
+            if (audioRef.current) {
+              if (groupState.isPlaying && audioRef.current.paused) {
+                audioRef.current
+                  .play()
+                  .then(() => {
+                    setIsPlaying(true);
+                    setAudioBlocked(false);
+                  })
+                  .catch(() => setAudioBlocked(true));
+              } else if (!groupState.isPlaying && !audioRef.current.paused) {
+                audioRef.current.pause();
+                setIsPlaying(false);
+              }
+
+              // Re-align time if drift > 1.8 seconds
+              const targetTime =
+                groupState.currentTime +
+                (groupState.isPlaying ? (Date.now() - groupState.updatedAt) / 1000 : 0);
+              if (Math.abs(audioRef.current.currentTime - targetTime) > 1.8) {
+                audioRef.current.currentTime = Math.max(
+                  0,
+                  Math.min(groupState.duration || 9999, targetTime),
+                );
+              }
+            }
+            return prev;
+          }
+        });
+      }
+
+      // Sync category & shuffle
+      if (groupState.category) {
+        setActiveCategory(groupState.category);
+      }
+      if (typeof groupState.shuffle === "boolean") {
+        setShuffle(groupState.shuffle);
+      }
+    };
+
+    es.addEventListener("sync", (e: MessageEvent) => {
+      try {
+        const state = JSON.parse(e.data) as GroupPlaybackState;
+        handleIncomingState(state);
+      } catch (err) {
+        console.error("Failed to parse sync event:", err);
+      }
+    });
+
+    es.addEventListener("state", (e: MessageEvent) => {
+      try {
+        const state = JSON.parse(e.data) as GroupPlaybackState;
+        handleIncomingState(state);
+      } catch (err) {
+        console.error("Failed to parse state event:", err);
+      }
+    });
+
+    es.addEventListener("peer-joined", (e: MessageEvent) => {
+      try {
+        const state = JSON.parse(e.data) as GroupPlaybackState;
+        setGroupListenersCount(state.listenersCount);
+        showToast(`👋 A device joined the session (${state.listenersCount} listeners)`, "success");
+      } catch {}
+    });
+
+    es.addEventListener("peer-left", (e: MessageEvent) => {
+      try {
+        const state = JSON.parse(e.data) as GroupPlaybackState;
+        setGroupListenersCount(state.listenersCount);
+      } catch {}
+    });
+
+    return () => {
+      es.close();
+    };
+  }, [isGroupMode, soundQuality, eqMode, reverbPercent, getAudioUrl]);
+
+  // Periodic time sync report to server in Group Mode
+  useEffect(() => {
+    if (!isGroupMode || !isPlaying) return;
+    const interval = setInterval(() => {
+      if (audioRef.current && !audioRef.current.paused) {
+        void apiClient.sendMusicGroupAction({
+          type: "sync-time",
+          time: audioRef.current.currentTime,
+        });
+      }
+    }, 8000);
+    return () => clearInterval(interval);
+  }, [isGroupMode, isPlaying]);
+
   // Play a specific song
   const playSong = useCallback(
     (song: SongData, resumeTime = 0) => {
+      if (isGroupMode) {
+        playTone("click");
+        void apiClient.sendMusicGroupAction({ type: "set-song", songId: song.id });
+        return;
+      }
+
       setCurrentSong(song);
       const url = getAudioUrl(song, soundQuality);
 
@@ -342,7 +505,7 @@ export default function MusicDashboardPage() {
         return next;
       });
     },
-    [getAudioUrl, soundQuality, activeCategory, saveSettingsToDb, eqMode, reverbPercent],
+    [isGroupMode, getAudioUrl, soundQuality, activeCategory, saveSettingsToDb, eqMode, reverbPercent],
   );
 
   // Compute ONLY the single NEXT upcoming track based on active shuffle mode
@@ -375,6 +538,13 @@ export default function MusicDashboardPage() {
 
   // Next Track Action
   const handleNext = useCallback(() => {
+    if (isGroupMode) {
+      playTone("click");
+      void apiClient.sendMusicGroupAction({ type: "next" });
+      showToast("⏭ Skipped to Next Track (Group Sync)", "success");
+      return;
+    }
+
     if (nextUpcomingSong) {
       // If we just exhausted the played set, clear it for the next round
       if (playedSongIds.size >= songs.length - 1) {
@@ -385,10 +555,16 @@ export default function MusicDashboardPage() {
       }
       playSong(nextUpcomingSong, 0);
     }
-  }, [nextUpcomingSong, playedSongIds.size, songs, isRandomMode, shuffle, playSong]);
+  }, [isGroupMode, nextUpcomingSong, playedSongIds.size, songs, isRandomMode, shuffle, playSong]);
 
   // Previous Track Action
   const handlePrev = useCallback(() => {
+    if (isGroupMode) {
+      playTone("click");
+      void apiClient.sendMusicGroupAction({ type: "prev" });
+      return;
+    }
+
     if (songs.length === 0) return;
     if (currentTime > 3) {
       if (audioRef.current) audioRef.current.currentTime = 0;
@@ -399,7 +575,7 @@ export default function MusicDashboardPage() {
     const currentIndex = songs.findIndex((s) => s.id === currentSong?.id);
     const prevIndex = (currentIndex - 1 + songs.length) % songs.length;
     playSong(songs[prevIndex], 0);
-  }, [songs, currentSong?.id, currentTime, playSong]);
+  }, [isGroupMode, songs, currentSong?.id, currentTime, playSong]);
 
   // Handle Track Finished Event
   useEffect(() => {
@@ -407,6 +583,11 @@ export default function MusicDashboardPage() {
     if (!audio) return;
 
     const onEnded = () => {
+      if (isGroupMode) {
+        void apiClient.sendMusicGroupAction({ type: "next" });
+        return;
+      }
+
       if (repeat === "one") {
         audio.currentTime = 0;
         void audio.play();
@@ -419,10 +600,25 @@ export default function MusicDashboardPage() {
 
     audio.addEventListener("ended", onEnded);
     return () => audio.removeEventListener("ended", onEnded);
-  }, [repeat, autoPlay, handleNext]);
+  }, [isGroupMode, repeat, autoPlay, handleNext]);
 
   // Play / Pause Toggle
   const handlePlayPause = () => {
+    if (isGroupMode) {
+      playTone("click");
+      if (audioBlocked && audioRef.current) {
+        audioRef.current
+          .play()
+          .then(() => {
+            setIsPlaying(true);
+            setAudioBlocked(false);
+          })
+          .catch(() => {});
+      }
+      void apiClient.sendMusicGroupAction({ type: isPlaying ? "pause" : "play" });
+      return;
+    }
+
     if (!audioRef.current) return;
     if (isPlaying) {
       audioRef.current.pause();
@@ -460,6 +656,15 @@ export default function MusicDashboardPage() {
 
   // Seek
   const handleSeek = (newTime: number) => {
+    if (isGroupMode) {
+      if (audioRef.current) {
+        audioRef.current.currentTime = newTime;
+        setCurrentTime(newTime);
+      }
+      void apiClient.sendMusicGroupAction({ type: "seek", time: newTime });
+      return;
+    }
+
     if (audioRef.current) {
       audioRef.current.currentTime = newTime;
       setCurrentTime(newTime);
@@ -485,6 +690,12 @@ export default function MusicDashboardPage() {
 
   // Shuffle Toggle
   const handleToggleShuffle = () => {
+    if (isGroupMode) {
+      playTone("click");
+      void apiClient.sendMusicGroupAction({ type: "toggle-shuffle" });
+      return;
+    }
+
     if (isRandomMode) {
       // In Random Mode, shuffle is permanently ON. Clicking it re-shuffles the entire library!
       const freshShuffle = shuffleList(songs);
@@ -537,6 +748,14 @@ export default function MusicDashboardPage() {
 
   // Category Selection
   const handleSelectCategory = (catId: string) => {
+    if (isGroupMode) {
+      playTone("click");
+      setActiveCategory(catId);
+      void apiClient.sendMusicGroupAction({ type: "set-category", category: catId });
+      showToast(`Category: ${catId.toUpperCase()} (Group Sync)`, "success");
+      return;
+    }
+
     setActiveCategory(catId);
     setPlayedSongIds(new Set());
 
@@ -748,6 +967,15 @@ export default function MusicDashboardPage() {
                   VH Music · Immersive Glass Theater
                 </h2>
                 <div className="flex flex-wrap items-center gap-2 text-xs font-mono text-zinc-300">
+                  {isGroupMode && (
+                    <>
+                      <span className="flex items-center gap-1.5 rounded-md bg-cyan-500/25 text-cyan-300 px-2 py-0.5 border border-cyan-500/40 font-bold shadow-[0_0_10px_rgba(6,182,212,0.3)]">
+                        <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-ping" />
+                        GROUP SYNC ({groupListenersCount})
+                      </span>
+                      <span>·</span>
+                    </>
+                  )}
                   <span>{activeCategoryName}</span>
                   <span>·</span>
                   <span className="text-rose-300 font-bold">{soundQuality}</span>
@@ -784,6 +1012,8 @@ export default function MusicDashboardPage() {
               isRandomMode={isRandomMode}
               eqMode={eqMode}
               reverbPercent={reverbPercent}
+              isGroupMode={isGroupMode}
+              groupListenersCount={groupListenersCount}
               onPlayPause={handlePlayPause}
               onNext={handleNext}
               onPrev={handlePrev}
@@ -825,36 +1055,74 @@ export default function MusicDashboardPage() {
 
       {/* STANDARD DASHBOARD VIEW */}
       <main className="min-h-[calc(100vh-4rem)] p-4 sm:p-6 lg:p-8 space-y-6 max-w-7xl mx-auto">
-        {/* Top Tab Bar: Song Player vs Settings */}
-        <div className="flex items-center justify-between border-b vh-border pb-3">
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => {
-                setActiveTab("song");
-                playTone("click");
-              }}
-              className={`flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-semibold transition ${
-                activeTab === "song"
-                  ? "bg-rose-500/20 text-rose-300 border border-rose-500/30 shadow-xs"
-                  : "vh-text-dim hover:text-white hover:bg-white/5"
-              }`}
-            >
-              <span>Song Player</span>
-            </button>
+        {/* Top Tab Bar: Song Player vs Settings & Group Mode Toggle */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b vh-border pb-3">
+          <div className="flex flex-wrap items-center gap-2.5">
+            <div className="flex items-center gap-1 rounded-2xl border vh-border vh-bg-card p-1 shadow-sm">
+              <button
+                onClick={() => {
+                  setActiveTab("song");
+                  playTone("click");
+                }}
+                className={`flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-semibold transition ${
+                  activeTab === "song"
+                    ? "bg-rose-500/20 text-rose-300 border border-rose-500/30 shadow-xs"
+                    : "vh-text-dim hover:text-white hover:bg-white/5"
+                }`}
+              >
+                <span>Song Player</span>
+              </button>
 
-            <button
-              onClick={() => {
-                setActiveTab("settings");
-                playTone("click");
-              }}
-              className={`flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-semibold transition ${
-                activeTab === "settings"
-                  ? "bg-rose-500/20 text-rose-300 border border-rose-500/30 shadow-xs"
-                  : "vh-text-dim hover:text-white hover:bg-white/5"
-              }`}
-            >
-              <span>Settings</span>
-            </button>
+              <button
+                onClick={() => {
+                  setActiveTab("settings");
+                  playTone("click");
+                }}
+                className={`flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-semibold transition ${
+                  activeTab === "settings"
+                    ? "bg-rose-500/20 text-rose-300 border border-rose-500/30 shadow-xs"
+                    : "vh-text-dim hover:text-white hover:bg-white/5"
+                }`}
+              >
+                <span>Settings</span>
+              </button>
+            </div>
+
+            {/* Group Session Mode Toggle Badge */}
+            {isGroupMode ? (
+              <button
+                onClick={() => {
+                  setIsGroupMode(false);
+                  void apiClient.sendMusicGroupAction({ type: "deactivate-group" });
+                  showToast("Switched to Solo Mode", "success");
+                }}
+                className="flex items-center gap-2 rounded-2xl border border-cyan-500/40 bg-cyan-500/15 px-3.5 py-2 text-xs font-mono font-bold text-cyan-300 shadow-[0_0_15px_rgba(6,182,212,0.25)] hover:bg-cyan-500/25 transition cursor-pointer"
+                title="Click to switch to Solo Local Mode"
+              >
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-400"></span>
+                </span>
+                <span className="tracking-wide">GROUP SYNC</span>
+                <span className="rounded-lg bg-cyan-500/30 px-1.5 py-0.5 text-[10px] text-cyan-200">
+                  {groupListenersCount} {groupListenersCount === 1 ? "device" : "devices"}
+                </span>
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  setIsGroupMode(true);
+                  void apiClient.sendMusicGroupAction({ type: "activate-group" });
+                  showToast("Switched to Synchronized Group Session", "success");
+                }}
+                className="flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-3.5 py-2 text-xs font-mono text-zinc-400 hover:text-white hover:bg-white/10 hover:border-white/20 transition cursor-pointer"
+                title="Click to enable Synchronized Group Session"
+              >
+                <Radio size={14} className="text-zinc-400" />
+                <span>Solo Mode</span>
+                <span className="text-[10px] text-zinc-500 hover:text-cyan-300">(Join Group)</span>
+              </button>
+            )}
           </div>
 
           <div className="hidden sm:flex items-center gap-2.5 text-xs font-mono vh-text-dim">
@@ -877,6 +1145,35 @@ export default function MusicDashboardPage() {
         {/* TAB 1: SONG PLAYER TAB */}
         {activeTab === "song" && (
           <div className="space-y-6 animate-in fade-in duration-200">
+            {/* Audio Autoplay Unblock Banner for newly connected laptops */}
+            {audioBlocked && (
+              <div
+                onClick={() => {
+                  if (audioRef.current) {
+                    audioRef.current
+                      .play()
+                      .then(() => {
+                        setIsPlaying(true);
+                        setAudioBlocked(false);
+                      })
+                      .catch(() => {});
+                  }
+                }}
+                className="flex items-center justify-between gap-4 p-4 rounded-2xl bg-gradient-to-r from-cyan-950/80 to-blue-950/80 border border-cyan-500/40 text-cyan-200 shadow-xl cursor-pointer hover:border-cyan-400 transition animate-pulse"
+              >
+                <div className="flex items-center gap-3">
+                  <Radio size={22} className="text-cyan-400 animate-spin" />
+                  <div>
+                    <div className="font-bold text-sm text-white">Group Session Audio is Live!</div>
+                    <div className="text-xs text-cyan-300">Tap anywhere to join synchronized playback on this device</div>
+                  </div>
+                </div>
+                <button className="rounded-xl bg-cyan-400 hover:bg-cyan-300 text-black font-bold px-4 py-2 text-xs shadow-md transition">
+                  Listen Now
+                </button>
+              </div>
+            )}
+
             {/* Running CD / Turntable Retro Player Chassis */}
             <CdPlayer
               currentSong={currentSong}
@@ -892,6 +1189,8 @@ export default function MusicDashboardPage() {
               isRandomMode={isRandomMode}
               eqMode={eqMode}
               reverbPercent={reverbPercent}
+              isGroupMode={isGroupMode}
+              groupListenersCount={groupListenersCount}
               onPlayPause={handlePlayPause}
               onNext={handleNext}
               onPrev={handlePrev}
