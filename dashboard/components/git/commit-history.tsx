@@ -161,12 +161,12 @@ export function CommitHistory({ commits }: CommitHistoryProps) {
                             key={rIdx}
                             className={`flex items-center gap-1 text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md border ${
                               isCurrentHead
-                                ? "bg-emerald-500/15 border-emerald-500/30 text-emerald-300"
+                                ? "bg-emerald-500/15 border-emerald-500/30 text-emerald-700 dark:text-emerald-300"
                                 : isTag
-                                ? "bg-amber-500/15 border-amber-500/30 text-amber-300"
+                                ? "bg-amber-500/15 border-amber-500/30 text-amber-700 dark:text-amber-300"
                                 : isRemote
-                                ? "bg-purple-500/15 border-purple-500/30 text-purple-300"
-                                : "bg-sky-500/15 border-sky-500/30 text-sky-300"
+                                ? "bg-purple-500/15 border-purple-500/30 text-purple-700 dark:text-purple-300"
+                                : "bg-sky-500/15 border-sky-500/30 text-sky-700 dark:text-sky-300"
                             }`}
                           >
                             {isCurrentHead ? (
@@ -232,7 +232,7 @@ export function CommitHistory({ commits }: CommitHistoryProps) {
                       >
                         {getInitials(c.author)}
                       </div>
-                      <span className="font-semibold text-slate-200">{c.author}</span>
+                      <span className="font-semibold vh-text-main">{c.author}</span>
                       <span className="vh-text-dim text-[10px] hidden sm:inline-block">
                         &lt;{c.email}&gt;
                       </span>

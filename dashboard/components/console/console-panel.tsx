@@ -12,6 +12,7 @@ import {
   Check,
   Boxes,
   Code2,
+  Globe,
 } from "lucide-react";
 
 import { useLogsQuery, useAppsQuery } from "@/lib/queries";
@@ -19,6 +20,7 @@ import { useDashboardPreferences, playTone } from "@/lib/prefrences";
 import type { LogEntry } from "@/types/logs";
 import { PrettyJson } from "@/components/shared/pretty-json";
 import { LogDetailsModal } from "@/components/console/log-details-modal";
+import { ChromeWindowModal } from "@/components/logs/chrome-window-modal";
 
 const levels = ["ALL", "log", "info", "warn", "error", "debug"] as const;
 
@@ -76,6 +78,7 @@ export function ConsolePanel() {
   const [level, setLevel] = useState<(typeof levels)[number]>("ALL");
   const [selectedFingerprint, setSelectedFingerprint] = useState<string | null>(null);
   const [copiedId, setCopiedId] = useState<number | null>(null);
+  const [isChromeWindowOpen, setIsChromeWindowOpen] = useState(false);
 
   const logs = query.data?.data ?? [];
 
@@ -149,6 +152,15 @@ export function ConsolePanel() {
               Show all apps
             </button>
           )}
+
+          <button
+            onClick={() => setIsChromeWindowOpen(true)}
+            className="flex items-center gap-1.5 rounded-lg border border-cyan-500/30 bg-cyan-500/10 px-3 py-1.5 text-xs font-semibold text-cyan-400 hover:bg-cyan-500/20 transition"
+            title="Open Chrome Live Capture Window"
+          >
+            <Globe size={13} />
+            Chrome Window
+          </button>
 
           <button
             onClick={() => void query.refetch()}
@@ -327,6 +339,12 @@ export function ConsolePanel() {
           onClose={() => setSelectedFingerprint(null)}
         />
       )}
+
+      {/* Chrome Live Capture Window modal */}
+      <ChromeWindowModal
+        isOpen={isChromeWindowOpen}
+        onClose={() => setIsChromeWindowOpen(false)}
+      />
     </div>
   );
 }

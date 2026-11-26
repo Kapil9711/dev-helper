@@ -536,7 +536,7 @@ export function GitSettings() {
 
             <button
               onClick={handleResetPreferences}
-              className="flex items-center gap-1.5 rounded-xl border vh-border vh-bg-input px-3 py-1.5 text-xs font-semibold vh-text-dim hover:text-white hover:border-white/20 transition"
+              className="flex items-center gap-1.5 rounded-xl border vh-border vh-bg-input px-3 py-1.5 text-xs font-semibold vh-text-dim hover:text-slate-900 dark:hover:text-white hover:border-black/20 dark:hover:border-white/20 transition"
             >
               <RotateCcw size={13} />
               <span>{resetDone ? "Preferences Reset!" : "Reset to Defaults"}</span>

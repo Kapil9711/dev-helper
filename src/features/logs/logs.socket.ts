@@ -102,35 +102,8 @@ export function createLogsSocketServer(httpServer: HttpServer) {
           return;
         }
 
-        void queue.enqueue(events).then(
+        ingestEvents(events).then(
           (persistedIds) => {
-            const logEvents = events.filter((event) => event.type === "log");
-
-            const networkEvents = events.filter(
-              (event) =>
-                event.type === "network:req" || event.type === "network:res",
-            );
-
-            const appNames = [...new Set(events.map((event) => event.appName))];
-
-            if (logEvents.length > 0) {
-              io.emit("vh:logs:new", {
-                appNames: [...new Set(logEvents.map((event) => event.appName))],
-                eventIds: logEvents.map((event) => event.eventId),
-                timestamp: Date.now(),
-              });
-            }
-
-            if (networkEvents.length > 0) {
-              io.emit("vh:network:new", {
-                appNames: [
-                  ...new Set(networkEvents.map((event) => event.appName)),
-                ],
-                eventIds: networkEvents.map((event) => event.eventId),
-                timestamp: Date.now(),
-              });
-            }
-
             ack({
               ok: true,
               eventIds: persistedIds,
@@ -152,6 +125,36 @@ export function createLogsSocketServer(httpServer: HttpServer) {
     );
   });
 
+  async function ingestEvents(events: IncomingVHEvent[]): Promise<string[]> {
+    if (!Array.isArray(events) || events.length === 0) {
+      return [];
+    }
+
+    const persistedIds = await queue.enqueue(events);
+    const logEvents = events.filter((event) => event.type === "log");
+    const networkEvents = events.filter(
+      (event) => event.type === "network:req" || event.type === "network:res",
+    );
+
+    if (logEvents.length > 0) {
+      io.emit("vh:logs:new", {
+        appNames: [...new Set(logEvents.map((event) => event.appName))],
+        eventIds: logEvents.map((event) => event.eventId),
+        timestamp: Date.now(),
+      });
+    }
+
+    if (networkEvents.length > 0) {
+      io.emit("vh:network:new", {
+        appNames: [...new Set(networkEvents.map((event) => event.appName))],
+        eventIds: networkEvents.map((event) => event.eventId),
+        timestamp: Date.now(),
+      });
+    }
+
+    return persistedIds;
+  }
+
   let closing = false;
 
   function close(): void {
@@ -172,6 +175,7 @@ export function createLogsSocketServer(httpServer: HttpServer) {
     io,
     database,
     queue,
+    ingestEvents,
     close,
   };
 }

@@ -315,12 +315,12 @@ export function LiveFileEditor() {
             LIVE WORKSPACE WATCH:
           </span>
 
-          <span className="font-mono text-[11px] text-zinc-300 truncate">
+          <span className="font-mono text-[11px] vh-text-muted truncate">
             {currentFile?.path ? (
               <>
-                <span className="text-emerald-300 font-bold">{currentFile.path}</span>
+                <span className="text-emerald-700 dark:text-emerald-300 font-bold">{currentFile.path}</span>
                 {lastLiveUpdate && (
-                  <span className="text-zinc-400 ml-1.5 opacity-80">
+                  <span className="vh-text-dim ml-1.5 opacity-80">
                     ({relativeTime(lastLiveUpdate)})
                   </span>
                 )}
@@ -331,7 +331,7 @@ export function LiveFileEditor() {
           </span>
 
           {isSseConnected && (
-            <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+            <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30">
               <Zap size={10} />
               Real-Time SSE
             </span>
@@ -347,8 +347,8 @@ export function LiveFileEditor() {
             title="Auto-follow: Immediately display whichever file is actively being written or created"
             className={`flex items-center gap-1 text-[11px] font-semibold px-2.5 py-0.5 rounded-lg border transition ${
               autoFollow
-                ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/40 shadow-xs"
-                : "bg-white/5 text-zinc-400 border-white/10 hover:text-white"
+                ? "bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border-emerald-500/40 shadow-xs"
+                : "bg-black/5 dark:bg-white/5 vh-text-muted border-black/10 dark:border-white/10 hover:text-slate-900 dark:hover:text-white"
             }`}
           >
             <Activity size={11} className={autoFollow ? "text-emerald-400" : ""} />
@@ -405,7 +405,7 @@ export function LiveFileEditor() {
             className={`flex items-center gap-1.5 rounded-xl border px-2.5 py-1.5 text-xs font-semibold transition ${
               isLiveWatch
                 ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-400 shadow-xs"
-                : "vh-border vh-bg-card vh-text-dim hover:text-white"
+                : "vh-border vh-bg-card vh-text-dim hover:text-slate-900 dark:hover:text-white"
             }`}
           >
             <RefreshCw size={12} className={isLiveWatch ? "animate-spin" : ""} />
@@ -420,7 +420,7 @@ export function LiveFileEditor() {
                 playTone("click");
               }}
               className={`flex items-center gap-1 rounded-lg px-2.5 py-1 font-semibold transition ${
-                !isEditMode ? "vh-bg-accent vh-text-accent" : "vh-text-dim hover:text-white"
+                !isEditMode ? "vh-bg-accent vh-text-accent" : "vh-text-dim hover:text-slate-900 dark:hover:text-white"
               }`}
             >
               <Eye size={12} />
@@ -432,7 +432,7 @@ export function LiveFileEditor() {
                 playTone("click");
               }}
               className={`flex items-center gap-1 rounded-lg px-2.5 py-1 font-semibold transition ${
-                isEditMode ? "vh-bg-accent vh-text-accent" : "vh-text-dim hover:text-white"
+                isEditMode ? "vh-bg-accent vh-text-accent" : "vh-text-dim hover:text-slate-900 dark:hover:text-white"
               }`}
             >
               <Edit3 size={12} />
@@ -483,7 +483,7 @@ export function LiveFileEditor() {
           <button
             onClick={() => void handleCopy()}
             title="Copy file contents"
-            className="flex h-8 w-8 items-center justify-center rounded-xl border vh-border vh-bg-card vh-text-dim hover:text-white transition"
+            className="flex h-8 w-8 items-center justify-center rounded-xl border vh-border vh-bg-card vh-text-dim hover:text-slate-900 dark:hover:text-white transition"
           >
             {copySuccess ? <Check size={14} className="text-emerald-400" /> : <Copy size={14} />}
           </button>
@@ -534,15 +534,15 @@ export function LiveFileEditor() {
                 onClick={() => handleSelectFile(file.path)}
                 className={`flex items-center gap-2 rounded-xl border px-3 py-1.5 text-xs transition shrink-0 ${
                   isSelected
-                    ? "border-emerald-500/50 bg-emerald-500/15 text-emerald-300 shadow-xs font-semibold scale-[1.01]"
-                    : "vh-border vh-bg-card vh-text-dim hover:text-white hover:border-white/20"
+                    ? "border-emerald-500/50 bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 shadow-xs font-semibold scale-[1.01]"
+                    : "vh-border vh-bg-card vh-text-dim hover:text-slate-900 dark:hover:text-white hover:border-black/20 dark:hover:border-white/20"
                 }`}
               >
                 <span
                   className={`flex items-center gap-1 text-[10px] uppercase font-mono px-1.5 py-0.5 rounded-md ${
                     isCurrent
-                      ? "bg-emerald-500/25 text-emerald-400 border border-emerald-500/30"
-                      : "bg-zinc-500/20 text-zinc-300 border border-zinc-500/30"
+                      ? "bg-emerald-500/25 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30"
+                      : "bg-zinc-500/20 text-zinc-700 dark:text-zinc-300 border border-zinc-500/30"
                   }`}
                 >
                   <span
@@ -631,8 +631,8 @@ export function LiveFileEditor() {
 
         <div className="flex items-center gap-2">
           {isFullScreen && (
-            <span className="hidden sm:inline text-xs text-zinc-400">
-              Press <kbd className="px-1 py-0.5 rounded bg-white/10 text-white">Esc</kbd> to exit full screen
+            <span className="hidden sm:inline text-xs vh-text-dim">
+              Press <kbd className="px-1.5 py-0.5 rounded bg-black/10 dark:bg-white/10 text-slate-800 dark:text-white font-mono text-[11px] border vh-border">Esc</kbd> to exit full screen
             </span>
           )}
           {isEditMode && (

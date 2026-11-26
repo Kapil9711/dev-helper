@@ -383,7 +383,7 @@ export function DiffViewer({
               className={`flex items-center gap-1.5 px-2.5 py-1 transition ${
                 viewMode === "split"
                   ? "vh-bg-accent vh-text-accent font-semibold"
-                  : "vh-text-dim hover:text-white"
+                  : "vh-text-dim hover:text-slate-900 dark:hover:text-white"
               }`}
               title="Side-by-side split comparison (Previous on Left, Updated on Right)"
             >
@@ -399,7 +399,7 @@ export function DiffViewer({
               className={`flex items-center gap-1.5 px-2.5 py-1 transition border-l vh-border ${
                 viewMode === "unified"
                   ? "vh-bg-accent vh-text-accent font-semibold"
-                  : "vh-text-dim hover:text-white"
+                  : "vh-text-dim hover:text-slate-900 dark:hover:text-white"
               }`}
               title="Single column unified diff view"
             >
@@ -415,7 +415,7 @@ export function DiffViewer({
               className={`px-2.5 py-1 transition border-l vh-border ${
                 viewMode === "raw"
                   ? "vh-bg-accent vh-text-accent font-semibold"
-                  : "vh-text-dim hover:text-white"
+                  : "vh-text-dim hover:text-slate-900 dark:hover:text-white"
               }`}
               title="Raw git diff text"
             >
@@ -513,7 +513,7 @@ export function DiffViewer({
               return (
                 <div
                   key={idx}
-                  className="bg-sky-500/10 text-sky-400 dark:text-sky-300 font-semibold py-1 px-4 text-[11px] sticky top-0 z-10 border-y border-sky-500/20"
+                  className="bg-sky-500/10 text-sky-700 dark:text-sky-300 font-semibold py-1 px-4 text-[11px] sticky top-0 z-10 border-y border-sky-500/20"
                 >
                   {row.chunkHeader}
                 </div>
@@ -532,13 +532,13 @@ export function DiffViewer({
             return (
               <div
                 key={idx}
-                className="grid grid-cols-2 divide-x vh-border transition-colors group hover:bg-white/5"
+                className="grid grid-cols-2 divide-x vh-border transition-colors group hover:bg-black/5 dark:hover:bg-white/5"
               >
                 {/* Left Side: Previous File */}
                 <div
                   className={`flex items-start py-1 px-3 min-w-0 ${
                     isLeftDel
-                      ? "bg-rose-500/15 text-rose-300"
+                      ? "bg-rose-500/15 text-rose-700 dark:text-rose-300 font-medium"
                       : isLeftEmpty
                       ? "bg-black/10 dark:bg-white/5 opacity-25 select-none"
                       : "vh-text-main"
@@ -561,7 +561,7 @@ export function DiffViewer({
                 <div
                   className={`flex items-start py-1 px-3 min-w-0 ${
                     isRightAdd
-                      ? "bg-emerald-500/15 text-emerald-300"
+                      ? "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 font-medium"
                       : isRightEmpty
                       ? "bg-black/10 dark:bg-white/5 opacity-25 select-none"
                       : "vh-text-main"
@@ -591,7 +591,7 @@ export function DiffViewer({
               return (
                 <div
                   key={idx}
-                  className="bg-sky-500/10 text-sky-400 dark:text-sky-300 font-semibold py-1 px-4 text-[11px] sticky top-0 z-10 border-y border-sky-500/20"
+                  className="bg-sky-500/10 text-sky-700 dark:text-sky-300 font-semibold py-1 px-4 text-[11px] sticky top-0 z-10 border-y border-sky-500/20"
                 >
                   {line.text}
                 </div>
@@ -615,11 +615,11 @@ export function DiffViewer({
             return (
               <div
                 key={idx}
-                className={`flex items-start py-0.5 px-2 hover:bg-white/5 transition-colors ${
+                className={`flex items-start py-0.5 px-2 hover:bg-black/5 dark:hover:bg-white/5 transition-colors ${
                   isAdd
-                    ? "bg-emerald-500/15 text-emerald-300 dark:text-emerald-300"
+                    ? "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 font-medium"
                     : isDel
-                    ? "bg-rose-500/15 text-rose-300 dark:text-rose-300"
+                    ? "bg-rose-500/15 text-rose-700 dark:text-rose-300 font-medium"
                     : "vh-text-main"
                 }`}
               >

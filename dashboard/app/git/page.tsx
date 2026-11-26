@@ -603,7 +603,7 @@ export default function GitDashboardPage() {
             )}
           </div>
           <p className="mt-1 text-xs vh-text-dim">
-            Repository: <span className="font-mono text-sky-300">{status?.repoRoot || "..."}</span>
+            Repository: <span className="font-mono text-sky-700 dark:text-sky-300 font-bold">{status?.repoRoot || "..."}</span>
           </p>
         </div>
 
@@ -618,7 +618,7 @@ export default function GitDashboardPage() {
                   void handlePull();
                 }}
                 title={`Pull latest changes from tracking branch (${currentBranch?.upstream || "origin/" + (currentBranch?.current || "HEAD")})`}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium hover:bg-white/10 transition"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium hover:bg-black/5 dark:hover:bg-white/10 transition"
               >
                 <DownloadCloud size={13} />
                 <span>Pull</span>
@@ -630,7 +630,7 @@ export default function GitDashboardPage() {
                   setIsPullMenuOpen((prev) => !prev);
                 }}
                 title="Pull from a different branch..."
-                className="px-2 py-1.5 border-l vh-border text-xs hover:bg-white/10 vh-text-dim hover:text-white transition"
+                className="px-2 py-1.5 border-l vh-border text-xs hover:bg-black/5 dark:hover:bg-white/10 vh-text-dim hover:text-slate-900 dark:hover:text-white transition"
               >
                 <ChevronDown
                   size={12}
@@ -658,7 +658,7 @@ export default function GitDashboardPage() {
                     setIsPullMenuOpen(false);
                     void handlePull();
                   }}
-                  className="w-full text-left p-2 rounded-lg text-xs bg-emerald-500/10 border border-emerald-500/25 text-emerald-300 hover:bg-emerald-500/20 transition flex items-center justify-between font-mono"
+                  className="w-full text-left p-2 rounded-lg text-xs bg-emerald-500/10 border border-emerald-500/25 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-500/20 transition flex items-center justify-between font-mono"
                 >
                   <div className="flex items-center gap-1.5 min-w-0 pr-2">
                     <GitBranch size={11} className="text-emerald-400 shrink-0" />
@@ -796,10 +796,10 @@ export default function GitDashboardPage() {
       {/* Action Feedback Banner */}
       {actionFeedback && (
         <div
-          className={`p-3 rounded-xl border text-xs font-medium flex items-center gap-2 transition animate-in fade-in duration-150 ${
+          className={`p-3 rounded-xl border text-xs font-semibold flex items-center gap-2 transition animate-in fade-in duration-150 ${
             actionFeedback.type === "success"
-              ? "bg-emerald-500/10 text-emerald-300 border-emerald-500/30"
-              : "bg-rose-500/10 text-rose-300 border-rose-500/30"
+              ? "bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/30"
+              : "bg-rose-500/10 text-rose-700 dark:text-rose-300 border-rose-500/30"
           }`}
         >
           {actionFeedback.type === "success" ? (
@@ -840,7 +840,7 @@ export default function GitDashboardPage() {
                 className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition ${
                   isActive
                     ? "vh-bg-accent vh-text-accent border vh-border-accent shadow-xs scale-[1.01]"
-                    : "vh-text-dim hover:text-white hover:bg-white/5 border border-transparent"
+                    : "vh-text-dim hover:text-slate-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 border border-transparent"
                 }`}
               >
                 <Icon size={14} />
@@ -856,7 +856,7 @@ export default function GitDashboardPage() {
               setSelectedFile(null);
               playTone("click");
             }}
-            className="text-xs vh-text-dim hover:text-white px-2.5 py-1 rounded-lg hover:bg-white/5 transition border vh-border"
+            className="text-xs vh-text-dim hover:text-slate-900 dark:hover:text-white px-2.5 py-1 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition border vh-border"
           >
             Clear Selected File
           </button>
@@ -909,8 +909,8 @@ export default function GitDashboardPage() {
                       }}
                       className={`flex items-center justify-between p-2 rounded-lg text-xs font-mono transition cursor-pointer select-none group ${
                         isSelected
-                          ? "bg-emerald-500/15 border border-emerald-500/30 text-emerald-300"
-                          : "hover:bg-white/5 border border-transparent"
+                          ? "bg-emerald-500/15 border border-emerald-500/30 text-emerald-700 dark:text-emerald-300 font-semibold"
+                          : "hover:bg-black/5 dark:hover:bg-white/5 border border-transparent"
                       }`}
                     >
                       <div className="flex items-center gap-2 min-w-0 pr-2">
@@ -979,18 +979,18 @@ export default function GitDashboardPage() {
                       }}
                       className={`flex items-center justify-between p-2 rounded-lg text-xs font-mono transition cursor-pointer select-none group ${
                         isSelected
-                          ? "bg-sky-500/15 border border-sky-500/30 text-sky-300"
-                          : "hover:bg-white/5 border border-transparent"
+                          ? "bg-sky-500/15 border border-sky-500/30 text-sky-700 dark:text-sky-300 font-semibold"
+                          : "hover:bg-black/5 dark:hover:bg-white/5 border border-transparent"
                       }`}
                     >
                       <div className="flex items-center gap-2 min-w-0 pr-2">
                         <span
                           className={`text-[10px] font-bold px-1 rounded shrink-0 ${
                             file.kind === "untracked"
-                              ? "bg-slate-500/20 text-slate-300"
+                              ? "bg-slate-500/20 text-slate-700 dark:text-slate-300 font-semibold"
                               : file.kind === "deleted"
-                              ? "bg-rose-500/20 text-rose-400"
-                              : "bg-amber-500/20 text-amber-400"
+                              ? "bg-rose-500/20 text-rose-700 dark:text-rose-400 font-semibold"
+                              : "bg-amber-500/20 text-amber-700 dark:text-amber-400 font-semibold"
                           }`}
                         >
                           {file.kind === "untracked"
@@ -1009,7 +1009,7 @@ export default function GitDashboardPage() {
                             void handleStageFile(file.path);
                           }}
                           title="Stage this file"
-                          className="p-1 rounded hover:bg-white/10 text-emerald-400 transition"
+                          className="p-1 rounded hover:bg-black/10 dark:hover:bg-white/10 text-emerald-600 dark:text-emerald-400 transition"
                         >
                           <Plus size={12} />
                         </button>
@@ -1020,7 +1020,7 @@ export default function GitDashboardPage() {
                             void handleDiscardFile(file.path);
                           }}
                           title="Discard changes in this file"
-                          className="p-1 rounded hover:bg-white/10 text-rose-400 transition"
+                          className="p-1 rounded hover:bg-black/10 dark:hover:bg-white/10 text-rose-600 dark:text-rose-400 transition"
                         >
                           <Trash2 size={12} />
                         </button>
@@ -1052,7 +1052,7 @@ export default function GitDashboardPage() {
                     if (commitMessage.startsWith(p.prefix)) return;
                     setCommitMessage((prev) => `${p.prefix}${prev.replace(/^[a-z]+:\s*/, "")}`);
                   }}
-                  className="text-[10px] font-mono px-2 py-0.5 rounded border vh-border bg-white/5 hover:bg-white/10 vh-text-muted hover:text-white transition"
+                  className="text-[10px] font-mono px-2 py-0.5 rounded border vh-border bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 vh-text-muted hover:text-slate-900 dark:hover:text-white transition"
                 >
                   {p.label}
                 </button>

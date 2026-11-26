@@ -2,9 +2,10 @@
 
 import { useMemo, useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { Search, RefreshCw, Network, Boxes, X, Filter, ChevronDown } from "lucide-react";
+import { Search, RefreshCw, Network, Boxes, X, Filter, ChevronDown, Globe } from "lucide-react";
 import { RequestTable } from "@/components/network/request-table";
 import { RequestDetails } from "@/components/network/request-details";
+import { ChromeWindowModal } from "@/components/logs/chrome-window-modal";
 import {
   useNetworkRequestsQuery,
   useNetworkRequestDetailsQuery,
@@ -57,6 +58,7 @@ function NetworkContent() {
   const [search, setSearch] = useState("");
   const [method, setMethod] = useState("ALL");
   const [status, setStatus] = useState("ALL");
+  const [isChromeWindowOpen, setIsChromeWindowOpen] = useState(false);
   const [selectedIdentity, setSelectedIdentity] = useState<{
     id: number;
     fingerprint?: string;
@@ -278,6 +280,15 @@ function NetworkContent() {
           )}
 
           <button
+            onClick={() => setIsChromeWindowOpen(true)}
+            className="flex items-center gap-2 rounded-lg border border-cyan-500/30 bg-cyan-500/10 px-3.5 py-2 text-xs font-medium text-cyan-400 hover:bg-cyan-500/20 transition"
+            title="Open Chrome Live Capture Window"
+          >
+            <Globe size={13} />
+            Chrome Window
+          </button>
+
+          <button
             onClick={refresh}
             disabled={isFetching}
             className="flex items-center gap-2 rounded-lg border vh-border vh-bg-card px-3.5 py-2 text-xs font-medium vh-text-main hover:border-white/20 transition disabled:opacity-50"
@@ -435,6 +446,12 @@ function NetworkContent() {
           onClose={() => setSelectedIdentity(null)}
         />
       )}
+
+      {/* Chrome Live Capture Window modal */}
+      <ChromeWindowModal
+        isOpen={isChromeWindowOpen}
+        onClose={() => setIsChromeWindowOpen(false)}
+      />
     </main>
   );
 }

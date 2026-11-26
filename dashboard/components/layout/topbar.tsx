@@ -123,7 +123,7 @@ export function Topbar() {
         <button
           onClick={handleSidebarToggle}
           title={preferences.sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-          className="flex h-9 w-9 items-center justify-center rounded-xl border vh-border vh-bg-card vh-text-dim hover:text-white hover:border-white/20 transition"
+          className="flex h-9 w-9 items-center justify-center rounded-xl border vh-border vh-bg-card vh-text-dim hover:text-slate-900 dark:hover:text-white hover:border-black/20 dark:hover:border-white/20 transition"
         >
           <PanelLeft size={16} />
         </button>
@@ -212,12 +212,12 @@ export function Topbar() {
                 {currentBranchName}
               </span>
               {Boolean(gitStatusQuery.data?.currentBranch?.ahead) && (
-                <span className="text-[10px] font-mono text-emerald-300">
+                <span className="text-[10px] font-mono text-emerald-700 dark:text-emerald-300 font-semibold">
                   ↑{gitStatusQuery.data?.currentBranch?.ahead}
                 </span>
               )}
               {Boolean(gitStatusQuery.data?.currentBranch?.behind) && (
-                <span className="text-[10px] font-mono text-amber-300">
+                <span className="text-[10px] font-mono text-amber-700 dark:text-amber-300 font-semibold">
                   ↓{gitStatusQuery.data?.currentBranch?.behind}
                 </span>
               )}
@@ -226,10 +226,10 @@ export function Topbar() {
             {/* Working Tree Clean / Modified indicator */}
             {gitStatusQuery.data && (
               <div
-                className={`hidden md:flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-medium border ${
+                className={`hidden md:flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold border ${
                   (gitStatusQuery.data.files?.length || 0) === 0
-                    ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-300"
-                    : "border-amber-500/20 bg-amber-500/10 text-amber-300"
+                    ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300"
+                    : "border-amber-500/20 bg-amber-500/10 text-amber-700 dark:text-amber-300"
                 }`}
               >
                 <span
@@ -339,7 +339,7 @@ export function Topbar() {
           <button
             onClick={() => setThemeDropdownOpen((prev) => !prev)}
             title="Switch theme"
-            className="flex h-9 w-9 items-center justify-center rounded-xl border vh-border vh-bg-card vh-text-dim transition hover:border-white/20 hover:text-white"
+            className="flex h-9 w-9 items-center justify-center rounded-xl border vh-border vh-bg-card vh-text-dim transition hover:border-black/20 dark:hover:border-white/20 hover:text-slate-900 dark:hover:text-white"
           >
             <Palette size={16} />
           </button>

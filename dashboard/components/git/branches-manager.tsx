@@ -192,7 +192,7 @@ export function BranchesManager({
               playTone("click");
               void refetch();
             }}
-            className="p-1.5 rounded-lg border vh-border vh-text-dim hover:text-white hover:bg-white/5 transition"
+            className="p-1.5 rounded-lg border vh-border vh-text-dim hover:text-slate-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition"
             title="Refresh branches"
           >
             <RefreshCw size={13} className={isLoading ? "animate-spin" : ""} />
@@ -203,10 +203,10 @@ export function BranchesManager({
       {/* Feedback banner */}
       {feedback && (
         <div
-          className={`p-2.5 rounded-lg text-xs font-medium border ${
+          className={`p-2.5 rounded-lg text-xs font-semibold border ${
             feedback.type === "success"
-              ? "bg-emerald-500/10 text-emerald-300 border-emerald-500/30"
-              : "bg-rose-500/10 text-rose-300 border-rose-500/30"
+              ? "bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/30"
+              : "bg-rose-500/10 text-rose-700 dark:text-rose-300 border-rose-500/30"
           }`}
         >
           {feedback.text}
@@ -300,7 +300,7 @@ export function BranchesManager({
                       disabled={isBusy}
                       onClick={() => void handleMerge(b.name)}
                       title={`Merge "${b.name}" into "${currentBranchName || "HEAD"}"`}
-                      className="flex items-center gap-1 text-xs px-2.5 py-1 rounded-lg border border-purple-500/30 bg-purple-500/10 text-purple-300 hover:bg-purple-500/20 transition"
+                      className="flex items-center gap-1 text-xs px-2.5 py-1 rounded-lg border border-purple-500/30 bg-purple-500/10 text-purple-700 dark:text-purple-300 hover:bg-purple-500/20 font-semibold transition"
                     >
                       <GitMerge size={12} />
                       Merge

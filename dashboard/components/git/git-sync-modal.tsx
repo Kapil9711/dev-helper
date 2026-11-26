@@ -229,7 +229,7 @@ export function GitSyncModal({
                 <span
                   className={`text-[10px] font-mono uppercase font-bold px-2 py-0.5 rounded-full border ${
                     isRunning
-                      ? "bg-sky-500/20 text-sky-300 border-sky-500/40 animate-pulse"
+                      ? "bg-sky-500/20 text-sky-700 dark:text-sky-300 border-sky-500/40 animate-pulse"
                       : isSuccess
                       ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/40"
                       : "bg-rose-500/20 text-rose-400 border-rose-500/40"
@@ -252,7 +252,7 @@ export function GitSyncModal({
                 playTone("click");
                 onClose();
               }}
-              className="p-1.5 rounded-lg vh-text-dim hover:text-white hover:bg-white/10 transition"
+              className="p-1.5 rounded-lg vh-text-dim hover:text-slate-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition"
             >
               <X size={18} />
             </button>
@@ -405,7 +405,7 @@ export function GitSyncModal({
                     className="flex items-center justify-between gap-2 p-2 rounded-lg bg-black/25 border vh-border font-mono text-xs"
                   >
                     <div className="flex items-center gap-2 min-w-0">
-                      <span className="px-1.5 py-0.5 rounded bg-sky-500/20 text-sky-300 font-bold text-[10px] shrink-0">
+                      <span className="px-1.5 py-0.5 rounded bg-sky-500/20 text-sky-700 dark:text-sky-300 font-bold text-[10px] shrink-0">
                         {c.hash}
                       </span>
                       <span className="truncate vh-text-main font-sans text-xs" title={c.message}>
@@ -461,11 +461,11 @@ export function GitSyncModal({
                       +{parsedStats.insertions} / -{parsedStats.deletions} ({parsedStats.filesChanged}f)
                     </span>
                   ) : parsedStats.objectsSummary ? (
-                    <span className="text-zinc-300 font-mono text-[11px]">
+                    <span className="text-zinc-700 dark:text-zinc-300 font-mono text-[11px]">
                       {parsedStats.objectsSummary}
                     </span>
                   ) : (
-                    <span className="text-zinc-400 font-mono text-[11px]">Synced</span>
+                    <span className="text-zinc-700 dark:text-zinc-400 font-mono text-[11px]">Synced</span>
                   )}
                 </p>
               </div>
@@ -482,21 +482,21 @@ export function GitSyncModal({
 
           {/* Merge Conflict Intelligence Card */}
           {parsedStats.conflictedFiles.length > 0 && (
-            <div className="p-3.5 rounded-xl border border-rose-500/40 bg-rose-500/10 text-rose-300 space-y-2.5">
+            <div className="p-3.5 rounded-xl border border-rose-500/40 bg-rose-500/10 text-rose-700 dark:text-rose-300 space-y-2.5">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 font-bold text-rose-400 text-xs">
+                <div className="flex items-center gap-2 font-bold text-rose-600 dark:text-rose-400 text-xs">
                   <AlertTriangle size={16} />
                   <span>
                     Merge Conflict in {parsedStats.conflictedFiles.length} file{parsedStats.conflictedFiles.length === 1 ? "" : "s"}
                   </span>
                 </div>
-                <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-rose-500/20 text-rose-700 dark:text-rose-300 border border-rose-500/30 font-semibold">
                   Manual Resolution Required
                 </span>
               </div>
 
               <p className="text-[11.5px] leading-relaxed">
-                Git could not automatically merge incoming edits. The following files contain conflict markers (<code className="font-mono text-rose-300">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> and <code className="font-mono text-rose-300">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>):
+                Git could not automatically merge incoming edits. The following files contain conflict markers (<code className="font-mono text-rose-700 dark:text-rose-300">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> and <code className="font-mono text-rose-700 dark:text-rose-300">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>):
               </p>
 
               <div className="space-y-1.5">
@@ -505,7 +505,7 @@ export function GitSyncModal({
                     key={file}
                     className="flex items-center justify-between p-2 rounded-lg bg-black/40 border border-rose-500/20 font-mono text-xs"
                   >
-                    <span className="text-rose-300 font-semibold truncate pr-2">{file}</span>
+                    <span className="text-rose-700 dark:text-rose-300 font-semibold truncate pr-2">{file}</span>
                     {onSelectConflictFile && (
                       <button
                         onClick={() => {
@@ -580,7 +580,7 @@ export function GitSyncModal({
               <div className="flex items-center gap-2">
                 <button
                   onClick={handleCopyLogs}
-                  className="flex items-center gap-1 text-[10px] font-mono hover:text-white px-2 py-0.5 rounded border vh-border bg-white/5 transition"
+                  className="flex items-center gap-1 text-[10px] font-mono hover:text-slate-900 dark:hover:text-white px-2 py-0.5 rounded border vh-border bg-black/5 dark:bg-white/5 transition"
                 >
                   {copied ? <Check size={11} className="text-emerald-400" /> : <Copy size={11} />}
                   <span>{copied ? "Copied" : "Copy Logs"}</span>
@@ -588,16 +588,16 @@ export function GitSyncModal({
               </div>
             </div>
 
-            <div className="p-3 rounded-xl bg-black/50 border vh-border font-mono text-xs space-y-1 overflow-x-auto max-h-48 selection:bg-sky-500/30">
+            <div className="p-3 rounded-xl bg-slate-950 border vh-border font-mono text-xs space-y-1 overflow-x-auto max-h-48 selection:bg-sky-500/30">
               <p className="text-sky-400 font-bold">$ {modalState.command || `git ${modalState.action}`}</p>
               {modalState.stdout && (
-                <pre className="text-slate-300 whitespace-pre-wrap">{modalState.stdout}</pre>
+                <pre className="text-slate-200 whitespace-pre-wrap">{modalState.stdout}</pre>
               )}
               {modalState.stderr && (
                 <pre className="text-rose-400 whitespace-pre-wrap">{modalState.stderr}</pre>
               )}
               {!modalState.stdout && !modalState.stderr && isRunning && (
-                <p className="text-slate-500 italic">Waiting for remote host stream response...</p>
+                <p className="text-slate-400 italic">Waiting for remote host stream response...</p>
               )}
             </div>
           </div>

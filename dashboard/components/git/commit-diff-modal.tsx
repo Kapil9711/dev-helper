@@ -231,7 +231,7 @@ export function CommitDiffModal({ commit, isOpen, onClose }: CommitDiffModalProp
                   >
                     {getInitials(commit.author)}
                   </div>
-                  <span className="font-semibold text-slate-200">{commit.author}</span>
+                  <span className="font-semibold vh-text-main">{commit.author}</span>
                   <span className="opacity-70">&lt;{commit.email}&gt;</span>
                 </div>
                 <span>•</span>
@@ -250,7 +250,7 @@ export function CommitDiffModal({ commit, isOpen, onClose }: CommitDiffModalProp
                 playTone("click");
               }}
               title={isFullScreen ? "Exit Full Screen" : "Expand to Full Screen"}
-              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border vh-border text-xs vh-text-main hover:bg-white/10 transition"
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border vh-border text-xs vh-text-main hover:bg-black/5 dark:hover:bg-white/10 transition"
             >
               {isFullScreen ? <Minimize2 size={13} /> : <Maximize2 size={13} />}
               <span className="hidden sm:inline">{isFullScreen ? "Restore" : "Full Screen"}</span>
@@ -261,7 +261,7 @@ export function CommitDiffModal({ commit, isOpen, onClose }: CommitDiffModalProp
                 playTone("click");
                 onClose();
               }}
-              className="p-1.5 rounded-lg vh-text-dim hover:text-white hover:bg-white/10 transition"
+              className="p-1.5 rounded-lg vh-text-dim hover:text-slate-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition"
             >
               <X size={18} />
             </button>
@@ -270,7 +270,7 @@ export function CommitDiffModal({ commit, isOpen, onClose }: CommitDiffModalProp
 
         {/* Files Changed Strip / File Selector Tabs */}
         {files.length > 0 && (
-          <div className="flex items-center gap-1.5 border-b vh-border px-4 py-2 bg-black/25 overflow-x-auto no-scrollbar shrink-0 text-xs">
+          <div className="flex items-center gap-1.5 border-b vh-border px-4 py-2 vh-bg-subtle overflow-x-auto no-scrollbar shrink-0 text-xs">
             <span className="text-[10px] uppercase font-mono font-bold vh-text-dim shrink-0 pr-1">
               Changed Files ({files.length}):
             </span>
@@ -289,8 +289,8 @@ export function CommitDiffModal({ commit, isOpen, onClose }: CommitDiffModalProp
                   title={f.path}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border font-mono text-xs whitespace-nowrap transition shrink-0 ${
                     isSelected
-                      ? "border-sky-500/50 bg-sky-500/15 text-sky-300 font-semibold shadow-xs"
-                      : "vh-border bg-white/[0.02] vh-text-dim hover:text-white hover:bg-white/5"
+                      ? "border-sky-500/50 bg-sky-500/15 text-sky-700 dark:text-sky-300 font-semibold shadow-xs"
+                      : "vh-border bg-black/[0.02] dark:bg-white/[0.02] vh-text-dim hover:text-slate-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"
                   }`}
                 >
                   <FileText size={12} className={isSelected ? "text-sky-400" : "vh-text-dim"} />

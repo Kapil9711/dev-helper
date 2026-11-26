@@ -275,7 +275,7 @@ export function Sidebar() {
           <button
             onClick={handleToggle}
             title={preferences.sidebarCollapsed ? "Pin sidebar open" : "Collapse to icon strip"}
-            className="rounded-lg p-1.5 vh-text-dim hover:bg-white/10 hover:text-white transition shrink-0"
+            className="rounded-lg p-1.5 vh-text-dim hover:bg-black/5 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-white transition shrink-0"
           >
             {preferences.sidebarCollapsed ? (
               <Pin size={14} className="rotate-45" />
@@ -337,7 +337,7 @@ export function Sidebar() {
                   } ${
                     active
                       ? "border vh-border-accent vh-bg-accent font-semibold vh-text-accent shadow-xs"
-                      : "vh-text-muted hover:bg-white/[0.04] hover:text-white"
+                      : "vh-text-muted hover:bg-black/5 dark:hover:bg-white/[0.04] hover:text-slate-900 dark:hover:text-white"
                   }`}
                 >
                   <Icon size={18} className="shrink-0" />
@@ -371,7 +371,7 @@ export function Sidebar() {
                 } ${
                   active
                     ? "border vh-border-accent vh-bg-accent font-semibold vh-text-accent shadow-xs"
-                    : "vh-text-muted hover:bg-white/[0.04] hover:text-white"
+                    : "vh-text-muted hover:bg-black/5 dark:hover:bg-white/[0.04] hover:text-slate-900 dark:hover:text-white"
                 }`}
               >
                 <Icon size={18} className="shrink-0" />
@@ -413,7 +413,7 @@ export function Sidebar() {
               </p>
               <button
                 onClick={() => updatePreferences({ selectedProject: "ALL" })}
-                className="mt-1.5 text-[10px] vh-text-dim hover:text-white underline"
+                className="mt-1.5 text-[10px] vh-text-dim hover:text-slate-900 dark:hover:text-white underline"
               >
                 Reset to all projects
               </button>

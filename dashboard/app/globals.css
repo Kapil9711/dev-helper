@@ -243,6 +243,113 @@
   --json-null: #64748b;
 }
 
+/* ========================================================
+   SKY MIST THEME PIXEL-PERFECT CONTRAST REFINEMENTS
+   ======================================================== */
+[data-theme="sky-mist"] {
+  color: var(--text-main);
+}
+
+/* Prevent white-on-white text when hovering buttons/tabs */
+[data-theme="sky-mist"] .hover\:text-white:hover {
+  color: #0c2340 !important;
+}
+
+[data-theme="sky-mist"] [class*="hover:text-white"]:hover:not([class*="bg-emerald-600"]):not([class*="bg-blue-600"]):not([class*="bg-cyan-500"]):not([class*="bg-sky-500"]):not([class*="bg-rose-600"]):not([class*="bg-purple-600"]):not([class*="bg-primary"]):not(.vh-bg-accent) {
+  color: #0c2340 !important;
+}
+
+/* High contrast pastel pills & text on light sky background */
+[data-theme="sky-mist"] .text-sky-300,
+[data-theme="sky-mist"] [class*="text-sky-300"] {
+  color: #0284c7 !important;
+}
+
+[data-theme="sky-mist"] .text-emerald-300,
+[data-theme="sky-mist"] [class*="text-emerald-300"] {
+  color: #047857 !important;
+}
+
+[data-theme="sky-mist"] .text-rose-300,
+[data-theme="sky-mist"] [class*="text-rose-300"] {
+  color: #be123c !important;
+}
+
+[data-theme="sky-mist"] .text-amber-300,
+[data-theme="sky-mist"] [class*="text-amber-300"] {
+  color: #b45309 !important;
+}
+
+[data-theme="sky-mist"] .text-purple-300,
+[data-theme="sky-mist"] [class*="text-purple-300"] {
+  color: #6d28d9 !important;
+}
+
+[data-theme="sky-mist"] .text-slate-200,
+[data-theme="sky-mist"] [class*="text-slate-200"] {
+  color: #0c2340 !important;
+}
+
+[data-theme="sky-mist"] .text-slate-300,
+[data-theme="sky-mist"] [class*="text-slate-300"] {
+  color: #33597d !important;
+}
+
+[data-theme="sky-mist"] .text-zinc-300,
+[data-theme="sky-mist"] [class*="text-zinc-300"] {
+  color: #33597d !important;
+}
+
+[data-theme="sky-mist"] .text-zinc-400,
+[data-theme="sky-mist"] [class*="text-zinc-400"] {
+  color: #475569 !important;
+}
+
+/* Subtle overlays and card surfaces for Sky Mist */
+[data-theme="sky-mist"] [class*="hover:bg-white/5"]:hover,
+[data-theme="sky-mist"] [class*="hover:bg-white/10"]:hover {
+  background-color: rgba(14, 116, 144, 0.08) !important;
+}
+
+[data-theme="sky-mist"] [class*="bg-white/5"] {
+  background-color: rgba(14, 116, 144, 0.05);
+}
+
+[data-theme="sky-mist"] [class*="bg-white/10"] {
+  background-color: rgba(14, 116, 144, 0.08);
+}
+
+/* Terminal / Console output inside light modals: keep a crisp dark slate console box with crisp white text */
+[data-theme="sky-mist"] .bg-black\/50 pre,
+[data-theme="sky-mist"] .bg-black\/40 pre,
+[data-theme="sky-mist"] pre.bg-black\/40,
+[data-theme="sky-mist"] pre.bg-black\/50 {
+  color: #e2e8f0 !important;
+}
+
+/* Diff viewer line additions & deletions in Sky Mist */
+[data-theme="sky-mist"] .bg-emerald-500\/15 {
+  background-color: rgba(16, 185, 129, 0.15) !important;
+  color: #047857 !important;
+}
+
+[data-theme="sky-mist"] .bg-rose-500\/15 {
+  background-color: rgba(244, 63, 94, 0.14) !important;
+  color: #be123c !important;
+}
+
+[data-theme="sky-mist"] .bg-sky-500\/15 {
+  background-color: rgba(2, 132, 199, 0.15) !important;
+  color: #0369a1 !important;
+}
+
+/* Kbd elements in Sky Mist */
+[data-theme="sky-mist"] kbd {
+  background-color: #e2ecf5 !important;
+  color: #0c2340 !important;
+  border: 1px solid rgba(14, 116, 144, 0.25) !important;
+}
+
 /* Accents */
 :root,
 [data-accent="blue"] {

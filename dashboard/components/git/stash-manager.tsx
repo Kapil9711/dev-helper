@@ -156,7 +156,7 @@ export function StashManager({ onRefreshWorkingTree }: StashManagerProps) {
             playTone("click");
             void refetch();
           }}
-          className="flex items-center gap-1 text-xs vh-text-dim hover:text-white transition"
+          className="flex items-center gap-1 text-xs vh-text-dim hover:text-slate-900 dark:hover:text-white transition"
         >
           <RefreshCw size={12} className={isLoading ? "animate-spin" : ""} />
           Refresh
@@ -166,10 +166,10 @@ export function StashManager({ onRefreshWorkingTree }: StashManagerProps) {
       {/* Feedback banner */}
       {feedback && (
         <div
-          className={`p-2.5 rounded-lg text-xs font-medium border ${
+          className={`p-2.5 rounded-lg text-xs font-semibold border ${
             feedback.type === "success"
-              ? "bg-emerald-500/10 text-emerald-300 border-emerald-500/30"
-              : "bg-rose-500/10 text-rose-300 border-rose-500/30"
+              ? "bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/30"
+              : "bg-rose-500/10 text-rose-700 dark:text-rose-300 border-rose-500/30"
           }`}
         >
           {feedback.text}
@@ -237,8 +237,8 @@ export function StashManager({ onRefreshWorkingTree }: StashManagerProps) {
                       }}
                       className={`flex items-center gap-1 text-[11px] px-2.5 py-1 rounded border vh-border transition ${
                         isViewingDiff
-                          ? "bg-amber-500/20 text-amber-300 border-amber-500/40"
-                          : "hover:bg-white/10 vh-text-dim hover:text-white"
+                          ? "bg-amber-500/20 text-amber-700 dark:text-amber-300 border-amber-500/40 font-semibold"
+                          : "hover:bg-black/5 dark:hover:bg-white/10 vh-text-dim hover:text-slate-900 dark:hover:text-white"
                       }`}
                     >
                       <FileCode size={12} />
