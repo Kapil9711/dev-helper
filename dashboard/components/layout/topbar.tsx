@@ -18,6 +18,7 @@ import {
   FolderGit2,
   Disc,
   Music,
+  Wrench,
 } from "lucide-react";
 import { ConnectionStatus } from "./connection-status";
 import {
@@ -41,6 +42,7 @@ const titles: Record<string, string> = {
   "/projects": "Projects",
   "/settings": "Settings",
   "/git": "Git Dashboard",
+  "/utility": "Utility Dashboard",
 };
 
 export function Topbar() {
@@ -60,6 +62,10 @@ export function Topbar() {
   const isMusicServer = serverInfoQuery.data?.mode === "music";
   const isMusicPath = pathname.startsWith("/music");
   const isMusicMode = isMusicServer || isMusicPath;
+
+  const isUtilityServer = serverInfoQuery.data?.mode === "utility";
+  const isUtilityPath = pathname.startsWith("/utility");
+  const isUtilityMode = isUtilityServer || isUtilityPath;
 
   const apps = appsQuery.data?.data ?? [];
 
@@ -125,10 +131,16 @@ export function Topbar() {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-sm font-bold vh-text-main">
-              {isMusicMode ? "VH Music" : isGitMode ? "Git Dashboard" : titles[normalizedPath] ?? "Dashboard"}
+              {isUtilityMode
+                ? "VH Utility"
+                : isMusicMode
+                ? "VH Music"
+                : isGitMode
+                ? "Git Dashboard"
+                : titles[normalizedPath] ?? "Dashboard"}
             </h1>
 
-            {!isGitMode && !isMusicMode && preferences.selectedProject !== "ALL" && (
+            {!isGitMode && !isMusicMode && !isUtilityMode && preferences.selectedProject !== "ALL" && (
               <span className="flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-semibold vh-bg-accent vh-text-accent border vh-border-accent">
                 <Boxes size={11} />
                 {preferences.selectedProject}
@@ -143,7 +155,11 @@ export function Topbar() {
             )}
           </div>
           <p className="mt-0.5 text-[11px] vh-text-dim">
-            {isMusicMode ? (
+            {isUtilityMode ? (
+              <>
+                VH Utility <span className="mx-1">/</span> MERN Dev Suite
+              </>
+            ) : isMusicMode ? (
               <>
                 VH Music <span className="mx-1">/</span> Hi-Fi Retro Player
               </>
@@ -162,8 +178,13 @@ export function Topbar() {
       </div>
 
       <div className="flex items-center gap-2.5">
-        {/* IN MUSIC MODE: Show Music Player Badge */}
-        {isMusicMode ? (
+        {/* IN UTILITY MODE: Show Utility Badge */}
+        {isUtilityMode ? (
+          <div className="flex items-center gap-2 rounded-xl border border-cyan-500/25 bg-cyan-500/10 px-3 py-1.5 text-xs font-semibold text-cyan-400 shadow-xs">
+            <Wrench size={14} />
+            <span className="hidden sm:inline">Node.js Engine Active</span>
+          </div>
+        ) : isMusicMode ? (
           <div className="flex items-center gap-2 rounded-xl border border-pink-500/25 bg-pink-500/10 px-3 py-1.5 text-xs font-semibold text-pink-400 shadow-xs">
             <Disc size={14} className="animate-[spin_6s_linear_infinite]" />
             <span className="hidden sm:inline">Hi-Fi Audio Player</span>

@@ -127,7 +127,7 @@ export interface GitActionResult {
 }
 
 export interface ServerInfoResponse {
-  mode: "git" | "logs" | "music";
+  mode: "git" | "logs" | "music" | "utility";
   service?: string;
   repoRoot?: string;
   currentBranch?: string;

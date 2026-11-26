@@ -2,6 +2,7 @@ import { Command } from "commander";
 import { gitCommandRouter } from "./features/git/git.route.ts";
 import { logsCommandRouter } from "./features/logs/logs.route.ts";
 import { musicCommandRouter } from "./features/music/music.route.ts";
+import { utilityCommandRouter } from "./features/utility/utility.route.ts";
 
 export class App {
   private program: Command;
@@ -20,6 +21,7 @@ export class App {
     gitCommandRouter.register(this.program);
     logsCommandRouter.register(this.program);
     musicCommandRouter.register(this.program);
+    utilityCommandRouter.register(this.program);
   }
 }
 

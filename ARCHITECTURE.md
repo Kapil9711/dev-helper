@@ -292,6 +292,20 @@ Deduplication via SHA-256 fingerprint (`app_name + method + url` for network, `a
 
 ---
 
+### Feature: Utility Dashboard
+
+**Command:** `vh utility [-p <port>]` / `vh util` (default port `4320`)
+
+Standalone developer productivity engine and dashboard tailored for full-stack MERN engineers:
+- **Server-Side Node Processing Engine**: Executes heavy conversions using Sharp, FFmpeg, and native streams/crypto, bypassing browser canvas and memory limitations.
+- **Image Studio**: Format conversion (PNG, JPG, WEBP, AVIF, GIF, TIFF, ICO), compression, resize & crop, filters & modulate, multi-size favicon bundle generation, and Base64 studio.
+- **PDF Suite**: Multi-image to PDF, Markdown/text to PDF, document metadata inspector, and stream text extraction.
+- **Video & Audio Studio**: Video to animated GIF (Lanczos palette), video frame/thumbnail extraction, clipper/trimmer, audio extraction (MP4 to MP3), and audio format converter.
+- **MERN Dev Tools**: JWT debugger/decoder/signer with expiry calculation and HMAC verification, MongoDB ObjectId inspector & authentic generator, cURL transpiler into Axios/Fetch/Node Express, and JSON to Mongoose/TypeScript schema inference.
+- **Security & Hashes**: Bcrypt salted hasher ($2b$) and timing benchmark verifier, cryptographic checksums (SHA256, MD5, SHA512, HMAC), UUID/NanoID generator, and URL/Base64 encodings.
+
+---
+
 ### Shared Utilities
 
 | Module | Purpose |
@@ -320,6 +334,7 @@ A **Next.js 16 App Router** application exported as a static site and bundled in
 | `/docs` | DocsPage + ApiRequestRunner | Swagger & Scalar style API reference (unique route aggregation, OpenAPI export, code snippets, parameters table, responses accordion, interactive runner) |
 | `/events` | Events view | — |
 | `/projects` | Projects view | — |
+| `/utility` | UtilityPage | Standalone MERN Full-Stack Dev Tools & Media Engine |
 | `/settings` | Settings | User preferences |
 
 ### Components
