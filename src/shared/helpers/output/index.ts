@@ -25,9 +25,10 @@ class Output {
         duration: result.durationMs,
       });
     } else {
+      const errMsg = result.stderr || result.stdout || "Command failed";
       await output.error({
         title: result.command,
-        message: result.stderr,
+        message: errMsg,
         duration: result.durationMs,
       });
     }
@@ -39,7 +40,7 @@ class Output {
     if (message) {
       await writer.writeln(message);
     }
-    if (duration) {
+    if (duration !== undefined) {
       const msg = ` Duration ${duration} ms `;
       await writer.writeln(chalk.yellow(msg));
     }
@@ -50,27 +51,24 @@ class Output {
 
   async error({ title, message, duration, isRaw = false }: OutputProps) {
     await writer.writeln("");
-    await writer.writeln(chalk.green(`${title} ☑️ Started`));
+    await writer.writeln(chalk.red(`${title} Failed`));
     if (message) {
-      await writer.writeln(message);
+      await writer.writeln(chalk.red(message));
     }
 
-    if (duration) {
+    if (duration !== undefined) {
       const msg = `Duration ${duration} ms`;
       await writer.writeln(chalk.yellow(msg));
     }
 
     await writer.writeln(
-      chalk.bgCyanBright(chalk.bgRedBright(chalk.black(` ${title} ❌ ERROR `))),
+      chalk.bgRedBright(chalk.whiteBright(` ${title} ❌ ERROR `)),
     );
-
-    // console.log(chalk.red(`${title} ✖ ERROR`));
   }
 
   async info(message: string, delay?: number) {
     await writer.writeln("");
     await writer.write(chalk.cyan(message), delay);
-    // console.log(chalk.cyan(message));
   }
 
   json(content: any) {
@@ -85,15 +83,19 @@ class Output {
       colWidths: [18, 35],
     });
 
+    const branchName = branch.detached
+      ? "(detached HEAD)"
+      : branch.current || "None";
+
     table.push(
-      ["Branch", branch.current],
+      ["Branch", branchName],
       ["Upstream", branch.upstream ?? "None"],
-      ["Ahead", branch.ahead],
-      ["Behind", branch.behind],
+      ["Ahead", branch.ahead ?? 0],
+      ["Behind", branch.behind ?? 0],
     );
     await writer.writeln("");
     await writer.writeln(chalk.cyan("Current Branch Details"));
-    await output.info(chalk.cyan(table.toString()));
+    await output.info(chalk.cyan(table.toString()), 0);
   }
 }
 

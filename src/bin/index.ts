@@ -8,5 +8,5 @@ if (nodeMajor < 20) {
   process.exit(1);
 }
 
-import app from "../app.tsx";
+import app from "../app.ts";
 app.initialiazeCommandar();

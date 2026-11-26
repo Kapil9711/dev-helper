@@ -5,8 +5,8 @@ import { gitCommandService } from "./git.service.ts";
 export type CommandOptions = {
   json?: boolean;
   force?: boolean;
-  forceUnsafe: boolean;
-  newBranch: boolean;
+  forceUnsafe?: boolean;
+  newBranch?: boolean | string;
   staged?: boolean;
   limit?: number;
   hard?: boolean;
@@ -49,7 +49,9 @@ class GitCommandController {
   }
 
   async gitDashboard(options: { port?: string; open?: boolean }) {
-    const { startGitDashboardServer } = await import("./git.dashboard.server.ts");
+    const { startGitDashboardServer } = await import(
+      "./git.dashboard.server.ts"
+    );
     const port = options.port ? Number(options.port) : 4318;
     if (!Number.isInteger(port) || port < 1 || port > 65535) {
       throw new Error("Port must be an integer from 1 to 65535");
@@ -67,12 +69,13 @@ class GitCommandController {
 
   async gitStatus(options: CommandOptions) {
     const result = await gitCommandService.gitStatus();
-
     await output.autoPrint(result, options);
   }
 
-  async gitAdd(options: CommandOptions) {
-    const result = await gitCommandService.gitAdd();
+  async gitAdd(files: string[] | undefined, options: CommandOptions) {
+    // When called by Commander: argument [files...] is passed first, then options
+    const filesArray = Array.isArray(files) && files.length > 0 ? files : undefined;
+    const result = await gitCommandService.gitAdd(false, filesArray);
     await output.autoPrint(result, options);
   }
 
@@ -81,7 +84,6 @@ class GitCommandController {
     options: CommandOptions,
     isFetch: boolean = false,
   ) {
-    // validate message before commiting
     if (!message) {
       message = "auto commit";
     }
@@ -99,21 +101,25 @@ class GitCommandController {
     await output.autoPrint(result, options);
   }
 
-  async gitPull(branch: string, options: CommandOptions) {
+  async gitPull(branch: string | undefined, options: CommandOptions) {
     const result = await gitCommandService.gitPull(branch);
     await output.autoPrint(result, options);
   }
 
-  async gitCheckout(branch: string, options: CommandOptions) {
+  async gitCheckout(branch: string | undefined, options: CommandOptions) {
     const result = await gitCommandService.gitCheckout(
       branch,
-      options.newBranch,
+      Boolean(options.newBranch),
     );
     await output.autoPrint(result, options);
   }
 
-  async gitBranch(options: CommandOptions) {
-    const result = await gitCommandService.gitBranch();
+  async gitBranch(branchName: string | undefined, options: CommandOptions) {
+    const targetBranch =
+      typeof options.newBranch === "string"
+        ? options.newBranch
+        : branchName;
+    const result = await gitCommandService.gitBranch(targetBranch);
     await output.autoPrint(result, options);
   }
 
@@ -130,7 +136,7 @@ class GitCommandController {
   async gitDiff(options: CommandOptions) {
     const result = await gitCommandService.gitDiff(!!options.staged);
     if (result.success) {
-      await output.info(result.stdout);
+      await output.info(result.stdout, 0);
     } else {
       await output.autoPrint(result, options);
     }
@@ -139,7 +145,7 @@ class GitCommandController {
   async gitLog(options: CommandOptions) {
     const result = await gitCommandService.gitLog(options.limit ?? 10);
     if (result.success) {
-      await output.info(result.stdout);
+      await output.info(result.stdout, 0);
     } else {
       await output.autoPrint(result, options);
     }
@@ -157,7 +163,7 @@ class GitCommandController {
   async gitTag(options: CommandOptions) {
     const result = await gitCommandService.gitTag();
     if (result.success) {
-      await output.info(result.stdout);
+      await output.info(result.stdout, 0);
     } else {
       await output.autoPrint(result, options);
     }
@@ -171,7 +177,7 @@ class GitCommandController {
   async gitRemote(options: CommandOptions) {
     const result = await gitCommandService.gitRemote();
     if (result.success) {
-      await output.info(result.stdout);
+      await output.info(result.stdout, 0);
     } else {
       await output.autoPrint(result, options);
     }
@@ -195,7 +201,7 @@ class GitCommandController {
   async gitShow(commit: string, options: CommandOptions) {
     const result = await gitCommandService.gitShow(commit);
     if (result.success) {
-      await output.info(result.stdout);
+      await output.info(result.stdout, 0);
     } else {
       await output.autoPrint(result, options);
     }
@@ -206,105 +212,139 @@ class GitCommandController {
     await output.autoPrint(result, options);
   }
 
-  // combined controllers
+  // ─── Combined Controllers ───────────────────────────────────────────────────
 
   async gitCommitWithAdd(message: string, options: CommandOptions) {
-    let result = await gitCommandService.gitAdd(true);
-    await output.autoPrint(result, options);
-    // if add fail return early
-    if (!result.success) return;
+    const addResult = await gitCommandService.gitAdd(true);
+    await output.autoPrint(addResult, options);
+    if (!addResult.success) return;
 
     await this.gitCommit(message, options, false);
   }
 
   async gitPushWithCommitAndAdd(message: string, options: CommandOptions) {
-    let result = await gitCommandService.gitAdd(true);
-    await output.autoPrint(result, options);
-    // if add fail return early
-    if (!result.success) return;
+    const addResult = await gitCommandService.gitAdd(true);
+    await output.autoPrint(addResult, options);
+    if (!addResult.success) return;
 
-    if (!message) {
-      message = "auto commit";
-    }
-    result = await gitCommandService.gitCommit(message, true);
-    await output.autoPrint(result, options);
-    //if commit fail return early
-    if (!result.success) return;
+    const commitMsg = message || "auto commit";
+    const commitResult = await gitCommandService.gitCommit(commitMsg, false);
+    await output.autoPrint(commitResult, options);
+    if (!commitResult.success) return;
 
     return this.gitPush(options);
   }
 
   async gitPullWithCommitAndAdd(
-    message: string,
-    inputBranch: string,
+    arg1: string | undefined,
+    arg2: string | undefined,
     options: CommandOptions,
   ) {
-    let result = await gitCommandService.gitAdd(true);
-    await output.autoPrint(result, options);
-    // if add fail return early
-    if (!result.success) return;
+    const addResult = await gitCommandService.gitAdd(true);
+    await output.autoPrint(addResult, options);
+    if (!addResult.success) return;
 
-    if (!message) {
-      message = "auto commit";
+    let branch: string | undefined;
+    let message = "auto commit";
+
+    if (arg1 && arg2) {
+      if (arg1.includes(" ") || (!arg2.includes(" ") && arg2)) {
+        message = arg1;
+        branch = arg2;
+      } else {
+        branch = arg1;
+        message = arg2;
+      }
+    } else if (arg1) {
+      if (arg1.includes(" ")) {
+        message = arg1;
+      } else {
+        branch = arg1;
+      }
     }
-    result = await gitCommandService.gitCommit(message, false);
-    await output.autoPrint(result, options);
-    //if commit fail return early
-    if (!result.success) return;
 
-    return this.gitPull(inputBranch, options);
+    const commitResult = await gitCommandService.gitCommit(message, false);
+    await output.autoPrint(commitResult, options);
+    if (!commitResult.success) return;
+
+    return this.gitPull(branch, options);
   }
 
   async gitPushWithPullAndCommit(
-    message: string,
-    inputBranch: string,
+    arg1: string | undefined,
+    arg2: string | undefined,
     options: CommandOptions,
   ) {
-    await output.info(chalk.blueBright("4 Steps Process"));
-    console.log();
+    let message = "auto commit";
+    let inputBranch: string | undefined;
 
-    await output.info(chalk.blueBright("1/4 Step (stagging files...)"));
-    let result = await gitCommandService.gitAdd(true);
-    await output.autoPrint(result, options);
-    // if add fail return early
-    if (!result.success) return;
-
-    if (!message) {
-      message = "auto commit";
+    if (arg1 && arg2) {
+      if (arg1.includes(" ")) {
+        message = arg1;
+        inputBranch = arg2;
+      } else {
+        inputBranch = arg1;
+        message = arg2;
+      }
+    } else if (arg1) {
+      if (arg1.includes(" ")) {
+        message = arg1;
+      } else {
+        inputBranch = arg1;
+      }
     }
-    await output.info(chalk.blueBright("2/4 Step (commiting staged files)"));
-    result = await gitCommandService.gitCommit(message, true);
-    await output.autoPrint(result, options);
-    //if commit fail return early
-    if (!result.success) return;
+
+    await output.info(chalk.blueBright("4 Steps Process"), 0);
+
+    await output.info(chalk.blueBright("1/4 Step (staging files...)"), 0);
+    const addResult = await gitCommandService.gitAdd(true);
+    await output.autoPrint(addResult, options);
+    if (!addResult.success) return;
+
+    await output.info(chalk.blueBright("2/4 Step (committing staged files)"), 0);
+    const commitResult = await gitCommandService.gitCommit(message, false);
+    await output.autoPrint(commitResult, options);
+    if (!commitResult.success) return;
+
     await output.info(
       chalk.blueBright("3/4 Step (pulling from remote branch)"),
+      0,
     );
-    result = await gitCommandService.gitPull(inputBranch);
-    await output.autoPrint(result, options);
-    //if pull fail return early
-    if (!result.success) return;
-    await output.info(chalk.blueBright("4/4 Step (pushing to remote branch)"));
+    const pullResult = await gitCommandService.gitPull(inputBranch);
+    await output.autoPrint(pullResult, options);
+    if (!pullResult.success) return;
+
+    await output.info(chalk.blueBright("4/4 Step (pushing to remote branch)"), 0);
     return this.gitPush(options);
   }
 
   async gitCheckoutWithCommitAndAdd(
-    message: string,
-    branch: string,
+    arg1: string | undefined,
+    arg2: string | undefined,
     options: CommandOptions,
   ) {
-    let result = await gitCommandService.gitAdd(true);
-    await output.autoPrint(result, options);
-    // if add fail return early
-    if (!result.success) return;
+    const addResult = await gitCommandService.gitAdd(true);
+    await output.autoPrint(addResult, options);
+    if (!addResult.success) return;
 
-    if (!message) {
-      message = "auto commit";
+    let branch = "";
+    let message = "auto commit";
+
+    if (arg1 && arg2) {
+      if (arg1.includes(" ") && !arg2.includes(" ")) {
+        message = arg1;
+        branch = arg2;
+      } else {
+        branch = arg1;
+        message = arg2;
+      }
+    } else if (arg1) {
+      branch = arg1;
     }
-    result = await gitCommandService.gitCommit(message);
-    await output.autoPrint(result, options);
-    //if commit fail return early
-    if (!result.success) return;
+
+    const commitResult = await gitCommandService.gitCommit(message, false);
+    await output.autoPrint(commitResult, options);
+    if (!commitResult.success) return;
 
     return this.gitCheckout(branch, options);
   }

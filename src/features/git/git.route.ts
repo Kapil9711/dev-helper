@@ -7,7 +7,7 @@ class GitCommandRouter {
     this.git = program.command("git");
     // dashboard command
     this.gitDashboard();
-    // acutal commands
+    // actual commands
     this.gitInit();
     this.gitStatus();
     this.gitAdd();
@@ -66,7 +66,8 @@ class GitCommandRouter {
   private gitAdd() {
     this.git
       .command("add")
-      .description("Add files to stagging area")
+      .description("Add files to staging area")
+      .argument("[files...]", "Files to stage (optional, interactive if omitted)")
       .option("-j, --json")
       .action(gitCommandController.gitAdd);
   }
@@ -75,7 +76,7 @@ class GitCommandRouter {
     this.git
       .command("commit")
       .description("Create commit")
-      .argument("[message]", "commit message")
+      .argument("[message]", "Commit message")
       .option("-j, --json")
       .action(gitCommandController.gitCommit);
   }
@@ -85,8 +86,8 @@ class GitCommandRouter {
       .command("push")
       .description("Push to remote branch")
       .option("-j, --json")
-      .option("--force")
-      .option("--force-unsafe")
+      .option("--force", "Force push with lease")
+      .option("--force-unsafe", "Force push without lease")
       .action(gitCommandController.gitPush);
   }
 
@@ -102,8 +103,8 @@ class GitCommandRouter {
   private gitCheckout() {
     this.git
       .command("checkout")
-      .description("Checkout to new branch")
-      .option("-b, --new-branch")
+      .description("Checkout to branch or create new")
+      .option("-b, --new-branch", "Create a new branch")
       .argument("[branch]", "Branch Name")
       .action(gitCommandController.gitCheckout);
   }
@@ -111,8 +112,9 @@ class GitCommandRouter {
   private gitBranch() {
     this.git
       .command("branch")
-      .description("All Branch List")
-      .option("-b, --new-branch")
+      .description("List branches or create new branch")
+      .argument("[branchName]", "Branch name to create (optional)")
+      .option("-b, --new-branch <name>", "Create a new branch")
       .action(gitCommandController.gitBranch);
   }
 
@@ -122,7 +124,7 @@ class GitCommandRouter {
       .command("cwa")
       .description("Auto commit with add")
       .option("-j, --json")
-      .argument("[message]", "commit message")
+      .argument("[message]", "Commit message")
       .action(gitCommandController.gitCommitWithAdd);
   }
 
@@ -131,7 +133,9 @@ class GitCommandRouter {
       .command("phcwa")
       .description("Auto push with commit and add")
       .option("-j, --json")
-      .argument("[message]", "commit message")
+      .option("--force", "Force push with lease")
+      .option("--force-unsafe", "Force push without lease")
+      .argument("[message]", "Commit message")
       .action(gitCommandController.gitPushWithCommitAndAdd);
   }
 
@@ -140,19 +144,18 @@ class GitCommandRouter {
       .command("plcwa")
       .description("Auto pull with commit and add")
       .option("-j, --json")
-      .argument("[message]", "Branch Name")
-      .argument("[branch]", "commit message")
+      .argument("[branch]", "Branch name to pull from (optional)")
+      .argument("[message]", "Commit message (optional)")
       .action(gitCommandController.gitPullWithCommitAndAdd);
   }
 
   private gitPushWithPullAndCommit() {
     this.git
       .command("puplwc")
-      .description("Auto pull with commit and add")
+      .description("Auto push with pull and commit")
       .option("-j, --json")
-      .argument("[message]", "commit message")
-      .argument("[branch]", "commit message")
-
+      .argument("[message]", "Commit message (optional)")
+      .argument("[branch]", "Branch name to pull from (optional)")
       .action(gitCommandController.gitPushWithPullAndCommit);
   }
 
@@ -160,9 +163,9 @@ class GitCommandRouter {
     this.git
       .command("cwca")
       .description("Checkout with commit and add")
-      .argument("[message]", "Branch Name")
-      .option("-b, --new-branch")
-      .argument("[branch]", "Branch Name")
+      .argument("[branch]", "Branch name to checkout to")
+      .argument("[message]", "Commit message (optional)")
+      .option("-b, --new-branch", "Create a new branch")
       .action(gitCommandController.gitCheckoutWithCommitAndAdd);
   }
 
@@ -209,7 +212,9 @@ class GitCommandRouter {
   private gitReset() {
     this.git
       .command("reset")
-      .description("Reset the last commit (soft or hard) or discard unstaged changes")
+      .description(
+        "Reset the last commit (soft or hard) or discard unstaged changes",
+      )
       .option("-j, --json")
       .option("--hard", "Hard reset — discard all changes")
       .option("--soft", "Soft reset — keep changes staged")
@@ -255,7 +260,9 @@ class GitCommandRouter {
   private gitClean() {
     this.git
       .command("clean")
-      .description("Remove untracked files and directories (with preview + confirmation)")
+      .description(
+        "Remove untracked files and directories (with preview + confirmation)",
+      )
       .option("-j, --json")
       .action(gitCommandController.gitClean);
   }
@@ -263,7 +270,9 @@ class GitCommandRouter {
   private gitRestore() {
     this.git
       .command("restore")
-      .description("Discard changes in working tree for specific files (interactive)")
+      .description(
+        "Discard changes in working tree for specific files (interactive)",
+      )
       .argument("[file]", "File path to restore (omit for interactive picker)")
       .option("-j, --json")
       .action(gitCommandController.gitRestore);

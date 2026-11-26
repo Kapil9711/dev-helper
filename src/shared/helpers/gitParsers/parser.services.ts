@@ -96,9 +96,9 @@ export class GitParser {
 
       const [ahead, behind] = value.split(" ");
 
-      branch.ahead = Number(ahead.replace("+", ""));
+      branch.ahead = ahead ? Number(ahead.replace("+", "")) || 0 : 0;
 
-      branch.behind = Number(behind.replace("-", ""));
+      branch.behind = behind ? Number(behind.replace("-", "")) || 0 : 0;
     }
   }
 
@@ -290,7 +290,10 @@ export class GitSummaryBuilder {
 
     summary.hasConflicts = summary.conflicted > 0;
 
-    summary.isClean = !summary.hasChanges;
+    summary.isClean =
+      summary.staged === 0 &&
+      summary.unstaged === 0 &&
+      summary.conflicted === 0;
 
     return summary;
   }
@@ -299,7 +302,6 @@ export class GitSummaryBuilder {
     switch (file.kind) {
       case GitFileKind.Untracked:
         summary.untracked++;
-        summary.unstaged++;
         break;
 
       case GitFileKind.Ignored:

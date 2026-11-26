@@ -16,6 +16,11 @@ export type ExecResult = {
   command: string;
 };
 
+export function quoteShell(arg: string): string {
+  if (!arg) return "''";
+  return `'${arg.replace(/'/g, "'\\''")}'`;
+}
+
 export async function exec(
   command: string,
   options: ExecOptions = {},
@@ -40,15 +45,17 @@ export async function exec(
         maxBuffer,
       },
       (error, stdout, stderr) => {
+        const trimmedStdout = stdout.trim();
+        const trimmedStderr = stderr.trim();
         const result: ExecResult = {
-          stdout: stdout.trim(),
-          stderr: stderr.trim(),
+          stdout: trimmedStdout,
+          stderr: trimmedStderr || (error && !trimmedStderr ? error.message : ""),
           durationMs: Date.now() - startedAt,
           success: !error,
           command,
         };
         if (error && throwOnError) {
-          const finalError = new Error(stderr.trim() || error.message);
+          const finalError = new Error(result.stderr || result.stdout || error.message);
           return reject(finalError);
         }
         resolve(result);

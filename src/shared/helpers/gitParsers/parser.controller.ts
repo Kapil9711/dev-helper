@@ -1,6 +1,11 @@
 import { Option } from "@clack/prompts";
 import { exec, ExecResult } from "../shell/exec.ts";
-import { GitDisplay, GitParser, GitStatusHelper } from "./parser.services.ts";
+import {
+  GitDisplay,
+  GitParser,
+  GitStatusHelper,
+  GitSummaryBuilder,
+} from "./parser.services.ts";
 import {
   GitBranch,
   GitChangedFile,
@@ -20,33 +25,27 @@ export class GitParserController {
   }
 
   async getRepositoryRoot(): Promise<string> {
-    const result = await exec("git rev-parse --show-toplevel", {
-      throwOnError: true,
-    });
+    const result = await exec("git rev-parse --show-toplevel");
 
-    return result.stdout;
+    return result.success ? result.stdout : process.cwd();
   }
 
   async getCurrentBranch(): Promise<string> {
-    const result = await exec("git branch --show-current", {
-      throwOnError: true,
-    });
+    const result = await exec("git branch --show-current");
 
-    return result.stdout;
+    return result.success ? result.stdout : "";
   }
 
   async getCurrentCommit(): Promise<string> {
-    const result = await exec("git rev-parse HEAD", {
-      throwOnError: true,
-    });
+    const result = await exec("git rev-parse HEAD");
 
-    return result.stdout;
+    return result.success ? result.stdout : "";
   }
 
   async getRemotes(): Promise<string[]> {
-    const result = await exec("git remote", {
-      throwOnError: true,
-    });
+    const result = await exec("git remote");
+
+    if (!result.success || !result.stdout) return [];
 
     return result.stdout
       .split("\n")
@@ -60,16 +59,16 @@ export class GitParserController {
     const result = await exec(
       `git ls-remote --heads ${remote} refs/heads/${branch}`,
       {
-        throwOnError: true,
+        timeout: 15000,
       },
     );
 
-    return result.stdout.trim() !== "";
+    return result.success && result.stdout.trim() !== "";
   }
   async ensureUpstream(
     branch: string,
     remote = "origin",
-    timeoutMs = 10000,
+    timeoutMs = 15000,
   ): Promise<ExecResult> {
     const successResult: ExecResult = {
       stdout: "",
@@ -79,14 +78,17 @@ export class GitParserController {
       command: "",
     };
 
-    const status = await this.getStatus();
+    const remoteBranch = `${remote}/${branch}`;
 
-    // Already configured
-    if (status.currentBranch.upstream) {
+    // Fast-path: try setting upstream directly without network call
+    const directUpstream = await exec(
+      `git branch --set-upstream-to=${remoteBranch}`,
+      { timeout: 5000 },
+    );
+
+    if (directUpstream.success) {
       return successResult;
     }
-
-    const remoteBranch = `${remote}/${branch}`;
 
     const remoteBranchExists = await this.remoteBranchExists(branch, remote);
 
@@ -99,7 +101,7 @@ export class GitParserController {
     }
 
     // Make sure the remote tracking ref exists locally.
-    const fetchResult = await exec(`git fetch ${remote}`, {
+    const fetchResult = await exec(`git fetch ${remote} ${branch}`, {
       timeout: timeoutMs,
     });
 
@@ -186,14 +188,25 @@ export class GitParserController {
     if (isFetch) {
       const now = Date.now();
       if (now - this.lastFetchAt > this.FETCH_TTL) {
-        const result = await exec("git fetch", { timeout: 60000 });
+        const result = await exec("git fetch", { timeout: 15000 });
         if (result.success) this.lastFetchAt = now;
       }
     }
 
-    const result = await exec("git status --porcelain=v2 --branch -z", {
-      throwOnError: true,
-    });
+    const result = await exec("git status --porcelain=v2 --branch -z");
+
+    if (!result.success || !result.stdout) {
+      return {
+        currentBranch: {
+          current: "",
+          detached: false,
+          ahead: 0,
+          behind: 0,
+        },
+        files: [],
+        summary: GitSummaryBuilder.build([]),
+      };
+    }
 
     return GitParser.parseStatus(result.stdout);
   }

@@ -1,24 +1,27 @@
 import { gitHelper } from "../../shared/helpers/gitParsers/parser.controller.ts";
 import { output } from "../../shared/helpers/output/index.ts";
 import { prompt } from "../../shared/helpers/prompt/prompt.ts";
-import { exec, ExecResult } from "../../shared/helpers/shell/exec.ts";
+import { exec, ExecResult, quoteShell } from "../../shared/helpers/shell/exec.ts";
 import Enquirer from "enquirer";
 
 const enquirer = new Enquirer();
 
 class GitCommandServices {
-  async gitInit() {
+  async gitInit(): Promise<ExecResult> {
     return await exec("git init");
   }
 
-  async gitStatus() {
+  async gitStatus(): Promise<ExecResult> {
     return await exec("git status");
   }
 
-  async gitAdd(auto: boolean = false): Promise<ExecResult> {
+  async gitAdd(
+    auto: boolean = false,
+    filesInput?: string[],
+  ): Promise<ExecResult> {
     const isGitRepo = await gitHelper.isRepository();
 
-    let result = {
+    let result: ExecResult = {
       stdout: "",
       stderr: "",
       durationMs: 0,
@@ -31,14 +34,27 @@ class GitCommandServices {
       return result;
     }
 
-    const status = await gitHelper.getStatus();
-    const currentBranch = status.currentBranch;
-
-    if (!currentBranch) {
-      result.stderr = "Unable to get current branch";
+    // Direct files specified on CLI
+    if (filesInput && filesInput.length > 0) {
+      const targets = filesInput
+        .map((f) => (f === "." ? "." : quoteShell(f)))
+        .join(" ");
+      result = await exec(`git add ${targets}`);
+      if (result.success) {
+        result.stdout = `${filesInput.join(", ")} staged successfully.`;
+      }
       return result;
     }
 
+    if (auto) {
+      result = await exec("git add -A");
+      if (result.success) {
+        result.stdout = "all changes staged successfully.";
+      }
+      return result;
+    }
+
+    const status = await gitHelper.getStatus(false);
     const stageableFiles = gitHelper.getStageableFiles(status.files);
 
     if (stageableFiles.length === 0) {
@@ -47,45 +63,27 @@ class GitCommandServices {
       return result;
     }
 
-    let files: string[] = [];
+    const files = await prompt.multiselect({
+      message: "Select file to stage",
+      options: gitHelper.getFileSelectOptions(stageableFiles),
+      initialValues: ["."],
+    });
 
-    // if not auto ask for selection
-    if (!auto) {
-      files = await prompt.multiselect({
-        message: "Select file to stage",
-        options: gitHelper.getFileSelectOptions(stageableFiles),
-        initialValues: ["."],
-      });
-      if (files?.length == 0) {
-        result.stderr = "Please select valid option";
-        return result;
-      }
-    } else {
-      files = ["."];
-    }
-
-    const selectAll = files?.includes(".");
-
-    // if not auto ask for confirmation
-    if (!auto) {
-      const confirmed = await prompt.confirm({
-        message: selectAll
-          ? "Stage all changes?"
-          : `Stage "${files.join(", ")}"?`,
-      });
-
-      if (!confirmed) {
-        result.stderr = "Operation is canceled, exit...";
-        return result;
-      }
-    }
-
-    result = await exec(`git add ${files.join(" ")}`);
-    const target = selectAll ? "all changes" : files?.join(", ");
-
-    if (result.success) {
-      result.stdout = `${target} staged successfully.`;
+    if (!files || files.length === 0) {
+      result.stderr = "Please select a valid option";
       return result;
+    }
+
+    const selectAll = files.includes(".");
+    const targets = selectAll
+      ? "."
+      : files.map((f) => quoteShell(f)).join(" ");
+
+    result = await exec(`git add ${targets}`);
+    if (result.success) {
+      result.stdout = selectAll
+        ? "all changes staged successfully."
+        : `${files.join(", ")} staged successfully.`;
     }
     return result;
   }
@@ -96,14 +94,15 @@ class GitCommandServices {
   ): Promise<ExecResult> {
     const isGitRepo = await gitHelper.isRepository();
 
-    const command = `git commit -m '${message}'`;
+    const commitMsg = message?.trim() || "auto commit";
+    const command = `git commit -m ${quoteShell(commitMsg)}`;
 
-    let result = {
+    let result: ExecResult = {
       stdout: "",
       stderr: "",
       durationMs: 0,
       success: false,
-      command: command,
+      command,
     };
 
     if (!isGitRepo) {
@@ -111,58 +110,46 @@ class GitCommandServices {
       return result;
     }
 
+    // Commits do not need to fetch from remote
     const status = await gitHelper.getStatus(isFetch);
     const currentBranch = status.currentBranch;
     const stageableFiles = gitHelper.getStageableFiles(status.files);
 
     await output.currentBranch(currentBranch);
 
-    if (status.summary.staged == 0) {
-      const msg = stageableFiles?.length
-        ? `
-      No changes to commit,
-
-      Add files to stagging
-      ${stageableFiles?.map((item) => item?.path)?.join(", ")}
-      `
-        : "no changes to commit";
-      result.stdout = msg;
+    if (status.summary.staged === 0) {
+      if (stageableFiles.length > 0) {
+        result.stderr = `No changes staged for commit.\nStage files first with 'vh git add' or use 'vh git cwa' (commit with add).\nUnstaged files:\n${stageableFiles.map((item) => item.path).join(", ")}`;
+        result.success = false;
+        return result;
+      }
+      result.stdout = "Working tree clean, nothing to commit.";
       result.success = true;
       return result;
     }
 
-    if (!currentBranch) {
-      result.stderr = "Unable to get current branch";
-      return result;
-    }
-
     result = await exec(command);
-
     return result;
   }
 
   async gitPush(force: "safe" | "unSafe" | undefined): Promise<ExecResult> {
     const isGitRepo = await gitHelper.isRepository();
 
-    const command = (cmd: string) => {
-      const trimmed = cmd.trim();
-      const middle = trimmed ? ` ${trimmed} ` : " ";
-      if (force == "safe") {
-        return `git push${middle}'--force-with-lease'`;
-      } else if (force == "unSafe") {
-        return `git push${middle}'--force'`;
-      } else {
-        return `git push${trimmed ? ` ${trimmed}` : ""}`;
-      }
-    };
+    const forceFlag =
+      force === "safe"
+        ? " --force-with-lease"
+        : force === "unSafe"
+          ? " --force"
+          : "";
 
-    let result = {
+    let result: ExecResult = {
       stdout: "",
       stderr: "",
       durationMs: 0,
       success: false,
-      command: command(""),
+      command: `git push${forceFlag}`,
     };
+
     if (!isGitRepo) {
       result.stderr = "Not a git repository";
       return result;
@@ -172,52 +159,50 @@ class GitCommandServices {
     const remote = remotes?.[0];
 
     if (!remote) {
-      result.stderr = "Remote url not exist";
+      result.stderr = "No remote repository configured";
       return result;
     }
 
-    const status = await gitHelper.getStatus();
+    const status = await gitHelper.getStatus(false);
     const currentBranch = status.currentBranch;
 
-    if (!currentBranch) {
-      result.stderr = "Unable to get current branch";
+    if (!currentBranch || !currentBranch.current) {
+      if (currentBranch?.detached) {
+        result.stderr = "Cannot push in detached HEAD mode";
+      } else {
+        result.stderr = "Unable to determine current branch";
+      }
       return result;
     }
 
-    if (currentBranch.detached) {
-      result.stderr = "Can not push in detached mode";
-      return result;
-    }
-
-    // if upstream exist then directly push it
+    // If upstream exists, push directly
     if (currentBranch.upstream) {
-      await output.info(`Upstream for '${currentBranch.current}' exist`);
-      return await exec(command(""), { timeout: 60000 });
+      await output.info(`Pushing '${currentBranch.current}' to upstream...`);
+      return await exec(`git push${forceFlag}`, { timeout: 60000 });
     }
+
+    // Upstream does not exist, set upstream and push with any force flags preserved
     const remoteBranch = `${remote}/${currentBranch.current}`;
-    output.info(`Upstream for ${currentBranch.current} not exist`);
-    output.info(
-      `Creating Upstream for ${currentBranch.current} to ${remoteBranch} `,
+    await output.info(
+      `Upstream for '${currentBranch.current}' not set. Setting upstream to '${remoteBranch}' and pushing...`,
     );
-    output.info("Pushing to remote...");
     return await exec(
-      `git push --set-upstream '${remote}' '${currentBranch.current}'`,
+      `git push --set-upstream ${quoteShell(remote)} ${quoteShell(currentBranch.current)}${forceFlag}`,
       { timeout: 60000 },
     );
   }
 
-  async gitPull(inputBranch: string): Promise<ExecResult> {
+  async gitPull(inputBranch?: string): Promise<ExecResult> {
     const isGitRepo = await gitHelper.isRepository();
 
-    const command = "git pull";
-
-    let result = {
+    let result: ExecResult = {
       stdout: "",
       stderr: "",
       durationMs: 0,
       success: false,
-      command: command,
+      command: "git pull",
     };
+
     if (!isGitRepo) {
       result.stderr = "Not a git repository";
       return result;
@@ -227,48 +212,51 @@ class GitCommandServices {
     const remote = remotes?.[0];
 
     if (!remote) {
-      result.stderr = "Remote url not exist";
+      result.stderr = "No remote repository configured";
       return result;
     }
 
-    const status = await gitHelper.getStatus(true);
+    // Pull already performs a fetch, do not do redundant fetch here
+    const status = await gitHelper.getStatus(false);
     const currentBranch = status.currentBranch;
 
     await output.currentBranch(currentBranch);
 
     if (status.summary.hasStagedChanges || status.summary.hasUnstagedChanges) {
-      result.stderr = "Please commit or stash local changes before pulling";
+      result.stderr =
+        "Please commit or stash local changes before pulling.";
       return result;
     }
 
-    if (!currentBranch) {
-      result.stderr = "Unable to get current branch";
+    if (!currentBranch || !currentBranch.current) {
+      if (currentBranch?.detached) {
+        result.stderr = "Cannot pull in detached HEAD mode";
+      } else {
+        result.stderr = "Unable to determine current branch";
+      }
       return result;
     }
 
-    if (currentBranch.detached) {
-      result.stderr = "Can not pull in detached mode";
-      return result;
-    }
-
-    // if input branch is available then use it and return
+    // If input branch is specified, pull from it
     if (inputBranch) {
-      await output.info(`Pulling from ${inputBranch} remote...`);
-      return await exec(`${command} '${remote}' '${inputBranch}'`, {
-        timeout: 60000,
-      });
+      await output.info(`Pulling from ${remote} ${inputBranch}...`);
+      return await exec(
+        `git pull ${quoteShell(remote)} ${quoteShell(inputBranch)}`,
+        { timeout: 60000 },
+      );
     }
 
-    // if upstream exist then directly pull it
+    // If upstream exists, pull directly
     if (currentBranch.upstream) {
-      await output.info(`Upstream for '${currentBranch.current}' exist`);
-      return await exec(command, { timeout: 60000 });
+      await output.info(`Pulling from upstream for '${currentBranch.current}'...`);
+      return await exec("git pull", { timeout: 60000 });
     }
 
+    // Try setting upstream if possible
     result = await gitHelper.ensureUpstream(
       currentBranch.current,
       remote,
-      60000,
+      30000,
     );
 
     if (!result.success) {
@@ -279,67 +267,81 @@ class GitCommandServices {
   }
 
   async gitCheckout(
-    inputBranch: string,
-    newBranch: boolean,
+    inputBranch?: string,
+    newBranch?: boolean,
   ): Promise<ExecResult> {
     const isGitRepo = await gitHelper.isRepository();
 
     const command = "git checkout";
 
-    let result = {
+    let result: ExecResult = {
       stdout: "",
       stderr: "",
       durationMs: 0,
       success: false,
-      command: command,
+      command,
     };
+
     if (!isGitRepo) {
       result.stderr = "Not a git repository";
       return result;
     }
 
-    // if checkout with create new branch return early
+    // Checkout with new branch (-b)
     if (newBranch) {
-      return await exec(`${command} -b '${inputBranch}'`);
-    }
-    // if checkout to existing branch return early
-    if (inputBranch) {
-      return await exec(`${command} '${inputBranch}'`);
+      let targetBranch = inputBranch?.trim();
+      if (!targetBranch) {
+        targetBranch = await this.promptForNewBranch();
+      }
+      if (!targetBranch || targetBranch.toLowerCase() === "exit") {
+        result.stdout = "Operation is canceled, exit...";
+        result.success = true;
+        return result;
+      }
+      return await exec(`${command} -b ${quoteShell(targetBranch)}`);
     }
 
-    const status = await gitHelper.getStatus();
+    // Checkout to existing branch specified directly
+    if (inputBranch?.trim()) {
+      return await exec(`${command} ${quoteShell(inputBranch.trim())}`);
+    }
 
-    if (!status.summary.isClean) {
-      result.stderr = `
-      Local changes are present
-      commit local changes to continue
-      abort checkout
-       `;
+    // Interactive branch picker
+    const status = await gitHelper.getStatus(false);
+
+    if (status.summary.hasStagedChanges || status.summary.hasUnstagedChanges) {
+      result.stderr =
+        "Local changes are present. Commit or stash local changes before checkout.";
       return result;
     }
 
     const branchList = await gitHelper.getBranches("all");
     const localBranchNames = branchList
-      .filter((branch) => !branch.remote)
-      .map((branch) => branch.name);
-    const branchNames = branchList.map((branch) => branch.name);
+      .filter((b) => !b.remote)
+      .map((b) => b.name);
+    const branchNames = branchList.map((b) => b.name);
 
-    const { branch }: any = await enquirer.prompt({
-      type: "autocomplete",
-      name: "branch",
-      message: "Select branch",
-      choices: ["create-new-branch", ...branchNames],
-    });
-
-    if (!branch) {
-      result.stderr = "select a valid branch";
+    let branch = "";
+    try {
+      const answer: any = await enquirer.prompt({
+        type: "autocomplete",
+        name: "branch",
+        message: "Select branch",
+        choices: ["create-new-branch", ...branchNames],
+      });
+      branch = answer.branch;
+    } catch {
+      result.stderr = "Operation is canceled, exit...";
       return result;
     }
 
-    const selectedBranch = branch;
+    if (!branch) {
+      result.stderr = "Select a valid branch";
+      return result;
+    }
 
     const confirmed = await prompt.confirm({
-      message: `confirm selection ${selectedBranch}`,
+      message: `Confirm checkout to '${branch}'?`,
     });
 
     if (!confirmed) {
@@ -348,71 +350,73 @@ class GitCommandServices {
     }
 
     const remotes = await gitHelper.getRemotes();
-    const remote = remotes?.[0];
+    const remote = remotes?.[0] || "origin";
 
-    // if remote branch selected
-    if (selectedBranch !== "create-new-branch" && selectedBranch?.includes(remote + "/")) {
-      const localBranch = selectedBranch.replace(`${remote}/`, "");
-      if (localBranchNames?.includes(localBranch)) {
-        await output.info("local branch exist checkout");
-        return await exec(`${command} '${localBranch}'`);
+    // If remote branch selected
+    if (branch !== "create-new-branch" && branch.startsWith(`${remote}/`)) {
+      const localBranch = branch.slice(remote.length + 1);
+      if (localBranchNames.includes(localBranch)) {
+        await output.info(`Local branch '${localBranch}' exists, checking out...`);
+        return await exec(`${command} ${quoteShell(localBranch)}`);
       }
-      await output.info("local branch  not exist");
-      await output.info("creating local branch and start tracking");
-      return await exec(`git checkout --track ${branch}`);
-    }
-    // if local branch selected direclty checkout
-    if (selectedBranch != "create-new-branch") {
-      return exec(`${command} '${selectedBranch}'`);
+      await output.info(
+        `Creating local branch '${localBranch}' tracking '${branch}'...`,
+      );
+      return await exec(`git checkout --track ${quoteShell(branch)}`);
     }
 
-    // if create new branch selected
+    // Existing local branch
+    if (branch !== "create-new-branch") {
+      return await exec(`${command} ${quoteShell(branch)}`);
+    }
 
+    // Create new branch selected interactively
     const userInput = await this.promptForNewBranch();
-
-    if (userInput.toLowerCase() == "exit") {
+    if (!userInput || userInput.toLowerCase() === "exit") {
       result.stdout = "Operation is canceled, exit...";
       result.success = true;
       return result;
     }
 
-    return await exec(`${command} -b '${userInput}'`);
+    return await exec(`${command} -b ${quoteShell(userInput)}`);
   }
 
-  async gitBranch(): Promise<ExecResult> {
+  async gitBranch(newBranchName?: string): Promise<ExecResult> {
     const isGitRepo = await gitHelper.isRepository();
 
-    const command = "git branch";
-
-    let result = {
+    let result: ExecResult = {
       stdout: "",
       stderr: "",
       durationMs: 0,
       success: false,
-      command: command,
+      command: "git branch",
     };
+
     if (!isGitRepo) {
       result.stderr = "Not a git repository";
       return result;
     }
 
-    const status = await gitHelper.getStatus();
+    // Create branch if name provided
+    if (newBranchName?.trim()) {
+      return await exec(`git branch ${quoteShell(newBranchName.trim())}`);
+    }
 
+    const status = await gitHelper.getStatus(false);
     const branchList = await gitHelper.getBranches("all");
     const branchNames = branchList.map((branch) => branch.name);
 
-    for (let name of branchNames) {
-      const isCurrent = status.currentBranch.current == name;
-      await output.info(`${name} ${isCurrent ? " *" : ""}`, 8);
+    for (const name of branchNames) {
+      const isCurrent = status.currentBranch.current === name;
+      await output.info(`${name} ${isCurrent ? "*" : ""}`, 0);
     }
 
     result.success = true;
-    result.stdout = "Branch listed successfully";
-
+    result.stdout = "Branches listed successfully";
     return result;
   }
 
-  // ─── New Commands ───────────────────────────────────────────────────────────
+  // ─── Extended Commands ───────────────────────────────────────────────────────
 
   async gitStash(): Promise<ExecResult> {
     const isGitRepo = await gitHelper.isRepository();
@@ -452,18 +456,16 @@ class GitCommandServices {
         placeholder: "WIP: my changes",
       });
       const cmd = message?.trim()
-        ? `git stash push -m '${message.trim()}'`
+        ? `git stash push -m ${quoteShell(message.trim())}`
         : "git stash push";
-      result = await exec(cmd, { timeout: 30000 });
-      return result;
+      return await exec(cmd, { timeout: 30000 });
     }
 
     if (action === "list") {
-      result = await exec("git stash list", { timeout: 30000 });
-      return result;
+      return await exec("git stash list", { timeout: 30000 });
     }
 
-    // pop / apply / drop — need to pick a stash
+    // pop / apply / drop — pick a stash
     const listResult = await exec("git stash list", { timeout: 30000 });
     if (!listResult.success) return listResult;
 
@@ -479,30 +481,35 @@ class GitCommandServices {
     }
 
     const stashChoices = stashLines.map((line) => {
-      // e.g. "stash@{0}: WIP on main: abc1234 message"
       const ref = line.split(":")[0].trim();
       return { name: line, value: ref };
     });
 
-    const { stash }: any = await enquirer.prompt({
-      type: "autocomplete",
-      name: "stash",
-      message: `Select stash to ${action}`,
-      choices: stashChoices.map((s) => s.name),
-    });
+    let stash = "";
+    try {
+      const answer: any = await enquirer.prompt({
+        type: "autocomplete",
+        name: "stash",
+        message: `Select stash to ${action}`,
+        choices: stashChoices.map((s) => s.name),
+      });
+      stash = answer.stash;
+    } catch {
+      result.stderr = "Operation is canceled, exit...";
+      return result;
+    }
 
     if (!stash) {
       result.stderr = "No stash selected";
       return result;
     }
 
-    // Resolve the ref from the displayed name
     const matched = stashChoices.find((s) => s.name === stash);
     const ref = matched ? matched.value : stash.split(":")[0].trim();
 
-    const cmd = `git stash ${action} '${ref}'`;
-    result = await exec(cmd, { timeout: 30000 });
-    return result;
+    return await exec(`git stash ${action} ${quoteShell(ref)}`, {
+      timeout: 30000,
+    });
   }
 
   async gitMerge(inputBranch: string, abort: boolean): Promise<ExecResult> {
@@ -522,15 +529,14 @@ class GitCommandServices {
     }
 
     if (abort) {
-      result = await exec("git merge --abort", { timeout: 30000 });
-      return result;
+      return await exec("git merge --abort", { timeout: 30000 });
     }
 
-    const status = await gitHelper.getStatus();
+    const status = await gitHelper.getStatus(false);
     const currentBranch = status.currentBranch;
     await output.currentBranch(currentBranch);
 
-    let targetBranch = inputBranch;
+    let targetBranch = inputBranch?.trim();
 
     if (!targetBranch) {
       const branchList = await gitHelper.getBranches("local");
@@ -543,19 +549,23 @@ class GitCommandServices {
         return result;
       }
 
-      const { branch }: any = await enquirer.prompt({
-        type: "autocomplete",
-        name: "branch",
-        message: "Select branch to merge into current",
-        choices: otherBranches,
-      });
-
-      if (!branch) {
-        result.stderr = "No branch selected";
+      try {
+        const answer: any = await enquirer.prompt({
+          type: "autocomplete",
+          name: "branch",
+          message: "Select branch to merge into current",
+          choices: otherBranches,
+        });
+        targetBranch = answer.branch;
+      } catch {
+        result.stderr = "Operation is canceled, exit...";
         return result;
       }
 
-      targetBranch = branch;
+      if (!targetBranch) {
+        result.stderr = "No branch selected";
+        return result;
+      }
     }
 
     const confirmed = await prompt.confirm({
@@ -567,8 +577,9 @@ class GitCommandServices {
       return result;
     }
 
-    result = await exec(`git merge '${targetBranch}'`, { timeout: 60000 });
-    return result;
+    return await exec(`git merge ${quoteShell(targetBranch)}`, {
+      timeout: 60000,
+    });
   }
 
   async gitDiff(staged: boolean): Promise<ExecResult> {
@@ -579,7 +590,7 @@ class GitCommandServices {
       stderr: "",
       durationMs: 0,
       success: false,
-      command: "git diff",
+      command: staged ? "git diff --staged" : "git diff",
     };
 
     if (!isGitRepo) {
@@ -588,8 +599,7 @@ class GitCommandServices {
     }
 
     const cmd = staged ? "git diff --staged" : "git diff";
-    result = await exec(cmd, { timeout: 30000 });
-    return result;
+    return await exec(cmd, { timeout: 30000 });
   }
 
   async gitLog(limit: number): Promise<ExecResult> {
@@ -610,11 +620,14 @@ class GitCommandServices {
 
     const n = limit && limit > 0 ? limit : 10;
     const cmd = `git log --oneline --graph --decorate -n ${n}`;
-    result = await exec(cmd, { timeout: 30000 });
-    return result;
+    return await exec(cmd, { timeout: 30000 });
   }
 
-  async gitReset(hard: boolean, soft: boolean, head: boolean): Promise<ExecResult> {
+  async gitReset(
+    hard: boolean,
+    soft: boolean,
+    head: boolean,
+  ): Promise<ExecResult> {
     const isGitRepo = await gitHelper.isRepository();
 
     let result: ExecResult = {
@@ -630,10 +643,9 @@ class GitCommandServices {
       return result;
     }
 
-    // --head: discard all unstaged changes
+    // Discard all unstaged changes
     if (head) {
-      result = await exec("git checkout -- .", { timeout: 30000 });
-      return result;
+      return await exec("git checkout -- .", { timeout: 30000 });
     }
 
     let mode: "soft" | "hard";
@@ -643,7 +655,6 @@ class GitCommandServices {
     } else if (soft) {
       mode = "soft";
     } else {
-      // prompt to choose
       const chosen = await prompt.select({
         message: "Reset mode",
         options: [
@@ -657,7 +668,8 @@ class GitCommandServices {
     if (mode === "hard") {
       const confirmed = await prompt.confirm({
         message:
-          "⚠️  Hard reset will permanently discard all uncommitted changes. Continue?",
+          "⚠️  Hard reset will permanently discard uncommitted changes. Continue?",
+        initialValue: false,
       });
       if (!confirmed) {
         result.stderr = "Operation is canceled, exit...";
@@ -665,11 +677,19 @@ class GitCommandServices {
       }
     }
 
-    const cmd = mode === "hard"
-      ? "git reset --hard HEAD~1"
-      : "git reset --soft HEAD~1";
-    result = await exec(cmd, { timeout: 30000 });
-    return result;
+    // Verify HEAD~1 exists before attempting reset
+    const checkCommit = await exec("git rev-parse --verify HEAD~1");
+    if (!checkCommit.success) {
+      result.stderr =
+        "Cannot reset: repository has only one commit (no previous commit to reset to).";
+      return result;
+    }
+
+    const cmd =
+      mode === "hard"
+        ? "git reset --hard HEAD~1"
+        : "git reset --soft HEAD~1";
+    return await exec(cmd, { timeout: 30000 });
   }
 
   async gitTag(): Promise<ExecResult> {
@@ -703,8 +723,7 @@ class GitCommandServices {
     }
 
     if (action === "list") {
-      result = await exec("git tag -l", { timeout: 30000 });
-      return result;
+      return await exec("git tag -l", { timeout: 30000 });
     }
 
     if (action === "create") {
@@ -724,13 +743,12 @@ class GitCommandServices {
 
       let cmd: string;
       if (tagMessage?.trim()) {
-        cmd = `git tag -a '${tagName.trim()}' -m '${tagMessage.trim()}'`;
+        cmd = `git tag -a ${quoteShell(tagName.trim())} -m ${quoteShell(tagMessage.trim())}`;
       } else {
-        cmd = `git tag '${tagName.trim()}'`;
+        cmd = `git tag ${quoteShell(tagName.trim())}`;
       }
 
-      result = await exec(cmd, { timeout: 30000 });
-      return result;
+      return await exec(cmd, { timeout: 30000 });
     }
 
     // delete
@@ -748,12 +766,19 @@ class GitCommandServices {
       return result;
     }
 
-    const { tag }: any = await enquirer.prompt({
-      type: "autocomplete",
-      name: "tag",
-      message: "Select tag to delete",
-      choices: tags,
-    });
+    let tag = "";
+    try {
+      const answer: any = await enquirer.prompt({
+        type: "autocomplete",
+        name: "tag",
+        message: "Select tag to delete",
+        choices: tags,
+      });
+      tag = answer.tag;
+    } catch {
+      result.stderr = "Operation is canceled, exit...";
+      return result;
+    }
 
     if (!tag) {
       result.stderr = "No tag selected";
@@ -769,8 +794,7 @@ class GitCommandServices {
       return result;
     }
 
-    result = await exec(`git tag -d '${tag}'`, { timeout: 30000 });
-    return result;
+    return await exec(`git tag -d ${quoteShell(tag)}`, { timeout: 30000 });
   }
 
   async gitRebase(inputBranch: string, abort: boolean): Promise<ExecResult> {
@@ -790,15 +814,14 @@ class GitCommandServices {
     }
 
     if (abort) {
-      result = await exec("git rebase --abort", { timeout: 30000 });
-      return result;
+      return await exec("git rebase --abort", { timeout: 30000 });
     }
 
-    const status = await gitHelper.getStatus();
+    const status = await gitHelper.getStatus(false);
     const currentBranch = status.currentBranch;
     await output.currentBranch(currentBranch);
 
-    let targetBranch = inputBranch;
+    let targetBranch = inputBranch?.trim();
 
     if (!targetBranch) {
       const branchList = await gitHelper.getBranches("local");
@@ -811,19 +834,23 @@ class GitCommandServices {
         return result;
       }
 
-      const { branch }: any = await enquirer.prompt({
-        type: "autocomplete",
-        name: "branch",
-        message: "Select branch to rebase onto",
-        choices: otherBranches,
-      });
-
-      if (!branch) {
-        result.stderr = "No branch selected";
+      try {
+        const answer: any = await enquirer.prompt({
+          type: "autocomplete",
+          name: "branch",
+          message: "Select branch to rebase onto",
+          choices: otherBranches,
+        });
+        targetBranch = answer.branch;
+      } catch {
+        result.stderr = "Operation is canceled, exit...";
         return result;
       }
 
-      targetBranch = branch;
+      if (!targetBranch) {
+        result.stderr = "No branch selected";
+        return result;
+      }
     }
 
     const confirmed = await prompt.confirm({
@@ -835,8 +862,9 @@ class GitCommandServices {
       return result;
     }
 
-    result = await exec(`git rebase '${targetBranch}'`, { timeout: 60000 });
-    return result;
+    return await exec(`git rebase ${quoteShell(targetBranch)}`, {
+      timeout: 60000,
+    });
   }
 
   async gitRemote(): Promise<ExecResult> {
@@ -870,8 +898,7 @@ class GitCommandServices {
     }
 
     if (action === "list") {
-      result = await exec("git remote -v", { timeout: 30000 });
-      return result;
+      return await exec("git remote -v", { timeout: 30000 });
     }
 
     if (action === "add") {
@@ -893,11 +920,10 @@ class GitCommandServices {
         },
       });
 
-      result = await exec(
-        `git remote add '${remoteName.trim()}' '${remoteUrl.trim()}'`,
+      return await exec(
+        `git remote add ${quoteShell(remoteName.trim())} ${quoteShell(remoteUrl.trim())}`,
         { timeout: 30000 },
       );
-      return result;
     }
 
     // remove
@@ -909,12 +935,19 @@ class GitCommandServices {
       return result;
     }
 
-    const { remote }: any = await enquirer.prompt({
-      type: "autocomplete",
-      name: "remote",
-      message: "Select remote to remove",
-      choices: remotes,
-    });
+    let remote = "";
+    try {
+      const answer: any = await enquirer.prompt({
+        type: "autocomplete",
+        name: "remote",
+        message: "Select remote to remove",
+        choices: remotes,
+      });
+      remote = answer.remote;
+    } catch {
+      result.stderr = "Operation is canceled, exit...";
+      return result;
+    }
 
     if (!remote) {
       result.stderr = "No remote selected";
@@ -930,11 +963,10 @@ class GitCommandServices {
       return result;
     }
 
-    result = await exec(`git remote remove '${remote}'`, { timeout: 30000 });
-    return result;
+    return await exec(`git remote remove ${quoteShell(remote)}`, {
+      timeout: 30000,
+    });
   }
-
-  // ─── 5 Additional Commands ───────────────────────────────────────────────────
 
   async gitCherryPick(inputCommit: string): Promise<ExecResult> {
     const isGitRepo = await gitHelper.isRepository();
@@ -955,14 +987,12 @@ class GitCommandServices {
     let commit = inputCommit?.trim();
 
     if (!commit) {
-      // Show recent commits across all branches for the user to pick from
-      const logResult = await exec(
-        "git log --all --oneline --decorate -n 50",
-        { timeout: 30000 },
-      );
+      const logResult = await exec("git log --all --oneline --decorate -n 50", {
+        timeout: 30000,
+      });
 
       if (!logResult.success || !logResult.stdout) {
-        result.stderr = "Could not retrieve commit history";
+        result.stderr = "No commits found to cherry-pick";
         return result;
       }
 
@@ -971,20 +1001,23 @@ class GitCommandServices {
         .map((l) => l.trim())
         .filter(Boolean);
 
-      const { selected }: any = await enquirer.prompt({
-        type: "autocomplete",
-        name: "selected",
-        message: "Select commit to cherry-pick",
-        choices: commits,
-      });
-
-      if (!selected) {
-        result.stderr = "No commit selected";
+      try {
+        const answer: any = await enquirer.prompt({
+          type: "autocomplete",
+          name: "selected",
+          message: "Select commit to cherry-pick",
+          choices: commits,
+        });
+        commit = answer.selected?.split(" ")[0];
+      } catch {
+        result.stderr = "Operation is canceled, exit...";
         return result;
       }
 
-      // Extract the short hash — first word
-      commit = selected.split(" ")[0];
+      if (!commit) {
+        result.stderr = "No commit selected";
+        return result;
+      }
     }
 
     const confirmed = await prompt.confirm({
@@ -996,8 +1029,9 @@ class GitCommandServices {
       return result;
     }
 
-    result = await exec(`git cherry-pick '${commit}'`, { timeout: 60000 });
-    return result;
+    return await exec(`git cherry-pick ${quoteShell(commit)}`, {
+      timeout: 60000,
+    });
   }
 
   async gitClean(): Promise<ExecResult> {
@@ -1016,9 +1050,8 @@ class GitCommandServices {
       return result;
     }
 
-    // Show what would be removed first (dry-run)
+    // Show preview (dry-run)
     const dryRun = await exec("git clean -nfd", { timeout: 30000 });
-
     if (!dryRun.success) {
       return dryRun;
     }
@@ -1029,13 +1062,19 @@ class GitCommandServices {
       return result;
     }
 
-    await output.info("The following files/directories would be removed:\n" + dryRun.stdout);
+    await output.info(
+      "The following files/directories would be removed:\n" + dryRun.stdout,
+      0,
+    );
 
     const mode = await prompt.select({
       message: "Clean mode",
       options: [
         { value: "files", label: "Remove untracked files only (git clean -fd)" },
-        { value: "all", label: "Remove untracked files + ignored files (git clean -fdx)" },
+        {
+          value: "all",
+          label: "Remove untracked files + ignored files (git clean -fdx)",
+        },
       ],
     });
 
@@ -1050,8 +1089,7 @@ class GitCommandServices {
     }
 
     const cmd = mode === "all" ? "git clean -fdx" : "git clean -fd";
-    result = await exec(cmd, { timeout: 30000 });
-    return result;
+    return await exec(cmd, { timeout: 30000 });
   }
 
   async gitRestore(inputFile: string): Promise<ExecResult> {
@@ -1070,9 +1108,7 @@ class GitCommandServices {
       return result;
     }
 
-    const status = await gitHelper.getStatus();
-
-    // Collect files that have unstaged changes or are staged
+    const status = await gitHelper.getStatus(false);
     const restorableFiles = status.files.filter(
       (f) => f.workTreeStatus !== null || f.indexStatus !== null,
     );
@@ -1087,7 +1123,11 @@ class GitCommandServices {
 
     if (!targetFile) {
       const fileOptions = [
-        { label: "🌍 Restore all changes (.)", value: ".", hint: "git restore ." },
+        {
+          label: "🌍 Restore all changes (.)",
+          value: ".",
+          hint: "git restore .",
+        },
         ...restorableFiles.map((f) => ({
           label: gitHelper.getFileLabel(f),
           value: f.path,
@@ -1106,9 +1146,11 @@ class GitCommandServices {
         return result;
       }
 
-      targetFile = files.includes(".") ? "." : files.map((f) => `'${f}'`).join(" ");
+      targetFile = files.includes(".")
+        ? "."
+        : files.map((f) => quoteShell(f)).join(" ");
     } else {
-      targetFile = `'${targetFile}'`;
+      targetFile = quoteShell(targetFile);
     }
 
     const confirmed = await prompt.confirm({
@@ -1147,11 +1189,9 @@ class GitCommandServices {
     let commit = inputCommit?.trim();
 
     if (!commit) {
-      // Let user pick from recent log
-      const logResult = await exec(
-        "git log --oneline --decorate -n 50",
-        { timeout: 30000 },
-      );
+      const logResult = await exec("git log --oneline --decorate -n 50", {
+        timeout: 30000,
+      });
 
       if (!logResult.success || !logResult.stdout) {
         result.stderr = "Could not retrieve commit history";
@@ -1163,23 +1203,26 @@ class GitCommandServices {
         .map((l) => l.trim())
         .filter(Boolean);
 
-      const { selected }: any = await enquirer.prompt({
-        type: "autocomplete",
-        name: "selected",
-        message: "Select commit to inspect",
-        choices: commits,
-      });
-
-      if (!selected) {
-        result.stderr = "No commit selected";
+      try {
+        const answer: any = await enquirer.prompt({
+          type: "autocomplete",
+          name: "selected",
+          message: "Select commit to inspect",
+          choices: commits,
+        });
+        commit = answer.selected?.split(" ")[0];
+      } catch {
+        result.stderr = "Operation is canceled, exit...";
         return result;
       }
 
-      commit = selected.split(" ")[0];
+      if (!commit) {
+        result.stderr = "No commit selected";
+        return result;
+      }
     }
 
-    result = await exec(`git show '${commit}'`, { timeout: 30000 });
-    return result;
+    return await exec(`git show ${quoteShell(commit)}`, { timeout: 30000 });
   }
 
   async gitFetch(all: boolean): Promise<ExecResult> {
@@ -1205,7 +1248,9 @@ class GitCommandServices {
       return result;
     }
 
-    const cmd = all ? "git fetch --all --prune" : `git fetch '${remotes[0]}' --prune`;
+    const cmd = all
+      ? "git fetch --all --prune"
+      : `git fetch ${quoteShell(remotes[0])} --prune`;
     result = await exec(cmd, { timeout: 60000 });
 
     if (result.success && !result.stdout) {
@@ -1216,17 +1261,15 @@ class GitCommandServices {
     return result;
   }
 
-  // small helpers
-
+  // Helper
   private async promptForNewBranch(): Promise<string> {
     return prompt.input({
       message: "Branch name",
-      placeholder: "feature/login (Enter exit for cancel)",
+      placeholder: "feature/login (Enter exit to cancel)",
       validate(value) {
         if (!value?.trim()) {
           return "Branch name is required.";
         }
-
         return undefined;
       },
     });
